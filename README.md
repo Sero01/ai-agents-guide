@@ -1,1 +1,55 @@
-IyBBSSBBZ2VudHMgJiBBZ2VudGljIFdvcmtmbG93cyBHdWlkZQoKQSBwcmFjdGljYWwsIGNvZGUtZmlyc3QgZ3VpZGUgdG8gQUkgYWdlbnRzLCBhZ2VudGljIHdvcmtmbG93cywgTUNQLCBhbmQgdGhlIHRvb2xzIHBvd2VyaW5nIHRoZSBuZXh0IGVyYSBvZiBBSS4KCiMjIExpdmUgU2l0ZQoKW2FnZW50d29ya2Zsb3dzLmRldl0oaHR0cHM6Ly9hZ2VudHdvcmtmbG93cy5kZXYpIOKAlCBkZXBsb3llZCBvbiBDbG91ZGZsYXJlIFBhZ2VzLgoKIyMgV2hhdCdzIEluc2lkZQoKfCBUb3BpYyB8IENvdmVyYWdlIHwKfC0tLS0tLS18LS0tLS0tLS0tLXwKfCBBSSBBZ2VudHMgfCBDb25jZXB0cywgYXJjaGl0ZWN0dXJlLCB0b2tlbnMsIGNvbnRleHQgfAp8IEFnZW50aWMgV29ya2Zsb3dzIHwgTXVsdGktc3RlcCBwaXBlbGluZXMsIG11bHRpLWFnZW50IHN5c3RlbXMgfAp8IE1DUCB8IE1vZGVsIENvbnRleHQgUHJvdG9jb2wg4oCUIHNldHVwLCBzZXJ2ZXJzLCBidWlsZGluZyB5b3VyIG93biB8CnwgRnJhbWV3b3JrcyB8IExhbmdDaGFpbiwgQ3Jld0FJLCBBdXRvR2VuIOKAlCBob25lc3QgY29tcGFyaXNvbiB8CnwgVG9vbHMgJiBNZW1vcnkgfCBIb3cgYWdlbnRzIHVzZSB0b29scyBhbmQgcGVyc2lzdCBrbm93bGVkZ2UgfAp8IFByb21wdCBFbmdpbmVlcmluZyB8IFN0cmF0ZWdpZXMgZGVzaWduZWQgZm9yIGFnZW50IHN5c3RlbXMgfAp8IEFnZW50IEluc3RydWN0aW9ucyB8IENMQVVERS5tZCAvIEFnZW50TUQgcGF0dGVybiB8CnwgQ29kZSBFeGFtcGxlcyB8IFdvcmtpbmcsIHJ1bm5hYmxlIGNvZGUgZm9yIGV2ZXJ5IGNvbmNlcHQgfAoKIyMgUmVwbyBTdHJ1Y3R1cmUKCmBgYArilJzilIDilIAgc2l0ZS8gICAgICAgICAgICAgICAgICAgIyBBc3RybyArIFN0YXJsaWdodCBkb2NzIHdlYnNpdGUK4pSCICAg4pSc4pSA4pSAIHNyYy9jb250ZW50L2RvY3MvICAgIyBBbGwgZG9jdW1lbnRhdGlvbiBwYWdlcwrilIIgICDilJzilIDilIAgc3JjL3BhZ2VzLyAgICAgICAgICAjIE1hcmtldGluZyBsYW5kaW5nIHBhZ2UK4pSCICAg4pSc4pSA4pSAIHNyYy9jb21wb25lbnRzLyAgICAgIyBNb25ldGl6YXRpb24gY29tcG9uZW50cwrilIIgICDilJTilIDilIAgYXN0cm8uY29uZmlnLm1qcyAgICAjIFNpZGViYXIsIGludGVncmF0aW9ucywgU0VPIGNvbmZpZwrilJzilIDilIAgZGlyZWN0aXZlcy8gICAgICAgICAgICAgIyBTT1BzIGZvciBvcmNoZXN0cmF0aW9uIHRhc2tzCuKUnOKUgOKUgCBleGVjdXRpb24vICAgICAgICAgICAgICAjIERldGVybWluaXN0aWMgUHl0aG9uIHNjcmlwdHMK4pSU4pSA4pSAIENMQVVERS5tZCAgICAgICAgICAgICAgICMgQUkgYWdlbnQgaW5zdHJ1Y3Rpb25zIChtaXJyb3JlZCBhcyBBR0VOVFMubWQpCmBgYAoKIyMgUnVubmluZyB0aGUgRG9jcyBTaXRlCgpSZXF1aXJlcyBOb2RlIDIwKzoKCmBgYGJhc2gKZXhwb3J0IE5WTV9ESVI9IiRIT01FLy5udm0iICYmIHNvdXJjZSAiJE5WTV9ESVIvbnZtLnNoIiAmJiBudm0gdXNlIDIwCmNkIHNpdGUKbnBtIGluc3RhbGwKbnBtIHJ1biBkZXYgICAgICAjIERldiBzZXJ2ZXIgYXQgbG9jYWxob3N0OjQzMjEKbnBtIHJ1biBidWlsZCAgICAjIEJ1aWxkIHN0YXRpYyBvdXRwdXQg4oaSIHNpdGUvZGlzdC8KYGBgCgojIyBEZXBsb3lpbmcgdG8gQ2xvdWRmbGFyZSBQYWdlcwoKQ29ubmVjdCB0aGlzIHJlcG8gdG8gQ2xvdWRmbGFyZSBQYWdlczoKLSBCdWlsZCBjb21tYW5kOiBgbnBtIHJ1biBidWlsZGAKLSBPdXRwdXQgZGlyZWN0b3J5OiBgZGlzdGAKLSBSb290IGRpcmVjdG9yeTogYHNpdGVgCi0gTm9kZSB2ZXJzaW9uOiBgMjBgCgojIyBBdXRob3IKCioqUGFydmV6IEFobWVkKiog4oCUIEFJIGRldmVsb3BlciAmIHRlY2huaWNhbCB3cml0ZXIKW0xpbmtlZEluXShodHRwczovL3d3dy5saW5rZWRpbi5jb20vaW4vcGFydmV6LWFobWVkLWI0NzY4MDEyNCkgwrcgW0dpdEh1Yl0oaHR0cHM6Ly9naXRodWIuY29tL1Nlcm8wMSkgwrcgW0luc3RhZ3JhbV0oaHR0cHM6Ly93d3cuaW5zdGFncmFtLmNvbS8xMjZwYXJ2ZXopCg==
+# AI Agents & Agentic Workflows Guide
+
+A practical, code-first guide to AI agents, agentic workflows, MCP, and the tools powering the next era of AI.
+
+## Live Site
+
+[agentworkflows.dev](https://agentworkflows.dev) — deployed on Cloudflare Pages.
+
+## What's Inside
+
+| Topic | Coverage |
+|-------|----------|
+| AI Agents | Concepts, architecture, tokens, context |
+| Agentic Workflows | Multi-step pipelines, multi-agent systems |
+| MCP | Model Context Protocol — setup, servers, building your own |
+| Frameworks | LangChain, CrewAI, AutoGen — honest comparison |
+| Tools & Memory | How agents use tools and persist knowledge |
+| Prompt Engineering | Strategies designed for agent systems |
+| Agent Instructions | CLAUDE.md / AgentMD pattern |
+| Code Examples | Working, runnable code for every concept |
+
+## Repo Structure
+
+```
+└── site/                   # Astro + Starlight docs website
+    ├── src/content/docs/   # All documentation pages
+    ├── src/pages/          # Marketing landing page
+    ├── src/components/     # Monetization components
+    └── astro.config.mjs    # Sidebar, integrations, SEO config
+```
+
+## Running the Docs Site
+
+Requires Node 20+:
+
+```bash
+export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh" && nvm use 20
+cd site
+npm install
+npm run dev      # Dev server at localhost:4321
+npm run build    # Build static output → site/dist/
+```
+
+## Deploying to Cloudflare Pages
+
+Connect this repo to Cloudflare Pages:
+- Build command: `npm run build`
+- Output directory: `dist`
+- Root directory: `site`
+- Node version: `20`
+
+## Author
+
+**Parvez Ahmed** — AI developer & technical writer
+[LinkedIn](https://www.linkedin.com/in/parvez-ahmed-b47680124) · [GitHub](https://github.com/Sero01) · [Instagram](https://www.instagram.com/126parvez)
