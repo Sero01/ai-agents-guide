@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://agentguide.dev',
+	site: 'https://agentguides.dev',
 	integrations: [
 		sitemap(),
 		starlight({
@@ -13,7 +13,7 @@ export default defineConfig({
 				ThemeSelect: './src/components/ThemeSelect.astro',
 			},
 			title: 'AI Agents & Agentic Workflows',
-			description: 'The developer\'s guide to AI agents, agentic workflows, MCP, and the tools powering the next era of AI.',
+			description: 'The most comprehensive, beginner-friendly guide to AI agents, agentic workflows, MCP, LangChain, CrewAI, AutoGen, and advanced agent patterns. Free, practical, code-first. Updated 2026.',
 			logo: {
 				light: './src/assets/logo-light.svg',
 				dark: './src/assets/logo-dark.svg',
@@ -36,9 +36,33 @@ export default defineConfig({
 					attrs: {
 						// Google AdSense — replace with your publisher ID
 						async: true,
-						src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-REPLACE_ME',
+						src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7347042268747630',
 						crossorigin: 'anonymous',
 					},
+				},
+				{
+					tag: 'script',
+					attrs: { type: 'application/ld+json' },
+					content: JSON.stringify({
+						'@context': 'https://schema.org',
+						'@type': 'WebSite',
+						'name': 'AI Agents & Agentic Workflows',
+						'url': 'https://agentguides.dev',
+						'description': 'The most comprehensive guide to AI agents, agentic workflows, MCP, LangChain, CrewAI, and AutoGen. Free, beginner-friendly, updated 2026.',
+						'publisher': {
+							'@type': 'Person',
+							'name': 'Parvez Ahmed',
+							'url': 'https://github.com/Sero01',
+						},
+						'potentialAction': {
+							'@type': 'SearchAction',
+							'target': {
+								'@type': 'EntryPoint',
+								'urlTemplate': 'https://agentguides.dev/getting-started/?q={search_term_string}',
+							},
+							'query-input': 'required name=search_term_string',
+						},
+					}),
 				},
 			],
 			sidebar: [

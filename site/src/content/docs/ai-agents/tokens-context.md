@@ -1,93 +1,78 @@
 ---
-title: Tokens & Context Windows
-description: How tokens and context windows affect AI agent design and performance.
+title: "Tokens & Context Windows: Advanced AI Agent Memory Management (2026)"
+description: "Master token budgets and context window management for the most advanced AI agents. Compare the latest Claude, GPT-4o, and Gemini context limits. Top strategies for production AI systems."
+sidebar:
+  order: 3
 ---
 
-# Tokens & Context Windows
+## What Are Tokens?
 
-Tokens and context windows are fundamental constraints in AI agent design. Understanding them helps you build agents that are faster, cheaper, and more reliable.
-
-## What is a Token?
-
-A **token** is the basic unit of text that an AI model processes. Roughly:
-- 1 token ≈ 4 characters in English
-- 1 token ≈ ¾ of a word
-- 100 tokens ≈ 75 words
-
-Models have a maximum number of tokens they can process in a single call. This is the **context window**.
-
-## Context Window Sizes (2024-2025)
+Tokens are the units LLMs process. Roughly: 1 token ≈ 0.75 words (English). Models have a fixed **context window** — the maximum number of tokens they can process in a single call.
 
 | Model | Context Window |
-|-------|----------------|
-| Claude 3.5 Sonnet | 200K tokens |
-| Claude 3 Opus | 200K tokens |
+|-------|---------------|
+| Claude Opus 4.6 | 200K tokens |
 | GPT-4o | 128K tokens |
 | Gemini 1.5 Pro | 1M tokens |
-| Llama 3.1 405B | 128K tokens |
 
-200K tokens is roughly 150,000 words — about 2-3 full novels. This is enough for most tasks.
+## Why Context Windows Matter for Agents
 
-## Context Window vs. Working Memory
+In a long-running agent loop, the conversation history grows with every tool call. Eventually you'll hit the context limit.
 
-The context window includes **everything** the model sees:
-- System prompt
-- Conversation history
-- Tool call results
-- Documents you’ve injected
-- The model’s own previous responses
+**The compounding problem:**
+- Each tool call adds an observation to context
+- Long tasks accumulate thousands of tokens in history
+- At limit: errors, truncation, or degraded reasoning
 
-This is fundamentally different from human working memory. The model doesn’t “remember” outside the context window — it only knows what’s currently in it.
+## Context Management Strategies
 
-## Impact on Agent Design
+### 1. Summarization
 
-### Problem: Context Accumulation
+Periodically summarize older context and replace it with the summary.
 
-In long-running agent loops, context grows with every tool call:
-
-```
-Turn 1: [system prompt] + [task] = 2K tokens
-Turn 3: + [tool calls + results] = 8K tokens
-Turn 10: + [more tool calls] = 40K tokens
-Turn 20: + [more history] = 100K tokens
+```python
+if token_count(context) > THRESHOLD:
+    summary = llm.summarize(context.oldest_messages())
+    context.replace_old_with(summary)
 ```
 
-At some point, the context fills up and the agent can’t continue.
+### 2. Sliding Window
 
-### Solutions
+Keep only the N most recent messages, always discarding the oldest.
 
-**Summarization**: Periodically summarize earlier parts of the conversation, replacing verbose history with a compact summary.
+```python
+MAX_MESSAGES = 20
+context = context[-MAX_MESSAGES:]
+```
 
-**Context pruning**: Remove old, irrelevant tool results that are no longer needed.
+### 3. External Memory
 
-**Handoff**: When context approaches the limit, hand off to a fresh agent instance with only the essential context.
+Store facts in a vector database; retrieve only what's relevant to the current step.
 
-**Selective inclusion**: Don’t include all history by default — only include what’s relevant to the current step.
+```python
+# Store
+memory.add({"fact": result, "timestamp": now()})
 
-## Token Costs
+# Retrieve
+relevant = memory.search(current_query, top_k=5)
+context.inject(relevant)
+```
 
-Tokens have direct cost implications:
+### 4. Task Decomposition
 
-- Input tokens (prompt) are cheaper than output tokens (response)
-- Agent loops can generate 10-100x more tokens than a simple call
-- Cached prompt tokens (unchanged system prompt) are discounted by most providers
+Break long tasks into smaller chunks, each with a clean context.
 
-### Rough cost example (Claude Sonnet 3.5):
-- Simple QA: 1K tokens, ~$0.003
-- Agent loop (20 steps): ~50K tokens, ~$0.15
-- Long agent run (100 steps): ~500K tokens, ~$1.50
+## Estimating Token Usage
 
-## Latency
+```python
+import anthropic
 
-Larger contexts = slower responses:
-- Prefill (processing input tokens) scales linearly with context size
-- First token latency increases with context
-- Use streaming to reduce perceived latency
+client = anthropic.Anthropic()
 
-## Best Practices
-
-1. **Keep system prompts tight** — every token in the system prompt is paid for on every call
-2. **Prune tool results** — truncate or summarize large tool outputs before adding to context
-3. **Use caching** — prefix caching for repeated system prompts saves cost
-4. **Monitor token usage** — log tokens per step to catch runaway agents
-5. **Design for context limits** — assume your agent will hit the limit; plan for graceful handoff
+# Count tokens before sending
+token_count = client.messages.count_tokens(
+    model="claude-opus-4-6",
+    messages=[{"role": "user", "content": your_message}]
+)
+print(f"This request will use ~{token_count.input_tokens} input tokens")
+```

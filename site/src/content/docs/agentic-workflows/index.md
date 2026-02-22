@@ -1,71 +1,53 @@
 ---
-title: Agentic Workflows
-description: What agentic workflows are, how they differ from simple AI calls, and why they matter.
+title: "Agentic Workflows: What They Are & How to Build the Best Ones (2026)"
+description: "The most complete guide to agentic workflows. Learn what they are, how they differ from simple AI agents, and the top best practices for building reliable, scalable AI automation pipelines."
+sidebar:
+  order: 1
 ---
 
-# Agentic Workflows
+An **agentic workflow** is a coordinated sequence of AI-driven steps designed to accomplish a complex, multi-stage goal. Think of it as a pipeline where AI agents handle the decision-making at each step.
 
-An **agentic workflow** is a process where an AI model takes a sequence of actions to complete a goal, rather than responding to a single prompt.
+## Agent vs. Workflow
 
-Instead of: *prompt → response*
+| Concept | Agent | Agentic Workflow |
+|---------|-------|------------------|
+| Scope | Single goal, flexible steps | Multi-stage, coordinated process |
+| Structure | Dynamic loop | Defined pipeline with checkpoints |
+| Error handling | Self-correcting | Stage-level retries and fallbacks |
+| Best for | Open-ended tasks | Repeatable business processes |
 
-Agentic workflows do: *goal → plan → actions → observation → more actions → result*
+## Anatomy of an Agentic Workflow
 
-## What Makes a Workflow "Agentic"?
+```
+Input
+  │
+  ▼
+[Stage 1: Data Gathering]  ← Agent with search tools
+  │
+  ▼
+[Stage 2: Analysis]        ← Agent with code execution
+  │
+  ▼
+[Stage 3: Human Review]    ← Human-in-the-loop checkpoint
+  │
+  ▼
+[Stage 4: Output]          ← Agent formats and delivers result
+```
 
-Three characteristics define agentic workflows:
+## Key Design Principles
 
-### 1. Multi-Step Execution
-The AI breaks a goal into steps and executes them in sequence. It doesn’t just answer — it acts.
+**1. Prefer deterministic code over LLM calls**
+Use Python for data processing, formatting, and anything that doesn't require reasoning. Reserve LLM calls for decisions.
 
-### 2. Tool Use
-The agent calls tools: web search, code execution, file operations, API calls. Tools extend what the model can do.
+**2. Build in human checkpoints**
+For high-stakes workflows, add review gates before irreversible actions (sending emails, making payments, publishing).
 
-### 3. Feedback Loops
-After each action, the agent observes the result and decides what to do next. This “observation” is key — it’s what separates an agent from a script.
+**3. Design for failure**
+Each stage should be independently retryable. Store intermediate results so you don't restart from scratch.
 
-## Simple vs. Agentic
+**4. Limit blast radius**
+Scope each agent's permissions to the minimum needed for its stage.
 
-| Simple AI Call | Agentic Workflow |
-|----------------|------------------|
-| Single prompt/response | Multi-step execution |
-| Stateless | Maintains context across steps |
-| No tools | Uses tools (search, code, APIs) |
-| Human decides next step | Agent decides next step |
-| Fast, cheap | Slower, more expensive |
+## See Also
 
-## Common Patterns
-
-### ReAct (Reason + Act)
-The most common pattern. The agent alternates between reasoning ("I need to find X") and acting (calling a tool). It observes the result, reasons again, acts again.
-
-### Plan-and-Execute
-The agent creates a full plan upfront, then executes each step. More predictable than ReAct, but less adaptive.
-
-### Reflexion
-The agent reviews its own outputs and self-corrects. Useful for tasks with clear quality criteria (code, writing).
-
-## When to Use Agentic Workflows
-
-Agentic workflows make sense when:
-- The task requires multiple steps that depend on each other
-- You need to use multiple tools or data sources
-- The path to completion isn’t fully known upfront
-- The task takes longer than a single context window
-
-Simple AI calls are better when:
-- You need a fast, cheap response
-- The task is well-defined and single-step
-- You need deterministic, predictable output
-- Latency matters
-
-## The Reliability Problem
-
-Agentic workflows have a compounding error problem. If each step succeeds 90% of the time:
-
-- 1 step: 90% success
-- 3 steps: 73% success  
-- 5 steps: 59% success
-- 10 steps: 35% success
-
-This is why architecture matters. See [Multi-Agent Pipelines](/agentic-workflows/multi-agent) for patterns that address this.
+- [Multi-Agent Pipelines](/agentic-workflows/multi-agent/) — Coordinating multiple agents in parallel and sequence

@@ -1,126 +1,66 @@
 ---
-title: Agent Patterns
-description: Common architectural patterns for building AI agents.
+title: "Top AI Agent Design Patterns 2026: ReAct, Reflection, Plan-and-Execute & More"
+description: "The best AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and Critic Loop. Build the most reliable, production-ready AI agents."
+sidebar:
+  order: 2
 ---
-
-# Agent Patterns
-
-Agent patterns are reusable architectural approaches for building reliable, capable AI agents. Rather than building from scratch, you combine these patterns to fit your use case.
 
 ## ReAct (Reason + Act)
 
-The most widely used pattern. The agent alternates between reasoning steps and action steps.
+The most common agent pattern. The model interleaves reasoning steps with tool calls.
 
-**Flow:**
 ```
-Thought: I need to find the current price of X
-Action: search("current price of X")
-Observation: Price is $Y
-Thought: Now I have the price, I can calculate...
-Action: calculate(Y * 1.2)
-Observation: Result is $Z
-Final Answer: The price with markup is $Z
+Thought: I need to find the current price of AAPL stock.
+Action: search("AAPL stock price today")
+Observation: AAPL is trading at $189.84
+Thought: I have the price. I can now answer the user.
+Answer: AAPL is currently trading at $189.84.
 ```
 
-**When to use:** General-purpose agents that need to use tools and reason about results.
+**When to use:** General-purpose agents that need to decide which tools to use.
 
-**Frameworks:** LangChain’s `create_react_agent`, most default agent implementations.
+## Reflection
 
----
+The agent generates a response, then critiques it, then improves it.
+
+```python
+response = agent.generate(task)
+critique = agent.reflect(response, task)
+final = agent.revise(response, critique)
+```
+
+**When to use:** Tasks where quality matters more than speed (writing, code review, analysis).
 
 ## Plan-and-Execute
 
-The agent creates a full plan first, then executes each step.
-
-**Flow:**
-```
-1. Plan: ["Search for X", "Extract Y from results", "Calculate Z", "Write report"]
-2. Execute step 1 → Observe
-3. Execute step 2 → Observe
-4. Execute step 3 → Observe
-5. Execute step 4 → Final output
-```
-
-**When to use:** Tasks with a knowable sequence of steps. More predictable than ReAct.
-
-**Tradeoff:** Less adaptive. If step 2 fails, the plan may not adjust well.
-
----
-
-## Reflection / Self-Critique
-
-After producing output, the agent evaluates its own work and revises.
-
-**Flow:**
-```
-Generate → Critique ("Is this correct? What’s missing?") → Revise → Final
-```
-
-**When to use:** Quality-sensitive outputs (code, writing, analysis). When you need the agent to catch its own errors.
-
-**Tradeoff:** Uses more tokens. May over-revise on good outputs.
-
----
-
-## Tool-Augmented Generation
-
-The simplest agent pattern: give the model tools and let it decide when to use them.
+A planner LLM creates a task list; an executor LLM completes each step.
 
 ```
-User: What’s the weather in Tokyo?
-Agent: [calls weather_api("Tokyo")] → "It’s 22°C and sunny"
+Planner:
+  1. Research the company
+  2. Find recent news
+  3. Summarize key risks
+
+Executor: (runs each step in sequence)
 ```
 
-**When to use:** When you need to extend model knowledge with live data or external APIs.
+**When to use:** Long-horizon tasks with many steps; separates strategy from execution.
 
-**Frameworks:** OpenAI function calling, Claude tool use, LangChain tools.
+## Multi-Agent (Orchestrator + Specialists)
 
----
-
-## Memory-Augmented Agent
-
-The agent retrieves relevant past context before responding.
-
-**Flow:**
-```
-Query → Retrieve relevant memories → Augment prompt → Respond → Store new memory
-```
-
-**Types of memory:**
-- **In-context**: Conversation history in the prompt (limited by context window)
-- **Vector memory**: Semantic search over past interactions
-- **External DB**: Structured storage queried by the agent
-
-**When to use:** Long-running agents, personalization, agents that need to learn over time.
-
----
-
-## Hierarchical Agents (Orchestrator + Workers)
-
-An orchestrator delegates to specialized worker agents.
+One orchestrator agent delegates to specialized sub-agents.
 
 ```
-Orchestrator (high-level planning)
-  ├── Research Agent (web search, summarization)
-  ├── Code Agent (write and execute code)
-  └── Writer Agent (produce final output)
+Orchestrator
+  ├── ResearchAgent (web search, summarization)
+  ├── CodeAgent (Python execution, debugging)
+  └── WriterAgent (drafting, formatting)
 ```
 
-**When to use:** Complex tasks requiring specialized capabilities. Reduces context bloat in any single agent.
+**When to use:** Complex tasks that benefit from specialized models or parallel execution.
 
-**Challenge:** Coordinating results from workers. Orchestrator needs clear interfaces with each worker.
+## Critic Loop
 
----
+A dedicated critic agent checks the work of the primary agent and requests revisions.
 
-## Choosing a Pattern
-
-| Pattern | Best for | Complexity |
-|---------|----------|------------|
-| ReAct | General tool use | Low |
-| Plan-and-Execute | Structured tasks | Medium |
-| Reflection | Quality-sensitive output | Medium |
-| Tool-Augmented | Simple tool integration | Low |
-| Memory-Augmented | Long-running, personalized | High |
-| Hierarchical | Complex, multi-capability | High |
-
-Start with the simplest pattern that works. Add complexity only when the simpler approach fails.
+**When to use:** High-stakes outputs (legal documents, financial analysis, security code).

@@ -1,119 +1,69 @@
 ---
-title: CrewAI
-description: CrewAI framework for building role-based multi-agent AI systems.
+title: "CrewAI Tutorial 2026 — The Best Framework for Multi-Agent AI Systems"
+description: "The most complete CrewAI tutorial. Learn the top framework for role-based multi-agent systems with step-by-step installation, code examples, and advanced real-world use cases."
+sidebar:
+  order: 3
 ---
 
-# CrewAI
+CrewAI structures agents as a "crew" — each agent has a role, goal, and backstory. Agents collaborate on tasks using a hierarchical or sequential process.
 
-CrewAI is a Python framework for building multi-agent systems organized around **roles, tasks, and crews**. It’s designed to feel like managing a team of specialized employees.
+## Install
 
-## Core Concepts
+```bash
+pip install crewai crewai-tools
+```
 
-### Agent
-An AI worker with a specific role, goal, and backstory.
+## Basic Crew
 
 ```python
-from crewai import Agent
+from crewai import Agent, Task, Crew, Process
+from crewai_tools import SerperDevTool
 
+search_tool = SerperDevTool()
+
+# Define agents with roles
 researcher = Agent(
-    role='Senior Research Analyst',
-    goal='Uncover cutting-edge developments in AI',
-    backstory='You work at a leading tech think tank. Your expertise lies in identifying emerging trends.',
+    role="Senior Research Analyst",
+    goal="Uncover cutting-edge developments in AI agents",
+    backstory="You are an expert at analyzing AI research papers and trends.",
+    tools=[search_tool],
     verbose=True,
-    allow_delegation=False
 )
-```
 
-### Task
-A specific piece of work assigned to an agent.
+writer = Agent(
+    role="Tech Content Writer",
+    goal="Write clear, engaging technical content",
+    backstory="You transform complex technical research into readable summaries.",
+    verbose=True,
+)
 
-```python
-from crewai import Task
-
+# Define tasks
 research_task = Task(
-    description='Research the latest developments in MCP (Model Context Protocol)',
-    expected_output='A 3-paragraph summary of key developments',
-    agent=researcher
+    description="Research the latest advances in MCP (Model Context Protocol)",
+    expected_output="A bullet-point summary of key advances with sources",
+    agent=researcher,
 )
-```
 
-### Crew
-A team of agents working together on a set of tasks.
+write_task = Task(
+    description="Write a 500-word blog post based on the research",
+    expected_output="A well-structured blog post in Markdown format",
+    agent=writer,
+)
 
-```python
-from crewai import Crew, Process
-
+# Assemble and run the crew
 crew = Crew(
     agents=[researcher, writer],
     tasks=[research_task, write_task],
-    process=Process.sequential  # or Process.hierarchical
+    process=Process.sequential,
+    verbose=True,
 )
 
 result = crew.kickoff()
 print(result)
 ```
 
-## Processes
-
-**Sequential**: Tasks run in order. Output of one task passes to the next.
-
-**Hierarchical**: A manager agent delegates tasks to worker agents and reviews output.
-
-```python
-crew = Crew(
-    agents=[manager, researcher, writer],
-    tasks=[...],
-    process=Process.hierarchical,
-    manager_llm=ChatOpenAI(model="gpt-4o")
-)
-```
-
-## Tools
-
-CrewAI integrates with LangChain tools and has its own tool system:
-
-```python
-from crewai_tools import SerperDevTool, WebsiteSearchTool
-
-search_tool = SerperDevTool()
-web_tool = WebsiteSearchTool()
-
-researcher = Agent(
-    role='Researcher',
-    goal='Find accurate information',
-    tools=[search_tool, web_tool],
-    ...
-)
-```
-
-## YAML Configuration
-
-CrewAI supports defining agents and tasks in YAML:
-
-```yaml
-# agents.yaml
-researcher:
-  role: Research Analyst
-  goal: Find comprehensive information on {topic}
-  backstory: Expert researcher with 10 years experience
-
-# tasks.yaml
-research_task:
-  description: Research {topic} thoroughly
-  expected_output: Detailed research report
-  agent: researcher
-```
-
 ## When to Use CrewAI
 
-**Strong fit:**
-- Tasks that map naturally to a team of specialists
-- Content creation pipelines (research → write → review)
-- When you want role-based agent design
-- Rapid prototyping of multi-agent workflows
-
-**Consider alternatives when:**
-- You need fine-grained control over agent behavior
-- Production reliability is critical (evaluate carefully)
-- You want to avoid framework abstraction
-- Your workflow doesn’t map to a “crew” metaphor
+- Role-based workflows where agent identity matters (researcher, writer, critic)
+- When you want a structured team metaphor for your system
+- Content generation pipelines with clear handoffs between roles

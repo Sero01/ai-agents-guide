@@ -1,121 +1,57 @@
 ---
-title: LangChain
-description: LangChain framework for building AI agents and chains.
+title: "LangChain for AI Agents — The Most Complete Guide & Code Examples (2026)"
+description: "The best LangChain guide for building AI agents. Top concepts, complete code examples, honest pros and cons, and when to use LangChain vs the latest alternatives. Beginner-friendly."
+sidebar:
+  order: 2
 ---
 
-# LangChain
+LangChain is the most widely used agent framework. It provides abstractions for chains, agents, tools, memory, and retrieval — along with a large ecosystem of integrations.
 
-LangChain is the most widely used framework for building LLM applications. It provides abstractions for chains, agents, RAG pipelines, and more.
+## Install
 
-## Core Concepts
+```bash
+pip install langchain langchain-anthropic
+```
 
-### Chains
-Sequences of calls to LLMs and other components.
+## Basic Agent
 
 ```python
-from langchain_core.prompts import ChatPromptTemplate
 from langchain_anthropic import ChatAnthropic
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_community.tools.tavily_search import TavilySearchResults
 
-llm = ChatAnthropic(model="claude-sonnet-4-5")
+llm = ChatAnthropic(model="claude-opus-4-6")
+tools = [TavilySearchResults(max_results=3)]
 
 prompt = ChatPromptTemplate.from_messages([
     ("system", "You are a helpful assistant."),
-    ("human", "{input}")
+    ("human", "{input}"),
+    ("placeholder", "{agent_scratchpad}"),
 ])
 
-chain = prompt | llm
-result = chain.invoke({"input": "What is an AI agent?"})
-print(result.content)
+agent = create_tool_calling_agent(llm, tools, prompt)
+executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+result = executor.invoke({"input": "What is the latest news about AI agents?"})
+print(result["output"])
 ```
 
-### Agents
-LangChain’s `create_react_agent` creates a ReAct-style agent:
+## Key Concepts
 
-```python
-from langchain_anthropic import ChatAnthropic
-from langchain_community.tools.tavily_search import TavilySearchResults
-from langgraph.prebuilt import create_react_agent
+- **Chain**: A sequence of operations (prompt → LLM → output parser)
+- **Agent**: A chain that decides which tools to call
+- **Tool**: Any function the agent can call
+- **Memory**: Persists conversation state across calls
+- **Retriever**: Fetches relevant documents from a vector store
 
-llm = ChatAnthropic(model="claude-sonnet-4-5")
-tools = [TavilySearchResults(max_results=3)]
+## Pros & Cons
 
-agent = create_react_agent(llm, tools)
-
-response = agent.invoke({
-    "messages": [("user", "What happened at Google I/O this year?")]
-})
-print(response["messages"][-1].content)
-```
-
-### RAG (Retrieval-Augmented Generation)
-
-```python
-from langchain_community.vectorstores import Chroma
-from langchain_openai import OpenAIEmbeddings
-from langchain_core.runnables import RunnablePassthrough
-
-vectorstore = Chroma.from_documents(documents, OpenAIEmbeddings())
-retriever = vectorstore.as_retriever()
-
-rag_chain = (
-    {"context": retriever, "question": RunnablePassthrough()}
-    | prompt
-    | llm
-)
-
-result = rag_chain.invoke("What is MCP?")
-```
-
-## LangGraph
-
-LangGraph is LangChain’s framework for stateful, multi-step workflows. It models workflows as graphs.
-
-```python
-from langgraph.graph import StateGraph, END
-from typing import TypedDict
-
-class AgentState(TypedDict):
-    messages: list
-    next: str
-
-def agent_node(state: AgentState):
-    # Call LLM, update state
-    return {"messages": [...], "next": "tools"}
-
-def tools_node(state: AgentState):
-    # Execute tool calls
-    return {"messages": [...], "next": "agent"}
-
-graph = StateGraph(AgentState)
-graph.add_node("agent", agent_node)
-graph.add_node("tools", tools_node)
-graph.add_edge("agent", "tools")
-graph.add_conditional_edges("tools", lambda s: s["next"])
-graph.set_entry_point("agent")
-
-app = graph.compile()
-```
+**Pros:** Large ecosystem, tons of integrations, well-documented, active community
+**Cons:** Abstractions can obscure what's happening; breaking changes between versions; can be overkill for simple tasks
 
 ## When to Use LangChain
 
-**Strong fit:**
-- RAG pipelines (document Q&A, knowledge bases)
-- Complex multi-step chains
-- When you need many integrations (100+ supported)
-- LangGraph for stateful agent workflows
-
-**Consider alternatives when:**
-- You want a simple agent without abstraction overhead
-- You need maximum performance (LangChain adds overhead)
-- You’re building something LangChain doesn’t cover well
-
-## LangSmith (Observability)
-
-LangSmith is LangChain’s observability platform. Trace agent runs, debug failures, evaluate quality.
-
-```bash
-export LANGCHAIN_TRACING_V2=true
-export LANGCHAIN_API_KEY=your_key
-```
-
-All LangChain/LangGraph runs are automatically traced when these env vars are set.
+- Rapid prototyping with many integrations
+- RAG (retrieval-augmented generation) pipelines
+- When you need battle-tested patterns and don't want to build from scratch

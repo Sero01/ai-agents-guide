@@ -1,150 +1,80 @@
 ---
-title: Tools & Memory
-description: How AI agents use tools and memory to act in the world and maintain context.
+title: "AI Agent Tools, Skills & Memory — How the Best Agents Remember & Act (2026)"
+description: "The most complete guide to AI agent tools, skills, and memory systems. In-context, vector, key-value, and episodic memory explained with Python code. Build the most capable AI agents."
+sidebar:
+  order: 1
 ---
-
-# Tools & Memory
-
-Tools and memory are what transform a language model into an agent. Tools let the model act; memory lets it persist context.
 
 ## Tools
 
-A **tool** is a function the AI can call. The model decides when to call it, with what arguments, and how to interpret the result.
-
-### Types of Tools
-
-**Read tools**: Retrieve information
-- Web search
-- File read
-- Database query
-- API call (GET)
-
-**Write tools**: Modify the world
-- File write
-- Database insert/update
-- API call (POST/PUT)
-- Send email/message
-
-**Compute tools**: Execute logic
-- Code execution
-- Calculator
-- Data transformation
-
-### Designing Good Tools
-
-Tools should be:
-
-**Atomic**: Do one thing. A tool that does multiple things is harder for the model to reason about.
+A **tool** is any function an agent can call. From the LLM's perspective, a tool has a name, description, and input schema — the LLM decides when and how to call it.
 
 ```python
-# Bad: too many responsibilities
-def search_and_summarize(query, max_results, format):
-    ...
+import anthropic
 
-# Better: separate concerns
-def search(query, max_results=5): ...
-def summarize(text, format="bullets"): ...
+client = anthropic.Anthropic()
+
+tools = [
+    {
+        "name": "get_weather",
+        "description": "Get the current weather for a city.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "city": {"type": "string", "description": "City name"},
+            },
+            "required": ["city"],
+        },
+    }
+]
+
+response = client.messages.create(
+    model="claude-opus-4-6",
+    max_tokens=1024,
+    tools=tools,
+    messages=[{"role": "user", "content": "What's the weather in Tokyo?"}],
+)
+
+# Check if the model wants to call a tool
+if response.stop_reason == "tool_use":
+    tool_call = next(b for b in response.content if b.type == "tool_use")
+    print(f"Tool: {tool_call.name}, Input: {tool_call.input}")
 ```
 
-**Clear descriptions**: The description is how the model decides whether to use the tool.
+## Skills
+
+A **skill** is a higher-level, reusable capability — typically a prompt + a tool or set of tools packaged together. Skills make agents composable.
+
+In this project's architecture, skills live as `.md` files in `directives/` — structured prompts that tell the agent what to do and which execution scripts to use.
+
+## Memory Types
+
+| Type | What it stores | Persistence |
+|------|---------------|-------------|
+| **In-context** | Recent conversation | Current session only |
+| **External (vector)** | Semantic facts, documents | Permanent |
+| **Key-value** | User preferences, state | Permanent |
+| **Episodic** | Past task summaries | Permanent |
+
+## Implementing Memory with a Vector Store
 
 ```python
-# Bad description:
-{"name": "get_data", "description": "Gets data"}
+# Simple in-memory vector store (use ChromaDB, Pinecone, etc. in production)
+from anthropic import Anthropic
 
-# Good description:
-{
-  "name": "get_stock_price",
-  "description": "Get the current stock price for a ticker symbol. Returns price in USD as of market close or last available quote."
-}
+# Store memories as embeddings, retrieve by semantic similarity
+# Example uses a simple list for illustration
+memory_store = []
+
+def remember(fact: str):
+    memory_store.append(fact)
+
+def recall(query: str, top_k: int = 3) -> list[str]:
+    # In production: embed query, search vector store
+    # Here: simple keyword match for illustration
+    return [m for m in memory_store if any(w in m.lower() for w in query.lower().split())][:top_k]
 ```
 
-**Explicit schemas**: Define inputs precisely.
+## MCP and Tool Discovery
 
-```json
-{
-  "input_schema": {
-    "type": "object",
-    "properties": {
-      "ticker": {
-        "type": "string",
-        "description": "Stock ticker symbol, e.g. 'AAPL', 'MSFT'"
-      }
-    },
-    "required": ["ticker"]
-  }
-}
-```
-
-**Safe by default**: Write tools should be hard to call accidentally.
-
-```python
-# Require explicit confirmation parameter for destructive actions
-def delete_file(path: str, confirm: bool = False):
-    if not confirm:
-        return "Set confirm=True to delete this file."
-    ...
-```
-
-## Memory
-
-**Memory** is how agents persist and retrieve context beyond the current context window.
-
-### Types of Memory
-
-#### In-Context Memory
-The conversation history in the current prompt. Simple, but limited by context window size.
-
-```
-[System prompt]
-[Turn 1]
-[Turn 2]
-[Turn N]  ← All of this is "in-context memory"
-```
-
-#### External Storage
-Structured data outside the model: databases, files, key-value stores.
-
-```python
-# Storing
-memory_db["user_preference"] = "prefers metric units"
-
-# Retrieving
-pref = memory_db.get("user_preference", "unknown")
-```
-
-#### Vector Memory
-Semantic search over past interactions. Good for "what did I do last time that was similar?"
-
-```python
-from sentence_transformers import SentenceTransformer
-import numpy as np
-
-# Store a memory
-embedding = model.encode("User prefers concise answers")
-vector_db.store(embedding, text="User prefers concise answers")
-
-# Retrieve relevant memories
-query_embedding = model.encode(current_task)
-related = vector_db.search(query_embedding, top_k=3)
-```
-
-#### Episodic Memory
-Record of past actions and outcomes. Used to improve future decisions.
-
-```json
-{
-  "task": "search for AI papers",
-  "approach": "arxiv search + semantic scholar",
-  "outcome": "success",
-  "notes": "semantic scholar gave better results for applied AI"
-}
-```
-
-### Memory Patterns
-
-**Summarize-and-compress**: When context gets long, summarize earlier history.
-
-**Selective retrieval**: Don’t inject all memory — retrieve only what’s relevant to the current task.
-
-**Write-back**: After completing a task, store learnings for next time.
+MCP (Model Context Protocol) standardizes how agents discover and use tools. Instead of hardcoding tool schemas, an MCP client queries a server for available tools at runtime. See the [MCP section](/mcp/) for the full guide.

@@ -1,217 +1,180 @@
 ---
-title: Building MCP Servers
-description: Step-by-step guide to building your own MCP server in Python.
+title: "Build Your Own MCP Server — The Most Complete Python Tutorial (2026)"
+description: "The best beginner-friendly guide to building a custom MCP server from scratch with Python. Complete, runnable code. Step-by-step MCP server tutorial — the most practical guide available."
+sidebar:
+  order: 4
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Build Your Own MCP Server — The Most Complete Python Tutorial (2026)","description":"The best beginner-friendly guide to building a custom MCP server from scratch with Python. Complete, runnable code. Step-by-step MCP server tutorial.","url":"https://agentguides.dev/mcp/building-servers/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
 ---
 
-# Building MCP Servers
+Building your own MCP server lets you expose any data source or service to Claude and other MCP clients. This tutorial builds a complete server from scratch.
 
-Building an MCP server lets you expose any tool, data source, or capability to AI agents. Here’s a complete walkthrough.
+## What We're Building
 
-## Prerequisites
+A minimal MCP server that exposes two tools:
+- `read_note(id)` — Read a note by ID
+- `list_notes()` — List all notes
+
+## Install the SDK
 
 ```bash
 pip install mcp
 ```
 
-## Minimal Server
+## Complete Server (Python)
 
 ```python
-# server.py
+# server.py — A complete MCP server in ~60 lines
+import json
+import asyncio
+from pathlib import Path
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
 from mcp import types
-import asyncio
 
-app = Server("my-server")
+# ── In-memory note store (replace with a real DB in production) ──────
+NOTES: dict[str, str] = {
+    "1": "MCP stands for Model Context Protocol.",
+    "2": "MCP uses JSON-RPC 2.0 over stdio or SSE.",
+    "3": "Tools are functions; Resources are data.",
+}
+
+# ── Server setup ──────────────────────────────────────────────────────
+app = Server("notes-server")
 
 @app.list_tools()
 async def list_tools() -> list[types.Tool]:
+    """Tell MCP clients what tools this server provides."""
     return [
         types.Tool(
-            name="greet",
-            description="Generate a greeting for a name",
+            name="read_note",
+            description="Read a note by its ID.",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "name": {"type": "string", "description": "Name to greet"}
+                    "id": {"type": "string", "description": "The note ID"}
                 },
-                "required": ["name"]
-            }
-        )
+                "required": ["id"],
+            },
+        ),
+        types.Tool(
+            name="list_notes",
+            description="List all available note IDs.",
+            inputSchema={
+                "type": "object",
+                "properties": {},
+            },
+        ),
     ]
 
 @app.call_tool()
 async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
-    if name == "greet":
-        return [types.TextContent(type="text", text=f"Hello, {arguments['name']}!")]
-    raise ValueError(f"Unknown tool: {name}")
+    """Handle tool calls from MCP clients."""
+    if name == "read_note":
+        note_id = arguments.get("id")
+        note = NOTES.get(note_id)
+        if note:
+            return [types.TextContent(type="text", text=note)]
+        else:
+            return [types.TextContent(type="text", text=f"No note found with ID: {note_id}")]
 
+    elif name == "list_notes":
+        note_list = "\n".join(f"- {k}: {v[:50]}..." for k, v in NOTES.items())
+        return [types.TextContent(type="text", text=f"Available notes:\n{note_list}")]
+
+    else:
+        raise ValueError(f"Unknown tool: {name}")
+
+# ── Run the server ─────────────────────────────────────────────────────
 async def main():
-    async with stdio_server() as (read, write):
-        await app.run(read, write, app.create_initialization_options())
+    async with stdio_server() as (read_stream, write_stream):
+        await app.run(read_stream, write_stream, app.create_initialization_options())
 
 if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+## Register with Claude Code
+
+Add to your `.claude/settings.json` or `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "notes": {
+      "command": "python",
+      "args": ["/absolute/path/to/server.py"]
+    }
+  }
+}
+```
+
+## Test It
+
+```bash
+# Run the server directly to see what it exposes
+python server.py
+```
+
+Or use the MCP inspector (official debugging tool):
+
+```bash
+npx @modelcontextprotocol/inspector python server.py
+```
+
+This opens a browser UI where you can call your tools manually.
+
 ## Adding Resources
 
-Resources expose data the AI can read:
+Resources expose data (not actions). The model can read them to get context.
 
 ```python
 @app.list_resources()
 async def list_resources() -> list[types.Resource]:
     return [
         types.Resource(
-            uri="file:///config",
-            name="Configuration",
-            description="Current configuration",
-            mimeType="application/json"
+            uri="notes://all",
+            name="All Notes",
+            description="Complete notes database",
+            mimeType="application/json",
         )
     ]
 
 @app.read_resource()
 async def read_resource(uri: str) -> str:
-    if uri == "file:///config":
-        return '{"version": "1.0", "debug": false}'
+    if uri == "notes://all":
+        return json.dumps(NOTES, indent=2)
     raise ValueError(f"Unknown resource: {uri}")
 ```
 
-## Adding Prompts
-
-Prompts are reusable message templates:
+## Error Handling Best Practices
 
 ```python
-@app.list_prompts()
-async def list_prompts() -> list[types.Prompt]:
-    return [
-        types.Prompt(
-            name="analyze",
-            description="Analyze a piece of text",
-            arguments=[
-                types.PromptArgument(name="text", description="Text to analyze", required=True)
-            ]
-        )
-    ]
-
-@app.get_prompt()
-async def get_prompt(name: str, arguments: dict) -> types.GetPromptResult:
-    if name == "analyze":
-        return types.GetPromptResult(
-            description="Text analysis prompt",
-            messages=[
-                types.PromptMessage(
-                    role="user",
-                    content=types.TextContent(
-                        type="text",
-                        text=f"Please analyze this text: {arguments['text']}"
-                    )
-                )
-            ]
-        )
-```
-
-## Full Example: File System Server
-
-```python
-# fs_server.py
-from mcp.server import Server
-from mcp.server.stdio import stdio_server
-from mcp import types
-import asyncio
-import os
-from pathlib import Path
-
-app = Server("filesystem")
-ALLOWED_DIR = Path("/tmp/agent-workspace")
-ALLOWED_DIR.mkdir(exist_ok=True)
-
-def safe_path(filename: str) -> Path:
-    path = (ALLOWED_DIR / filename).resolve()
-    if not str(path).startswith(str(ALLOWED_DIR)):
-        raise ValueError("Path traversal not allowed")
-    return path
-
-@app.list_tools()
-async def list_tools() -> list[types.Tool]:
-    return [
-        types.Tool(
-            name="read_file",
-            description="Read a file from the workspace",
-            inputSchema={"type": "object", "properties": {"filename": {"type": "string"}}, "required": ["filename"]}
-        ),
-        types.Tool(
-            name="write_file",
-            description="Write content to a file in the workspace",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "filename": {"type": "string"},
-                    "content": {"type": "string"}
-                },
-                "required": ["filename", "content"]
-            }
-        ),
-        types.Tool(
-            name="list_files",
-            description="List files in the workspace",
-            inputSchema={"type": "object", "properties": {}}
-        )
-    ]
-
 @app.call_tool()
 async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
-    if name == "read_file":
-        path = safe_path(arguments["filename"])
-        content = path.read_text()
-        return [types.TextContent(type="text", text=content)]
-    
-    elif name == "write_file":
-        path = safe_path(arguments["filename"])
-        path.write_text(arguments["content"])
-        return [types.TextContent(type="text", text=f"Written to {arguments['filename']}")]
-    
-    elif name == "list_files":
-        files = [f.name for f in ALLOWED_DIR.iterdir() if f.is_file()]
-        return [types.TextContent(type="text", text="\n".join(files) or "(empty)")]
-    
-    raise ValueError(f"Unknown tool: {name}")
-
-async def main():
-    async with stdio_server() as (read, write):
-        await app.run(read, write, app.create_initialization_options())
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        # ... your tool logic
+        pass
+    except KeyError as e:
+        # Return a helpful error message (don't crash the server)
+        return [types.TextContent(type="text", text=f"Missing required argument: {e}")]
+    except Exception as e:
+        return [types.TextContent(type="text", text=f"Tool error: {str(e)}")]
 ```
 
-## Testing Your Server
+## Production Checklist
 
-```bash
-# Test with MCP inspector
-npx @modelcontextprotocol/inspector python server.py
+- [ ] Input validation (don't trust `arguments` blindly)
+- [ ] Error handling (never crash the server process)
+- [ ] Logging (write to stderr, not stdout — stdout is used by the protocol)
+- [ ] Secrets via environment variables, not hardcoded
+- [ ] Rate limiting if wrapping external APIs
 
-# Or call directly via stdio
-echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | python server.py
-```
+## What's Next
 
-## Connecting to Claude Desktop
-
-Add to `claude_desktop_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "my-server": {
-      "command": "python",
-      "args": ["/path/to/server.py"]
-    }
-  }
-}
-```
-
-## Deployment Options
-
-- **stdio**: Simplest. Claude spawns the process directly. Good for local tools.
-- **HTTP/SSE**: Deployable as a web service. Multiple clients can connect.
-- **Docker**: Package with dependencies for reproducible deployment.
+- Browse [Available Servers](/mcp/servers/) to see patterns in real servers
+- The [official MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) has more examples

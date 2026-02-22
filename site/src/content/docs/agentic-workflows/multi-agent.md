@@ -1,110 +1,90 @@
 ---
-title: Multi-Agent Pipelines
-description: Patterns for building reliable workflows with multiple AI agents.
+title: "Multi-Agent Pipelines: Build the Most Advanced AI Systems (2026)"
+description: "The top guide to multi-agent pipelines. Learn sequential, parallel, and hierarchical agent topologies with complete Python code. Build the most advanced AI automation systems."
+sidebar:
+  order: 2
 ---
 
-# Multi-Agent Pipelines
+Multi-agent systems split a complex task across specialized agents that work in parallel, in sequence, or in a hierarchy.
 
-A multi-agent pipeline coordinates multiple AI agents, each with a specific role, to complete complex tasks.
+## Topologies
 
-## Why Multiple Agents?
+### Sequential Pipeline
 
-A single agent doing everything compounds errors and burns context. Multiple agents with clear responsibilities:
-
-- **Reduce context bloat**: Each agent has a focused context window
-- **Isolate failures**: One agent failing doesn’t cascade to others
-- **Enable parallelism**: Independent agents run concurrently
-- **Specialize**: Each agent is prompted for its specific task
-
-## Core Patterns
-
-### Orchestrator + Workers
-
-The most common pattern. An orchestrator agent breaks down the goal and dispatches subtasks to worker agents.
+Agents run one after another; each builds on the previous output.
 
 ```
-Orchestrator
-  ├── Worker A (research)
-  ├── Worker B (writing)
-  └── Worker C (review)
+[Researcher] → [Analyst] → [Writer] → [Editor]
 ```
-
-The orchestrator doesn’t do the work — it manages the workflow.
-
-### Pipeline (Sequential)
-
-Agents form a chain. Each agent’s output becomes the next agent’s input.
-
-```
-Scraper → Cleaner → Analyzer → Reporter
-```
-
-Simple to reason about. Fails if any stage fails.
 
 ### Parallel Fan-Out
 
-One agent spawns multiple agents to work on subtasks simultaneously, then aggregates results.
+One orchestrator spawns multiple agents simultaneously; results are merged.
 
 ```
-         ┌─ Agent A (task 1)
-Router ─┤─ Agent B (task 2) ─── Aggregator
-         └─ Agent C (task 3)
+              ┌─[Agent A]─┐
+Orchestrator ─┼─[Agent B]─┼─▶ Merge ─▶ Result
+              └─[Agent C]─┘
 ```
 
-Good for independent subtasks. Requires careful aggregation.
+**When to use:** Independent subtasks (e.g., research 5 competitors simultaneously).
 
-### Evaluator-Optimizer Loop
+### Hierarchical (Orchestrator + Specialists)
 
-An executor agent produces output; an evaluator agent scores it. If below threshold, the executor revises.
+An orchestrator plans and delegates; specialists execute.
 
 ```
-Executor → Evaluator → (pass?) → Output
-              ↓ (fail)
-           Feedback → Executor
+Orchestrator
+  ├── delegates to ResearchAgent
+  ├── delegates to DataAgent
+  └── synthesizes results
 ```
 
-Useful for quality-sensitive tasks like code generation or content writing.
+## Communication Patterns
 
-## The 3-Layer Architecture
+**Shared message queue:** Agents publish and subscribe to a message bus.
 
-This repo implements a practical multi-agent approach:
+**Direct handoff:** One agent's output is passed directly as input to the next.
 
-| Layer | Role | Implementation |
-|-------|------|----------------|
-| Directives | Goal definition | Markdown SOPs |
-| Orchestrator | Coordination | AI agent (Claude Code) |
-| Execution | Implementation | Python scripts |
+**Shared state store:** All agents read/write to a central state object (e.g., a dict or database record).
 
-The key insight: **keep the AI in the coordination layer, not the execution layer**. Execution is done by deterministic code.
+```python
+# Shared state example
+state = {
+    "task": "Analyze AAPL Q4 earnings",
+    "research": None,      # populated by ResearchAgent
+    "analysis": None,      # populated by AnalysisAgent
+    "final_report": None,  # populated by WriterAgent
+}
+```
 
-This addresses the compounding error problem: deterministic scripts are 100% reliable (or they fail loudly), so reliability only compounds across orchestration decisions.
+## Code Example: Simple Parallel Agents
 
-## Communication Between Agents
+```python
+import asyncio
+import anthropic
 
-Agents communicate through:
+client = anthropic.Anthropic()
 
-- **Shared state** (files, databases): Simple, persistent, inspectable
-- **Direct messages**: One agent calls another directly (MCP, function calls)
-- **Message queues**: Decoupled, async, scalable (good for production)
-- **Context passing**: Output of one is input to the next
+async def run_agent(task: str, system: str) -> str:
+    response = client.messages.create(
+        model="claude-opus-4-6",
+        max_tokens=1024,
+        system=system,
+        messages=[{"role": "user", "content": task}]
+    )
+    return response.content[0].text
 
-## Failure Handling
-
-### Retry with backoff
-Transient failures (rate limits, network) resolve with simple retry.
-
-### Checkpoint and resume
-Save intermediate state so a failed pipeline can restart from the last checkpoint.
-
-### Fallback agents
-If primary agent fails, try an alternative (different model, different approach).
-
-### Human-in-the-loop
-For high-stakes decisions, pause and ask a human before continuing.
-
-## When Not to Use Multi-Agent
-
-- Simple tasks that fit in one context window
-- When coordination overhead exceeds the benefit
-- When you need low latency (orchestration adds round trips)
-- When you’re still prototyping (start simple, add complexity only when needed)
+async def multi_agent_research(topic: str) -> dict:
+    # Run three specialized agents in parallel
+    results = await asyncio.gather(
+        run_agent(f"Find recent news about {topic}", "You are a news researcher."),
+        run_agent(f"Summarize technical aspects of {topic}", "You are a technical analyst."),
+        run_agent(f"List key players in {topic}", "You are a market researcher."),
+    )
+    return {
+        "news": results[0],
+        "technical": results[1],
+        "players": results[2],
+    }
+```

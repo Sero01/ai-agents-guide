@@ -1,75 +1,73 @@
 ---
-title: What are AI Agents?
-description: A clear explanation of AI agents - what they are, how they work, and when to use them.
+title: "What Are AI Agents? Concepts, Architecture & How They Work (2026)"
+description: "The most comprehensive guide to AI agent concepts and architecture. Learn what AI agents are, how the ReAct loop works, and the core patterns behind the most advanced AI systems. Beginner-friendly."
+sidebar:
+  order: 1
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"What Are AI Agents? Concepts, Architecture & How They Work (2026)","description":"The most comprehensive guide to AI agent concepts and architecture. Learn what AI agents are, how the ReAct loop works, and the core patterns behind the most advanced AI systems.","url":"https://agentguides.dev/ai-agents/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
 ---
 
-# What are AI Agents?
+An AI agent is a system that perceives its environment, reasons about it, and takes actions to achieve a goal — repeatedly, in a loop.
 
-An **AI agent** is a system that uses an AI model to pursue a goal by taking actions, observing results, and deciding what to do next.
+## What Makes Something an "Agent"?
 
-Unlike a simple AI call that answers a question, an agent operates in a loop:
+The minimal definition: **a model + a loop + tools**.
 
 ```
-Goal → Think → Act → Observe → Think → Act → ... → Done
+while not done:
+    observation → LLM → action → execute → observation
 ```
 
-## The Core Loop
+Most LLM chat interfaces are not agents — they're single-turn request/response. An agent persists across turns, maintains state, and uses tools to affect the world.
 
-Every AI agent, regardless of framework, runs some version of this loop:
+## The Agent Loop
 
-1. **Perceive**: Receive input (goal, task, user message, tool result)
-2. **Reason**: Decide what to do (which tool to call, what to say, whether to ask for help)
-3. **Act**: Execute the decision (call a tool, generate output, ask a question)
-4. **Observe**: See the result of the action
-5. **Repeat**: Use the observation to inform the next decision
+Every agent runs some variation of the **ReAct loop**:
 
-The loop continues until the agent decides the goal is complete, or it hits a limit.
+1. **Observe** — receive input (user message, tool result, environment state)
+2. **Think** — reason about what to do next (the LLM's job)
+3. **Act** — call a tool, execute code, or produce output
+4. **Observe** — receive the result and loop
 
-## What Makes an Agent an Agent?
+```python
+# Simplified agent loop
+while not agent.is_done():
+    thought = llm.think(agent.context)
+    action = thought.next_action
+    result = tools.execute(action)
+    agent.context.append(result)
+```
 
-The key distinction from a simple AI call:
+## Core Architecture
 
-| Simple AI Call | AI Agent |
-|----------------|----------|
-| One prompt, one response | Autonomous loop |
-| You decide next steps | Agent decides next steps |
-| Stateless | Maintains state across steps |
-| No tools | Uses tools to act in the world |
+```
+┌─────────────────────────────────────────┐
+│              Agent System               │
+│                                         │
+│  ┌─────────┐    ┌──────────────────┐   │
+│  │  Input  │───▶│    LLM (Brain)   │   │
+│  └─────────┘    └────────┬─────────┘   │
+│                          │             │
+│              ┌───────────▼──────────┐  │
+│              │   Tool Dispatcher    │  │
+│              └─┬──────┬──────┬─────┘  │
+│                │      │      │         │
+│           ┌────▼┐ ┌───▼─┐ ┌─▼────┐   │
+│           │ Web │ │Code │ │ API  │   │
+│           │ Srch│ │Exec │ │Calls │   │
+│           └────┘ └─────┘ └──────┘   │
+│                                         │
+│  ┌──────────────────────────────────┐  │
+│  │         Memory / State           │  │
+│  └──────────────────────────────────┘  │
+└─────────────────────────────────────────┘
+```
 
-## Three Types of Agents
+## See Also
 
-### Tool-Using Agents
-The most common type. The model has access to tools (web search, code execution, file operations, APIs) and decides when and how to use them.
-
-### Planning Agents
-The model creates a plan before acting. Useful for complex tasks where the sequence of steps matters.
-
-### Multi-Agent Systems
-Multiple agents, each with a role, coordinate to complete a task. One agent orchestrates; others execute subtasks. See [Multi-Agent Pipelines](/agentic-workflows/multi-agent).
-
-## When to Use an Agent
-
-Agents are powerful but not always the right tool:
-
-**Use an agent when:**
-- The task requires multiple steps
-- You don’t know the full path to completion upfront
-- The task requires using multiple tools
-- The context is too large for a single prompt
-
-**Don’t use an agent when:**
-- A simple prompt works
-- You need fast, low-latency responses
-- The task is well-defined and deterministic
-- Cost is a constraint (agents use many more tokens)
-
-## The Building Blocks
-
-Every agent is built from:
-
-- **Model**: The AI doing the reasoning (Claude, GPT-4, Gemini)
-- **Tools**: Functions the agent can call
-- **Memory**: How the agent remembers past actions
-- **Instructions**: The system prompt defining the agent’s role and behavior
-
-See [Agent Patterns](/ai-agents/patterns) for common architectures built from these blocks.
+- [Agent Patterns](/ai-agents/patterns/) — Common design patterns for agent systems
+- [Tokens & Context](/ai-agents/tokens-context/) — Managing context windows effectively

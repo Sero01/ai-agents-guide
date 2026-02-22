@@ -1,126 +1,150 @@
 ---
-title: MCP Setup & Configuration
-description: How to set up MCP with Claude Desktop, Claude Code, and other clients.
+title: "MCP Setup & Installation — Complete Guide for Claude Desktop & Claude Code (2026)"
+description: "The most complete step-by-step MCP setup guide for Claude Desktop and Claude Code. Install Model Context Protocol on macOS, Linux, and Windows. Best practices and top troubleshooting tips."
+sidebar:
+  order: 2
 ---
 
-# MCP Setup & Configuration
+This tutorial gets you from zero to a working MCP setup in under 10 minutes.
 
-How to install and configure MCP servers for use with Claude Desktop and Claude Code.
+## Prerequisites
 
-## Claude Desktop
+- Node.js 18+ or Python 3.10+
+- Claude Desktop (for local testing) or Claude Code CLI
 
-### Config File Location
+## Option A: Claude Desktop (GUI)
 
-| OS | Path |
-|----|------|
-| macOS | `~/Library/Application Support/Claude/claude_desktop_config.json` |
-| Windows | `%APPDATA%\Claude\claude_desktop_config.json` |
+### 1. Install Claude Desktop
 
-### Basic Configuration
+Download and install Claude Desktop from the Anthropic website.
+
+### 2. Configure MCP Servers
+
+Claude Desktop reads MCP configuration from a JSON file:
+
+**macOS/Linux:**
+```bash
+~/.config/claude/claude_desktop_config.json
+```
+
+**Windows:**
+```
+%APPDATA%\Claude\claude_desktop_config.json
+```
+
+### 3. Add a Server
+
+Here's an example adding the official filesystem MCP server:
 
 ```json
 {
   "mcpServers": {
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/you/Documents"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/you/Documents"
+      ]
+    }
+  }
+}
+```
+
+### 4. Restart Claude Desktop
+
+After saving the config, restart Claude Desktop. You'll see a tools icon (🔧) in the chat input — click it to verify your servers loaded.
+
+## Option B: Claude Code CLI
+
+Claude Code reads MCP config from `.claude/settings.json` in your project root, or from `~/.claude/settings.json` globally.
+
+### Project-level config
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
     },
     "github": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_..."
+        "GITHUB_TOKEN": "your-github-token"
       }
     }
   }
 }
 ```
 
-After editing, restart Claude Desktop.
-
-### Verifying It Works
-
-Open Claude Desktop and look for the tools icon (hammer). If your server loaded correctly, you’ll see its tools listed.
-
-## Claude Code
-
-Claude Code supports MCP via the `claude mcp` command:
+### Verify it's working
 
 ```bash
-# Add a server
-claude mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /tmp
-
-# List configured servers
+# List available MCP tools in the current project
 claude mcp list
-
-# Remove a server
-claude mcp remove filesystem
 ```
 
-Servers are stored in `~/.claude/claude_desktop_config.json` (same format as Claude Desktop).
+## Transport Types
 
-## Python MCP Client
+MCP supports two transport mechanisms:
 
-For programmatic use:
+| Transport | Use Case |
+|-----------|----------|
+| **stdio** | Local servers (most common) — server runs as a subprocess |
+| **SSE** | Remote servers — server runs as an HTTP service |
 
-```python
-import asyncio
-from mcp import ClientSession, StdioServerParameters
-from mcp.client.stdio import stdio_client
-
-async def connect_to_server(script_path: str):
-    server_params = StdioServerParameters(
-        command="python",
-        args=[script_path]
-    )
-    
-    async with stdio_client(server_params) as (read, write):
-        async with ClientSession(read, write) as session:
-            await session.initialize()
-            
-            # List available tools
-            tools = await session.list_tools()
-            for tool in tools.tools:
-                print(f"Tool: {tool.name} - {tool.description}")
-            
-            # Call a tool
-            result = await session.call_tool("greet", {"name": "World"})
-            print(result.content[0].text)
-
-asyncio.run(connect_to_server("server.py"))
+**stdio config** (local subprocess):
+```json
+{
+  "command": "python",
+  "args": ["my_server.py"]
+}
 ```
 
-## Environment Variables
+**SSE config** (remote HTTP):
+```json
+{
+  "url": "http://localhost:8080/sse"
+}
+```
 
-Many MCP servers need API keys. Pass them via `env` in the config:
+## Adding Environment Variables
+
+Pass API keys and config to MCP servers via the `env` field:
 
 ```json
 {
   "mcpServers": {
-    "brave-search": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+    "my-server": {
+      "command": "python",
+      "args": ["server.py"],
       "env": {
-        "BRAVE_API_KEY": "your-key-here"
+        "API_KEY": "sk-...",
+        "DATABASE_URL": "postgresql://..."
       }
     }
   }
 }
 ```
 
+:::tip
+Never hardcode secrets in your config files. Use environment variable references or a secrets manager in production.
+:::
+
 ## Troubleshooting
 
 **Server not appearing in Claude Desktop:**
-1. Check JSON syntax in config file (use a JSON validator)
-2. Make sure `npx` is in your PATH (`which npx`)
-3. Check Claude Desktop logs: `~/Library/Logs/Claude/` (macOS)
+- Check the config file is valid JSON (`json.tool < config.json`)
+- Ensure the command is in your `PATH`
+- Check Claude Desktop logs: `~/Library/Logs/Claude/` (macOS)
 
-**Server crashes on startup:**
-1. Test the server command manually in terminal
-2. Check server logs
-3. Verify environment variables are set
+**Server crashes immediately:**
+- Run the server command manually in your terminal to see error output
+- Check the server's dependencies are installed
 
-**Tool calls failing:**
-1. Check server is still running (Claude may show a disconnected indicator)
-2. Verify tool input matches the server’s input schema
-3. Check for permission issues (file servers need access to specified directories)
+## Next Steps
+
+- [Available Servers](/mcp/servers/) — Pre-built servers for common services
+- [Building MCP Servers](/mcp/building-servers/) — Create your own
