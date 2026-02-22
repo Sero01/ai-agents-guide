@@ -1,0 +1,43 @@
+---
+/**
+ * AdSlot.astro
+ * Drop-in Google AdSense display unit.
+ *
+ * Usage:
+ *   <AdSlot slot="ca-pub-XXXX/YYYY" position="in-content" />
+ *
+ * The `slot` prop is the AdSense ad-slot string (publisher-id/ad-unit-id).
+ * The `position` prop is used for CSS targeting only.
+ */
+
+interface Props {
+  slot: string;       // "ca-pub-XXXX/YYYY"
+  position?: string;  // "in-content" | "sidebar" | "footer" etc.
+}
+
+const { slot, position = 'in-content' } = Astro.props;
+const [publisherId, adUnit] = slot.split('/');
+---
+
+<div class={`ad-slot ad-slot--${position}`} aria-label="Advertisement">
+  <ins
+    class="adsbygoogle"
+    style="display:block"
+    data-ad-client={publisherId}
+    data-ad-slot={adUnit}
+    data-ad-format="auto"
+    data-full-width-responsive="true"
+  />
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+<style>
+  .ad-slot {
+    width: 100%;
+    min-height: 90px;
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+</style>

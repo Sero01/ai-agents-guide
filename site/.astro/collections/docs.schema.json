@@ -1,0 +1,76 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"type": "object",
+	"properties": {
+		"title": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"editUrl": {
+			"type": [
+				"string",
+				"boolean"
+			]
+		},
+		"head": {
+			"type": "array"
+		},
+		"tableOfContents": {
+			"type": [
+				"object",
+				"boolean"
+			]
+		},
+		"template": {
+			"type": "string",
+			"enum": [
+				"doc",
+				"splash"
+			]
+		},
+		"hero": {
+			"type": "object"
+		},
+		"banner": {
+			"type": "object"
+		},
+		"badge": {
+			"type": [
+				"string",
+				"object"
+			]
+		},
+		"lastUpdated": {
+			"type": [
+				"string",
+				"boolean",
+				"number"
+			]
+		},
+		"prev": {
+			"type": [
+				"string",
+				"boolean",
+				"object"
+			]
+		},
+		"next": {
+			"type": [
+				"string",
+				"boolean",
+				"object"
+			]
+		},
+		"pagefind": {
+			"type": "boolean"
+		},
+		"draft": {
+			"type": "boolean"
+		},
+		"sidebar": {
+			"type": "object"
+		}
+	}
+}
