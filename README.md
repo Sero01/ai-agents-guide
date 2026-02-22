@@ -4,7 +4,7 @@ A practical, code-first guide to AI agents, agentic workflows, MCP, and the tool
 
 ## Live Site
 
-[agentworkflows.dev](https://agentworkflows.dev) — deployed on Cloudflare Pages.
+[agentguide.dev](https://agentguide.dev) — deployed on Cloudflare Pages.
 
 ## What's Inside
 
