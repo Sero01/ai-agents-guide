@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://agentworkflows.dev/sitemap-index.xml
+Sitemap: https://agentguide.dev/sitemap-index.xml
