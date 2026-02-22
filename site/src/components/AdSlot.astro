@@ -1,0 +1,38 @@
+---
+/**
+ * AdSlot — Google AdSense display ad unit
+ *
+ * Usage in .mdx:
+ *   import AdSlot from '@components/AdSlot.astro'
+ *   <AdSlot slot="ca-pub-XXXXX/YYYYY" position="in-content" />
+ *
+ * Positions: "in-content" | "sidebar" | "footer"
+ * When no slot prop is provided, renders a placeholder (dev mode).
+ */
+interface Props {
+  /** AdSense slot ID in format "ca-pub-PUBLISHER_ID/SLOT_ID" */
+  slot?: string;
+  position?: 'in-content' | 'sidebar' | 'footer';
+}
+
+const { slot: adSlot, position = 'in-content' } = Astro.props;
+const isDev = import.meta.env.DEV;
+---
+
+{adSlot ? (
+  <div class={`ad-slot ad-slot--${position}`} aria-label="Advertisement">
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client={adSlot.split('/')[0]}
+      data-ad-slot={adSlot.split('/')[1]}
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    />
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+) : isDev ? (
+  <div class={`ad-slot ad-slot--${position}`} aria-hidden="true">
+    Ad slot [{position}] — configure slot ID in component props
+  </div>
+) : null}

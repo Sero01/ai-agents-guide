@@ -1,0 +1,43 @@
+---
+/**
+ * SponsorBanner — Featured sponsor slot
+ *
+ * Edit SPONSOR config below to activate. Leave name empty to hide banner.
+ *
+ * Usage in .mdx (optional — also injected via layout override):
+ *   import SponsorBanner from '@components/SponsorBanner.astro'
+ *   <SponsorBanner />
+ */
+
+// ── Configure your sponsor here ───────────────────────────────────────
+const SPONSOR = {
+  name: '',           // e.g. "Anthropic"
+  tagline: '',        // e.g. "Build reliable AI agents with Claude"
+  url: '',            // e.g. "https://anthropic.com?ref=agentguide"
+  cta: 'Learn more',  // Button label
+  logoUrl: '',        // Optional logo image URL
+};
+// ──────────────────────────────────────────────────────────────────────
+
+const isActive = Boolean(SPONSOR.name && SPONSOR.url);
+---
+
+{isActive && (
+  <aside class="sponsor-banner" aria-label="Sponsored">
+    {SPONSOR.logoUrl && (
+      <img src={SPONSOR.logoUrl} alt={SPONSOR.name} width="48" height="48" loading="lazy" />
+    )}
+    <div>
+      <strong>Sponsor: {SPONSOR.name}</strong>
+      {SPONSOR.tagline && <span> — {SPONSOR.tagline}</span>}
+    </div>
+    <a
+      href={SPONSOR.url}
+      rel="sponsored noopener noreferrer"
+      target="_blank"
+      class="sponsor-banner__cta"
+    >
+      {SPONSOR.cta} →
+    </a>
+  </aside>
+)}

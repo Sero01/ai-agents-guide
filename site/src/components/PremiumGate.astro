@@ -1,0 +1,50 @@
+---
+/**
+ * PremiumGate — Blurs slot content and shows an upgrade CTA.
+ *
+ * Uses localStorage key "premium_unlocked" for client-side unlock.
+ * Replace the unlock logic with a real auth check for production.
+ *
+ * Usage in .mdx:
+ *   import PremiumGate from '@components/PremiumGate.astro'
+ *   <PremiumGate title="Premium: Advanced Multi-Agent Patterns" courseUrl="https://...">
+ *     (hidden content here)
+ *   </PremiumGate>
+ */
+interface Props {
+  title?: string;
+  /** URL to premium course or membership page */
+  courseUrl?: string;
+  cta?: string;
+}
+
+const {
+  title = 'Premium Content',
+  courseUrl = '/premium',
+  cta = 'Unlock Premium Access',
+} = Astro.props;
+---
+
+<div class="premium-gate" data-premium-gate>
+  <div class="premium-gate__content" aria-hidden="true">
+    <slot />
+  </div>
+  <div class="premium-gate__cta">
+    <p style="margin-bottom: 0.75rem; font-size: 0.875rem; font-weight: 600;">
+      🔒 {title}
+    </p>
+    <a href={courseUrl} rel="noopener noreferrer">{cta}</a>
+  </div>
+</div>
+
+<script>
+  // Unlock gated content if premium flag is set
+  document.querySelectorAll('[data-premium-gate]').forEach((gate) => {
+    if (localStorage.getItem('premium_unlocked') === 'true') {
+      const content = gate.querySelector('.premium-gate__content');
+      const cta = gate.querySelector('.premium-gate__cta');
+      if (content) (content as HTMLElement).style.filter = 'none';
+      if (cta) (cta as HTMLElement).style.display = 'none';
+    }
+  });
+</script>

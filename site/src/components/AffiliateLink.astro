@@ -1,0 +1,35 @@
+---
+/**
+ * AffiliateLink — Wraps a link with affiliate/UTM attributes.
+ *
+ * Adds rel="sponsored noopener", target="_blank", and an optional
+ * UTM suffix. A small ↗ indicator is shown via CSS.
+ *
+ * Usage in .mdx:
+ *   import AffiliateLink from '@components/AffiliateLink.astro'
+ *   <AffiliateLink href="https://example.com" campaign="mcp-page">
+ *     Try Example Tool
+ *   </AffiliateLink>
+ */
+interface Props {
+  href: string;
+  /** UTM campaign tag appended as ?utm_source=agentguide&utm_campaign=... */
+  campaign?: string;
+}
+
+const { href, campaign } = Astro.props;
+
+const url = new URL(href);
+url.searchParams.set('utm_source', 'agentguide');
+url.searchParams.set('utm_medium', 'docs');
+if (campaign) url.searchParams.set('utm_campaign', campaign);
+---
+
+<a
+  href={url.toString()}
+  rel="sponsored noopener noreferrer"
+  target="_blank"
+  class="affiliate-link"
+>
+  <slot />
+</a>

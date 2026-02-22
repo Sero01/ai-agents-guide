@@ -1,0 +1,85 @@
+---
+// Replaces Starlight's default <ThemeSelect> dropdown with a sun/moon toggle button.
+// Starlight stores the preference in localStorage under 'starlight-theme' and applies
+// data-theme on <html>. This component hooks into the same key so both sections stay in sync.
+---
+
+<button
+  id="starlight-theme-toggle"
+  class="sl-theme-toggle"
+  aria-label="Toggle dark mode"
+  title="Toggle dark mode"
+>
+  <!-- Sun (shown in dark mode) -->
+  <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+    aria-hidden="true">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+  <!-- Moon (shown in light mode) -->
+  <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+    aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+</button>
+
+<style>
+  .sl-theme-toggle {
+    background: none;
+    border: none;
+    color: var(--sl-color-text-accent, var(--sl-color-gray-2));
+    padding: 0.4rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s, background 0.15s;
+  }
+  .sl-theme-toggle:hover {
+    color: var(--sl-color-white);
+    background: var(--sl-color-gray-6, rgba(255,255,255,0.08));
+  }
+  .sl-theme-toggle svg { width: 1.1rem; height: 1.1rem; }
+
+  /* Light mode: show moon, hide sun */
+  .icon-sun  { display: none; }
+  .icon-moon { display: block; }
+
+  /* Dark mode: show sun, hide moon */
+  :root[data-theme='dark'] .icon-sun  { display: block; }
+  :root[data-theme='dark'] .icon-moon { display: none; }
+
+  /* OS-level dark fallback (before JS sets data-theme) */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .icon-sun  { display: block; }
+    :root:not([data-theme='light']) .icon-moon { display: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const KEY = 'starlight-theme';
+
+    function getTheme() {
+      const stored = localStorage.getItem(KEY);
+      if (stored === 'dark' || stored === 'light') return stored;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem(KEY, theme);
+    }
+
+    // Ensure correct state on load (Starlight may have already set it, this is a no-op in that case)
+    applyTheme(getTheme());
+
+    document.getElementById('starlight-theme-toggle')?.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    });
+  })();
+</script>

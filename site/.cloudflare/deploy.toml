@@ -1,0 +1,13 @@
+# Cloudflare Pages deployment config
+# Reference: https://developers.cloudflare.com/pages/
+
+[build]
+command = "npm run build"
+output_dir = "dist"
+
+[build.environment]
+NODE_VERSION = "20"
+
+# Preview deployments (feature branches)
+[preview.environment]
+NODE_VERSION = "20"

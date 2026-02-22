@@ -1,0 +1,801 @@
+---
+// Marketing landing page — separate from the /docs/ Starlight layout
+// Routes to: yourdomain.com/
+import SponsorBanner from '../components/SponsorBanner.astro';
+
+const TOPICS = [
+  {
+    title: 'AI Agents',
+    description: 'Concepts, architecture, tokens, context, and how agents actually think.',
+    href: '/ai-agents/',
+    icon: '🤖',
+  },
+  {
+    title: 'Agentic Workflows',
+    description: 'Multi-step pipelines, multi-agent systems, and reliability at scale.',
+    href: '/agentic-workflows/',
+    icon: '⚙️',
+  },
+  {
+    title: 'MCP',
+    description: 'Model Context Protocol — the universal connector for AI tools.',
+    href: '/mcp/',
+    icon: '🔌',
+    badge: 'Hot',
+  },
+  {
+    title: 'Agent Frameworks',
+    description: 'LangChain, CrewAI, AutoGen — honest comparison with working examples.',
+    href: '/frameworks/',
+    icon: '🧰',
+  },
+  {
+    title: 'Tools & Memory',
+    description: 'How agents use tools, store memory, and persist skills across sessions.',
+    href: '/tools-memory/',
+    icon: '🧠',
+  },
+  {
+    title: 'Prompt Engineering',
+    description: 'Prompting strategies specifically designed for agent systems.',
+    href: '/prompt-engineering/',
+    icon: '✍️',
+  },
+  {
+    title: 'Agent Instructions',
+    description: 'CLAUDE.md, AgentMD patterns, and writing great system prompts.',
+    href: '/agent-instructions/',
+    icon: '📋',
+  },
+  {
+    title: 'Code Examples',
+    description: 'Working, runnable code for every concept. Copy-paste ready.',
+    href: '/code-examples/',
+    icon: '💻',
+  },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agents & Agentic Workflows — Developer Guide</title>
+  <meta name="description" content="A practical, code-first guide to AI agents, agentic workflows, MCP, and the tools powering the next era of AI." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AI Agents & Agentic Workflows" />
+  <meta property="og:description" content="A practical, code-first guide to AI agents, agentic workflows, MCP, and the tools powering the next era of AI." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://agentworkflows.dev/" />
+  <meta property="og:image" content="https://agentworkflows.dev/og-default.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI Agents & Agentic Workflows" />
+  <meta name="twitter:description" content="A practical, code-first guide to AI agents, agentic workflows, and MCP." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://agentworkflows.dev/" />
+
+  <!-- Apply theme before paint to prevent flash -->
+  <script is:inline>
+    (function() {
+      const s = localStorage.getItem('starlight-theme');
+      const t = s === 'dark' || s === 'light' ? s
+        : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Starlight-matched palette ───────────────────────────────────── */
+    /* Light theme (default) */
+    :root {
+      --accent: #4f46e5;
+      --accent-high: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+      --text: hsl(224, 10%, 10%);
+      --text-muted: hsl(224, 6%, 46%);
+      --bg: hsl(0, 0%, 100%);
+      --bg-nav: hsl(224, 13%, 97%);
+      --bg-card: hsl(224, 20%, 97%);
+      --border: hsl(224, 13%, 88%);
+      color-scheme: light;
+    }
+
+    /* Dark theme — triggered by JS toggle (matches Starlight's data-theme) */
+    :root[data-theme='dark'] {
+      --accent: #818cf8;
+      --accent-high: #a5b4fc;
+      --accent-glow: rgba(129, 140, 248, 0.12);
+      --text: hsl(224, 20%, 94%);
+      --text-muted: hsl(224, 6%, 61%);
+      --bg: hsl(224, 10%, 10%);
+      --bg-nav: hsl(224, 10%, 9%);
+      --bg-card: hsl(224, 10%, 14%);
+      --border: hsl(224, 7%, 22%);
+      color-scheme: dark;
+    }
+
+    /* Fallback: honour OS preference before JS loads (avoids flash) */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme='light']) {
+        --accent: #818cf8;
+        --accent-high: #a5b4fc;
+        --accent-glow: rgba(129, 140, 248, 0.12);
+        --text: hsl(224, 20%, 94%);
+        --text-muted: hsl(224, 6%, 61%);
+        --bg: hsl(224, 10%, 10%);
+        --bg-nav: hsl(224, 10%, 9%);
+        --bg-card: hsl(224, 10%, 14%);
+        --border: hsl(224, 7%, 22%);
+        color-scheme: dark;
+      }
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Nav (30% larger than original 3.5rem base) ──────────────────── */
+    nav {
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border);
+      padding: 0 0;
+      height: 4.55rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      height: 100%;
+    }
+
+    /* ── Logo (left) ─────────────────────────────────────────────────── */
+    .nav-logo {
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .nav-logo svg { height: 2.6rem; width: auto; }
+    .nav-logo svg .logo-stroke { stroke: currentColor; }
+    .nav-logo svg .logo-text  { fill: currentColor; }
+
+    /* ── Search bar (center, grows) ──────────────────────────────────── */
+    .nav-search {
+      position: relative;
+      flex: 1;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .nav-search-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 0.5rem;
+      padding: 0.55rem 4rem 0.55rem 2.5rem;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .nav-search-input::placeholder { color: var(--text-muted); }
+    .nav-search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); cursor: text; }
+    .nav-search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+      display: flex;
+    }
+    .nav-search-icon svg { width: 1.1rem; height: 1.1rem; }
+    .nav-search-kbd {
+      position: absolute;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 0.2rem;
+      pointer-events: none;
+    }
+    .nav-search-kbd kbd {
+      background: var(--border);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-family: inherit;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.25rem;
+      border: 1px solid var(--border);
+      line-height: 1.4;
+    }
+    /* Hide search kbd and shrink on small screens */
+    @media (max-width: 768px) { .nav-search { max-width: 200px; } .nav-search-kbd { display: none; } }
+    @media (max-width: 500px) { .nav-search { display: none; } }
+
+    /* ── Nav text links ──────────────────────────────────────────────── */
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+      flex-shrink: 0;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.45rem 0.8rem;
+      border-radius: 0.375rem;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--bg-card); }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* ── Right icon cluster ──────────────────────────────────────────── */
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      flex-shrink: 0;
+    }
+    .nav-icon-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      border-radius: 0.375rem;
+      padding: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-icon-btn:hover { color: var(--text); background: var(--bg-card); }
+    .nav-icon-btn svg { width: 1.4rem; height: 1.4rem; }
+
+    /* Show sun in dark, moon in light */
+    .icon-sun  { display: none; }
+    .icon-moon { display: block; }
+    :root[data-theme='dark'] .icon-sun  { display: block; }
+    :root[data-theme='dark'] .icon-moon { display: none; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme='light']) .icon-sun  { display: block; }
+      :root:not([data-theme='light']) .icon-moon { display: none; }
+    }
+
+    /* ── Hero ────────────────────────────────────────────────────────── */
+    .hero {
+      padding: 5.5rem 0 3.5rem;
+      text-align: center;
+      /* subtle radial gradient matching Starlight's accent glow */
+      background: radial-gradient(ellipse 60% 40% at 50% 0%, var(--accent-glow), transparent 70%);
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.25rem 0.875rem;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+    .hero-badge span { color: var(--accent); font-weight: 700; }
+    .hero h1 {
+      font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-high));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 2.25rem;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: 0.875rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      padding: 0.75rem 1.75rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.975rem;
+      transition: opacity 0.15s, transform 0.15s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-secondary {
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text);
+      padding: 0.75rem 1.75rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.975rem;
+      transition: border-color 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Topics vertical list (react.dev style) ──────────────────────── */
+    .topics { padding: 3.5rem 0 4.5rem; }
+    .topics-header {
+      text-align: center;
+      margin-bottom: 2.75rem;
+    }
+    .topics-header h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+    }
+    .topics-header p { color: var(--text-muted); font-size: 0.95rem; }
+
+    .topics-list {
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+    .topic-row {
+      display: grid;
+      grid-template-columns: 3rem 1fr auto;
+      align-items: center;
+      gap: 0 1.25rem;
+      padding: 1.25rem 1.5rem;
+      text-decoration: none;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      position: relative;
+    }
+    .topic-row:last-child { border-bottom: none; }
+    .topic-row:hover { background: var(--bg-card); }
+    .topic-row:hover .topic-arrow { color: var(--accent); transform: translateX(3px); }
+
+    .topic-icon {
+      font-size: 1.75rem;
+      line-height: 1;
+      text-align: center;
+    }
+    .topic-body { min-width: 0; }
+    .topic-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+    .topic-title-row h3 { font-size: 1rem; font-weight: 700; }
+    .topic-badge {
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .topic-desc { color: var(--text-muted); font-size: 0.875rem; line-height: 1.5; }
+    .topic-arrow {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      transition: color 0.15s, transform 0.15s;
+      flex-shrink: 0;
+    }
+    @media (max-width: 480px) {
+      .topic-row { grid-template-columns: 2.25rem 1fr; }
+      .topic-arrow { display: none; }
+    }
+
+    /* ── Sponsor section ─────────────────────────────────────────────── */
+    .sponsor-section {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-nav);
+      padding: 3.5rem 0 0;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* Main grid: author card + 3 link columns */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 2.5rem 3rem;
+      padding-bottom: 3rem;
+    }
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 540px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* Author card */
+    .footer-author {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .author-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+    .author-avatar {
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid var(--border);
+    }
+    .author-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.1rem;
+    }
+    .author-handle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .author-bio {
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    /* Social icons */
+    .author-socials {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.3rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .social-link:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .social-link svg { width: 0.9rem; height: 0.9rem; flex-shrink: 0; }
+
+    /* Link columns */
+    .footer-col h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--accent); }
+
+    /* Bottom bar */
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .footer-bottom a { color: var(--text-muted); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <!-- Logo (left) -->
+    <a href="/" class="nav-logo" aria-label="AgentGuide home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 36" fill="none" aria-hidden="true">
+        <circle cx="18" cy="18" r="13" class="logo-stroke" stroke-width="2"/>
+        <circle cx="18" cy="18" r="5.5" fill="#6366f1"/>
+        <path d="M18 5 L18 9 M18 27 L18 31 M5 18 L9 18 M27 18 L31 18" class="logo-stroke" stroke-width="2" stroke-linecap="round"/>
+        <text x="40" y="23.5" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" class="logo-text">AgentGuide</text>
+      </svg>
+    </a>
+
+    <!-- Search bar (center, grows) -->
+    <div class="nav-search">
+      <span class="nav-search-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </span>
+      <input class="nav-search-input" type="search" placeholder="Search docs…" aria-label="Search documentation" id="nav-search" />
+      <span class="nav-search-kbd" aria-hidden="true">
+        <kbd>Ctrl</kbd><kbd>K</kbd>
+      </span>
+    </div>
+
+    <!-- Text nav links -->
+    <ul class="nav-links">
+      <li><a href="/getting-started/">Start Here</a></li>
+      <li><a href="/mcp/">MCP</a></li>
+      <li><a href="/frameworks/">Frameworks</a></li>
+      <li><a href="/code-examples/">Examples</a></li>
+    </ul>
+
+    <!-- Right icon cluster -->
+    <div class="nav-icons">
+      <!-- Theme toggle -->
+      <button class="nav-icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <!-- GitHub -->
+      <a href="https://github.com/Sero01" class="nav-icon-btn" aria-label="GitHub" title="View on GitHub" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <span class="hero-badge">Open Source · Free Forever · <span>Updated Feb 2026</span></span>
+      <h1>Build better<br /><em>AI Agents</em></h1>
+      <p>
+        A practical, code-first guide to AI agents, agentic workflows, MCP,
+        and the tools powering the next era of AI.
+      </p>
+      <div class="hero-actions">
+        <a href="/getting-started/" class="btn-primary">Start Learning →</a>
+        <a href="/mcp/" class="btn-secondary">Explore MCP</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="topics">
+    <div class="container">
+      <div class="topics-header">
+        <h2>Everything you need to build with AI agents</h2>
+        <p>Concept explanations, step-by-step tutorials, and working code — for every topic.</p>
+      </div>
+      <div class="topics-list">
+        {TOPICS.map(topic => (
+          <a href={topic.href} class="topic-row">
+            <span class="topic-icon">{topic.icon}</span>
+            <div class="topic-body">
+              <div class="topic-title-row">
+                <h3>{topic.title}</h3>
+                {topic.badge && <span class="topic-badge">{topic.badge}</span>}
+              </div>
+              <p class="topic-desc">{topic.description}</p>
+            </div>
+            <span class="topic-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="sponsor-section">
+    <div class="container">
+      <SponsorBanner />
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+
+      <!-- Author card -->
+      <div class="footer-author">
+        <div class="author-profile">
+          <img src="/profile_pic.jpeg" alt="Parvez Ahmed" class="author-avatar" />
+          <div>
+            <div class="author-name">Parvez Ahmed</div>
+            <div class="author-handle">@126parvez</div>
+          </div>
+        </div>
+        <p class="author-bio">
+          AI developer &amp; technical writer building at the intersection of code and intelligence.
+          This guide is a living reference — practical, opinionated, and always up to date.
+        </p>
+        <div class="author-socials">
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/parvez-ahmed-b47680124" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </a>
+          <!-- GitHub -->
+          <a href="https://github.com/Sero01" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+          <!-- Email -->
+          <a href="mailto:126ahmedparvez@gmail.com" class="social-link" aria-label="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            Email
+          </a>
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/126parvez" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+
+      <!-- Guide links -->
+      <div class="footer-col">
+        <h4>Guide</h4>
+        <ul>
+          <li><a href="/getting-started/">Getting Started</a></li>
+          <li><a href="/ai-agents/">AI Agents</a></li>
+          <li><a href="/agentic-workflows/">Agentic Workflows</a></li>
+          <li><a href="/mcp/">MCP</a></li>
+          <li><a href="/frameworks/">Frameworks</a></li>
+          <li><a href="/code-examples/">Code Examples</a></li>
+        </ul>
+      </div>
+
+      <!-- Official sources -->
+      <div class="footer-col">
+        <h4>Official Sources</h4>
+        <ul>
+          <li><a href="https://docs.anthropic.com" target="_blank" rel="noopener">Anthropic Docs</a></li>
+          <li><a href="https://platform.openai.com/docs" target="_blank" rel="noopener">OpenAI Platform</a></li>
+          <li><a href="https://ai.google.dev" target="_blank" rel="noopener">Google AI Studio</a></li>
+          <li><a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP Protocol</a></li>
+          <li><a href="https://huggingface.co/docs" target="_blank" rel="noopener">HuggingFace Docs</a></li>
+          <li><a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a></li>
+        </ul>
+      </div>
+
+      <!-- Community & blogs -->
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="https://www.langchain.com/blog" target="_blank" rel="noopener">LangChain Blog</a></li>
+          <li><a href="https://newsletter.theaivalley.com" target="_blank" rel="noopener">The AI Valley</a></li>
+          <li><a href="https://www.reddit.com/r/LocalLLaMA/" target="_blank" rel="noopener">r/LocalLLaMA</a></li>
+          <li><a href="https://www.reddit.com/r/ChatGPT/" target="_blank" rel="noopener">r/ChatGPT</a></li>
+          <li><a href="https://github.com/Sero01/ai-agents-guide" target="_blank" rel="noopener">GitHub Repo</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <span>© 2026 AgentGuide · Parvez Ahmed</span>
+      <span>
+        Built with
+        <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> +
+        <a href="https://starlight.astro.build" target="_blank" rel="noopener">Starlight</a>
+        · Deployed on
+        <a href="https://pages.cloudflare.com" target="_blank" rel="noopener">Cloudflare Pages</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+
+<script is:inline>
+  // Sync with Starlight's theme key ('starlight-theme') so both sections share one preference.
+  const STORAGE_KEY = 'starlight-theme';
+
+  function getTheme() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'dark' || stored === 'light') return stored;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem(STORAGE_KEY, theme);
+  }
+
+  // Apply immediately (before paint) to avoid flash
+  applyTheme(getTheme());
+
+  // Wire up the toggle button after DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('theme-toggle')?.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+    });
+
+    // Search: Enter navigates, Ctrl+K focuses
+    const searchInput = document.getElementById('nav-search');
+    searchInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const q = searchInput.value.trim();
+        if (q) window.location.href = '/getting-started/?q=' + encodeURIComponent(q);
+      }
+      if (e.key === 'Escape') { searchInput.blur(); }
+    });
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInput?.focus();
+        searchInput?.select();
+      }
+    });
+  });
+</script>
+</body>
+</html>
