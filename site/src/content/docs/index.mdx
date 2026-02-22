@@ -1,0 +1,48 @@
+---
+title: Agent Workflows
+description: Learn to build AI agents and agentic workflows. Practical guides on MCP, frameworks, patterns, and architecture.
+template: splash
+hero:
+  tagline: Learn to build AI agents that actually work. Practical guides on architecture, MCP, frameworks, and patterns.
+  image:
+    file: ../../assets/logo-dark.svg
+  actions:
+    - text: Get Started
+      link: /getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: What are AI Agents?
+      link: /ai-agents/
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Everything you need to build AI agents
+
+<CardGrid stagger>
+  <Card title="AI Agents" icon="rocket">
+    Understand the agent loop, patterns, and when to use agents vs simple AI calls.
+    [Start learning →](/ai-agents/)
+  </Card>
+  <Card title="Agentic Workflows" icon="puzzle">
+    Design reliable multi-step AI workflows that handle real-world complexity.
+    [Explore workflows →](/agentic-workflows/)
+  </Card>
+  <Card title="MCP" icon="plug">
+    Model Context Protocol: connect your agents to any tool or data source.
+    [Learn MCP →](/mcp/)
+  </Card>
+  <Card title="Frameworks" icon="list-format">
+    Compare LangChain, CrewAI, AutoGen, and more. Pick the right tool.
+    [Compare frameworks →](/frameworks/)
+  </Card>
+  <Card title="Agent Instructions" icon="document">
+    Use CLAUDE.md and the AgentMD pattern to give agents persistent context.
+    [See the pattern →](/agent-instructions/)
+  </Card>
+  <Card title="Code Examples" icon="seti:html">
+    Copy-paste examples: tool-using agents, ReAct loops, MCP clients.
+    [Browse examples →](/code-examples/)
+  </Card>
+</CardGrid>

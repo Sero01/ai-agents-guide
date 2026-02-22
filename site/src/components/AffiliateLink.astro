@@ -1,0 +1,44 @@
+---
+/**
+ * AffiliateLink — Wraps a link with affiliate/UTM attribution.
+ *
+ * Usage:
+ *   <AffiliateLink href="https://partner.example.com/signup" campaign="mcp-page">
+ *     Try Partner Tool
+ *   </AffiliateLink>
+ *
+ * Adds ?ref=agentworkflows&utm_campaign=<campaign> to the URL.
+ */
+
+interface Props {
+  href: string;
+  campaign?: string;
+  class?: string;
+}
+
+const { href, campaign = 'general', class: className } = Astro.props;
+
+const url = new URL(href);
+url.searchParams.set('ref', 'agentworkflows');
+url.searchParams.set('utm_source', 'agentworkflows.dev');
+url.searchParams.set('utm_medium', 'docs');
+url.searchParams.set('utm_campaign', campaign);
+
+const finalHref = url.toString();
+---
+
+<a href={finalHref} class={`affiliate-link ${className ?? ''}`} target="_blank" rel="noopener sponsored">
+  <slot />
+</a>
+
+<style>
+  .affiliate-link {
+    color: var(--sl-color-accent);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+  .affiliate-link:hover {
+    text-decoration-style: solid;
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+/**
+ * SponsorBanner — Featured sponsor slot
+ *
+ * Edit the SPONSOR config below to activate.
+ * Set `active: false` to hide the banner.
+ */
+
+const SPONSOR = {
+  active: false,            // flip to true when you have a sponsor
+  name: 'Your Company',
+  tagline: 'The platform for building AI agents at scale.',
+  url: 'https://example.com?ref=agentworkflows',
+  cta: 'Try it free',
+  logo: '',                 // optional: path to logo image in /public/
+};
+---
+
+{SPONSOR.active && (
+  <aside class="sponsor-banner">
+    <span class="sponsor-banner__label">Sponsor</span>
+    <div class="sponsor-banner__body">
+      {SPONSOR.logo && <img src={SPONSOR.logo} alt={SPONSOR.name} class="sponsor-banner__logo" />}
+      <div>
+        <strong>{SPONSOR.name}</strong>
+        <span class="sponsor-banner__tagline"> — {SPONSOR.tagline}</span>
+      </div>
+    </div>
+    <a href={SPONSOR.url} target="_blank" rel="noopener sponsored" class="sponsor-banner__cta">
+      {SPONSOR.cta}
+    </a>
+  </aside>
+)}
+
+<style>
+  .sponsor-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--sl-color-bg-sidebar);
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+  }
+  .sponsor-banner__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--sl-color-text-accent);
+    white-space: nowrap;
+  }
+  .sponsor-banner__body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .sponsor-banner__logo {
+    height: 24px;
+    width: auto;
+  }
+  .sponsor-banner__tagline {
+    color: var(--sl-color-text-secondary);
+  }
+  .sponsor-banner__cta {
+    padding: 0.4rem 0.9rem;
+    background: var(--sl-color-accent);
+    color: white !important;
+    border-radius: 5px;
+    text-decoration: none;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .sponsor-banner__cta:hover {
+    opacity: 0.9;
+  }
+</style>

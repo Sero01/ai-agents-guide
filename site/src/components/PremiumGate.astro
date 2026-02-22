@@ -1,0 +1,88 @@
+---
+/**
+ * PremiumGate — Blurs slot content and shows an upgrade prompt.
+ * Content unlocks when `localStorage.premium_unlocked === 'true'`.
+ *
+ * Usage:
+ *   <PremiumGate>
+ *     <p>This content is for premium members only.</p>
+ *   </PremiumGate>
+ */
+---
+
+<div class="premium-gate" id="premium-gate">
+  <div class="premium-gate__content" id="gate-content">
+    <slot />
+  </div>
+  <div class="premium-gate__overlay" id="gate-overlay">
+    <div class="premium-gate__prompt">
+      <p>🔒 Premium Content</p>
+      <p>Unlock full access to code examples, templates, and deep-dives.</p>
+      <button id="unlock-btn" class="premium-gate__button">Unlock Premium</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('gate-overlay');
+  const content = document.getElementById('gate-content');
+  const btn = document.getElementById('unlock-btn');
+
+  function checkUnlocked() {
+    if (localStorage.getItem('premium_unlocked') === 'true') {
+      overlay?.remove();
+      content?.classList.remove('premium-gate__content--blurred');
+    } else {
+      content?.classList.add('premium-gate__content--blurred');
+    }
+  }
+
+  btn?.addEventListener('click', () => {
+    // Replace with your actual payment/auth flow
+    alert('Payment integration not yet configured. Set localStorage.premium_unlocked = "true" to unlock.');
+  });
+
+  checkUnlocked();
+</script>
+
+<style>
+  .premium-gate {
+    position: relative;
+  }
+  .premium-gate__content--blurred {
+    filter: blur(4px);
+    user-select: none;
+    pointer-events: none;
+  }
+  .premium-gate__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(2px);
+    border-radius: 8px;
+  }
+  .premium-gate__prompt {
+    text-align: center;
+    padding: 2rem;
+    background: var(--sl-color-bg);
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  }
+  .premium-gate__button {
+    margin-top: 1rem;
+    padding: 0.6rem 1.4rem;
+    background: var(--sl-color-accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  .premium-gate__button:hover {
+    opacity: 0.9;
+  }
+</style>

@@ -1,0 +1,53 @@
+/* Agent Workflows — Starlight CSS overrides */
+
+:root {
+  /* Brand colors */
+  --sl-color-accent-low: #2e1065;
+  --sl-color-accent: #7c3aed;
+  --sl-color-accent-high: #a78bfa;
+
+  /* Slightly warmer dark background */
+  --sl-color-bg: #0d0f14;
+  --sl-color-bg-sidebar: #111318;
+  --sl-color-bg-nav: rgba(13, 15, 20, 0.95);
+}
+
+/* Sticky nav with blur */
+header.header {
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Slightly larger base font for readability */
+.sl-markdown-content {
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+/* Nicer code blocks */
+.sl-markdown-content pre {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+/* Table styling */
+.sl-markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9rem;
+}
+.sl-markdown-content th {
+  background: rgba(124, 58, 237, 0.15);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+}
+.sl-markdown-content td {
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Hero section accent */
+.hero > .sl-flex {
+  gap: 1.5rem;
+}

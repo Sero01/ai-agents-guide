@@ -1,0 +1,43 @@
+---
+// Minimal theme toggle — light / dark
+// Uses Starlight's built-in theme management via data-theme attribute on <html>
+---
+
+<button id="theme-toggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+  <span class="theme-icon theme-icon--sun">☀️</span>
+  <span class="theme-icon theme-icon--moon">🌙</span>
+</button>
+
+<script>
+  const btn = document.getElementById('theme-toggle');
+
+  function getTheme(): string {
+    return document.documentElement.getAttribute('data-theme') ??
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+
+  function setTheme(theme: string) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('starlight-theme', theme);
+  }
+
+  btn?.addEventListener('click', () => {
+    setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+  });
+</script>
+
+<style>
+  #theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+  #theme-toggle:hover {
+    background: var(--sl-color-bg-sidebar);
+  }
+  html[data-theme='dark'] .theme-icon--sun { display: none; }
+  html[data-theme='light'] .theme-icon--moon { display: none; }
+</style>
