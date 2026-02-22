@@ -19,9 +19,9 @@ export default defineConfig({
 				dark: './src/assets/logo-dark.svg',
 				replacesTitle: false,
 			},
-			social: [
-				{ icon: 'github', label: 'GitHub', href: 'https://github.com/Sero01/ai-agents-guide' },
-			],
+			social: {
+				github: 'https://github.com/Sero01/ai-agents-guide',
+			},
 			editLink: {
 				baseUrl: 'https://github.com/Sero01/ai-agents-guide/edit/main/site/',
 			},
