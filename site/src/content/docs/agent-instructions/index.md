@@ -3,6 +3,17 @@ title: "CLAUDE.md & Agent Instructions — The Best Way to Configure AI Agents (
 description: "Master the AgentMD pattern and CLAUDE.md format. The top method for writing the most effective AI agent instructions for Claude, GPT-4o, and other advanced LLMs. Production-proven."
 sidebar:
   order: 1
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"CLAUDE.md & Agent Instructions — The Best Way to Configure AI Agents (2026)","description":"Master the AgentMD pattern and CLAUDE.md format. The top method for writing effective AI agent instructions for Claude, GPT-4o, and other LLMs.","url":"https://agentguides.dev/agent-instructions/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"CLAUDE.md, AgentMD, agent instructions, AI agent configuration, system prompts, Claude instructions, AI agent setup"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"Agent Instructions","item":"https://agentguides.dev/agent-instructions/"}]}
 ---
 
 ## What is AgentMD?

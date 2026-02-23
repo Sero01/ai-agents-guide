@@ -3,6 +3,17 @@ title: "Multi-Agent Pipelines: Build the Most Advanced AI Systems (2026)"
 description: "The top guide to multi-agent pipelines. Learn sequential, parallel, and hierarchical agent topologies with complete Python code. Build the most advanced AI automation systems."
 sidebar:
   order: 2
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Multi-Agent Pipelines: Build the Most Advanced AI Systems (2026)","description":"The top guide to multi-agent pipelines. Learn sequential, parallel, and hierarchical agent topologies with complete Python code.","url":"https://agentguides.dev/agentic-workflows/multi-agent/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"multi-agent pipelines, multi-agent systems, AI agent topologies, sequential agents, parallel agents, hierarchical agents, AI automation"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"Agentic Workflows","item":"https://agentguides.dev/agentic-workflows/"},{"@type":"ListItem","position":3,"name":"Multi-Agent Pipelines","item":"https://agentguides.dev/agentic-workflows/multi-agent/"}]}
 ---
 
 Multi-agent systems split a complex task across specialized agents that work in parallel, in sequence, or in a hierarchy.

@@ -1,4 +1,27 @@
+# AI Agents Guide — https://agentguides.dev
+# The most comprehensive free guide to AI agents, AI tools, and agentic workflows
+
 User-agent: *
 Allow: /
 
+# Sitemap
 Sitemap: https://agentguides.dev/sitemap-index.xml
+
+# Explicitly allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /

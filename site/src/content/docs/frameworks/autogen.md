@@ -3,6 +3,17 @@ title: "AutoGen Guide 2026 — Microsoft's Most Advanced Multi-Agent AI Framewor
 description: "Build the most powerful conversational multi-agent systems with Microsoft AutoGen. The best tutorial with complete code for agent conversations, GroupChat, and research workflows."
 sidebar:
   order: 4
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"AutoGen Guide 2026 — Microsoft's Most Advanced Multi-Agent AI Framework","description":"Build powerful conversational multi-agent systems with Microsoft AutoGen. Complete code for agent conversations, GroupChat, and research workflows.","url":"https://agentguides.dev/frameworks/autogen/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AutoGen, Microsoft AutoGen, AutoGen tutorial, multi-agent framework, AI agent conversations, GroupChat, AutoGen guide"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"Agent Frameworks","item":"https://agentguides.dev/frameworks/"},{"@type":"ListItem","position":3,"name":"AutoGen","item":"https://agentguides.dev/frameworks/autogen/"}]}
 ---
 
 AutoGen (by Microsoft Research) models agents as conversational participants. Agents talk to each other via a message-passing interface, making it natural to build systems where agents debate, critique, and collaborate through dialogue.

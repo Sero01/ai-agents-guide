@@ -3,6 +3,17 @@ title: "AI Agent Tools, Skills & Memory — How the Best Agents Remember & Act (
 description: "The most complete guide to AI agent tools, skills, and memory systems. In-context, vector, key-value, and episodic memory explained with Python code. Build the most capable AI agents."
 sidebar:
   order: 1
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Tools, Skills & Memory — How the Best Agents Remember & Act (2026)","description":"The most complete guide to AI agent tools, skills, and memory systems. In-context, vector, key-value, and episodic memory explained with Python code.","url":"https://agentguides.dev/tools-memory/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent tools, AI agent memory, vector memory, episodic memory, AI skills, tool use, AI agent capabilities"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"Tools, Skills & Memory","item":"https://agentguides.dev/tools-memory/"}]}
 ---
 
 ## Tools

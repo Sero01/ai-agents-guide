@@ -3,6 +3,17 @@ title: "Top AI Agent Design Patterns 2026: ReAct, Reflection, Plan-and-Execute &
 description: "The best AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and Critic Loop. Build the most reliable, production-ready AI agents."
 sidebar:
   order: 2
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Top AI Agent Design Patterns 2026: ReAct, Reflection, Plan-and-Execute & More","description":"The best AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and Critic Loop.","url":"https://agentguides.dev/ai-agents/patterns/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent patterns, ReAct pattern, reflection pattern, plan-and-execute, multi-agent orchestration, AI design patterns, AI agent architecture"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"AI Agents","item":"https://agentguides.dev/ai-agents/"},{"@type":"ListItem","position":3,"name":"Agent Patterns","item":"https://agentguides.dev/ai-agents/patterns/"}]}
 ---
 
 ## ReAct (Reason + Act)

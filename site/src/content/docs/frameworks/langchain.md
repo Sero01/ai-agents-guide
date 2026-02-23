@@ -3,6 +3,17 @@ title: "LangChain for AI Agents — The Most Complete Guide & Code Examples (202
 description: "The best LangChain guide for building AI agents. Top concepts, complete code examples, honest pros and cons, and when to use LangChain vs the latest alternatives. Beginner-friendly."
 sidebar:
   order: 2
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"LangChain for AI Agents — The Most Complete Guide & Code Examples (2026)","description":"The best LangChain guide for building AI agents. Top concepts, complete code examples, honest pros and cons.","url":"https://agentguides.dev/frameworks/langchain/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"LangChain, LangChain guide, LangChain tutorial, LangChain agents, AI agent framework, LangChain code examples, LangChain vs alternatives"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"Agent Frameworks","item":"https://agentguides.dev/frameworks/"},{"@type":"ListItem","position":3,"name":"LangChain","item":"https://agentguides.dev/frameworks/langchain/"}]}
 ---
 
 LangChain is the most widely used agent framework. It provides abstractions for chains, agents, tools, memory, and retrieval — along with a large ecosystem of integrations.

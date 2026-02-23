@@ -3,6 +3,17 @@ title: "Prompt Engineering for AI Agents — The Most Advanced Techniques & Best
 description: "The most advanced prompt engineering guide built for AI agent systems. Top techniques: chain-of-thought, few-shot examples, anti-hallucination strategies, and complete system prompt templates."
 sidebar:
   order: 1
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Prompt Engineering for AI Agents — The Most Advanced Techniques & Best Practices (2026)","description":"The most advanced prompt engineering guide for AI agent systems. Chain-of-thought, few-shot examples, anti-hallucination strategies, and system prompt templates.","url":"https://agentguides.dev/prompt-engineering/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"prompt engineering, AI agent prompts, chain-of-thought, few-shot prompting, system prompts, anti-hallucination, prompt templates, AI prompt best practices"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"Prompt Engineering","item":"https://agentguides.dev/prompt-engineering/"}]}
 ---
 
 Prompt engineering for agents is different from single-turn chat. You're designing for a loop, not a response.

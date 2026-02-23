@@ -3,6 +3,17 @@ title: "Best MCP Servers 2026 — Top 20+ Pre-Built Servers for AI Agents"
 description: "The most comprehensive list of the best MCP servers for AI agents. Top picks: GitHub, PostgreSQL, Filesystem, Slack, Puppeteer, Brave Search, and 15+ more official and community servers."
 sidebar:
   order: 3
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Best MCP Servers 2026 — Top 20+ Pre-Built Servers for AI Agents","description":"The most comprehensive list of the best MCP servers for AI agents. GitHub, PostgreSQL, Filesystem, Slack, Puppeteer, Brave Search, and more.","url":"https://agentguides.dev/mcp/servers/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"MCP servers, best MCP servers, Model Context Protocol servers, AI agent tools, MCP GitHub, MCP PostgreSQL, MCP Slack, MCP Puppeteer"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"MCP","item":"https://agentguides.dev/mcp/"},{"@type":"ListItem","position":3,"name":"Available Servers","item":"https://agentguides.dev/mcp/servers/"}]}
 ---
 
 The MCP ecosystem has hundreds of pre-built servers. Here are the most useful ones, organized by category.
