@@ -3,6 +3,17 @@ title: "Tokens & Context Windows: Advanced AI Agent Memory Management (2026)"
 description: "Master token budgets and context window management for the most advanced AI agents. Compare the latest Claude, GPT-4o, and Gemini context limits. Top strategies for production AI systems."
 sidebar:
   order: 3
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Tokens & Context Windows: Advanced AI Agent Memory Management (2026)","description":"Master token budgets and context window management for AI agents. Compare Claude, GPT-4o, and Gemini context limits.","url":"https://agentguides.dev/ai-agents/tokens-context/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"tokens, context windows, AI agent memory, token budgets, Claude context, GPT-4o context, Gemini context, LLM context management"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"AI Agents","item":"https://agentguides.dev/ai-agents/"},{"@type":"ListItem","position":3,"name":"Tokens & Context","item":"https://agentguides.dev/ai-agents/tokens-context/"}]}
 ---
 
 ## What Are Tokens?

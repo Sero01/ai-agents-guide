@@ -3,6 +3,17 @@ title: "MCP Setup & Installation — Complete Guide for Claude Desktop & Claude 
 description: "The most complete step-by-step MCP setup guide for Claude Desktop and Claude Code. Install Model Context Protocol on macOS, Linux, and Windows. Best practices and top troubleshooting tips."
 sidebar:
   order: 2
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"MCP Setup & Installation — Complete Guide for Claude Desktop & Claude Code (2026)","description":"The most complete step-by-step MCP setup guide for Claude Desktop and Claude Code. Install Model Context Protocol on macOS, Linux, and Windows.","url":"https://agentguides.dev/mcp/setup/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"MCP setup, MCP installation, Model Context Protocol setup, Claude Desktop MCP, Claude Code MCP, MCP tutorial, AI tools setup"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"MCP","item":"https://agentguides.dev/mcp/"},{"@type":"ListItem","position":3,"name":"Setup & Installation","item":"https://agentguides.dev/mcp/setup/"}]}
 ---
 
 This tutorial gets you from zero to a working MCP setup in under 10 minutes.

@@ -8,7 +8,17 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"What Are AI Agents? Concepts, Architecture & How They Work (2026)","description":"The most comprehensive guide to AI agent concepts and architecture. Learn what AI agents are, how the ReAct loop works, and the core patterns behind the most advanced AI systems.","url":"https://agentguides.dev/ai-agents/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"What Are AI Agents? Concepts, Architecture & How They Work (2026)","description":"The most comprehensive guide to AI agent concepts and architecture. Learn what AI agents are, how the ReAct loop works, and the core patterns behind the most advanced AI systems.","url":"https://agentguides.dev/ai-agents/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agents, what are AI agents, AI agent architecture, ReAct loop, AI agent concepts, how AI agents work, artificial intelligence agents"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"AI Agents","item":"https://agentguides.dev/ai-agents/"}]}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What makes something an AI agent vs a chatbot?","acceptedAnswer":{"@type":"Answer","text":"The key difference is autonomy and persistence. A chatbot handles single-turn requests. An AI agent persists across turns, maintains state, uses tools to affect the world, and runs in a loop: observe → think → act → observe. The minimal definition is a model + a loop + tools."}},{"@type":"Question","name":"What is the ReAct loop in AI agents?","acceptedAnswer":{"@type":"Answer","text":"The ReAct (Reason + Act) loop is the core pattern behind most AI agents. It has four steps: 1) Observe — receive input, 2) Think — reason about what to do next, 3) Act — call a tool or produce output, 4) Observe — receive the result and loop again. This continues until the task is complete."}},{"@type":"Question","name":"What tools do AI agents use?","acceptedAnswer":{"@type":"Answer","text":"AI agents can use any function exposed as a tool: web search, code execution, file system access, database queries, API calls, browser automation, and more. MCP (Model Context Protocol) standardizes how agents discover and use tools across different AI models."}}]}
 ---
 
 An AI agent is a system that perceives its environment, reasons about it, and takes actions to achieve a goal — repeatedly, in a loop.

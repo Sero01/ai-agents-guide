@@ -8,7 +8,12 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"Build Your Own MCP Server — The Most Complete Python Tutorial (2026)","description":"The best beginner-friendly guide to building a custom MCP server from scratch with Python. Complete, runnable code. Step-by-step MCP server tutorial.","url":"https://agentguides.dev/mcp/building-servers/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Build Your Own MCP Server — The Most Complete Python Tutorial (2026)","description":"The best beginner-friendly guide to building a custom MCP server from scratch with Python. Complete, runnable code. Step-by-step MCP server tutorial.","url":"https://agentguides.dev/mcp/building-servers/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"build MCP server, MCP server tutorial, custom MCP server, Python MCP server, MCP server from scratch, Model Context Protocol development"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"MCP","item":"https://agentguides.dev/mcp/"},{"@type":"ListItem","position":3,"name":"Building MCP Servers","item":"https://agentguides.dev/mcp/building-servers/"}]}
 ---
 
 Building your own MCP server lets you expose any data source or service to Claude and other MCP clients. This tutorial builds a complete server from scratch.

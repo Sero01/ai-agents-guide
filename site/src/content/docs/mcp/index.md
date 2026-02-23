@@ -11,7 +11,17 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"What is MCP? The Complete Model Context Protocol Guide 2026","description":"The #1 guide to Model Context Protocol (MCP) — the latest open standard for connecting AI agents to tools and data.","url":"https://agentguides.dev/mcp/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"What is MCP? The Complete Model Context Protocol Guide 2026","description":"The #1 guide to Model Context Protocol (MCP) — the latest open standard for connecting AI agents to tools and data.","url":"https://agentguides.dev/mcp/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"MCP, Model Context Protocol, what is MCP, MCP guide, AI tools protocol, MCP Anthropic, AI agent tools, MCP tutorial"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"MCP","item":"https://agentguides.dev/mcp/"}]}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is MCP (Model Context Protocol)?","acceptedAnswer":{"@type":"Answer","text":"MCP is an open standard created by Anthropic that defines how AI models connect to external tools, data sources, and services. Think of it as USB-C for AI agents — one universal interface, endless compatible devices. Build an integration once, use it with any MCP-compatible model."}},{"@type":"Question","name":"How does MCP work?","acceptedAnswer":{"@type":"Answer","text":"MCP uses a client-server architecture. Your AI application contains an MCP client that communicates with MCP servers. Each server exposes tools, resources, and prompts. The AI model (like Claude) decides when to call tools, and the MCP client handles the communication with servers."}},{"@type":"Question","name":"What AI models support MCP?","acceptedAnswer":{"@type":"Answer","text":"MCP is supported by Claude (via Claude Desktop and Claude Code), and the ecosystem is growing rapidly. Because MCP is an open standard, any AI model or application can implement MCP client support to connect to the hundreds of available MCP servers."}}]}
 ---
 
 **MCP (Model Context Protocol)** is an open standard created by Anthropic that defines how AI models connect to external tools, data sources, and services. Think of it as USB-C for AI agents — one universal interface, endless compatible devices.

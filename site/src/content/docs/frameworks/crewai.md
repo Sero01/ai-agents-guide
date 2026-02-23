@@ -3,6 +3,17 @@ title: "CrewAI Tutorial 2026 — The Best Framework for Multi-Agent AI Systems"
 description: "The most complete CrewAI tutorial. Learn the top framework for role-based multi-agent systems with step-by-step installation, code examples, and advanced real-world use cases."
 sidebar:
   order: 3
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"CrewAI Tutorial 2026 — The Best Framework for Multi-Agent AI Systems","description":"The most complete CrewAI tutorial. Learn the top framework for role-based multi-agent systems with step-by-step installation and code examples.","url":"https://agentguides.dev/frameworks/crewai/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"CrewAI, CrewAI tutorial, CrewAI guide, multi-agent AI, role-based agents, CrewAI framework, AI agent teams"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"Agent Frameworks","item":"https://agentguides.dev/frameworks/"},{"@type":"ListItem","position":3,"name":"CrewAI","item":"https://agentguides.dev/frameworks/crewai/"}]}
 ---
 
 CrewAI structures agents as a "crew" — each agent has a role, goal, and backstory. Agents collaborate on tasks using a hierarchical or sequential process.

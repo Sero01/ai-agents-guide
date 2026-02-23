@@ -3,6 +3,17 @@ title: "AI Agent Code Examples 2026 — The Best Working Python Code for Every C
 description: "The top collection of AI agent code examples. Complete, runnable Python code for ReAct agents, multi-agent systems, MCP servers, LangChain, CrewAI, and AutoGen. Free and beginner-friendly."
 sidebar:
   order: 1
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Code Examples 2026 — The Best Working Python Code for Every Concept","description":"Complete, runnable Python code for ReAct agents, multi-agent systems, MCP servers, LangChain, CrewAI, and AutoGen.","url":"https://agentguides.dev/code-examples/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent code examples, Python AI agent, ReAct agent code, multi-agent code, MCP server code, LangChain examples, CrewAI examples, AutoGen examples"}
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"Code Examples","item":"https://agentguides.dev/code-examples/"}]}
 ---
 
 All examples use the Anthropic Claude API directly (no framework required). They're designed to be runnable with minimal setup.
