@@ -1,6 +1,6 @@
 ---
-title: "Agentic Workflows: What They Are & How to Build the Best Ones (2026)"
-description: "The most complete guide to agentic workflows. Learn what they are, how they differ from simple AI agents, and the top best practices for building reliable, scalable AI automation pipelines."
+title: "Agentic Workflows: What They Are and How to Build Them"
+description: "What agentic workflows are, how they differ from single AI agents, and practical design principles for building reliable, scalable AI automation pipelines."
 sidebar:
   order: 1
 head:

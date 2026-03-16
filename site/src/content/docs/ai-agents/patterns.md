@@ -1,6 +1,6 @@
 ---
-title: "Top AI Agent Design Patterns 2026: ReAct, Reflection, Plan-and-Execute & More"
-description: "The best AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and Critic Loop. Build the most reliable, production-ready AI agents."
+title: "AI Agent Design Patterns: ReAct, Reflection, Plan-and-Execute, and More"
+description: "Core AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and the Critic Loop pattern."
 sidebar:
   order: 2
 head:

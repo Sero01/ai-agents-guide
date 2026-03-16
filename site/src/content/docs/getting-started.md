@@ -1,6 +1,6 @@
 ---
-title: "Getting Started with AI Agents — Beginner's Complete Guide 2026"
-description: "Start building AI agents from scratch. The best beginner-friendly introduction to AI agents, agentic workflows, and the latest AI automation tools. No fluff, just code."
+title: "Getting Started with AI Agents: A Developer's Introduction"
+description: "A code-first introduction to AI agents and agentic workflows for developers. Covers what AI agents are, what tools you'll need, and how to navigate this guide."
 sidebar:
   order: 1
 head:

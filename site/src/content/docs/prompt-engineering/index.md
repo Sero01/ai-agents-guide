@@ -1,6 +1,6 @@
 ---
-title: "Prompt Engineering for AI Agents — The Most Advanced Techniques & Best Practices (2026)"
-description: "The most advanced prompt engineering guide built for AI agent systems. Top techniques: chain-of-thought, few-shot examples, anti-hallucination strategies, and complete system prompt templates."
+title: "Prompt Engineering for AI Agents: Techniques and Best Practices"
+description: "How to write system prompts for AI agent loops, not single-turn chat. Covers chain-of-thought, few-shot examples, anti-hallucination strategies, and common mistakes to avoid."
 sidebar:
   order: 1
 head:

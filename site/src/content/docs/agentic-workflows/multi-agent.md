@@ -1,6 +1,6 @@
 ---
-title: "Multi-Agent Pipelines: Build the Most Advanced AI Systems (2026)"
-description: "The top guide to multi-agent pipelines. Learn sequential, parallel, and hierarchical agent topologies with complete Python code. Build the most advanced AI automation systems."
+title: "Multi-Agent Pipelines: Sequential, Parallel, and Hierarchical Topologies"
+description: "How to build multi-agent pipelines. Covers sequential, parallel fan-out, and hierarchical agent topologies with complete Python code examples."
 sidebar:
   order: 2
 head:

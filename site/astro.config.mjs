@@ -13,7 +13,7 @@ export default defineConfig({
 				ThemeSelect: './src/components/ThemeSelect.astro',
 			},
 			title: 'AI Agents Guide — AI Agents, AI Tools & Agentic Workflows',
-			description: 'The most comprehensive, free guide to AI agents, agentic workflows, AI tools, MCP, LangChain, CrewAI, AutoGen, prompt engineering, and advanced agent patterns. Code-first. Updated 2026.',
+			description: 'A free, code-first reference for developers building AI agents and agentic systems. Covers MCP, LangChain, CrewAI, AutoGen, prompt engineering, and agent design patterns. Updated 2026.',
 			logo: {
 				light: './src/assets/logo-light.svg',
 				dark: './src/assets/logo-dark.svg',
@@ -191,6 +191,13 @@ export default defineConfig({
 					label: 'Code Examples',
 					items: [
 						{ label: 'All Examples', slug: 'code-examples' },
+					],
+				},
+				{
+					label: 'Site',
+					items: [
+						{ label: 'About', slug: 'about' },
+						{ label: 'Privacy Policy', slug: 'privacy' },
 					],
 				},
 			],

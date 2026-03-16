@@ -1,6 +1,6 @@
 ---
-title: "Build Your Own MCP Server — The Most Complete Python Tutorial (2026)"
-description: "The best beginner-friendly guide to building a custom MCP server from scratch with Python. Complete, runnable code. Step-by-step MCP server tutorial — the most practical guide available."
+title: "Build Your Own MCP Server: A Python Tutorial"
+description: "How to build a custom MCP server from scratch using the Python SDK. Covers tools, resources, error handling, and how to register your server with Claude Code and Claude Desktop."
 sidebar:
   order: 4
 head:

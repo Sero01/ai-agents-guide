@@ -1,6 +1,6 @@
 ---
-title: "AutoGen Guide 2026 — Microsoft's Most Advanced Multi-Agent AI Framework"
-description: "Build the most powerful conversational multi-agent systems with Microsoft AutoGen. The best tutorial with complete code for agent conversations, GroupChat, and research workflows."
+title: "AutoGen: Microsoft's Conversational Multi-Agent Framework"
+description: "How to build multi-agent systems with Microsoft AutoGen. Covers two-agent conversations, GroupChat with multiple agents, code execution, and when to choose AutoGen over other frameworks."
 sidebar:
   order: 4
 head:

@@ -1,6 +1,6 @@
 ---
-title: "CrewAI Tutorial 2026 — The Best Framework for Multi-Agent AI Systems"
-description: "The most complete CrewAI tutorial. Learn the top framework for role-based multi-agent systems with step-by-step installation, code examples, and advanced real-world use cases."
+title: "CrewAI Tutorial: Role-Based Multi-Agent AI Systems"
+description: "How to build multi-agent systems with CrewAI. Covers agents, tasks, crews, process types, and practical examples of role-based agent workflows."
 sidebar:
   order: 3
 head:

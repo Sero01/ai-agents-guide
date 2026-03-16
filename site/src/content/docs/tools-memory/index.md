@@ -1,6 +1,6 @@
 ---
-title: "AI Agent Tools, Skills & Memory — How the Best Agents Remember & Act (2026)"
-description: "The most complete guide to AI agent tools, skills, and memory systems. In-context, vector, key-value, and episodic memory explained with Python code. Build the most capable AI agents."
+title: "AI Agent Tools, Skills, and Memory Systems Explained"
+description: "How tools, skills, and memory work in AI agent systems. Covers tool calling from the API, skill composition, in-context vs external memory types, and vector store integration."
 sidebar:
   order: 1
 head:

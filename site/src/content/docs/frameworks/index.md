@@ -1,6 +1,6 @@
 ---
-title: "Best AI Agent Frameworks 2026: LangChain vs CrewAI vs AutoGen — Top Comparison"
-description: "The most comprehensive comparison of the top AI agent frameworks. LangChain vs CrewAI vs AutoGen vs raw API — find the best framework for your project. Honest pros, cons, and benchmarks."
+title: "AI Agent Frameworks Compared: LangChain, CrewAI, AutoGen, and Raw API"
+description: "A practical comparison of AI agent frameworks — LangChain, CrewAI, AutoGen, and using the raw API directly. Covers use cases, trade-offs, and when to skip frameworks entirely."
 sidebar:
   order: 1
 head:

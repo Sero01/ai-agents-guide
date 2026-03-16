@@ -1,6 +1,6 @@
 ---
-title: "CLAUDE.md & Agent Instructions — The Best Way to Configure AI Agents (2026)"
-description: "Master the AgentMD pattern and CLAUDE.md format. The top method for writing the most effective AI agent instructions for Claude, GPT-4o, and other advanced LLMs. Production-proven."
+title: "Configuring AI Agents with CLAUDE.md and the AgentMD Pattern"
+description: "How to use CLAUDE.md and the AgentMD pattern to configure AI agents with project-specific instructions. Covers format, what to include, and how system prompts differ from CLAUDE.md."
 sidebar:
   order: 1
 head:

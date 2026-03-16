@@ -1,6 +1,6 @@
 ---
-title: "Best MCP Servers 2026 — Top 20+ Pre-Built Servers for AI Agents"
-description: "The most comprehensive list of the best MCP servers for AI agents. Top picks: GitHub, PostgreSQL, Filesystem, Slack, Puppeteer, Brave Search, and 15+ more official and community servers."
+title: "MCP Servers: 20+ Pre-Built Servers for AI Agents"
+description: "A reference of pre-built MCP servers organized by category. Covers official Anthropic servers (GitHub, PostgreSQL, Filesystem, Slack) and community servers, with config examples."
 sidebar:
   order: 3
 head:

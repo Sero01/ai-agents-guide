@@ -1,6 +1,6 @@
 ---
-title: "MCP Setup & Installation — Complete Guide for Claude Desktop & Claude Code (2026)"
-description: "The most complete step-by-step MCP setup guide for Claude Desktop and Claude Code. Install Model Context Protocol on macOS, Linux, and Windows. Best practices and top troubleshooting tips."
+title: "MCP Setup and Installation: Claude Desktop and Claude Code"
+description: "Step-by-step instructions for setting up MCP with Claude Desktop and Claude Code. Covers config file locations, adding servers, transport types, environment variables, and troubleshooting."
 sidebar:
   order: 2
 head:

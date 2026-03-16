@@ -1,6 +1,6 @@
 ---
-title: "What is MCP? The Complete Model Context Protocol Guide 2026"
-description: "The #1 guide to Model Context Protocol (MCP) — the latest open standard for connecting AI agents to tools and data. Beginner-friendly with architecture diagrams. The best MCP explainer online."
+title: "What is MCP? A Developer's Guide to Model Context Protocol"
+description: "An explanation of Model Context Protocol (MCP) — the open standard for connecting AI agents to tools and data sources. Covers architecture, core concepts, and why it matters for agent development."
 sidebar:
   order: 1
   badge:

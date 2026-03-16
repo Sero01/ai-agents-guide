@@ -1,6 +1,6 @@
 ---
-title: "AI Agent Code Examples 2026 — The Best Working Python Code for Every Concept"
-description: "The top collection of AI agent code examples. Complete, runnable Python code for ReAct agents, multi-agent systems, MCP servers, LangChain, CrewAI, and AutoGen. Free and beginner-friendly."
+title: "AI Agent Code Examples: Runnable Python Code for Every Concept"
+description: "Complete, runnable Python code examples for AI agents: ReAct agents from scratch, parallel multi-agent patterns, MCP server implementations, and tool calling with the Claude API."
 sidebar:
   order: 1
 head:

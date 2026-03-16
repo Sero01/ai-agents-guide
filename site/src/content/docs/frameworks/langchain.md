@@ -1,6 +1,6 @@
 ---
-title: "LangChain for AI Agents — The Most Complete Guide & Code Examples (2026)"
-description: "The best LangChain guide for building AI agents. Top concepts, complete code examples, honest pros and cons, and when to use LangChain vs the latest alternatives. Beginner-friendly."
+title: "LangChain for AI Agents: Guide and Code Examples"
+description: "How to build AI agents with LangChain. Covers core concepts, a working agent with tool calling, pros and cons, and when to use LangChain versus simpler alternatives."
 sidebar:
   order: 2
 head:

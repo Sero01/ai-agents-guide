@@ -1,6 +1,6 @@
 ---
-title: "What Are AI Agents? Concepts, Architecture & How They Work (2026)"
-description: "The most comprehensive guide to AI agent concepts and architecture. Learn what AI agents are, how the ReAct loop works, and the core patterns behind the most advanced AI systems. Beginner-friendly."
+title: "What Are AI Agents? Concepts, Architecture, and How They Work"
+description: "A developer-focused explanation of AI agents: what they are, how the ReAct loop works, and the core architecture behind agent systems. Includes code and diagrams."
 sidebar:
   order: 1
 head:
