@@ -243,6 +243,20 @@ episodic_store.append({
 
 Episodic memories can be retrieved and included in future sessions to give the agent context about how similar tasks have been handled before.
 
+## Choosing the Right Memory Type
+
+The four memory types are not mutually exclusive. Most production agents use a combination, with each type serving a different role.
+
+In-context memory handles the immediate conversation — what was just said, what tools were just called, the current task state. It's always present and always fast, but it's temporary and space-limited.
+
+Key-value memory handles structured, permanent state: user preferences, configuration, API keys, progress through a long workflow. It's cheap to read and write and persists across sessions, but it doesn't support semantic search.
+
+Vector memory handles knowledge retrieval at scale: past conversations, documentation, domain knowledge. It can search across millions of stored items by semantic similarity, which makes it invaluable when the agent needs to draw on a large knowledge base. The cost is infrastructure complexity (you need an embedding model and a vector store).
+
+Episodic memory bridges in-context and vector memory: it stores summaries of past sessions (rather than raw facts), which gives the agent a sense of history without requiring it to re-read entire past conversations.
+
+A practical starting point: use in-context memory for everything until you hit context limits, then add key-value memory for persistent state, then add vector memory if you need to query a large knowledge base.
+
 ## MCP and Tool Discovery
 
 MCP (Model Context Protocol) standardizes how agents discover and use tools. Instead of hardcoding tool schemas, an MCP client queries a server for available tools at runtime. See the [MCP section](/mcp/) for the full guide.

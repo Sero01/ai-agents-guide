@@ -263,6 +263,24 @@ if token_count.input_tokens < 10_000:
 
 Counting tokens before sending is useful in agents that accumulate long conversation histories. You can check the token count before each API call and trigger context management (summarization, sliding window) when approaching the model's limit.
 
+## Common Patterns Summary
+
+Looking across these examples, a few patterns repeat consistently:
+
+**The message accumulation pattern**: Every example builds up a `messages` list that grows with each turn. The critical rule is that the model's response — including tool calls — must be appended to `messages` before the tool results. Skipping this step breaks the conversation structure and causes errors.
+
+**The tool dispatcher pattern**: As tools increase, routing tool calls through a single dispatcher function (rather than nested if/else blocks in the main loop) keeps the agent loop clean. The dispatcher maps tool names to Python functions and handles unknown tools gracefully.
+
+**The turn limit**: Every agent loop should have a maximum turn count. An agent that loops indefinitely due to a stuck state or a misunderstood task will accumulate costs and never return. Ten turns is a reasonable default for most tasks; increase it only when you have a concrete reason.
+
+**Returning errors as strings**: When a tool fails, return the error as a text string rather than raising an exception. The model can read an error message and adapt — retry with different arguments, explain to the user, or try a different approach. An unhandled exception crashes the loop.
+
+**Structured output for validation**: When you need the model to produce machine-readable output, request JSON and validate it. Structured output reduces the chance of format errors in downstream processing and makes it easier to extract specific values from responses.
+
+**Idempotent tool implementations**: Write tools so that calling them twice with the same arguments produces the same result (or at least doesn't cause harm). Agents sometimes retry tool calls when results are ambiguous, so tools that have destructive side effects on repeated calls are dangerous. A tool that reads data is naturally idempotent. A tool that sends an email is not — guard it carefully.
+
+These patterns apply whether you're building a simple calculator agent or a complex multi-step research pipeline. Getting comfortable with them before adding framework abstractions makes the frameworks much easier to understand and debug.
+
 ## See Also
 
 - [AI Agents: Concepts & Architecture](/ai-agents/) — Understanding the agent loop

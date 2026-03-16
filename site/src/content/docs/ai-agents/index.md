@@ -172,6 +172,20 @@ Agents are not magic. They're limited by the quality of the underlying model, th
 
 Designing agents well means anticipating these failure modes: clear tool descriptions, explicit stopping conditions, turn limits, and human-in-the-loop checkpoints for high-stakes actions.
 
+## Agents in Production
+
+Building an agent that works in a demo is straightforward. Building one that works reliably in production requires thinking carefully about what can go wrong and building safeguards.
+
+Production agents need logging. When an agent makes 30 tool calls and produces an unexpected result, you need to be able to trace exactly what happened: what was in the context at each step, which tool was called with which arguments, and what each tool returned. Without logs, debugging production failures is nearly impossible.
+
+Production agents need monitoring. Track success rates, latency, and cost per run. Set up alerts for unusual failure rates or runaway costs. A single agent run that loops indefinitely can become very expensive very quickly.
+
+Production agents need rate limiting. Agents that call external APIs (search, databases, third-party services) should respect rate limits and handle rate limit errors gracefully. An agent that hammers an API when it gets rate-limited will worsen the situation.
+
+Production agents need human review for high-stakes actions. Sending emails, modifying production data, making purchases, posting to social media — any irreversible action should have a human confirmation step. The cost of pausing for confirmation is low; the cost of an unintended irreversible action can be very high.
+
+These concerns don't apply to experimental or internal-use agents where failures are easy to recover from. But they matter greatly for customer-facing agents or agents that interact with critical systems.
+
 ## See Also
 
 - [Agent Patterns](/ai-agents/patterns/) — Common design patterns for agent systems

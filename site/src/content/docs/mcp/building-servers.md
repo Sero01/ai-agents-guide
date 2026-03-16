@@ -285,6 +285,34 @@ A few things worth noting in this real-world example: the `SELECT`-only check pr
 - [ ] Read-only mode where possible (minimize write access)
 - [ ] Test with the MCP inspector before connecting to Claude
 
+## Debugging Tips
+
+MCP servers communicate over stdio, which means you can't use `print()` for debugging — it interferes with the protocol. Always use `sys.stderr` for any diagnostic output:
+
+```python
+import sys
+sys.stderr.write(f"Debug: received arguments {arguments}\n")
+sys.stderr.flush()
+```
+
+The MCP inspector (`npx @modelcontextprotocol/inspector`) is your primary debugging tool. It lets you connect to any MCP server and call its tools manually, inspect the schema it exposes, and see the raw protocol messages going back and forth.
+
+For production servers, use Python's `logging` module with a handler that writes to stderr:
+
+```python
+import logging
+import sys
+
+logging.basicConfig(
+    stream=sys.stderr,
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(message)s'
+)
+logger = logging.getLogger("my-server")
+```
+
+This gives you structured logs that appear in the MCP client's log files without interfering with the stdio protocol.
+
 ## What's Next
 
 - Browse [Available Servers](/mcp/servers/) to see patterns in real servers

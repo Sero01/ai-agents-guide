@@ -197,6 +197,20 @@ async def parallel_research(topics: list[str]) -> list[str]:
 
 **No error handling**: What happens if an LLM call fails? If an external API times out? Build retry logic into each stage from the beginning.
 
+## When to Use Agentic Workflows vs Single Agents
+
+An agentic workflow is more work to build than a single agent. It's worth the investment when:
+
+**The task has natural phases with different requirements**: Research requires search tools and patience. Analysis requires reasoning and possibly code execution. Writing requires a different tone and focus. Splitting these into separate pipeline stages lets you optimize each stage independently — different system prompts, different models, different tool sets.
+
+**The pipeline will run repeatedly on similar inputs**: A one-off task might not justify the engineering overhead of a multi-stage pipeline. But if you're running the same research-analyze-write workflow daily, the investment in a well-structured pipeline pays off quickly.
+
+**You need to inspect intermediate outputs**: If a stakeholder needs to review the research before analysis proceeds, or a human needs to approve the analysis before writing begins, a pipeline structure makes those checkpoints natural.
+
+**Reliability matters**: Single agents fail silently in ways that are hard to attribute to a specific cause. Pipelines fail at a specific stage with a specific input, which makes failures much easier to diagnose and fix.
+
+For truly one-off, exploratory tasks where the structure is unclear in advance, a single flexible agent is often easier to get started with. You can always refactor into a pipeline once you understand the shape of the work.
+
 ## See Also
 
 - [Multi-Agent Pipelines](/agentic-workflows/multi-agent/) — Coordinating multiple agents in parallel and sequence
