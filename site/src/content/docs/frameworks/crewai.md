@@ -1,6 +1,6 @@
 ---
-title: CrewAI
-description: CrewAI framework for building role-based multi-agent systems.
+title: "CrewAI Tutorial — Role-Based Multi-Agent AI Systems (2026)"
+description: "CrewAI tutorial for building role-based multi-agent systems. Step-by-step installation, code examples, and real-world use cases."
 sidebar:
   order: 3
 ---

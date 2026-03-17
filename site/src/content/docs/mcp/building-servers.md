@@ -1,8 +1,14 @@
 ---
-title: Building MCP Servers
-description: Build a custom MCP server from scratch in Python — complete, runnable code example.
+title: "Build Your Own MCP Server — Python Tutorial from Scratch (2026)"
+description: "Build a custom MCP server from scratch with Python. Complete, runnable code with step-by-step instructions. Beginner-friendly."
 sidebar:
   order: 4
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Build Your Own MCP Server — Python Tutorial from Scratch (2026)","description":"Build a custom MCP server from scratch with Python. Complete, runnable code with step-by-step instructions.","url":"https://agentguides.dev/mcp/building-servers/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
 ---
 
 Building your own MCP server lets you expose any data source or service to Claude and other MCP clients. This tutorial builds a complete server from scratch.

@@ -61,25 +61,31 @@
 
 <script is:inline>
   (function () {
-    const KEY = 'starlight-theme';
+    var KEY = 'starlight-theme';
 
     function getTheme() {
-      const stored = localStorage.getItem(KEY);
+      var stored = localStorage.getItem(KEY);
       if (stored === 'dark' || stored === 'light') return stored;
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
 
     function applyTheme(theme) {
-      document.documentElement.dataset.theme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem(KEY, theme);
     }
 
-    // Ensure correct state on load (Starlight may have already set it, this is a no-op in that case)
+    // Re-apply theme on every navigation (is:inline re-runs on each view transition)
     applyTheme(getTheme());
 
-    document.getElementById('starlight-theme-toggle')?.addEventListener('click', () => {
-      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-      applyTheme(next);
-    });
+    // Add click listener only ONCE — guard prevents duplicates across navigations
+    if (!window.__slThemeListenerAdded) {
+      window.__slThemeListenerAdded = true;
+      document.addEventListener('click', function (e) {
+        if (e.target && e.target.closest && e.target.closest('#starlight-theme-toggle')) {
+          var current = document.documentElement.getAttribute('data-theme') || getTheme();
+          applyTheme(current === 'dark' ? 'light' : 'dark');
+        }
+      });
+    }
   })();
 </script>

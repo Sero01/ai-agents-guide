@@ -1,6 +1,6 @@
 ---
-title: Multi-Agent Pipelines
-description: How to coordinate multiple specialized agents working in parallel and sequence.
+title: "Multi-Agent Pipelines: Sequential, Parallel & Hierarchical Topologies (2026)"
+description: "Guide to multi-agent pipelines. Learn sequential, parallel, and hierarchical agent topologies with Python code examples."
 sidebar:
   order: 2
 ---

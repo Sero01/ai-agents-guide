@@ -1,6 +1,8 @@
 ---
-title: Tools, Skills & Memory
-description: How agents use tools to take actions, build skills, and persist memory across sessions.
+title: "AI Agent Tools, Skills & Memory — How Agents Remember & Act (2026)"
+description: "Guide to AI agent tools, skills, and memory systems. In-context, vector, key-value, and episodic memory explained with Python code examples."
+sidebar:
+  order: 1
 ---
 
 ## Tools

@@ -1,11 +1,17 @@
 ---
-title: What is MCP?
-description: Model Context Protocol (MCP) explained — the open standard for connecting AI agents to tools, data sources, and services.
+title: "What is MCP? A Developer's Guide to Model Context Protocol (2026)"
+description: "A developer's guide to Model Context Protocol (MCP) — the open standard for connecting AI agents to tools and data. Beginner-friendly with architecture diagrams and code examples."
 sidebar:
   order: 1
   badge:
     text: Hot
     variant: tip
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"What is MCP? A Developer's Guide to Model Context Protocol (2026)","description":"A developer's guide to Model Context Protocol (MCP) — the open standard for connecting AI agents to tools and data.","url":"https://agentguides.dev/mcp/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
 ---
 
 **MCP (Model Context Protocol)** is an open standard created by Anthropic that defines how AI models connect to external tools, data sources, and services. Think of it as USB-C for AI agents — one universal interface, endless compatible devices.

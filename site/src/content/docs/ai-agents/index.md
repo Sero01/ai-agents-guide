@@ -1,8 +1,14 @@
 ---
-title: AI Agents — Concepts & Architecture
-description: What AI agents are, how they work, and the architectural patterns behind them.
+title: "What Are AI Agents? Concepts, Architecture & How They Work (2026)"
+description: "A developer's guide to AI agent concepts and architecture. Learn what AI agents are, how the ReAct loop works, and the core patterns behind modern AI systems. With code examples."
 sidebar:
   order: 1
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"What Are AI Agents? Concepts, Architecture & How They Work (2026)","description":"A developer's guide to AI agent concepts and architecture. Learn what AI agents are, how the ReAct loop works, and the core patterns behind modern AI systems.","url":"https://agentguides.dev/ai-agents/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
 ---
 
 An AI agent is a system that perceives its environment, reasons about it, and takes actions to achieve a goal — repeatedly, in a loop.

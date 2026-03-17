@@ -1,6 +1,8 @@
 ---
-title: Code Examples
-description: Working code examples for every major concept in the AI agents guide.
+title: "AI Agent Code Examples — Runnable Python for ReAct, MCP & More (2026)"
+description: "Practical AI agent code examples. Runnable Python code for ReAct agents, multi-agent systems, MCP servers, LangChain, CrewAI, and AutoGen. Free and beginner-friendly."
+sidebar:
+  order: 1
 ---
 
 All examples use the Anthropic Claude API directly (no framework required). They're designed to be runnable with minimal setup.

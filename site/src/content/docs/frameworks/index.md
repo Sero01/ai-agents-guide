@@ -1,8 +1,14 @@
 ---
-title: Agent Framework Comparison
-description: LangChain, CrewAI, AutoGen, and more — how to choose the right framework for your use case.
+title: "AI Agent Frameworks Compared: LangChain vs CrewAI vs AutoGen (2026)"
+description: "Honest comparison of AI agent frameworks. LangChain vs CrewAI vs AutoGen vs raw API — pros, cons, code examples, and when to use each."
 sidebar:
   order: 1
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Frameworks Compared: LangChain vs CrewAI vs AutoGen (2026)","description":"Honest comparison of AI agent frameworks. LangChain vs CrewAI vs AutoGen vs raw API — pros, cons, and code examples.","url":"https://agentguides.dev/frameworks/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
 ---
 
 Choosing a framework shapes how you build, debug, and scale your agents. Here's an honest comparison.

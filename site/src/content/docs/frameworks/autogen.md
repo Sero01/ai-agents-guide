@@ -1,6 +1,6 @@
 ---
-title: AutoGen
-description: Microsoft AutoGen framework for conversational multi-agent systems.
+title: "AutoGen Guide — Microsoft's Conversational Multi-Agent Framework (2026)"
+description: "Build conversational multi-agent systems with Microsoft AutoGen. Tutorial with code for agent conversations, GroupChat, and research workflows."
 sidebar:
   order: 4
 ---

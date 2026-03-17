@@ -1,6 +1,6 @@
 ---
-title: Tokens & Context Windows
-description: Understanding token budgets, context limits, and strategies for managing them in agent systems.
+title: "Tokens & Context Windows: Advanced AI Agent Memory Management (2026)"
+description: "Token budgets and context window management for AI agents. Compare Claude, GPT-4o, and Gemini context limits. Practical strategies for production systems."
 sidebar:
   order: 3
 ---

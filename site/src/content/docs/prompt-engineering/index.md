@@ -1,6 +1,8 @@
 ---
-title: Prompt Engineering for Agents
-description: Practical prompt engineering techniques specifically for agent systems, not just single-turn chat.
+title: "Prompt Engineering for AI Agents — Techniques & Patterns (2026)"
+description: "Prompt engineering guide for AI agent systems. Chain-of-thought, few-shot examples, anti-hallucination strategies, and system prompt templates."
+sidebar:
+  order: 1
 ---
 
 Prompt engineering for agents is different from single-turn chat. You're designing for a loop, not a response.

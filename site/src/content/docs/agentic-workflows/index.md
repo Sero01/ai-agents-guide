@@ -1,6 +1,6 @@
 ---
-title: Agentic Workflows — Overview
-description: What agentic workflows are, how they differ from simple agents, and when to use them.
+title: "Agentic Workflows: What They Are & How to Build Them (2026)"
+description: "Guide to agentic workflows. Learn what they are, how they differ from simple AI agents, and practical patterns for building reliable AI automation pipelines."
 sidebar:
   order: 1
 ---

@@ -4,75 +4,40 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 > Mirrored across CLAUDE.md, AGENTS.md, and GEMINI.md — same instructions load in any AI environment.
 
+## Session Start
+
+Before doing anything else:
+1. Read `tasks/lessons.md` — internalize all active rules before touching any code
+2. Read the last 3 files in `memory/` — understand current project state and open questions
+3. Read `user/preferences.md` — re-establish user context and working style
+4. Summarize active context and open questions to yourself in 2–3 lines before proceeding
+
+## Project Structure
+
+- `memory/` — daily logs: decisions, bugs, learnings, open questions
+- `user/` — user preferences and working style
+- `skills/` — registry of reusable code and prompt patterns
+- `tasks/` — lessons log (distilled rulebook) and task tracking
+- `plans/` — implementation plans with checkable steps
+- `.tmp/` — intermediate files, never committed, always regeneratable
+- `.env` — environment variables and API keys
+
 ---
 
 ## Repository Purpose
 
 Two concerns live here side by side:
 
-1. **Orchestration system** (root) — A 3-layer AI workflow framework used to automate tasks (job scraping, repo management, etc.)
-2. **Documentation website** (`site/`) — Astro + Starlight docs site about AI agents and agentic workflows
-
----
-
-## The 3-Layer Architecture (root)
-
-**Layer 1 — Directives** (`directives/`)
-SOPs in Markdown. Define the goal, inputs, tools/scripts to use, outputs, and edge cases. Natural language, like instructions for a mid-level employee.
-
-**Layer 2 — Orchestration** (you)
-Read directives, call execution scripts in the right order, handle errors, ask for clarification, update directives with learnings. Don't do the work yourself — route it to deterministic scripts.
-
-**Layer 3 — Execution** (`execution/`)
-Deterministic Python scripts. All API calls, data processing, and file operations happen here.
-
-**Why:** If the LLM does everything, errors compound. 90% accuracy per step = 59% success over 5 steps. Deterministic code fixes this.
-
-### Operating Principles
-
-1. **Check for existing tools** before writing a new script — look in `execution/` first
-2. **Self-anneal**: fix the script → test → update the directive with what you learned
-3. **Update directives as you learn** — don't create/overwrite directives without asking unless told to
-
-### Root File Organization
-
-| Path | Purpose |
-|------|---------|
-| `directives/` | SOPs / instruction set |
-| `execution/` | Python scripts (deterministic tools) |
-| `.env` | API keys and environment variables |
-| `.tmp/` | Intermediates — never commit, always regeneratable |
-| `credentials.json`, `token.json` | Google OAuth (in `.gitignore`) |
-
-**Deliverables** go to cloud services (Google Sheets, Slides). Local files are for intermediate processing only.
-
-### Existing Directives
-
-| Directive | What it does |
-|-----------|-------------|
-| `directives/create_repo.md` | Initialize a local git repo with `.gitignore` and initial commit |
-| `directives/job_scraper.md` | Scrape LinkedIn jobs (Bangalore/Hyderabad) → Google Sheet |
-| `directives/push_to_github.md` | Push project to GitHub via MCP tools (not `git push` — HTTPS doesn't work here) |
-
-### Infrastructure Specifics
-
-- **GitHub user**: `Sero01` (default for all repos)
-- **Default branch**: `main`
-- **Google OAuth credentials**: `/home/parvez/.config/gdrive-mcp/` (no `.env` needed for GSheets)
-- **GitHub push**: Use MCP tools (`create_or_update_file` to seed, then `push_files`). Seed with one file first — empty repos reject `push_files`.
+1. **Documentation website** (`site/`) — Astro + Starlight docs site about AI agents and agentic workflows, live at [agentguides.dev](https://agentguides.dev)
+2. **Orchestration system** (root) — A 3-layer AI workflow framework used to automate tasks (job scraping, repo management, etc.)
 
 ---
 
 ## Docs Website (`site/`)
 
-Astro + Starlight documentation site. Tech: Astro 5, `@astrojs/starlight`, `@astrojs/sitemap`.
+Astro 5 + Starlight + @astrojs/sitemap. Deployed on Cloudflare Pages.
 
 ### Commands
-
-> **Requires Node 20+** (system has 18.19.1 — use nvm):
-> ```bash
-> export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh" && nvm use 20
-> ```
 
 ```bash
 cd site
@@ -81,52 +46,68 @@ npm run build    # Build static output → site/dist/
 npm run preview  # Preview the production build locally
 ```
 
-### Architecture
+Node 20+ required. System has v24 available.
+
+### Key Files
 
 | Path | Purpose |
 |------|---------|
-| `site/astro.config.mjs` | Sidebar structure, integrations, site URL, AdSense head tag |
+| `site/astro.config.mjs` | Sidebar structure, integrations, site URL, AdSense, JSON-LD schema |
 | `site/src/content/docs/` | All documentation pages (`.md` / `.mdx`) |
-| `site/src/pages/index.astro` | Marketing landing page (separate from `/docs/` Starlight layout) |
-| `site/src/components/` | Monetization components |
+| `site/src/pages/index.astro` | Marketing landing page (separate from Starlight layout) |
+| `site/src/pages/privacy.astro` | Privacy policy (required for AdSense) |
+| `site/src/pages/about.astro` | About page (required for AdSense) |
+| `site/src/components/` | ThemeSelect override + monetization components |
 | `site/src/styles/custom.css` | Brand colors and Starlight CSS overrides |
-| `site/public/robots.txt` | SEO: points to sitemap |
+| `site/public/ads.txt` | AdSense ads.txt (required for approval) |
 
-### Content Structure
+### Adding a Page
 
-```
-site/src/content/docs/
-├── index.mdx                  ← Docs homepage (Starlight splash template)
-├── getting-started.md
-├── ai-agents/                 ← Concepts, patterns, tokens/context
-├── agentic-workflows/         ← Overview, multi-agent pipelines
-├── mcp/                       ← What is MCP, setup, servers, building servers (full example)
-├── frameworks/                ← Comparison, LangChain, CrewAI, AutoGen
-├── tools-memory/
-├── agent-instructions/        ← CLAUDE.md / AgentMD pattern
-├── prompt-engineering/
-└── code-examples/
-```
+1. Create `.md` or `.mdx` in the appropriate `site/src/content/docs/` subdirectory
+2. Required frontmatter: `title`, `description` (factual — no superlatives like "best", "most complete", "#1")
+3. Add an entry to the `sidebar` array in `astro.config.mjs`
 
-**Adding a page:** Create `.md` or `.mdx` in the appropriate subdirectory. Required frontmatter: `title`, `description`. Then add an entry to the `sidebar` array in `astro.config.mjs`.
+### SEO Rules
+
+- **No superlative-stacked titles/descriptions.** Google flags "The most comprehensive", "The #1 guide", "The Best" as low-quality. Use factual descriptors instead.
+- Pages with JSON-LD schemas: update both the frontmatter description AND the JSON-LD description
+- Landing page meta tags are in `index.astro` `<head>`, separate from Starlight's config
 
 ### Monetization Components
 
-| Component | Usage |
-|-----------|-------|
-| `AdSlot.astro` | `<AdSlot slot="ca-pub-XXX/YYY" position="in-content" />` — wraps AdSense unit |
-| `SponsorBanner.astro` | Edit `SPONSOR` config at the top of the file to activate |
-| `PremiumGate.astro` | Blurs slot content; unlocks via `localStorage.premium_unlocked = true` |
-| `AffiliateLink.astro` | `<AffiliateLink href="..." campaign="mcp-page">text</AffiliateLink>` |
+| Component | Status |
+|-----------|--------|
+| `AdSlot.astro` | Defined, not yet used in content pages |
+| `SponsorBanner.astro` | Defined, inactive (empty config) |
+| `PremiumGate.astro` | Defined, not yet used |
+| `AffiliateLink.astro` | Defined, not yet used |
 
 ### Deployment (Cloudflare Pages)
 
-Static output — no adapter needed. Connect your GitHub repo to Cloudflare Pages:
 - Build command: `npm run build`
 - Output directory: `dist`
 - Root directory: `site`
-- Node version: 20
+- Node version: 20+
 
-Config file: `site/.cloudflare/deploy.toml`
+---
 
-**Before deploying:** Update `site: 'https://agentworkflows.dev'` in `astro.config.mjs` with your actual domain, and replace `ca-pub-REPLACE_ME` in the AdSense script tag.
+## The 3-Layer Architecture (root)
+
+**Layer 1 — Directives** (`directives/`): SOPs in Markdown defining goals, inputs, tools, outputs, edge cases.
+
+**Layer 2 — Orchestration** (Claude): Read directives, call execution scripts, handle errors, update directives with learnings.
+
+**Layer 3 — Execution** (`execution/`): Deterministic Python scripts. All API calls, data processing, file operations.
+
+### Operating Principles
+
+1. Check `execution/` for existing tools before writing new scripts
+2. Self-anneal: fix script → test → update directive with what you learned
+3. Don't create/overwrite directives without asking
+
+### Infrastructure
+
+- **GitHub user**: `Sero01`, default branch: `main`
+- **GitHub push**: Use MCP tools (`create_or_update_file` to seed, then `push_files`). Seed with one file first — empty repos reject `push_files`.
+- **Google OAuth**: `/home/parvez/.config/gdrive-mcp/`
+- **Deliverables** go to cloud services (Google Sheets, Slides). Local files are for intermediate processing only.

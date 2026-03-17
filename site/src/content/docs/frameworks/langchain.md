@@ -1,6 +1,6 @@
 ---
-title: LangChain
-description: LangChain overview, key concepts, and when to use it for agent development.
+title: "LangChain for AI Agents — Guide & Code Examples (2026)"
+description: "LangChain guide for building AI agents. Core concepts, code examples, honest pros and cons, and when to use LangChain vs alternatives. Beginner-friendly."
 sidebar:
   order: 2
 ---

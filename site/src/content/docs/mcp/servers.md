@@ -1,6 +1,6 @@
 ---
-title: Available MCP Servers
-description: A curated list of pre-built MCP servers for common tools, databases, APIs, and services.
+title: "MCP Servers Directory — 20+ Pre-Built Servers for AI Agents (2026)"
+description: "Curated list of MCP servers for AI agents. Includes GitHub, PostgreSQL, Filesystem, Slack, Puppeteer, Brave Search, and 15+ more official and community servers."
 sidebar:
   order: 3
 ---

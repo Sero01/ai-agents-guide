@@ -61,23 +61,51 @@ const TOPICS = [
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Agents & Agentic Workflows — Developer Guide</title>
-  <meta name="description" content="A practical, code-first guide to AI agents, agentic workflows, MCP, and the tools powering the next era of AI." />
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7347042268747630" crossorigin="anonymous"></script>
+  <title>AI Agents & Agentic Workflows — Free Complete Developer Guide 2026</title>
+  <meta name="description" content="A beginner-friendly, code-first guide to AI agents, agentic workflows, MCP, and AI frameworks. Learn LangChain, CrewAI, AutoGen, and agent design patterns. Free, practical, updated 2026." />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="AI Agents & Agentic Workflows" />
-  <meta property="og:description" content="A practical, code-first guide to AI agents, agentic workflows, MCP, and the tools powering the next era of AI." />
+  <meta property="og:title" content="AI Agents & Agentic Workflows — Free Complete Developer Guide 2026" />
+  <meta property="og:description" content="A beginner-friendly, code-first guide to AI agents, agentic workflows, MCP, and AI frameworks. Learn LangChain, CrewAI, AutoGen, and agent design patterns. Free, practical, updated 2026." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://agentworkflows.dev/" />
-  <meta property="og:image" content="https://agentworkflows.dev/og-default.png" />
+  <meta property="og:url" content="https://agentguides.dev/" />
+  <meta property="og:image" content="https://agentguides.dev/og-default.png" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="AI Agents & Agentic Workflows" />
-  <meta name="twitter:description" content="A practical, code-first guide to AI agents, agentic workflows, and MCP." />
+  <meta name="twitter:title" content="AI Agents & Agentic Workflows — Free Complete Developer Guide 2026" />
+  <meta name="twitter:description" content="A beginner-friendly guide to AI agents, agentic workflows, MCP, LangChain, CrewAI, AutoGen, and agent design patterns. Free, updated 2026." />
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://agentworkflows.dev/" />
+  <link rel="canonical" href="https://agentguides.dev/" />
+
+  <!-- JSON-LD: WebSite + Person -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "AI Agents & Agentic Workflows",
+          "url": "https://agentguides.dev",
+          "description": "A beginner-friendly, code-first guide to AI agents, agentic workflows, MCP, LangChain, CrewAI, AutoGen, and agent design patterns. Free, updated 2026.",
+          "publisher": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://github.com/Sero01" }
+        },
+        {
+          "@type": "Person",
+          "name": "Parvez Ahmed",
+          "url": "https://github.com/Sero01",
+          "sameAs": [
+            "https://github.com/Sero01",
+            "https://www.linkedin.com/in/parvez-ahmed-b47680124",
+            "https://www.instagram.com/126parvez"
+          ]
+        }
+      ]
+    }
+  </script>
 
   <!-- Apply theme before paint to prevent flash -->
   <script is:inline>
@@ -561,18 +589,7 @@ const TOPICS = [
       </svg>
     </a>
 
-    <!-- Search bar (center, grows) -->
-    <div class="nav-search">
-      <span class="nav-search-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-      </span>
-      <input class="nav-search-input" type="search" placeholder="Search docs…" aria-label="Search documentation" id="nav-search" />
-      <span class="nav-search-kbd" aria-hidden="true">
-        <kbd>Ctrl</kbd><kbd>K</kbd>
-      </span>
-    </div>
+    <!-- Search available inside docs via Starlight's built-in Pagefind -->
 
     <!-- Text nav links -->
     <ul class="nav-links">
@@ -594,7 +611,7 @@ const TOPICS = [
         </svg>
       </button>
       <!-- GitHub -->
-      <a href="https://github.com/Sero01" class="nav-icon-btn" aria-label="GitHub" title="View on GitHub" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/Sero01/ai-agents-guide" class="nav-icon-btn" aria-label="GitHub" title="View on GitHub" target="_blank" rel="noopener noreferrer">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
         </svg>
@@ -709,6 +726,8 @@ const TOPICS = [
           <li><a href="/mcp/">MCP</a></li>
           <li><a href="/frameworks/">Frameworks</a></li>
           <li><a href="/code-examples/">Code Examples</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/privacy/">Privacy Policy</a></li>
         </ul>
       </div>
 
@@ -741,7 +760,7 @@ const TOPICS = [
 
     <!-- Bottom bar -->
     <div class="footer-bottom">
-      <span>© 2026 AgentGuide · Parvez Ahmed</span>
+      <span>© 2026 AgentGuide · Parvez Ahmed · <a href="/privacy/">Privacy</a> · <a href="/about/">About</a></span>
       <span>
         Built with
         <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> +
@@ -779,22 +798,7 @@ const TOPICS = [
       applyTheme(next);
     });
 
-    // Search: Enter navigates, Ctrl+K focuses
-    const searchInput = document.getElementById('nav-search');
-    searchInput?.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const q = searchInput.value.trim();
-        if (q) window.location.href = '/getting-started/?q=' + encodeURIComponent(q);
-      }
-      if (e.key === 'Escape') { searchInput.blur(); }
-    });
-    document.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        searchInput?.focus();
-        searchInput?.select();
-      }
-    });
+    // Search is available inside the docs section via Starlight's built-in Pagefind
   });
 </script>
 </body>

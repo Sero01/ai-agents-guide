@@ -1,6 +1,6 @@
 ---
-title: Agent Patterns
-description: Common design patterns for building reliable AI agent systems.
+title: "AI Agent Design Patterns: ReAct, Reflection, Plan-and-Execute & More (2026)"
+description: "AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and Critic Loop. With Python examples."
 sidebar:
   order: 2
 ---

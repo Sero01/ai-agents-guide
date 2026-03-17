@@ -1,8 +1,14 @@
 ---
-title: Getting Started
-description: Introduction to AI agents and how to use this guide effectively.
+title: "Getting Started with AI Agents — A Developer's Introduction (2026)"
+description: "Start building AI agents from scratch. A beginner-friendly introduction to AI agents, agentic workflows, and AI automation tools. Code-first, no fluff."
 sidebar:
   order: 1
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Getting Started with AI Agents — A Developer's Introduction (2026)","description":"Start building AI agents from scratch. A beginner-friendly introduction to AI agents, agentic workflows, and AI automation tools.","url":"https://agentguides.dev/getting-started/","datePublished":"2026-01-01","dateModified":"2026-02-22","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"}}
 ---
 
 Welcome to the developer's guide to AI agents and agentic workflows.

@@ -1,6 +1,8 @@
 ---
-title: Agent Instructions & CLAUDE.md
-description: How to write effective agent instructions using CLAUDE.md, AGENTS.md, and the AgentMD pattern.
+title: "CLAUDE.md & Agent Instructions — How to Configure AI Agents (2026)"
+description: "Learn the AgentMD pattern and CLAUDE.md format. How to write effective AI agent instructions for Claude, GPT-4o, and other LLMs. Production-proven examples."
+sidebar:
+  order: 1
 ---
 
 ## What is AgentMD?
