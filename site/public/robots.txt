@@ -1,5 +1,5 @@
 # AI Agents Guide — https://agentguides.dev
-# The most comprehensive free guide to AI agents, AI tools, and agentic workflows
+# A free, code-first developer guide to AI agents, AI tools, and agentic workflows
 
 User-agent: *
 Allow: /
