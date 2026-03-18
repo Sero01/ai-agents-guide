@@ -12,16 +12,16 @@ export default defineConfig({
 			components: {
 				ThemeSelect: './src/components/ThemeSelect.astro',
 			},
-			title: 'AI Agents Guide — AI Agents, AI Tools & Agentic Workflows',
+			title: 'AI Agents & Agentic Workflows Guide',
 			description: 'A free, code-first reference for developers building AI agents and agentic systems. Covers MCP, LangChain, CrewAI, AutoGen, prompt engineering, and agent design patterns. Updated 2026.',
 			logo: {
 				light: './src/assets/logo-light.svg',
 				dark: './src/assets/logo-dark.svg',
 				replacesTitle: false,
 			},
-			social: {
-				github: 'https://github.com/Sero01/ai-agents-guide',
-			},
+			social: [
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/Sero01/ai-agents-guide' },
+			],
 			editLink: {
 				baseUrl: 'https://github.com/Sero01/ai-agents-guide/edit/main/site/',
 			},
@@ -93,38 +93,17 @@ export default defineConfig({
 					attrs: { type: 'application/ld+json' },
 					content: JSON.stringify({
 						'@context': 'https://schema.org',
-						'@graph': [
-							{
-								'@type': 'WebSite',
-								'name': 'AI Agents Guide — Complete AI Agents & AI Tools Guide',
-								'alternateName': ['AgentGuide', 'AI Agents Guide', 'AI Guide', 'AI Tools Guide'],
-								'url': 'https://agentguides.dev',
-								'description': 'The most comprehensive free guide to AI agents, agentic workflows, AI tools, MCP, LangChain, CrewAI, AutoGen, and advanced agent patterns. Updated 2026.',
-								'inLanguage': 'en-US',
-								'publisher': {
-									'@type': 'Person',
-									'name': 'Parvez Ahmed',
-									'url': 'https://github.com/Sero01',
-								},
-								'potentialAction': {
-									'@type': 'SearchAction',
-									'target': {
-										'@type': 'EntryPoint',
-										'urlTemplate': 'https://agentguides.dev/getting-started/?q={search_term_string}',
-									},
-									'query-input': 'required name=search_term_string',
-								},
-							},
-							{
-								'@type': 'Organization',
-								'name': 'AgentGuide',
-								'url': 'https://agentguides.dev',
-								'logo': 'https://agentguides.dev/favicon.svg',
-								'sameAs': [
-									'https://github.com/Sero01/ai-agents-guide',
-								],
-							},
-						],
+						'@type': 'WebSite',
+						'name': 'AI Agents & Agentic Workflows Guide',
+						'alternateName': ['AgentGuide', 'AI Agents Guide'],
+						'url': 'https://agentguides.dev',
+						'description': 'A free, code-first guide to AI agents, agentic workflows, MCP, LangChain, CrewAI, AutoGen, and agent design patterns. Updated 2026.',
+						'inLanguage': 'en-US',
+						'publisher': {
+							'@type': 'Person',
+							'name': 'Parvez Ahmed',
+							'url': 'https://github.com/Sero01',
+						},
 					}),
 				},
 			],
