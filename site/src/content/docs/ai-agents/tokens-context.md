@@ -1,6 +1,6 @@
 ---
 title: "Tokens and Context Windows: Managing AI Agent Memory"
-description: "How tokens and context windows work in AI agents, why they matter for long-running tasks, and practical strategies for managing context: summarization, sliding windows, and external memory."
+description: "How LLM token counting works, why context windows fill faster than you expect, and how to budget tokens across system prompt, history, and retrieval."
 sidebar:
   order: 3
 head:
@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"Tokens and Context Windows: Managing AI Agent Memory","description":"How tokens and context windows work in AI agents, why they matter for long-running tasks, and practical strategies for managing context: summarization, sliding windows, and external memory.","url":"https://agentguides.dev/ai-agents/tokens-context/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"tokens, context windows, AI agent memory, token budgets, Claude context, GPT-4o context, Gemini context, LLM context management"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Tokens and Context Windows: Managing AI Agent Memory","description":"How LLM token counting works, why context windows fill faster than you expect, and how to budget tokens across system prompt, history, and retrieval.","url":"https://agentguides.dev/ai-agents/tokens-context/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"tokens, context windows, AI agent memory, token budgets, Claude context, GPT-4o context, Gemini context, LLM context management"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -30,6 +30,10 @@ More precisely, a token is a chunk of text that the model's tokenizer splits inp
 
 200K tokens is roughly 150,000 words or about 500 pages of text. That sounds enormous, but in a long-running agent session with many tool calls, it's possible to fill that context — especially if tool results are verbose (database query results, long web pages, extensive code files).
 
+:::caution[Context fills faster than you expect]
+A 200K-token window sounds large. In practice, a system prompt (2k), ten turns of dialogue (8k), and three tool results returning file contents or search results (15k) can consume over half the budget before the agent finishes its first major subtask. Planning for this is not optional in production agents.
+:::
+
 ## Why Context Windows Matter for Agents
 
 In a long-running agent loop, the conversation history grows with every tool call. Eventually you'll hit the context limit.
@@ -49,6 +53,31 @@ Turn 50: + many more calls = potentially 50,000+ tokens
 ```
 
 This growth is manageable for short tasks, but agents doing research, code generation, or multi-step analysis can generate tens of thousands of tokens per session. Planning for context growth is essential for production agents.
+
+## Token Budget: A Worked Example
+
+To make context pressure concrete, here is how a 50,000-token context window fills in a real research-and-summarize agent session:
+
+| Slot | Tokens | Running total |
+|------|--------|---------------|
+| System prompt (role, instructions, tool descriptions) | 2,000 | 2,000 |
+| Turn 1: user task description | 150 | 2,150 |
+| Turn 1: assistant plan | 400 | 2,550 |
+| Turn 2: tool call + file read result (≈3,000-word file) | 3,200 | 5,750 |
+| Turn 2: assistant analysis | 500 | 6,250 |
+| Turn 3: tool call + web search result | 2,800 | 9,050 |
+| Turn 3: assistant reasoning | 450 | 9,500 |
+| Turn 4: tool call + database query result | 4,100 | 13,600 |
+| Turn 4: assistant response | 600 | 14,200 |
+| Turn 5: retrieved documents injected (RAG) | 8,000 | 22,200 |
+| Turn 5: assistant synthesis | 700 | **22,900** |
+
+After five turns, **22,900 of 50,000 tokens are used — 46% of the budget**. If the agent continues at this rate, it hits the limit around turn 11. The token rate is also non-linear: early turns are cheap (short messages), while later turns accumulate large tool results.
+
+Key takeaways from this breakdown:
+- The system prompt is the largest fixed cost, charged on every API call.
+- A single large tool result (a file read, a search result page) can cost as much as 5–10 turns of normal dialogue.
+- Retrieved documents from RAG pipelines are often the fastest path to exhausting a context budget.
 
 There's also a quality degradation effect. Studies and empirical observation both suggest that models pay less attention to content in the middle of a very long context. The beginning (system prompt and initial goal) and the end (recent turns) tend to have the most influence on responses. Important instructions or context that gets pushed into the middle of a very long conversation may be partially ignored.
 
@@ -182,6 +211,16 @@ def decomposed_research(topic: str) -> str:
 Each agent starts fresh. The only information carried between agents is the intentionally selected output of the previous stage — not the entire conversation history. This keeps each agent's context lean and focused.
 
 Task decomposition is often the most effective context management strategy for complex tasks because it also naturally structures the work. The parallel with human team workflows is intentional: you don't have one person do all 50 steps of a complex research project — you break it into phases, each handled by someone fresh to that stage.
+
+## Common Mistakes
+
+**Dumping entire files into context.** When a tool reads a file, it's tempting to pass the full content into the conversation. A 3,000-word source file is roughly 4,000 tokens. Three such reads consume ~12,000 tokens in tool results alone. Instead, extract only the relevant function, class, or section before injecting.
+
+**Not pruning old turns.** Every turn in conversation history is re-sent with every new API call. If you have 30 turns of history averaging 500 tokens each, that's 15,000 tokens of fixed overhead on every request — regardless of whether those turns are still relevant. Prune old turns or summarize them once they are no longer needed for active reasoning.
+
+**Forgetting the system prompt multiplier.** A 2,000-token system prompt runs on every API call. For an agent that makes 100 calls in a session, that is 200,000 input tokens from the system prompt alone — before any actual work. Keep system prompts concise, or split them into a shorter core prompt plus task-specific context loaded only when needed.
+
+**Conflating token limits with token costs.** You can have a 200K context window and still incur significant API charges on a single session if you re-send large histories on every call. Tracking `response.usage.input_tokens` across turns lets you catch runaway sessions before costs become excessive. A reasonable ceiling is to stop or compress when cumulative input tokens exceed 2× the context window size.
 
 ## Estimating Token Usage
 
