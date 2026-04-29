@@ -155,6 +155,35 @@ const TOPICS = [
           ]
         },
         {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is an AI agent?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "An AI agent is a system that perceives its environment, reasons about it, and takes actions to achieve a goal — repeatedly, in a loop. Unlike simple chatbots, agents persist across turns, maintain state, and use tools to affect the world."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What are agentic workflows?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Agentic workflows are coordinated sequences of AI-driven steps designed to accomplish complex, multi-stage goals. They combine multiple AI agents in pipelines with checkpoints, retries, and human-in-the-loop review gates."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What AI tools and frameworks are covered in this guide?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This guide covers AI agents, MCP (Model Context Protocol), LangChain, CrewAI, AutoGen, prompt engineering, agent instructions (CLAUDE.md), tools & memory systems, and complete Python code examples for every concept."
+              }
+            }
+          ]
+        },
+        {
           "@type": "ItemList",
           "name": "AI Agents Guide — Topics",
           "description": "All topics covered in this free AI agents and AI tools guide",
@@ -517,6 +546,39 @@ const TOPICS = [
       .topic-arrow { display: none; }
     }
 
+    /* ── Guide intro prose ───────────────────────────────────────────── */
+    .guide-intro {
+      padding: 4rem 0 4.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .guide-intro-inner { max-width: 740px; margin: 0 auto; }
+    .guide-intro h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 2.25rem 0 0.75rem;
+    }
+    .guide-intro > .container > .guide-intro-inner > h2:first-child { margin-top: 0; }
+    .guide-intro h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 1.5rem 0 0.5rem;
+    }
+    .guide-intro p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .guide-intro a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .guide-intro a:hover { text-decoration: underline; }
+
     /* ── Sponsor section ─────────────────────────────────────────────── */
     .sponsor-section {
       padding: 2.5rem 0;
@@ -721,6 +783,36 @@ const TOPICS = [
             <span class="topic-arrow">→</span>
           </a>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-intro">
+    <div class="container">
+      <div class="guide-intro-inner">
+        <h2>Welcome</h2>
+        <p>This is a developer-focused reference for building with large language models. It covers AI agents, agentic workflows, the Model Context Protocol (MCP), and the Python frameworks people actually reach for in 2026 — LangChain, CrewAI, and AutoGen. Every concept is paired with runnable code, every framework page explains when to pick it and when to skip it, and every architectural pattern is grounded in a specific failure mode it solves. The goal is to give you a working mental model fast, then hand you the code to try it yourself. There is no signup, no paywall, and no gated chapters — the entire guide is open and indexable.</p>
+
+        <h2>How this guide is organized</h2>
+        <p>The site is split into six sections, each pitched at a different layer of the stack. <strong>AI Agents</strong> covers the core ideas: what an agent actually is, how the reason–act loop works, how token budgets and context windows constrain design, and which architectural patterns recur across implementations. <strong>Agentic Workflows</strong> moves up a level to multi-step pipelines and multi-agent systems, including human-in-the-loop checkpoints and reliability strategies for long-running jobs. <strong>MCP</strong> is the protocol layer — how to connect agents to real tools, what servers already exist, and how to build your own. <strong>Frameworks</strong> compares LangChain, CrewAI, and AutoGen side-by-side so you can pick one without reading three sets of docs. <strong>Tools, Skills &amp; Memory</strong> explains how agents persist information across sessions and how to design a skills registry that scales. <strong>Code Examples</strong> collects runnable snippets you can copy-paste and adapt. If you are new to all of this, start at <a href="/getting-started/">Getting Started</a> — it sets up the prerequisites and walks through your first agent in under fifty lines of Python.</p>
+
+        <h2>Choose a learning path</h2>
+        <p>The pages are designed to be readable independently, but the order below is a sensible progression if you want a curriculum rather than a reference.</p>
+
+        <h3>Beginner</h3>
+        <p>If you have written Python before but never built anything with an LLM, start here. Read <a href="/getting-started/">Getting Started</a> to set up your environment, then <a href="/ai-agents/">AI Agents</a> for the conceptual foundation, then <a href="/prompt-engineering/">Prompt Engineering</a> to learn how to get reliable output from a model. Finish with <a href="/code-examples/">Code Examples</a> and run one end-to-end. By that point you will have a working agent and an intuition for why it sometimes goes wrong.</p>
+
+        <h3>Intermediate</h3>
+        <p>Once the basics click, the interesting questions are about reliability and design. Read <a href="/ai-agents/patterns/">Agent Patterns</a> to learn the recurring shapes (ReAct, Plan-and-Execute, reflection loops), <a href="/ai-agents/tokens-context/">Tokens &amp; Context</a> to understand the resource constraints that shape every decision, <a href="/agent-instructions/">Agent Instructions</a> for how to specify behavior in a stable, version-controlled way, and <a href="/tools-memory/">Tools &amp; Memory</a> for state that persists across runs.</p>
+
+        <h3>Advanced</h3>
+        <p>The advanced section is for people building production systems. <a href="/agentic-workflows/multi-agent/">Multi-Agent Workflows</a> covers coordination, role specialization, and how teams of agents fail. <a href="/mcp/building-servers/">Building MCP Servers</a> walks through publishing your own tool server. The framework deep-dives — <a href="/frameworks/langchain/">LangChain</a>, <a href="/frameworks/crewai/">CrewAI</a>, and <a href="/frameworks/autogen/">AutoGen</a> — go beyond marketing comparisons into the trade-offs that matter at scale.</p>
+
+        <h2>What you'll need</h2>
+        <p>You can read the entire guide without writing any code, but the examples assume Python 3.10 or newer and a small amount of command-line comfort. To run them you will also need an API key from at least one model provider — Anthropic, OpenAI, or any provider compatible with the OpenAI SDK. A free-tier key is enough for every example on the site; nothing here requires a paid plan or special access. If you want to follow the MCP sections you will additionally need Node.js 20+ for some servers, but the protocol itself is language-agnostic and the explanations stand regardless of which runtime you use.</p>
+
+        <h2>How to use this site</h2>
+        <p>Pages are short by design — most sit in the 1,000 to 1,700 word range — and they cross-link aggressively, so following a link rarely sends you down a long detour. Use the search box at the top of every page to jump directly to a concept; results are full-text and include code blocks. Code samples are copy-paste ready and tested against current library versions, but APIs change, so check the framework's own docs if something looks off. The site is updated as the ecosystem moves, and significant changes are noted on the page they affect rather than buried in a changelog.</p>
       </div>
     </div>
   </section>
