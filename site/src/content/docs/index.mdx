@@ -23,6 +23,38 @@ head:
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
+## Welcome
+
+This is a developer-focused reference for building with large language models. It covers AI agents, agentic workflows, the Model Context Protocol (MCP), and the Python frameworks people actually reach for in 2026 — LangChain, CrewAI, and AutoGen. Every concept is paired with runnable code, every framework page explains when to pick it and when to skip it, and every architectural pattern is grounded in a specific failure mode it solves. The goal is to give you a working mental model fast, then hand you the code to try it yourself. There is no signup, no paywall, and no gated chapters — the entire guide is open and indexable.
+
+## How this guide is organized
+
+The site is split into six sections, each pitched at a different layer of the stack. **AI Agents** covers the core ideas: what an agent actually is, how the reason–act loop works, how token budgets and context windows constrain design, and which architectural patterns recur across implementations. **Agentic Workflows** moves up a level to multi-step pipelines and multi-agent systems, including human-in-the-loop checkpoints and reliability strategies for long-running jobs. **MCP** is the protocol layer — how to connect agents to real tools, what servers already exist, and how to build your own. **Frameworks** compares LangChain, CrewAI, and AutoGen side-by-side so you can pick one without reading three sets of docs. **Tools, Skills & Memory** explains how agents persist information across sessions and how to design a skills registry that scales. **Code Examples** collects runnable snippets you can copy-paste and adapt. If you are new to all of this, start at [Getting Started](/getting-started/) — it sets up the prerequisites and walks through your first agent in under fifty lines of Python.
+
+## Choose a learning path
+
+The pages are designed to be readable independently, but the order below is a sensible progression if you want a curriculum rather than a reference.
+
+### Beginner
+
+If you have written Python before but never built anything with an LLM, start here. Read [Getting Started](/getting-started/) to set up your environment, then [AI Agents](/ai-agents/) for the conceptual foundation, then [Prompt Engineering](/prompt-engineering/) to learn how to get reliable output from a model. Finish with [Code Examples](/code-examples/) and run one end-to-end. By that point you will have a working agent and an intuition for why it sometimes goes wrong.
+
+### Intermediate
+
+Once the basics click, the interesting questions are about reliability and design. Read [Agent Patterns](/ai-agents/patterns/) to learn the recurring shapes (ReAct, Plan-and-Execute, reflection loops), [Tokens & Context](/ai-agents/tokens-context/) to understand the resource constraints that shape every decision, [Agent Instructions](/agent-instructions/) for how to specify behavior in a stable, version-controlled way, and [Tools & Memory](/tools-memory/) for state that persists across runs.
+
+### Advanced
+
+The advanced section is for people building production systems. [Multi-Agent Workflows](/agentic-workflows/multi-agent/) covers coordination, role specialization, and how teams of agents fail. [Building MCP Servers](/mcp/building-servers/) walks through publishing your own tool server. The framework deep-dives — [LangChain](/frameworks/langchain/), [CrewAI](/frameworks/crewai/), and [AutoGen](/frameworks/autogen/) — go beyond marketing comparisons into the trade-offs that matter at scale.
+
+## What you'll need
+
+You can read the entire guide without writing any code, but the examples assume Python 3.10 or newer and a small amount of command-line comfort. To run them you will also need an API key from at least one model provider — Anthropic, OpenAI, or any provider compatible with the OpenAI SDK. A free-tier key is enough for every example on the site; nothing here requires a paid plan or special access. If you want to follow the MCP sections you will additionally need Node.js 20+ for some servers, but the protocol itself is language-agnostic and the explanations stand regardless of which runtime you use.
+
+## How to use this site
+
+Pages are short by design — most sit in the 1,000 to 1,700 word range — and they cross-link aggressively, so following a link rarely sends you down a long detour. Use the search box at the top of every page to jump directly to a concept; results are full-text and include code blocks. Code samples are copy-paste ready and tested against current library versions, but APIs change, so check the framework's own docs if something looks off. The site is updated as the ecosystem moves, and significant changes are noted on the page they affect rather than buried in a changelog.
+
 ## What You'll Learn
 
 <CardGrid stagger>
