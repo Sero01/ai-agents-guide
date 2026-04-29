@@ -72,6 +72,8 @@ To make context pressure concrete, here is how a 50,000-token context window fil
 | Turn 5: retrieved documents injected (RAG) | 8,000 | 22,200 |
 | Turn 5: assistant synthesis | 700 | **22,900** |
 
+![Token budget breakdown: how a 50k-token context window fills after 5 turns of an agent session](/diagrams/token-budget.svg)
+
 After five turns, **22,900 of 50,000 tokens are used — 46% of the budget**. If the agent continues at this rate, it hits the limit around turn 11. The token rate is also non-linear: early turns are cheap (short messages), while later turns accumulate large tool results.
 
 Key takeaways from this breakdown:

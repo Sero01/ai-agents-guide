@@ -1,0 +1,78 @@
+<svg width="720" height="320" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320">
+  <style>
+    text { font-family: system-ui, -apple-system, sans-serif; fill: #e2e8f0; }
+    .title { font-size: 16px; font-weight: 700; fill: #a78bfa; }
+    .subtitle { font-size: 11px; fill: #94a3b8; }
+    .tick { font-size: 11px; fill: #94a3b8; }
+    .legend-label { font-size: 12px; fill: #cbd5e1; }
+    .callout { font-size: 12px; font-weight: 600; fill: #f1f5f9; }
+    .callout-sub { font-size: 11px; fill: #94a3b8; }
+    .seg-label { font-size: 11px; font-weight: 600; fill: #f8fafc; }
+  </style>
+  <defs>
+    <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#1e293b"/>
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#334155" stroke-width="2"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="720" height="320" rx="16" fill="#0f1117"/>
+  <rect width="720" height="320" rx="16" fill="none" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Title + subtitle -->
+  <text class="title" x="360" y="34" text-anchor="middle">Token budget after 5 turns of a research agent</text>
+  <text class="subtitle" x="360" y="54" text-anchor="middle">50,000-token context window — running totals from the worked example</text>
+
+  <!-- Stacked bar (x=40..680, y=90..160, height=70) -->
+  <!-- 1. System prompt: 2,000 → 26px : x 40..66 -->
+  <rect x="40" y="90" width="26" height="70" fill="#6366f1"/>
+  <!-- 2. Dialogue (user + assistant, 5 turns): 2,800 → 36px : x 66..102 -->
+  <rect x="66" y="90" width="36" height="70" fill="#a78bfa"/>
+  <!-- 3. Tool results & RAG: 18,100 → 232px : x 102..334 -->
+  <rect x="102" y="90" width="232" height="70" fill="#ec4899"/>
+  <!-- 4. Headroom: 27,100 → 346px : x 334..680 -->
+  <rect x="334" y="90" width="346" height="70" fill="url(#hatch)"/>
+  <rect x="334" y="90" width="346" height="70" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- Bar outline -->
+  <rect x="40" y="90" width="640" height="70" fill="none" stroke="#1e293b" stroke-width="1.5" rx="3"/>
+
+  <!-- In-segment label for the dominant tool-results segment (only one wide enough) -->
+  <text class="seg-label" x="218" y="131" text-anchor="middle">Tool results &amp; RAG · 18,100 (36%)</text>
+
+  <!-- Tick marks below bar -->
+  <line x1="40"  y1="160" x2="40"  y2="168" stroke="#475569" stroke-width="1.2"/>
+  <line x1="200" y1="160" x2="200" y2="168" stroke="#475569" stroke-width="1.2"/>
+  <line x1="360" y1="160" x2="360" y2="168" stroke="#475569" stroke-width="1.2"/>
+  <line x1="520" y1="160" x2="520" y2="168" stroke="#475569" stroke-width="1.2"/>
+  <line x1="680" y1="160" x2="680" y2="168" stroke="#475569" stroke-width="1.2"/>
+  <text class="tick" x="40"  y="182" text-anchor="middle">0</text>
+  <text class="tick" x="200" y="182" text-anchor="middle">12.5k</text>
+  <text class="tick" x="360" y="182" text-anchor="middle">25k</text>
+  <text class="tick" x="520" y="182" text-anchor="middle">37.5k</text>
+  <text class="tick" x="680" y="182" text-anchor="middle">50k</text>
+
+  <!-- Callout marking the 22,900-token boundary (x=334) -->
+  <line x1="334" y1="74" x2="334" y2="88" stroke="#f472b6" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text class="callout" x="334" y="68" text-anchor="middle">22,900 used · 46%</text>
+  <text class="callout-sub" x="334" y="208" text-anchor="middle">at this rate, the window fills around turn 11</text>
+
+  <!-- Legend (y ~ 240..290) -->
+  <!-- Row 1 -->
+  <rect x="56"  y="244" width="14" height="14" rx="3" fill="#6366f1"/>
+  <text class="legend-label" x="78" y="255">System prompt — 2,000 (4%)</text>
+
+  <rect x="280" y="244" width="14" height="14" rx="3" fill="#a78bfa"/>
+  <text class="legend-label" x="302" y="255">Dialogue (5 turns) — 2,800 (6%)</text>
+
+  <!-- Row 2 -->
+  <rect x="56"  y="272" width="14" height="14" rx="3" fill="#ec4899"/>
+  <text class="legend-label" x="78" y="283">Tool results &amp; RAG — 18,100 (36%)</text>
+
+  <rect x="280" y="272" width="14" height="14" rx="3" fill="url(#hatch)" stroke="#475569" stroke-width="1"/>
+  <text class="legend-label" x="302" y="283">Headroom — 27,100 (54%)</text>
+
+  <!-- Footer note -->
+  <text class="subtitle" x="360" y="306" text-anchor="middle">Tool outputs and retrieved documents dominate; chat text is a rounding error.</text>
+</svg>
