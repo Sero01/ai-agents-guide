@@ -51,7 +51,7 @@ search_tool = SerperDevTool()
 # Define agents with roles
 researcher = Agent(
     role="Senior Research Analyst",
-    goal="Uncover cutting-edge developments in AI agents",
+    goal="Identify recent developments in AI agents",
     backstory="You are an expert at analyzing AI research papers and trends.",
     tools=[search_tool],
     verbose=True,

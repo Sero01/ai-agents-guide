@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"MCP Servers: 20+ Pre-Built Servers for AI Agents","description":"A reference of pre-built MCP servers organized by category. Covers official Anthropic servers and community servers, with complete config examples.","url":"https://agentguides.dev/mcp/servers/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"MCP servers, best MCP servers, Model Context Protocol servers, AI agent tools, MCP GitHub, MCP PostgreSQL, MCP Slack, MCP Puppeteer"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"MCP Servers: 20+ Pre-Built Servers for AI Agents","description":"A reference of pre-built MCP servers organized by category. Covers official Anthropic servers and community servers, with complete config examples.","url":"https://agentguides.dev/mcp/servers/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"MCP servers, Model Context Protocol servers, AI agent tools, MCP GitHub, MCP PostgreSQL, MCP Slack, MCP Puppeteer"}
   - tag: script
     attrs:
       type: application/ld+json

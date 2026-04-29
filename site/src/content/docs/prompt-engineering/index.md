@@ -1,5 +1,5 @@
 ---
-title: "Prompt Engineering for AI Agents: Techniques and Best Practices"
+title: "Prompt Engineering for AI Agents: Techniques and Patterns"
 description: "How to write system prompts for AI agent loops, not single-turn chat. Covers chain-of-thought, few-shot examples, anti-hallucination strategies, and common mistakes to avoid."
 sidebar:
   order: 1
@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"Prompt Engineering for AI Agents: Techniques and Best Practices","description":"How to write system prompts for AI agent loops, not single-turn chat. Covers chain-of-thought, few-shot examples, anti-hallucination strategies, and common mistakes to avoid.","url":"https://agentguides.dev/prompt-engineering/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"prompt engineering, AI agent prompts, chain-of-thought, few-shot prompting, system prompts, anti-hallucination, prompt templates, AI prompt best practices"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Prompt Engineering for AI Agents: Techniques and Patterns","description":"How to write system prompts for AI agent loops, not single-turn chat. Covers chain-of-thought, few-shot examples, anti-hallucination strategies, and common mistakes to avoid.","url":"https://agentguides.dev/prompt-engineering/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"prompt engineering, AI agent prompts, chain-of-thought, few-shot prompting, system prompts, anti-hallucination, prompt templates, AI prompt patterns"}
   - tag: script
     attrs:
       type: application/ld+json
