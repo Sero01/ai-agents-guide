@@ -1,78 +1,312 @@
-/* Agent Workflows — Starlight CSS overrides */
+/* AgentGuide — Starlight overrides
+ * Warm editorial minimalism applied to docs pages.
+ * Tokens shared with the homepage via theme.css.
+ */
 
-/* ── Brand accent (works for both themes) ── */
+@import './theme.css';
+
+/* ── Starlight token mapping ─────────────────────────────────────── */
 :root {
-  --sl-color-accent: #7c3aed;
+  --sl-font: var(--sans);
+  --sl-font-system: var(--sans);
+  --sl-font-system-mono: var(--mono);
+  --sl-text-base: 1rem;
+  --sl-line-height: 1.8;
 }
 
-/* ── Dark mode overrides ── */
+/* Dark (default) — Starlight applies these when not data-theme='light' */
+:root,
 :root:not([data-theme='light']) {
-  --sl-color-accent-low: #2e1065;
-  --sl-color-accent-high: #a78bfa;
+  --sl-color-bg: var(--bg);
+  --sl-color-bg-nav: color-mix(in srgb, var(--bg) 85%, transparent);
+  --sl-color-bg-sidebar: var(--bg);
+  --sl-color-bg-inline-code: var(--accent-dim);
 
-  /* Slightly warmer dark background */
-  --sl-color-bg: #0d0f14;
-  --sl-color-bg-sidebar: #111318;
-  --sl-color-bg-nav: rgba(13, 15, 20, 0.95);
+  --sl-color-text: var(--text-secondary);
+  --sl-color-text-accent: var(--accent);
+  --sl-color-text-invert: var(--bg);
+  --sl-color-white: var(--text-primary);
+
+  --sl-color-accent: var(--accent);
+  --sl-color-accent-low: var(--accent-dim);
+  --sl-color-accent-high: var(--accent-hover);
+
+  --sl-color-gray-1: var(--text-primary);
+  --sl-color-gray-2: var(--text-secondary);
+  --sl-color-gray-3: var(--text-secondary);
+  --sl-color-gray-4: var(--text-muted);
+  --sl-color-gray-5: var(--text-muted);
+  --sl-color-gray-6: var(--bg-card);
+  --sl-color-gray-7: var(--bg-card-hover);
+
+  --sl-color-hairline: var(--border);
+  --sl-color-hairline-light: var(--border);
+  --sl-color-hairline-shade: var(--border);
 }
 
-/* ── Light mode overrides ── */
+/* Light overrides */
 :root[data-theme='light'] {
-  --sl-color-accent-low: #ede9fe;
-  --sl-color-accent-high: #5b21b6;
+  --sl-color-bg: var(--bg);
+  --sl-color-bg-nav: color-mix(in srgb, var(--bg) 85%, transparent);
+  --sl-color-bg-sidebar: var(--bg);
+  --sl-color-bg-inline-code: var(--accent-dim);
+
+  --sl-color-text: var(--text-secondary);
+  --sl-color-text-accent: var(--accent);
+  --sl-color-text-invert: var(--bg);
+  --sl-color-white: var(--text-primary);
+  --sl-color-black: var(--text-primary);
+
+  --sl-color-accent: var(--accent);
+  --sl-color-accent-low: var(--accent-dim);
+  --sl-color-accent-high: var(--accent-hover);
+
+  --sl-color-gray-1: var(--text-primary);
+  --sl-color-gray-2: var(--text-secondary);
+  --sl-color-gray-3: var(--text-secondary);
+  --sl-color-gray-4: var(--text-muted);
+  --sl-color-gray-5: var(--text-muted);
+  --sl-color-gray-6: var(--bg-card);
+  --sl-color-gray-7: var(--bg-card-hover);
+
+  --sl-color-hairline: var(--border);
+  --sl-color-hairline-light: var(--border);
+  --sl-color-hairline-shade: var(--border);
 }
 
-/* Sticky nav with blur */
+/* ── Global typography on Starlight pages ────────────────────────── */
+body {
+  font-family: var(--sans);
+  font-weight: 300;
+  background: var(--bg);
+  color: var(--text-secondary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Logo / site title in header */
+.site-title {
+  font-family: var(--serif) !important;
+  font-weight: 500 !important;
+  font-size: 1.4rem !important;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  align-items: center;
+  gap: 0.6rem;
+}
+.site-title img { height: 1.8rem; width: auto; }
+
+/* Sticky header w/ blur */
 header.header {
-  backdrop-filter: blur(8px);
-}
-:root:not([data-theme='light']) header.header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-}
-:root[data-theme='light'] header.header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: color-mix(in srgb, var(--bg) 85%, transparent) !important;
+  border-bottom: 1px solid var(--border) !important;
 }
 
-/* Slightly larger base font for readability */
+/* Nav links — uppercase mono-ish */
+.sl-nav-mobile-link,
+header.header a[href]:not(.site-title):not(.social-icons) {
+  font-family: var(--sans);
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────── */
+nav.sidebar {
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+}
+nav.sidebar ul.top-level > li > a,
+nav.sidebar ul.top-level > li > details > summary {
+  font-family: var(--mono);
+  font-size: 0.72rem !important;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+nav.sidebar a {
+  font-family: var(--sans);
+  font-weight: 300;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+nav.sidebar a:hover { color: var(--text-primary); background: transparent; }
+nav.sidebar a[aria-current='page'] {
+  color: var(--accent) !important;
+  background: transparent !important;
+  font-weight: 500;
+}
+
+/* ── Article body ────────────────────────────────────────────────── */
 .sl-markdown-content {
+  font-family: var(--sans);
+  font-weight: 300;
   font-size: 1.02rem;
-  line-height: 1.75;
+  line-height: 1.8;
+  color: var(--text-secondary);
 }
 
-/* Nicer code blocks */
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.sl-markdown-content h5,
+.sl-markdown-content h6,
+h1.title,
+.page-title,
+[data-page-title] {
+  font-family: var(--serif) !important;
+  font-weight: 400 !important;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.sl-markdown-content h1, h1.title { font-size: clamp(2.5rem, 5vw, 3.5rem); letter-spacing: -0.03em; line-height: 1.1; }
+.sl-markdown-content h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin-top: 3rem; }
+.sl-markdown-content h3 { font-size: 1.4rem; margin-top: 2rem; }
+.sl-markdown-content h4 { font-size: 1.15rem; }
+
+.sl-markdown-content em { font-style: italic; }
+.sl-markdown-content strong { font-weight: 500; color: var(--text-primary); }
+
+.sl-markdown-content a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.sl-markdown-content a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sl-markdown-content p,
+.sl-markdown-content li { color: var(--text-secondary); }
+
+.sl-markdown-content ul li::marker,
+.sl-markdown-content ol li::marker { color: var(--text-muted); }
+
+/* ── Code ─────────────────────────────────────────────────────────── */
+.sl-markdown-content code:not(pre code) {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--accent-dim);
+  color: var(--text-primary);
+  padding: 2px 0.4em;
+  border-radius: 2px;
+}
 .sl-markdown-content pre {
-  border-radius: 10px;
+  font-family: var(--mono);
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 2px !important;
+  padding: 1.25rem !important;
 }
-:root:not([data-theme='light']) .sl-markdown-content pre {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-:root[data-theme='light'] .sl-markdown-content pre {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
+.sl-markdown-content pre code { font-family: var(--mono); font-weight: 400; }
 
-/* Table styling */
+/* ── Tables (1px border grid) ────────────────────────────────────── */
 .sl-markdown-content table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
 }
 .sl-markdown-content th {
-  background: rgba(124, 58, 237, 0.15);
-  padding: 0.5rem 0.75rem;
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem 1rem;
   text-align: left;
-  font-weight: 600;
+  border-bottom: 1px solid var(--border);
 }
 .sl-markdown-content td {
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
 }
-:root:not([data-theme='light']) .sl-markdown-content td {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-:root[data-theme='light'] .sl-markdown-content td {
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+.sl-markdown-content tr:hover td { background: var(--bg-card-hover); }
+
+/* ── Blockquotes ─────────────────────────────────────────────────── */
+.sl-markdown-content blockquote {
+  border-left: 2px solid var(--accent);
+  background: transparent;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+  font-family: var(--serif);
+  font-size: 1.1rem;
 }
 
-/* Hero section accent */
-.hero > .sl-flex {
-  gap: 1.5rem;
+/* ── HR ──────────────────────────────────────────────────────────── */
+.sl-markdown-content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 3rem 0;
 }
+
+/* ── Asides / callouts ───────────────────────────────────────────── */
+.sl-markdown-content aside.starlight-aside {
+  background: var(--bg-card);
+  border-radius: 2px;
+  border-inline-start: 2px solid var(--accent);
+  padding: 1rem 1.25rem;
+}
+.sl-markdown-content aside.starlight-aside .starlight-aside__title {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ── Pagination links ────────────────────────────────────────────── */
+.pagination-links a {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.pagination-links a:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
+}
+
+/* ── Search button ───────────────────────────────────────────────── */
+site-search button {
+  font-family: var(--mono) !important;
+  font-size: 0.75rem !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 2px !important;
+  color: var(--text-muted) !important;
+}
+site-search button:hover {
+  border-color: var(--border-hover) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* ── Status icon utilities (kept from prior file) ────────────────── */
+.sl-markdown-content [data-icon] {
+  display: inline-block;
+  vertical-align: -0.15em;
+  width: 1em;
+  height: 1em;
+}
+.sl-markdown-content .status-pass     { color: #16a34a; }
+.sl-markdown-content .status-warn     { color: #d97706; }
+.sl-markdown-content .status-fail     { color: #dc2626; }
+.sl-markdown-content .status-good     { color: #16a34a; fill: currentColor; }
+.sl-markdown-content .status-partial  { color: #eab308; fill: currentColor; }
+.sl-markdown-content .inline-icon     { vertical-align: -0.2em; }
+
+:root:not([data-theme='light']) .sl-markdown-content .status-pass    { color: #4ade80; }
+:root:not([data-theme='light']) .sl-markdown-content .status-warn    { color: #fbbf24; }
+:root:not([data-theme='light']) .sl-markdown-content .status-fail    { color: #f87171; }
+:root:not([data-theme='light']) .sl-markdown-content .status-good    { color: #4ade80; }
+:root:not([data-theme='light']) .sl-markdown-content .status-partial { color: #facc15; }

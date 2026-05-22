@@ -1,0 +1,911 @@
+---
+import modelsData from '../data/models.json';
+const { last_updated, models } = modelsData as any;
+
+// Compute composite score (mean of normalised benchmarks, 0-100) and blended price (3:1 input:output)
+const BENCHMARK_KEYS = ['mmlu_pro','gpqa_diamond','humaneval','swe_bench','math_500','mmmu','aider_polyglot','tau_bench'];
+
+const enriched = models.map((m: any) => {
+  const scores = BENCHMARK_KEYS.map(k => m.benchmarks?.[k]).filter((v: any) => typeof v === 'number');
+  const composite = scores.length ? scores.reduce((a: number, b: number) => a + b, 0) / scores.length : null;
+  const blended = m.pricing?.input != null && m.pricing?.output != null
+    ? (m.pricing.input * 0.75) + (m.pricing.output * 0.25)
+    : null;
+  return { ...m, composite, blended };
+});
+
+// Sort default by composite desc
+enriched.sort((a: any, b: any) => (b.composite ?? -1) - (a.composite ?? -1));
+
+const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{`AI Models Leaderboard — Benchmarks, Pricing, and Comparison (${last_updated})`}</title>
+  <meta name="description" content={`Interactive leaderboard comparing ${enriched.length} AI models on benchmarks (MMLU-Pro, GPQA, SWE-bench, MATH-500, MMMU, Aider, tau-bench), pricing, context windows, and throughput. Updated ${last_updated}.`} />
+  <meta name="author" content="Parvez Ahmed" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://agentguides.dev/leaderboard/" />
+  <meta property="og:title" content="AI Models Leaderboard — Benchmarks, Pricing, and Comparison" />
+  <meta property="og:description" content={`Compare ${enriched.length} AI models on benchmarks, pricing, and context. Interactive table, charts, and cost calculator. Updated ${last_updated}.`} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://agentguides.dev/leaderboard/" />
+  <meta property="og:image" content="https://agentguides.dev/og/leaderboard.png" />
+  <meta property="og:site_name" content="AgentGuide — AI Agents & AI Tools Guide" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI Models Leaderboard — Benchmarks, Pricing, Comparison" />
+  <meta name="twitter:description" content={`Sortable table of ${enriched.length} AI models with benchmarks, pricing, and a cost calculator. Updated ${last_updated}.`} />
+  <meta name="twitter:image" content="https://agentguides.dev/og/leaderboard.png" />
+  <meta name="keywords" content="AI models leaderboard, LLM benchmark comparison, MMLU-Pro, GPQA, SWE-bench, AI model pricing, Claude Opus 4.7, GPT-5, Gemini 2.5, AI model context window" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7347042268747630" crossorigin="anonymous"></script>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Dataset",
+        "@id": "https://agentguides.dev/leaderboard/#dataset",
+        "name": "AI Models Leaderboard — Benchmarks, Pricing, and Comparison",
+        "description": `Comparison of ${enriched.length} AI models across benchmarks (MMLU-Pro, GPQA Diamond, HumanEval, SWE-bench Verified, MATH-500, MMMU, Aider Polyglot, tau-bench), pricing per million tokens, context windows, and throughput.`,
+        "url": "https://agentguides.dev/leaderboard/",
+        "dateModified": last_updated,
+        "inLanguage": "en-US",
+        "creator": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://github.com/Sero01" },
+        "publisher": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://agentguides.dev/about/" },
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "keywords": "AI models leaderboard, LLM benchmark comparison, AI model pricing, AI model context window, SWE-bench, GPQA, MMLU-Pro",
+        "variableMeasured": [
+          "MMLU-Pro","GPQA Diamond","HumanEval","SWE-bench Verified","MATH-500","MMMU","Aider Polyglot","tau-bench","Input price per million tokens","Output price per million tokens","Context window","Throughput tokens per second"
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://agentguides.dev/leaderboard/#webpage",
+        "url": "https://agentguides.dev/leaderboard/",
+        "name": `AI Models Leaderboard — Benchmarks, Pricing, and Comparison (${last_updated})`,
+        "description": `Interactive leaderboard comparing ${enriched.length} AI models on benchmarks, pricing, context windows, and throughput. Updated ${last_updated}.`,
+        "inLanguage": "en-US",
+        "isPartOf": { "@type": "WebSite", "name": "AI Agents Guide", "url": "https://agentguides.dev" },
+        "primaryImageOfPage": "https://agentguides.dev/og/leaderboard.png",
+        "dateModified": last_updated,
+        "author": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://github.com/Sero01" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentguides.dev/" },
+          { "@type": "ListItem", "position": 2, "name": "Leaderboard", "item": "https://agentguides.dev/leaderboard/" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "How is the composite LLM score calculated?", "acceptedAnswer": { "@type": "Answer", "text": "The composite is the simple mean of every published benchmark for a model (MMLU-Pro, GPQA Diamond, HumanEval, SWE-bench Verified, MATH-500, MMMU, Aider Polyglot, tau-bench). Where a vendor has not reported a benchmark, the cell is empty and the composite excludes it." } },
+          { "@type": "Question", "name": "What does the blended price column mean?", "acceptedAnswer": { "@type": "Answer", "text": "A 3:1 input-to-output weighted average price per million tokens, approximating the cost shape of typical production agent workloads (heavy input from context, smaller output per call)." } },
+          { "@type": "Question", "name": "Which benchmark is the most predictive for AI coding tools?", "acceptedAnswer": { "@type": "Answer", "text": "SWE-bench Verified — it measures whether a model can resolve real GitHub issues end-to-end. Above 70 is frontier; above 50 is shippable for most coding workloads." } },
+          { "@type": "Question", "name": "How often is the leaderboard updated?", "acceptedAnswer": { "@type": "Answer", "text": "Monthly. The last-updated timestamp at the top of the page is the source of truth. New model releases get added within seven days of public availability." } },
+          { "@type": "Question", "name": "Why does pricing differ from a vendor's headline price?", "acceptedAnswer": { "@type": "Answer", "text": "Headline prices are usually input or output alone. The blended price reflects realistic agent traffic, and Anthropic/OpenAI prompt caching can drop the effective input cost by 60-80% on workloads with repeated context." } }
+        ]
+      }
+    ]
+  })} />
+
+  <script is:inline define:vars={{ MODELS: enriched, LAST_UPDATED: last_updated }}>
+    window.__LEADERBOARD = { models: MODELS, lastUpdated: LAST_UPDATED };
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script is:inline>
+    (function() {
+      const s = localStorage.getItem('starlight-theme');
+      if (s === 'dark' || s === 'light') document.documentElement.dataset.theme = s;
+    })();
+  </script>
+
+  <style>
+    @import '../styles/theme.css';
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
+    ::selection { background: var(--accent-dim); color: var(--text-primary); }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    .container-wide { max-width: 1560px; margin: 0 auto; padding: 0 2rem; }
+    @media (max-width: 768px) {
+      .container, .container-wide { padding: 0 1.25rem; }
+    }
+
+    /* ── Nav (matches homepage) ─────────────────────────────────── */
+    nav.site-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem;
+    }
+    .nav-logo {
+      font-family: var(--serif); font-size: 1.5rem; font-weight: 500;
+      letter-spacing: -0.01em; line-height: 1;
+      display: inline-flex; align-items: baseline;
+    }
+    .nav-logo .lm { color: var(--text-primary); }
+    .nav-logo .li { color: var(--accent); font-style: italic; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      color: var(--text-secondary);
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a[aria-current="page"] { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 1.25rem; }
+    .nav-github { font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; }
+    .nav-github:hover { color: var(--accent); }
+    .theme-toggle {
+      background: transparent; border: none; cursor: pointer;
+      color: var(--text-muted); padding: 0.25rem;
+      display: inline-flex; align-items: center;
+      transition: color 0.3s ease;
+    }
+    .theme-toggle:hover { color: var(--accent); }
+    .theme-toggle svg { width: 1.05rem; height: 1.05rem; }
+    .theme-toggle .icon-sun { display: none; }
+    .theme-toggle .icon-moon { display: inline-block; }
+    :root[data-theme='light'] .theme-toggle .icon-sun  { display: none; }
+    :root[data-theme='light'] .theme-toggle .icon-moon { display: inline-block; }
+    :root[data-theme='dark']  .theme-toggle .icon-sun  { display: inline-block; }
+    :root[data-theme='dark']  .theme-toggle .icon-moon { display: none; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme='light']) .theme-toggle .icon-sun  { display: inline-block; }
+      :root:not([data-theme='light']) .theme-toggle .icon-moon { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-github { display: none; }
+      .nav-inner { padding: 1rem 1.25rem; }
+    }
+
+    /* ── Hero ──────────────────────────────────────────────────── */
+    .hero { padding: 5rem 0 3rem; border-bottom: 1px solid var(--border); }
+    .hero h1 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1; letter-spacing: -0.03em;
+      color: var(--text-primary); margin-bottom: 1.25rem;
+    }
+    .hero p {
+      font-family: var(--sans); font-weight: 300;
+      color: var(--text-secondary); max-width: 720px;
+      font-size: 1.05rem; line-height: 1.8;
+    }
+    .updated-pill {
+      display: inline-block;
+      font-family: var(--mono); font-size: 0.7rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.5rem;
+    }
+
+    /* ── Filters ───────────────────────────────────────────────── */
+    .filters {
+      display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem;
+      padding: 1.5rem 0; align-items: center;
+      border-bottom: 1px solid var(--border);
+      margin: 0 0 2rem;
+    }
+    .filter-group { display: flex; gap: 0.4rem; align-items: center; }
+    .filter-label {
+      font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.15em;
+      margin-right: 0.5rem;
+    }
+    .chip {
+      font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.05em; text-transform: lowercase;
+      background: transparent; border: 1px solid var(--accent-dim);
+      color: var(--text-secondary);
+      padding: 0.4rem 0.75rem; border-radius: 2px;
+      cursor: pointer; user-select: none;
+      transition: all 0.3s ease;
+    }
+    .chip:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--text-primary); }
+    .chip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .search-input {
+      font-family: var(--sans); font-weight: 300;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-primary); border-radius: 2px;
+      padding: 0.5rem 0.75rem; font-size: 0.9rem; min-width: 220px;
+      transition: border-color 0.3s ease;
+    }
+    .search-input:focus { outline: none; border-color: var(--accent); }
+    .search-input::placeholder { color: var(--text-muted); }
+
+    /* ── Table ─────────────────────────────────────────────────── */
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--border);
+      margin-bottom: 3rem; max-height: 640px;
+      background: var(--bg-card);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    thead { position: sticky; top: 0; z-index: 1; }
+    th {
+      font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: left; padding: 1rem 0.9rem;
+      cursor: pointer; user-select: none;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      background: var(--bg-card-hover);
+      white-space: nowrap;
+      transition: color 0.3s ease;
+    }
+    th:last-child, td:last-child { border-right: none; }
+    th:hover { color: var(--accent); }
+    th .sort-indicator { color: var(--accent); font-size: 0.7rem; margin-left: 0.25rem; }
+    td {
+      font-family: var(--sans); font-weight: 300;
+      padding: 1rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      color: var(--text-secondary);
+      white-space: nowrap; line-height: 1.5;
+    }
+    td strong { font-family: var(--serif); font-weight: 500; font-size: 1.05rem; color: var(--text-primary); }
+    tr:hover td { background: var(--bg-card-hover); }
+    .vendor-chip { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.05em; }
+    .lic-open { color: var(--accent); font-weight: 500; font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
+    .lic-closed { color: var(--text-muted); font-weight: 500; font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
+    .try-btn {
+      font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      display: inline-block; padding: 0.35rem 0.8rem; border-radius: 2px;
+      background: var(--accent); color: var(--bg);
+      border: 1px solid var(--accent);
+      transition: all 0.3s ease;
+    }
+    .try-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+    .compare-cb { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent); }
+
+    /* ── Charts ────────────────────────────────────────────────── */
+    .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-bottom: 3rem; background: var(--border); border: 1px solid var(--border); }
+    @media (max-width: 900px) { .charts-row { grid-template-columns: 1fr; } }
+    .chart-card { background: var(--bg-card); padding: 1.75rem; }
+    .chart-card h2 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: 1.5rem; line-height: 1.3;
+      color: var(--text-primary); margin-bottom: 1rem;
+    }
+    .chart-card p { font-family: var(--sans); font-weight: 300; color: var(--text-muted); }
+    .chart-card select {
+      font-family: var(--mono); font-size: 0.78rem;
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--text-primary); border-radius: 2px;
+      padding: 0.4rem 0.65rem; margin-bottom: 1rem;
+      cursor: pointer;
+    }
+    .chart-card select:focus { outline: none; border-color: var(--accent); }
+
+    .bar-row { display: grid; grid-template-columns: 11rem 1fr 3rem; align-items: center; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; font-family: var(--sans); color: var(--text-secondary); }
+    .bar-track { height: 10px; background: var(--bg); border: 1px solid var(--border); overflow: hidden; }
+    .bar-fill { height: 100%; }
+    .bar-fill.open { background: var(--accent); }
+    .bar-fill.closed { background: var(--text-muted); }
+
+    /* ── Cost calculator ───────────────────────────────────────── */
+    .calc {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2rem; margin-bottom: 3rem;
+    }
+    .calc h2 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: 1.8rem; line-height: 1.2;
+      color: var(--text-primary); margin-bottom: 1.5rem;
+    }
+    .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
+    .calc-grid label {
+      font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-muted);
+      display: block; margin-bottom: 0.5rem;
+    }
+    .calc-grid input, .calc-grid select {
+      font-family: var(--sans); font-weight: 300; font-size: 0.95rem;
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border); color: var(--text-primary);
+      border-radius: 2px; padding: 0.55rem 0.7rem;
+    }
+    .calc-grid input:focus, .calc-grid select:focus { outline: none; border-color: var(--accent); }
+    .calc-result {
+      background: var(--bg); border: 1px solid var(--border);
+      padding: 1.25rem; font-family: var(--sans); font-weight: 300;
+      color: var(--text-secondary);
+    }
+    .calc-result strong {
+      font-family: var(--serif); font-weight: 500;
+      color: var(--accent); font-size: 1.75rem;
+    }
+
+    /* ── Compare drawer ────────────────────────────────────────── */
+    #compare-bar {
+      position: fixed; bottom: 1.25rem; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent); color: var(--bg);
+      padding: 0.75rem 1.5rem; border-radius: 2px;
+      font-family: var(--sans); font-weight: 500; font-size: 0.85rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      cursor: pointer; display: none;
+      border: 1px solid var(--accent);
+      transition: all 0.3s ease;
+    }
+    #compare-bar:hover { background: var(--accent-hover); }
+    #compare-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: min(95%, 720px); background: var(--bg);
+      border-left: 1px solid var(--border);
+      padding: 2rem; overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease; z-index: 110;
+    }
+    #compare-drawer.open { transform: translateX(0); }
+    #compare-drawer h2 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: 2rem; color: var(--text-primary);
+    }
+    #compare-drawer .close {
+      float: right; background: none; border: none;
+      color: var(--text-muted); font-size: 1.75rem;
+      cursor: pointer; line-height: 1;
+      transition: color 0.3s ease;
+    }
+    #compare-drawer .close:hover { color: var(--accent); }
+    .compare-table { width: 100%; margin-top: 1.5rem; border-collapse: collapse; font-size: 0.85rem; border: 1px solid var(--border); }
+    .compare-table th, .compare-table td {
+      padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border);
+      text-align: left; font-family: var(--sans); font-weight: 300;
+    }
+    .compare-table th {
+      font-family: var(--mono); font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); background: var(--bg-card);
+    }
+    .compare-table th:first-child, .compare-table td:first-child { color: var(--text-muted); font-weight: 500; }
+
+    /* ── Prose ─────────────────────────────────────────────────── */
+    .prose { max-width: 760px; margin: 4rem 0 5rem; }
+    .prose h2 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin: 3rem 0 1rem;
+    }
+    .prose h2:first-child { margin-top: 0; }
+    .prose h3 { font-family: var(--serif); font-weight: 400; font-size: 1.4rem; color: var(--text-primary); margin: 2rem 0 0.75rem; }
+    .prose p {
+      font-family: var(--sans); font-weight: 300;
+      color: var(--text-secondary); line-height: 1.85;
+      margin-bottom: 1.25rem; font-size: 1.02rem;
+    }
+    .prose strong { font-weight: 500; color: var(--text-primary); }
+    .prose a { color: var(--accent); }
+    .prose a:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* ── Footer ────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      font-family: var(--mono); font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--text-muted); text-align: center;
+    }
+    footer a { color: var(--text-muted); }
+    footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="AgentGuide home">
+      <span class="lm">agent</span><span class="li">guide</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/reviews/">Reviews</a></li>
+      <li><a href="/best/">Best Of</a></li>
+      <li><a href="/build/">Tutorials</a></li>
+      <li><a href="/leaderboard/" aria-current="page">Leaderboard</a></li>
+      <li><a href="/learn/">Learn</a></li>
+    </ul>
+    <div class="nav-right">
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <a class="nav-github" href="https://github.com/Sero01/ai-agents-guide" target="_blank" rel="noopener noreferrer">github &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <span class="updated-pill">Updated {last_updated} · {enriched.length} models tracked</span>
+      <h1>AI Models Leaderboard</h1>
+      <p>Compare {enriched.length} large language models on benchmarks, pricing, context window, and throughput. Sort and filter the table, see the price-vs-performance frontier in a glance, and use the cost calculator to estimate what each model will actually cost you in production.</p>
+    </div>
+  </section>
+
+  <div class="container-wide">
+
+    <div class="filters">
+      <div class="filter-group">
+        <span class="filter-label">License</span>
+        <span class="chip active" data-license="all">All</span>
+        <span class="chip" data-license="open">Open</span>
+        <span class="chip" data-license="closed">Closed</span>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Context</span>
+        <span class="chip active" data-ctx="all">All</span>
+        <span class="chip" data-ctx="32000">≥ 32K</span>
+        <span class="chip" data-ctx="128000">≥ 128K</span>
+        <span class="chip" data-ctx="200000">≥ 200K</span>
+        <span class="chip" data-ctx="1000000">≥ 1M</span>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Search</span>
+        <input type="text" id="search-input" class="search-input" placeholder="Model or vendor…" />
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table id="leaderboard-table">
+        <thead>
+          <tr>
+            <th data-sort="name">Model</th>
+            <th data-sort="vendor">Vendor</th>
+            <th data-sort="composite">Score</th>
+            <th data-sort="context_window">Ctx</th>
+            <th data-sort="pricing.input">In $/M</th>
+            <th data-sort="pricing.output">Out $/M</th>
+            <th data-sort="benchmarks.mmlu_pro">MMLU-Pro</th>
+            <th data-sort="benchmarks.gpqa_diamond">GPQA</th>
+            <th data-sort="benchmarks.swe_bench">SWE-bench</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body"></tbody>
+      </table>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <h2>Benchmark Leaders</h2>
+        <select id="bench-select">
+          <option value="mmlu_pro">MMLU-Pro (knowledge)</option>
+          <option value="gpqa_diamond">GPQA Diamond (reasoning)</option>
+          <option value="humaneval">HumanEval (code)</option>
+          <option value="swe_bench">SWE-bench Verified (real coding)</option>
+          <option value="math_500">MATH-500</option>
+          <option value="mmmu">MMMU (multimodal)</option>
+          <option value="aider_polyglot">Aider Polyglot</option>
+          <option value="tau_bench">tau-bench (agent tools)</option>
+        </select>
+        <div id="bar-chart"></div>
+      </div>
+      <div class="chart-card">
+        <h2>Price vs Performance</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem">X: blended $/M (log). Y: composite benchmark score. Pareto-optimal models are highlighted.</p>
+        <div id="scatter-chart"></div>
+      </div>
+    </div>
+
+    <div class="calc">
+      <h2>Cost Calculator</h2>
+      <div class="calc-grid">
+        <div>
+          <label for="calc-model">Model</label>
+          <select id="calc-model"></select>
+        </div>
+        <div>
+          <label for="calc-input-tokens">Input tokens / request</label>
+          <input type="number" id="calc-input-tokens" value="3000" min="0" />
+        </div>
+        <div>
+          <label for="calc-output-tokens">Output tokens / request</label>
+          <input type="number" id="calc-output-tokens" value="800" min="0" />
+        </div>
+        <div>
+          <label for="calc-requests">Requests / month</label>
+          <input type="number" id="calc-requests" value="10000" min="0" />
+        </div>
+      </div>
+      <div id="calc-output" class="calc-result"></div>
+      <p style="margin-top:0.75rem;font-size:0.85rem;color:var(--text-muted)">
+        Track real spend per provider with <a href="https://www.helicone.ai/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard" rel="sponsored nofollow noopener" target="_blank" style="color:var(--accent)">Helicone</a> or <a href="https://langfuse.com/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard" rel="sponsored nofollow noopener" target="_blank" style="color:var(--accent)">Langfuse</a>. Need access to every model under one bill? <a href="https://openrouter.ai/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard" rel="sponsored nofollow noopener" target="_blank" style="color:var(--accent)">OpenRouter</a> routes to all of them.
+      </p>
+    </div>
+
+    <div class="prose">
+      <h2>How to read this leaderboard</h2>
+      <p>The composite score is the simple mean of every published benchmark for a model. We do not normalise across benchmarks because they are already roughly comparable in their published units (most are 0-100 accuracy). Where a vendor has not reported a benchmark, the cell is empty and the composite excludes it — which means a model with fewer reported benchmarks is comparable to one with more, but tied scores should be read carefully.</p>
+      <p>The blended price column is a 3:1 input-to-output weighted average, which approximates the cost shape of most production agent workloads (heavy input from context and history, smaller output per call). Prompt caching changes this calculus substantially — Anthropic and OpenAI both ship aggressive caching that can drop effective price by 60-80% on repeated-context workloads. If your application is conversational or RAG-heavy, the cached-read price is the one you should optimise against, not the headline input price.</p>
+
+      <h2>Which benchmark actually matters</h2>
+      <p><strong>MMLU-Pro</strong> measures broad knowledge across 14 disciplines. Useful as a general capability indicator; weak as a predictor of agent performance.</p>
+      <p><strong>GPQA Diamond</strong> measures graduate-level science reasoning on questions verified to be hard for non-experts. A reliable indicator of how a model handles novel reasoning rather than retrieved facts.</p>
+      <p><strong>HumanEval</strong> is the original "synthesise a Python function from a docstring" benchmark. Saturated for frontier models; treat scores >85% as a baseline competency check, not a differentiator.</p>
+      <p><strong>SWE-bench Verified</strong> measures end-to-end issue resolution on real GitHub repositories — closing tickets, not solving toy problems. The single most predictive benchmark for AI coding tool performance in our experience.</p>
+      <p><strong>MATH-500</strong> measures competition mathematics. Saturated for reasoning-focused models (o3, R1) and a strong indicator of chain-of-thought capability.</p>
+      <p><strong>MMMU</strong> measures multimodal reasoning across images and text. Only matters if your application uses vision.</p>
+      <p><strong>Aider Polyglot</strong> measures multi-language code editing across Python, Go, Rust, TypeScript, JavaScript, and C++. Practical and harder to game than HumanEval.</p>
+      <p><strong>tau-bench</strong> measures tool-use in conversational agent settings (retail and airline scenarios). The best published proxy for "how good is this model as an agent" until a better benchmark replaces it.</p>
+
+      <h2>Picking a model for production</h2>
+      <p>Three rules of thumb after spending the past 12 months testing most models on this list in production-shaped workloads:</p>
+      <p><strong>1. Start cheaper, upgrade only on observed regression.</strong> Most agent flows do not need a frontier model. We default to Claude Sonnet 4.6 or DeepSeek V3.1 and only move to Opus / GPT-5 / o3 when we see a quality cliff. The cost difference compounds fast at production volume.</p>
+      <p><strong>2. Optimise for cached-read price, not headline price.</strong> If your workload has any repeated context (system prompts, conversation history, RAG corpora), the cached-read price column dominates monthly spend. Anthropic and OpenAI both offer caching; Google's flash variants have implicit caching as well.</p>
+      <p><strong>3. Benchmark your own task before committing.</strong> Run the cheapest plausible candidate on 30 examples of your real task. The leaderboard tells you which models to consider; only your eval set tells you which model to ship.</p>
+
+      <h2>Methodology and sources</h2>
+      <p>Benchmark numbers are aggregated from vendor model cards, the <a href="https://lmarena.ai" target="_blank" rel="noopener">LMSYS Chatbot Arena</a> leaderboard, <a href="https://artificialanalysis.ai" target="_blank" rel="noopener">Artificial Analysis</a>, the <a href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard" target="_blank" rel="noopener">HuggingFace Open LLM Leaderboard</a>, the <a href="https://aider.chat/docs/leaderboards/" target="_blank" rel="noopener">Aider leaderboard</a>, and <a href="https://www.swebench.com" target="_blank" rel="noopener">SWE-bench Verified</a>. Pricing is taken from each provider's first-party API on {last_updated}; open-weights pricing reflects the typical OpenRouter / Together / Fireworks rate. We update the data monthly and bump the timestamp in this page's header on every refresh.</p>
+      <p>For the long-form analysis behind these numbers — which models we use day-to-day, which we ruled out, and how the landscape shifted in the last six months — read the companion post <a href="/best/llm-benchmark-comparison-2026/">LLM Benchmark Comparison 2026</a>.</p>
+    </div>
+  </div>
+</main>
+
+<div id="compare-bar"><span id="compare-count">0</span> selected · Compare →</div>
+<aside id="compare-drawer">
+  <button class="close" aria-label="Close compare">×</button>
+  <h2>Compare</h2>
+  <div id="compare-content"></div>
+</aside>
+
+<footer>
+  <div class="container">
+    © 2026 AgentGuide · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a> · Data updated {last_updated}
+  </div>
+</footer>
+
+<script is:inline>
+  const STATE = {
+    models: window.__LEADERBOARD.models,
+    sort: { key: 'composite', dir: 'desc' },
+    filters: { license: 'all', ctx: 'all', search: '' },
+    selected: new Set(),
+  };
+
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+
+  function getValue(obj, path) {
+    return path.split('.').reduce((o, k) => (o == null ? null : o[k]), obj);
+  }
+
+  function fmtPrice(n) { return n == null ? '—' : '$' + n.toFixed(2); }
+  function fmtCtx(n) {
+    if (!n) return '—';
+    if (n >= 1000000) return (n / 1000000).toFixed(n % 1000000 === 0 ? 0 : 1) + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(n % 1000 === 0 ? 0 : 0) + 'K';
+    return String(n);
+  }
+  function fmtScore(n) { return n == null ? '—' : Number(n).toFixed(1); }
+
+  function applyFilters(list) {
+    const { license, ctx, search } = STATE.filters;
+    return list.filter(m => {
+      if (license !== 'all' && m.license !== license) return false;
+      if (ctx !== 'all' && (m.context_window || 0) < Number(ctx)) return false;
+      if (search) {
+        const q = search.toLowerCase();
+        if (!m.name.toLowerCase().includes(q) && !m.vendor.toLowerCase().includes(q)) return false;
+      }
+      return true;
+    });
+  }
+
+  function applySort(list) {
+    const { key, dir } = STATE.sort;
+    const factor = dir === 'asc' ? 1 : -1;
+    return [...list].sort((a, b) => {
+      const av = getValue(a, key);
+      const bv = getValue(b, key);
+      if (av == null && bv == null) return 0;
+      if (av == null) return 1;
+      if (bv == null) return -1;
+      if (typeof av === 'string') return factor * av.localeCompare(bv);
+      return factor * (av - bv);
+    });
+  }
+
+  function renderTable() {
+    const filtered = applyFilters(STATE.models);
+    const sorted = applySort(filtered);
+    const tbody = $('#leaderboard-body');
+    tbody.innerHTML = sorted.map(m => `
+      <tr>
+        <td><strong>${m.name}</strong></td>
+        <td><span class="vendor-chip">${m.vendor}</span></td>
+        <td><strong>${fmtScore(m.composite)}</strong></td>
+        <td>${fmtCtx(m.context_window)}</td>
+        <td>${fmtPrice(m.pricing?.input)}</td>
+        <td>${fmtPrice(m.pricing?.output)}</td>
+        <td>${fmtScore(m.benchmarks?.mmlu_pro)}</td>
+        <td>${fmtScore(m.benchmarks?.gpqa_diamond)}</td>
+        <td>${fmtScore(m.benchmarks?.swe_bench)}</td>
+      </tr>
+    `).join('');
+    // update sort indicators
+    $$('#leaderboard-table th[data-sort]').forEach(th => {
+      const k = th.getAttribute('data-sort');
+      const ind = th.querySelector('.sort-indicator');
+      if (ind) ind.remove();
+      if (k === STATE.sort.key) {
+        const span = document.createElement('span');
+        span.className = 'sort-indicator';
+        span.textContent = STATE.sort.dir === 'asc' ? ' ▲' : ' ▼';
+        th.appendChild(span);
+      }
+    });
+    bindCheckboxes();
+  }
+
+  function tryLink(m) {
+    const router = m.license === 'open'
+      ? 'https://openrouter.ai/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard-try'
+      : 'https://openrouter.ai/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard-try';
+    return `<a href="${router}" target="_blank" rel="sponsored nofollow noopener" class="try-btn">Try</a>`;
+  }
+
+  function bindCheckboxes() {
+    $$('.compare-cb').forEach(cb => {
+      cb.onchange = () => {
+        const id = cb.getAttribute('data-id');
+        if (cb.checked) {
+          if (STATE.selected.size >= 4) {
+            cb.checked = false;
+            alert('Compare up to 4 models at a time.');
+            return;
+          }
+          STATE.selected.add(id);
+        } else {
+          STATE.selected.delete(id);
+        }
+        updateCompareBar();
+      };
+    });
+  }
+
+  function updateCompareBar() {
+    const bar = $('#compare-bar');
+    const count = STATE.selected.size;
+    $('#compare-count').textContent = String(count);
+    bar.style.display = count >= 2 ? 'block' : 'none';
+  }
+
+  $('#compare-bar').onclick = () => {
+    const drawer = $('#compare-drawer');
+    const content = $('#compare-content');
+    const selected = STATE.models.filter(m => STATE.selected.has(m.id));
+    if (selected.length < 2) return;
+    const rows = [
+      ['Vendor', selected.map(m => m.vendor)],
+      ['License', selected.map(m => m.license)],
+      ['Context', selected.map(m => fmtCtx(m.context_window))],
+      ['Input $/M', selected.map(m => fmtPrice(m.pricing?.input))],
+      ['Output $/M', selected.map(m => fmtPrice(m.pricing?.output))],
+      ['Blended $/M', selected.map(m => fmtPrice(m.blended))],
+      ['MMLU-Pro', selected.map(m => fmtScore(m.benchmarks?.mmlu_pro))],
+      ['GPQA Diamond', selected.map(m => fmtScore(m.benchmarks?.gpqa_diamond))],
+      ['HumanEval', selected.map(m => fmtScore(m.benchmarks?.humaneval))],
+      ['SWE-bench', selected.map(m => fmtScore(m.benchmarks?.swe_bench))],
+      ['MATH-500', selected.map(m => fmtScore(m.benchmarks?.math_500))],
+      ['MMMU', selected.map(m => fmtScore(m.benchmarks?.mmmu))],
+      ['Aider Polyglot', selected.map(m => fmtScore(m.benchmarks?.aider_polyglot))],
+      ['tau-bench', selected.map(m => fmtScore(m.benchmarks?.tau_bench))],
+      ['Composite', selected.map(m => `<strong>${fmtScore(m.composite)}</strong>`)],
+    ];
+    content.innerHTML = `
+      <table class="compare-table">
+        <thead><tr><th></th>${selected.map(m => `<th>${m.name}</th>`).join('')}</tr></thead>
+        <tbody>${rows.map(([label, vals]) => `<tr><th>${label}</th>${vals.map(v => `<td>${v}</td>`).join('')}</tr>`).join('')}</tbody>
+      </table>
+    `;
+    drawer.classList.add('open');
+  };
+  $('#compare-drawer .close').onclick = () => $('#compare-drawer').classList.remove('open');
+
+  // Header sort
+  $$('#leaderboard-table th[data-sort]').forEach(th => {
+    th.onclick = () => {
+      const k = th.getAttribute('data-sort');
+      if (STATE.sort.key === k) {
+        STATE.sort.dir = STATE.sort.dir === 'desc' ? 'asc' : 'desc';
+      } else {
+        STATE.sort.key = k;
+        STATE.sort.dir = 'desc';
+      }
+      renderTable();
+    };
+  });
+
+  // Filter chips
+  $$('.chip[data-license]').forEach(c => {
+    c.onclick = () => {
+      $$('.chip[data-license]').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      STATE.filters.license = c.getAttribute('data-license');
+      renderTable();
+    };
+  });
+  $$('.chip[data-ctx]').forEach(c => {
+    c.onclick = () => {
+      $$('.chip[data-ctx]').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      STATE.filters.ctx = c.getAttribute('data-ctx');
+      renderTable();
+    };
+  });
+  $('#search-input').oninput = (e) => {
+    STATE.filters.search = e.target.value;
+    renderTable();
+  };
+
+  // Bar chart
+  function renderBarChart() {
+    const key = $('#bench-select').value;
+    const top = [...STATE.models]
+      .filter(m => m.benchmarks?.[key] != null)
+      .sort((a, b) => b.benchmarks[key] - a.benchmarks[key])
+      .slice(0, 15);
+    const max = Math.max(...top.map(m => m.benchmarks[key]));
+    $('#bar-chart').innerHTML = top.map(m => {
+      const pct = (m.benchmarks[key] / max) * 100;
+      return `
+        <div class="bar-row">
+          <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.name}</span>
+          <div class="bar-track"><div class="bar-fill ${m.license}" style="width:${pct}%"></div></div>
+          <span style="text-align:right">${m.benchmarks[key].toFixed(1)}</span>
+        </div>
+      `;
+    }).join('');
+  }
+  $('#bench-select').onchange = renderBarChart;
+
+  // Scatter chart (SVG)
+  function renderScatter() {
+    const pts = STATE.models
+      .filter(m => m.blended != null && m.composite != null && m.blended > 0)
+      .map(m => ({ x: Math.log10(m.blended + 0.01), y: m.composite, name: m.name, license: m.license, blended: m.blended }));
+    if (pts.length === 0) { $('#scatter-chart').innerHTML = '<p>No data.</p>'; return; }
+    const W = 560, H = 360, P = 40;
+    const xMin = Math.min(...pts.map(p => p.x));
+    const xMax = Math.max(...pts.map(p => p.x));
+    const yMin = Math.min(...pts.map(p => p.y));
+    const yMax = Math.max(...pts.map(p => p.y));
+    const sx = (x) => P + ((x - xMin) / (xMax - xMin || 1)) * (W - 2 * P);
+    const sy = (y) => H - P - ((y - yMin) / (yMax - yMin || 1)) * (H - 2 * P);
+
+    // Pareto frontier: minimise price, maximise score
+    const sortedByPrice = [...pts].sort((a, b) => a.x - b.x);
+    const pareto = [];
+    let bestY = -Infinity;
+    for (const p of sortedByPrice) {
+      if (p.y > bestY) { pareto.push(p); bestY = p.y; }
+    }
+    const paretoSet = new Set(pareto.map(p => p.name));
+
+    const circles = pts.map(p => `
+      <circle cx="${sx(p.x)}" cy="${sy(p.y)}" r="${paretoSet.has(p.name) ? 6 : 4}"
+        fill="var(--${p.license})" opacity="${paretoSet.has(p.name) ? 1 : 0.6}"
+        stroke="${paretoSet.has(p.name) ? 'var(--accent-high)' : 'none'}" stroke-width="2">
+        <title>${p.name} — $${p.blended.toFixed(2)}/M, score ${p.y.toFixed(1)}</title>
+      </circle>
+    `).join('');
+
+    const labels = pareto.map(p => `
+      <text x="${sx(p.x) + 8}" y="${sy(p.y) - 6}" font-size="10" fill="var(--text)">${p.name}</text>
+    `).join('');
+
+    $('#scatter-chart').innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;background:var(--bg);border-radius:0.375rem">
+        <line x1="${P}" y1="${H - P}" x2="${W - P}" y2="${H - P}" stroke="var(--border)" />
+        <line x1="${P}" y1="${P}" x2="${P}" y2="${H - P}" stroke="var(--border)" />
+        <text x="${W / 2}" y="${H - 8}" text-anchor="middle" font-size="11" fill="var(--text-muted)">Blended price per 1M tokens (log10)</text>
+        <text x="14" y="${H / 2}" transform="rotate(-90 14 ${H / 2})" text-anchor="middle" font-size="11" fill="var(--text-muted)">Composite score</text>
+        ${circles}
+        ${labels}
+      </svg>
+    `;
+  }
+
+  // Cost calculator
+  function populateCalcModels() {
+    const sel = $('#calc-model');
+    sel.innerHTML = STATE.models.map(m => `<option value="${m.id}">${m.name} (${m.vendor})</option>`).join('');
+  }
+  function renderCalc() {
+    const id = $('#calc-model').value;
+    const m = STATE.models.find(x => x.id === id);
+    if (!m) return;
+    const inT = Number($('#calc-input-tokens').value) || 0;
+    const outT = Number($('#calc-output-tokens').value) || 0;
+    const reqs = Number($('#calc-requests').value) || 0;
+    const inputCost = (inT * (m.pricing?.input ?? 0)) / 1e6;
+    const outputCost = (outT * (m.pricing?.output ?? 0)) / 1e6;
+    const perReq = inputCost + outputCost;
+    const monthly = perReq * reqs;
+    // Cheapest open / closed
+    const cheapestOpen = [...STATE.models].filter(x => x.license === 'open' && x.blended != null).sort((a,b) => a.blended - b.blended)[0];
+    const cheapestClosed = [...STATE.models].filter(x => x.license === 'closed' && x.blended != null).sort((a,b) => a.blended - b.blended)[0];
+    const monthlyAlt = (model) => {
+      if (!model) return 0;
+      return ((inT * (model.pricing?.input ?? 0)) + (outT * (model.pricing?.output ?? 0))) / 1e6 * reqs;
+    };
+    $('#calc-output').innerHTML = `
+      <div>Monthly cost on <strong>${m.name}</strong>: <strong>$${monthly.toFixed(2)}</strong></div>
+      <div style="margin-top:0.5rem;font-size:0.88rem;color:var(--text-muted)">
+        Per request: $${perReq.toFixed(5)} ·
+        vs cheapest open (${cheapestOpen?.name}): $${monthlyAlt(cheapestOpen).toFixed(2)} ·
+        vs cheapest closed (${cheapestClosed?.name}): $${monthlyAlt(cheapestClosed).toFixed(2)}
+      </div>
+    `;
+  }
+  ['calc-model','calc-input-tokens','calc-output-tokens','calc-requests'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderCalc);
+    document.getElementById(id).addEventListener('change', renderCalc);
+  });
+
+  // Theme toggle (shared key with Starlight & homepage)
+  const themeBtn = document.getElementById('theme-toggle');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const stored = localStorage.getItem('starlight-theme');
+      const cur = (stored === 'dark' || stored === 'light')
+        ? stored
+        : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('starlight-theme', next); } catch (e) {}
+    });
+  }
+
+  // Init
+  renderTable();
+  renderBarChart();
+  renderScatter();
+  populateCalcModels();
+  renderCalc();
+</script>
+
+</body>
+</html>

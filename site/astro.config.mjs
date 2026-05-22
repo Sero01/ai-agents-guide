@@ -2,11 +2,13 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import sitemap from '@astrojs/sitemap';
+import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://agentguides.dev',
 	integrations: [
+		icon(),
 		sitemap(),
 		starlight({
 			components: {
@@ -27,6 +29,16 @@ export default defineConfig({
 			},
 			customCss: ['./src/styles/custom.css'],
 			head: [
+				// Google Fonts — Cormorant Garamond (serif), Libre Franklin (sans), JetBrains Mono
+				{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
+				{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' } },
+				{
+					tag: 'link',
+					attrs: {
+						rel: 'stylesheet',
+						href: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap',
+					},
+				},
 				// SEO meta tags applied to all Starlight doc pages
 				{
 					tag: 'meta',
@@ -42,7 +54,7 @@ export default defineConfig({
 				},
 				{
 					tag: 'meta',
-					attrs: { name: 'theme-color', content: '#4f46e5' },
+					attrs: { name: 'theme-color', content: '#0c0c0c' },
 				},
 				{
 					tag: 'meta',
@@ -55,7 +67,7 @@ export default defineConfig({
 				},
 				{
 					tag: 'meta',
-					attrs: { property: 'og:image:alt', content: 'AI Agents Guide — Free comprehensive guide to AI agents and AI tools' },
+					attrs: { property: 'og:image:alt', content: 'AI Agents Guide — Free, code-first guide to AI agents and AI tools' },
 				},
 				{
 					tag: 'meta',
@@ -76,7 +88,7 @@ export default defineConfig({
 				},
 				{
 					tag: 'meta',
-					attrs: { name: 'twitter:image:alt', content: 'AI Agents Guide — Free comprehensive guide to AI agents and AI tools' },
+					attrs: { name: 'twitter:image:alt', content: 'AI Agents Guide — Free, code-first guide to AI agents and AI tools' },
 				},
 				// Google AdSense
 				{
@@ -109,28 +121,55 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
-					label: 'Getting Started',
+					label: 'Reviews',
+					badge: { text: 'New', variant: 'tip' },
 					items: [
-						{ label: 'Introduction', slug: 'getting-started' },
+						{ label: 'All Reviews', slug: 'reviews' },
+						{ label: 'CrewAI vs LangGraph vs AutoGen', slug: 'reviews/crewai-vs-langgraph-vs-autogen' },
+						{ label: 'Claude Code vs Cursor vs Codex', slug: 'reviews/claude-code-vs-cursor-vs-codex' },
 					],
 				},
 				{
-					label: 'AI Agents',
+					label: 'Best Of',
 					items: [
+						{ label: 'All Lists', slug: 'best' },
+						{ label: 'AI Agent Frameworks 2026', slug: 'best/ai-agent-frameworks-2026' },
+						{ label: 'AI Engineer Certifications 2026', slug: 'best/ai-engineer-certifications-2026' },
+						{ label: 'LLM Benchmark Comparison 2026', slug: 'best/llm-benchmark-comparison-2026' },
+					],
+				},
+				{
+					label: 'Build Tutorials',
+					items: [
+						{ label: 'All Tutorials', slug: 'build' },
+						{ label: 'Research Agent with CrewAI', slug: 'build/research-agent-with-crewai' },
+					],
+				},
+				{
+					label: 'Leaderboard',
+					badge: { text: 'New', variant: 'tip' },
+					items: [
+						{ label: 'AI Models Leaderboard', link: '/leaderboard/' },
+					],
+				},
+				{
+					label: 'Learn: AI Agents',
+					items: [
+						{ label: 'Overview', slug: 'learn' },
 						{ label: 'Concepts & Architecture', slug: 'ai-agents' },
 						{ label: 'Agent Patterns', slug: 'ai-agents/patterns' },
 						{ label: 'Tokens & Context', slug: 'ai-agents/tokens-context' },
 					],
 				},
 				{
-					label: 'Agentic Workflows',
+					label: 'Learn: Agentic Workflows',
 					items: [
 						{ label: 'Overview', slug: 'agentic-workflows' },
 						{ label: 'Multi-Agent Pipelines', slug: 'agentic-workflows/multi-agent' },
 					],
 				},
 				{
-					label: 'MCP',
+					label: 'Learn: MCP',
 					badge: { text: 'Hot', variant: 'tip' },
 					items: [
 						{ label: 'What is MCP?', slug: 'mcp' },
@@ -140,7 +179,7 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'Agent Frameworks',
+					label: 'Learn: Frameworks',
 					items: [
 						{ label: 'Framework Comparison', slug: 'frameworks' },
 						{ label: 'LangChain', slug: 'frameworks/langchain' },
@@ -149,27 +188,13 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'Tools, Skills & Memory',
+					label: 'Learn: More',
 					items: [
-						{ label: 'Overview', slug: 'tools-memory' },
-					],
-				},
-				{
-					label: 'Agent Instructions',
-					items: [
-						{ label: 'CLAUDE.md / AgentMD', slug: 'agent-instructions' },
-					],
-				},
-				{
-					label: 'Prompt Engineering',
-					items: [
-						{ label: 'For Agents', slug: 'prompt-engineering' },
-					],
-				},
-				{
-					label: 'Code Examples',
-					items: [
-						{ label: 'All Examples', slug: 'code-examples' },
+						{ label: 'Getting Started', slug: 'getting-started' },
+						{ label: 'Tools & Memory', slug: 'tools-memory' },
+						{ label: 'Agent Instructions', slug: 'agent-instructions' },
+						{ label: 'Prompt Engineering', slug: 'prompt-engineering' },
+						{ label: 'Code Examples', slug: 'code-examples' },
 					],
 				},
 				{

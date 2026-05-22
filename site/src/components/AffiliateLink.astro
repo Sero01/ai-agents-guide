@@ -3,31 +3,45 @@
  * AffiliateLink — Wraps a link with affiliate/UTM attribution.
  *
  * Usage:
- *   <AffiliateLink href="https://partner.example.com/signup" campaign="mcp-page">
- *     Try Partner Tool
- *   </AffiliateLink>
+ *   <AffiliateLink tool="semrush" campaign="best-of-2026">Try Semrush</AffiliateLink>
+ *   <AffiliateLink href="https://example.com">Custom URL</AffiliateLink>
  *
- * Adds ?ref=agentworkflows&utm_campaign=<campaign> to the URL.
+ * Reads canonical URLs from src/data/affiliates.json so a single edit
+ * propagates everywhere. Adds UTM params and rel="sponsored nofollow"
+ * (FTC + Google requirement for affiliate links).
  */
 
+import affiliates from '../data/affiliates.json';
+
 interface Props {
-  href: string;
+  tool?: string;
+  href?: string;
   campaign?: string;
   class?: string;
 }
 
-const { href, campaign = 'general', class: className } = Astro.props;
+const { tool, href: rawHref, campaign = 'general', class: className } = Astro.props;
 
-const url = new URL(href);
-url.searchParams.set('ref', 'agentworkflows');
-url.searchParams.set('utm_source', 'agentworkflows.dev');
-url.searchParams.set('utm_medium', 'docs');
+let resolvedHref = rawHref;
+if (tool) {
+  const entry = (affiliates as Record<string, { url: string }>)[tool];
+  if (entry) resolvedHref = entry.url;
+}
+
+if (!resolvedHref) {
+  throw new Error(`AffiliateLink requires either 'tool' (in affiliates.json) or 'href'. Got tool=${tool}`);
+}
+
+const url = new URL(resolvedHref);
+url.searchParams.set('ref', 'agentguides');
+url.searchParams.set('utm_source', 'agentguides.dev');
+url.searchParams.set('utm_medium', 'review');
 url.searchParams.set('utm_campaign', campaign);
 
 const finalHref = url.toString();
 ---
 
-<a href={finalHref} class={`affiliate-link ${className ?? ''}`} target="_blank" rel="noopener sponsored">
+<a href={finalHref} class={`affiliate-link ${className ?? ''}`} target="_blank" rel="sponsored nofollow noopener">
   <slot />
 </a>
 

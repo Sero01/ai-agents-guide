@@ -8,6 +8,7 @@
  *     <p>This content is for premium members only.</p>
  *   </PremiumGate>
  */
+import { Icon } from 'astro-icon/components';
 ---
 
 <div class="premium-gate" id="premium-gate">
@@ -16,7 +17,7 @@
   </div>
   <div class="premium-gate__overlay" id="gate-overlay">
     <div class="premium-gate__prompt">
-      <p>🔒 Premium Content</p>
+      <p class="premium-gate__title"><Icon name="lucide:lock" /> Premium Content</p>
       <p>Unlock full access to code examples, templates, and deep-dives.</p>
       <button id="unlock-btn" class="premium-gate__button">Unlock Premium</button>
     </div>
@@ -64,6 +65,13 @@
     backdrop-filter: blur(2px);
     border-radius: 8px;
   }
+  .premium-gate__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+  }
+  .premium-gate__title svg { width: 1em; height: 1em; }
   .premium-gate__prompt {
     text-align: center;
     padding: 2rem;

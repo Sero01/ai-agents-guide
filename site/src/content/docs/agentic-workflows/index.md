@@ -33,6 +33,8 @@ A single agent is flexible but can be difficult to predict. An agentic workflow 
 
 ## Anatomy of an Agentic Workflow
 
+![Agentic Workflow Pipeline — stages with defined inputs, outputs, and human checkpoints](/diagrams/agentic-workflow-pipeline.svg)
+
 ```
 Input
   │
@@ -211,7 +213,6 @@ An agentic workflow is more work to build than a single agent. It's worth the in
 
 For truly one-off, exploratory tasks where the structure is unclear in advance, a single flexible agent is often easier to get started with. You can always refactor into a pipeline once you understand the shape of the work.
 
-## See Also
+## Continue reading
 
-- [Multi-Agent Pipelines](/agentic-workflows/multi-agent/) — Coordinating multiple agents in parallel and sequence
-- [AI Agent Patterns](/ai-agents/patterns/) — Design patterns for individual agent stages
+- **[Multi-Agent Pipelines: Sequential, Parallel, and Hierarchical Topologies](/agentic-workflows/multi-agent/)** — How to build multi-agent pipelines. Covers sequential, parallel fan-out, and hierarchical agent topologies with complete Python code examples.

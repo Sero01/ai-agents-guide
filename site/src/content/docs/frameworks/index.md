@@ -157,8 +157,8 @@ Start with the simplest option that meets your needs:
 
 The biggest mistake is choosing a framework before you understand the problem, then spending time fighting the framework rather than solving the problem.
 
-## Detailed Pages
+## Continue reading
 
-- [LangChain](/frameworks/langchain/)
-- [CrewAI](/frameworks/crewai/)
-- [AutoGen](/frameworks/autogen/)
+- **[LangChain for AI Agents: Guide and Code Examples](/frameworks/langchain/)** — How to build AI agents with LangChain. Covers core concepts, a working agent with tool calling, pros and cons, and when to use LangChain versus simpler alternatives.
+- **[CrewAI Tutorial: Role-Based Multi-Agent AI Systems](/frameworks/crewai/)** — How to build multi-agent systems with CrewAI. Covers agents, tasks, crews, process types, and practical examples of role-based agent workflows.
+- **[AutoGen: Microsoft's Conversational Multi-Agent Framework](/frameworks/autogen/)** — How to build multi-agent systems with Microsoft AutoGen. Covers two-agent conversations, GroupChat with multiple agents, code execution, and when to choose AutoGen over other frameworks.

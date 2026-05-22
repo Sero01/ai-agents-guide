@@ -1,0 +1,79 @@
+/* AgentGuide Theme — design tokens
+ *
+ * Default = dark (warm editorial minimalism per AGENTGUIDE-THEME.md).
+ * Light theme is a warm parchment adaptation that preserves the same
+ * typographic hierarchy and borders-only structure.
+ *
+ * Both themes load the same fonts. Color is the only thing that swaps.
+ */
+
+:root {
+  /* Type families */
+  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --sans:  'Libre Franklin', system-ui, -apple-system, sans-serif;
+  --mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Spacing scale */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 7rem;
+
+  --max-w: 1100px;
+
+  /* === Dark (default) === */
+  --bg:             #0c0c0c;
+  --bg-card:        #141414;
+  --bg-card-hover:  #1a1a1a;
+  --text-primary:   #e8e4df;
+  --text-secondary: #8a8580;
+  --text-muted:     #5a5550;
+  --accent:         #c8a882;
+  --accent-hover:   #d4b896;
+  --accent-dim:     rgba(200, 168, 130, 0.12);
+  --border:         #222222;
+  --border-hover:   #333333;
+  --hero-glow:      rgba(200, 168, 130, 0.06);
+
+  color-scheme: dark;
+}
+
+/* === Light theme === */
+:root[data-theme='light'] {
+  --bg:             #faf7f2;
+  --bg-card:        #f3eee5;
+  --bg-card-hover:  #ebe5d9;
+  --text-primary:   #1a1612;
+  --text-secondary: #5a534b;
+  --text-muted:     #8a8378;
+  --accent:         #8b6f47;
+  --accent-hover:   #74592f;
+  --accent-dim:     rgba(139, 111, 71, 0.10);
+  --border:         #d8d0c2;
+  --border-hover:   #b8ac98;
+  --hero-glow:      rgba(139, 111, 71, 0.05);
+
+  color-scheme: light;
+}
+
+/* OS-preference fallback before JS resolves (avoids flash on a light-OS user
+ * arriving with no stored preference). Dark is our default, so we only need
+ * to flip when the OS prefers light AND no explicit theme is set. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']):not([data-theme='light']) {
+    --bg:             #faf7f2;
+    --bg-card:        #f3eee5;
+    --bg-card-hover:  #ebe5d9;
+    --text-primary:   #1a1612;
+    --text-secondary: #5a534b;
+    --text-muted:     #8a8378;
+    --accent:         #8b6f47;
+    --accent-hover:   #74592f;
+    --accent-dim:     rgba(139, 111, 71, 0.10);
+    --border:         #d8d0c2;
+    --border-hover:   #b8ac98;
+    --hero-glow:      rgba(139, 111, 71, 0.05);
+    color-scheme: light;
+  }
+}

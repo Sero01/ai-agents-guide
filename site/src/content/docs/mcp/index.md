@@ -44,6 +44,8 @@ The protocol also separates concerns cleanly. Your application code handles the 
 
 MCP uses a client-server architecture:
 
+![MCP Client-Server Architecture — how AI applications connect to tools through the Model Context Protocol](/diagrams/mcp-architecture.svg)
+
 ```
 ┌──────────────────────────────────────────────┐
 │                 AI Application               │
@@ -131,8 +133,8 @@ The answer is reuse and standardization. A custom tool you write for Claude only
 
 For internal-only tools that are application-specific, direct tool calling is simpler. For capabilities you want to be reusable or shareable, MCP is the better choice.
 
-## What's Next
+## Continue reading
 
-- [Setup & Installation](/mcp/setup/) — Get your first MCP server running in 5 minutes
-- [Available Servers](/mcp/servers/) — Browse the pre-built server ecosystem
-- [Building MCP Servers](/mcp/building-servers/) — Create your own custom server
+- **[MCP Setup and Installation: Claude Desktop and Claude Code](/mcp/setup/)** — Step-by-step instructions for setting up MCP with Claude Desktop and Claude Code. Covers config file locations, adding servers, transport types, environment variables, and troubleshooting.
+- **[MCP Servers: 20+ Pre-Built Servers for AI Agents](/mcp/servers/)** — A reference of pre-built MCP servers organized by category. Covers official Anthropic servers (GitHub, PostgreSQL, Filesystem, Slack) and community servers, with config examples.
+- **[Build Your Own MCP Server: A Python Tutorial](/mcp/building-servers/)** — How to build a custom MCP server from scratch using the Python SDK. Covers tools, resources, error handling, and how to register your server with Claude Code and Claude Desktop.

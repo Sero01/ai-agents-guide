@@ -15,6 +15,7 @@ head:
     content: |
       {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"MCP","item":"https://agentguides.dev/mcp/"},{"@type":"ListItem","position":3,"name":"Setup & Installation","item":"https://agentguides.dev/mcp/setup/"}]}
 ---
+import { Icon } from 'astro-icon/components';
 
 This tutorial gets you from zero to a working MCP setup in under 10 minutes.
 
@@ -72,7 +73,7 @@ The `command` and `args` array tells Claude Desktop how to start the server. Cla
 
 ### 4. Restart Claude Desktop
 
-After saving the config, restart Claude Desktop. You'll see a tools icon (🔧) in the chat input — click it to verify your servers loaded.
+After saving the config, restart Claude Desktop. You'll see a tools icon (<Icon name="lucide:wrench" class="inline-icon" />) in the chat input — click it to verify your servers loaded.
 
 If the tools icon doesn't appear, or if it shows fewer tools than expected, check the troubleshooting section below.
 

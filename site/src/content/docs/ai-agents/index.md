@@ -50,6 +50,8 @@ The key properties that distinguish an agent from a chatbot are:
 
 Every agent runs some variation of the **ReAct loop**:
 
+![The ReAct Loop — Observe, Think, Act cycle that drives every AI agent](/diagrams/react-loop.svg)
+
 1. **Observe** — receive input (user message, tool result, environment state)
 2. **Think** — reason about what to do next (the LLM's job)
 3. **Act** — call a tool, execute code, or produce output
@@ -186,8 +188,7 @@ Production agents need human review for high-stakes actions. Sending emails, mod
 
 These concerns don't apply to experimental or internal-use agents where failures are easy to recover from. But they matter greatly for customer-facing agents or agents that interact with critical systems.
 
-## See Also
+## Continue reading
 
-- [Agent Patterns](/ai-agents/patterns/) — Common design patterns for agent systems
-- [Tokens & Context](/ai-agents/tokens-context/) — Managing context windows effectively
-- [Code Examples](/code-examples/) — Complete runnable agent code
+- **[AI Agent Design Patterns: ReAct, Reflection, Plan-and-Execute, and More](/ai-agents/patterns/)** — Core AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and the Critic Loop pattern.
+- **[Tokens and Context Windows: Managing AI Agent Memory](/ai-agents/tokens-context/)** — How tokens and context windows work in AI agents, why they matter for long-running tasks, and practical strategies for managing context: summarization, sliding windows, and external memory.

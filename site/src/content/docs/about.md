@@ -33,7 +33,11 @@ The guide is organized around the layers of building an AI agent system:
 
 ## Who Maintains This
 
-This guide is maintained by Parvez Ahmed, a software developer interested in practical applications of large language models. The source code for the site is publicly available at https://github.com/Sero01/ai-agents-guide.
+This guide is written and maintained by **Parvez Ahmed**, a software developer working on AI agent systems, agentic automation pipelines, and the infrastructure that makes them reliable in production. I have been building with large language models since the original GPT-3 API was opened in 2020, shipped my first agent system into a real workflow in 2023, and have since worked on a mix of solo projects and client engagements ranging from RAG pipelines and document-processing agents to multi-agent research assistants and CI-integrated code-review bots.
+
+The reviews and comparisons on this site are written from that working context. When I review a framework, I have either built something I shipped on it or rebuilt the reference example from the docs and pushed it past the happy path. When I compare AI coding tools, I have used each on real tasks from my own codebases, not on toy benchmarks. The opinions on the site are mine, and I name the experience behind them rather than appealing to abstract authority.
+
+You can find me on [GitHub (@Sero01)](https://github.com/Sero01), [LinkedIn](https://www.linkedin.com/in/parvez-ahmed-b47680124), and at [126ahmedparvez@gmail.com](mailto:126ahmedparvez@gmail.com). The source code for this entire site is open and available at [github.com/Sero01/ai-agents-guide](https://github.com/Sero01/ai-agents-guide) — every review, every benchmark number, every diagram is in git history with the commit that introduced it.
 
 The site is built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build), a documentation framework for Astro. Pages are written in Markdown. If you find an error, outdated information, or a missing topic, you can open an issue or pull request on GitHub.
 
@@ -53,7 +57,7 @@ A secondary motivation was learning. Writing clear technical explanations forces
 
 **Raw API examples**: Many examples use the Anthropic Claude API directly rather than going through a framework. This is intentional. Frameworks add abstraction, and abstraction can obscure what's actually happening. Once you understand how tool calling works at the API level, the frameworks make more sense — and you'll know when to reach for them and when to go without.
 
-**No affiliate links**: There are no affiliate or referral links on this site. Links to tools and libraries go directly to the project's official documentation or GitHub repository.
+**Affiliate disclosure**: Some links on this site — primarily on the [Reviews](/reviews/), [Best-Of](/best/), and [Leaderboard](/leaderboard/) pages — are affiliate links. If you sign up through one of those links we may earn a commission at no extra cost to you. Every post that contains affiliate links carries a visible disclosure at the top. Commission rate does not influence which tools we recommend; tools that pay no commission still appear on the recommendations when they win our testing. Outside of those clearly marked pages, links to tools and libraries go directly to the project's official documentation or GitHub repository.
 
 ## How to Use This Guide
 

@@ -16,9 +16,21 @@ head:
       {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"Prompt Engineering","item":"https://agentguides.dev/prompt-engineering/"}]}
 ---
 
-Prompt engineering for agents is different from single-turn chat. You're designing for a loop, not a response.
+Prompt engineering is the practice of writing instructions that reliably shape how a language model reasons and responds. For single-turn chat, a vague prompt costs one unhelpful reply. For agents running in a loop, a flawed system prompt compounds: the agent misuses tools, misinterprets results, and repeats the same mistake across every iteration — sometimes for dozens of steps before hitting a turn limit.
 
-In a chat interface, a bad prompt produces one bad response. In an agent, a bad system prompt produces cascading errors across many steps — the agent misuses tools, misinterprets results, or gets stuck in loops. The stakes for prompt quality are higher.
+This page covers the five core techniques — zero-shot instructions, few-shot examples, chain-of-thought, role prompting, and structured output — and explains which problem each one solves. The focus is on agents specifically: how to write system prompts for a loop rather than a single response, how to encode decision-making logic, and how to make agent behavior readable enough to debug when things go wrong.
+
+## Technique overview
+
+The five techniques each address a different failure mode. Most production agent prompts combine several — for example, a role-prompting preamble, few-shot examples for edge cases, and a chain-of-thought instruction for complex decisions. The table below maps each technique to the problem it solves, a representative use case, and the cost of applying it.
+
+| Technique | When to use | Example use case | Trade-off |
+|-----------|-------------|-----------------|-----------|
+| **Zero-shot** | Task is self-explanatory; model needs no examples | "Summarize this document in 3 bullets" | May miss edge cases without demonstrations |
+| **Few-shot** | Behavior is easier to show than describe | Teaching when to call — or skip — a tool | Increases prompt token count per request |
+| **Chain-of-thought** | Multi-step reasoning; debuggability matters | Research agent picking which tool to invoke | Slower; more tokens consumed per step |
+| **Role prompting** | Consistent persona or domain expertise needed | "You are a security auditor..." | Vague roles add little; specific roles help |
+| **Structured output** | Output must be parsed or validated downstream | JSON schema for a data extraction pipeline | Reduces free-form response flexibility |
 
 ## System Prompt Structure for Agents
 
