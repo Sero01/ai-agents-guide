@@ -127,6 +127,7 @@ export default defineConfig({
 						{ label: 'All Reviews', slug: 'reviews' },
 						{ label: 'CrewAI vs LangGraph vs AutoGen', slug: 'reviews/crewai-vs-langgraph-vs-autogen' },
 						{ label: 'Claude Code vs Cursor vs Codex', slug: 'reviews/claude-code-vs-cursor-vs-codex' },
+							{ label: 'Claude Opus 4.8 Review', slug: 'reviews/claude-opus-4-8-review' },
 					],
 				},
 				{

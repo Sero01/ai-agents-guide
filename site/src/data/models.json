@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-29",
+  "last_updated": "2026-05-31",
   "methodology_note": "Benchmark numbers aggregated from vendor model cards, lmarena.ai, artificialanalysis.ai, HuggingFace Open LLM Leaderboard, the Aider leaderboard, and SWE-bench Verified. Pricing is per 1M tokens in USD on each provider's first-party API. Open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate. Cells set to null indicate the vendor has not published that benchmark or pricing tier. Models superseded by a newer same-vendor entry are retained when still in active use; truly stagnant lines are removed. Update cadence: monthly.",
   "models": [
     { "id": "claude-opus-4-8", "name": "Claude Opus 4.8", "vendor": "Anthropic", "license": "closed", "released": "2026-05-28", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 5.00, "output": 25.00, "cache_write": 6.25, "cache_read": 0.50 }, "benchmarks": { "mmlu_pro": 88.5, "gpqa_diamond": 93.6, "humaneval": 94.5, "swe_bench": 88.6, "math_500": 96.8, "mmmu": 81.0, "aider_polyglot": 85.0, "tau_bench": 84.0 }, "throughput": 85, "vendor_link": "https://anthropic.com/claude" },

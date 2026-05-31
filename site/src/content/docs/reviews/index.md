@@ -44,9 +44,10 @@ head:
     content: |
       {"@context":"https://schema.org","@graph":[
         {"@type":"CollectionPage","@id":"https://agentguides.dev/reviews/#collection","name":"AI Tool Reviews","headline":"AI Tool Reviews — Honest, Tested, Numbers-First","description":"Reviews of AI agent frameworks, LLM coding tools, and developer infrastructure. Each review is based on tools we have tested ourselves on a defined task.","url":"https://agentguides.dev/reviews/","inLanguage":"en-US","dateModified":"2026-05-23","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png"},
-        {"@type":"ItemList","name":"All Reviews","numberOfItems":2,"itemListElement":[
+        {"@type":"ItemList","name":"All Reviews","numberOfItems":3,"itemListElement":[
           {"@type":"ListItem","position":1,"url":"https://agentguides.dev/reviews/crewai-vs-langgraph-vs-autogen/","name":"CrewAI vs LangGraph vs AutoGen — Head-to-Head, Same Task, Real Numbers"},
-          {"@type":"ListItem","position":2,"url":"https://agentguides.dev/reviews/claude-code-vs-cursor-vs-codex/","name":"Claude Code vs Cursor vs Codex — AI Coding Tools Tested on 3 Real Tasks"}
+          {"@type":"ListItem","position":2,"url":"https://agentguides.dev/reviews/claude-code-vs-cursor-vs-codex/","name":"Claude Code vs Cursor vs Codex — AI Coding Tools Tested on 3 Real Tasks"},
+          {"@type":"ListItem","position":3,"url":"https://agentguides.dev/reviews/claude-opus-4-8-review/","name":"Claude Opus 4.8 Review — Benchmarks, Effort Controls, and Dynamic Workflows"}
         ]},
         {"@type":"BreadcrumbList","itemListElement":[
           {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
@@ -77,6 +78,7 @@ Most reviews link out to tools we have an affiliate relationship with. That rela
 
 - [CrewAI vs LangGraph vs AutoGen — head-to-head](/reviews/crewai-vs-langgraph-vs-autogen/) — same 3-agent research assistant built in each framework. Token cost, latency, lines of code, and the verdict.
 - [Claude Code vs Cursor vs Codex — AI coding tools tested](/reviews/claude-code-vs-cursor-vs-codex/) — three real tasks (refactor, bug fix, greenfield feature), first-try success rate, and pricing.
+- [Claude Opus 4.8 review](/reviews/claude-opus-4-8-review/) — what changed over Opus 4.7: SWE-bench Pro gains, the new effort parameter, Dynamic Workflows in Claude Code, and pricing.
 
 More reviews ship on a weekly cadence. The next planned ones cover Anthropic's Claude Agent SDK head-to-head with the OpenAI Agents SDK, an evaluation of LLM observability platforms (Helicone, Langfuse, LangSmith) using the same trace dataset, and a review of agent-friendly model routers comparing OpenRouter, Together AI, and Fireworks AI on latency, cost, and supported features.
 
