@@ -128,6 +128,7 @@ export default defineConfig({
 						{ label: 'CrewAI vs LangGraph vs AutoGen', slug: 'reviews/crewai-vs-langgraph-vs-autogen' },
 						{ label: 'Claude Code vs Cursor vs Codex', slug: 'reviews/claude-code-vs-cursor-vs-codex' },
 							{ label: 'Claude Opus 4.8 Review', slug: 'reviews/claude-opus-4-8-review' },
+							{ label: 'Microsoft MAI-Thinking-1 & MAI-Code-1-Flash', slug: 'reviews/microsoft-mai-thinking-1-mai-code-1-flash-review' },
 					],
 				},
 				{

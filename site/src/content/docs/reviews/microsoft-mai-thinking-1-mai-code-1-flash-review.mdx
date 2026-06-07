@@ -1,0 +1,175 @@
+---
+title: "Microsoft MAI-Thinking-1 and MAI-Code-1-Flash Review — Build 2026 In-House Models"
+description: "What Microsoft shipped at Build 2026: MAI-Thinking-1, its first in-house reasoning model, and MAI-Code-1-Flash in GitHub Copilot. Architecture, benchmarks, pricing, availability, and the OpenAI-independence angle."
+author: Parvez Ahmed
+date: 2026-06-07
+lastUpdated: 2026-06-07
+sidebar:
+  order: 5
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Microsoft MAI-Thinking-1 and MAI-Code-1-Flash Review — Build 2026 In-House Models"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "What Microsoft shipped at Build 2026: MAI-Thinking-1 reasoning and MAI-Code-1-Flash in GitHub Copilot. Architecture, benchmarks, pricing, availability, and the OpenAI-independence angle."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-06-07"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-06-07"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "Microsoft MAI, MAI-Thinking-1, MAI-Code-1-Flash, GitHub Copilot, Microsoft Build 2026, reasoning model, AI coding model, LLM review"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "Microsoft MAI-Thinking-1 & MAI-Code-1-Flash Review"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "Microsoft's first in-house reasoning and coding models from Build 2026: architecture, benchmarks, pricing, and availability."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/#article","headline":"Microsoft MAI-Thinking-1 and MAI-Code-1-Flash Review — Build 2026 In-House Models","description":"What Microsoft shipped at Build 2026: MAI-Thinking-1 reasoning and MAI-Code-1-Flash in GitHub Copilot. Architecture, benchmarks, pricing, availability, and the OpenAI-independence angle.","url":"https://agentguides.dev/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/","mainEntityOfPage":"https://agentguides.dev/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/","datePublished":"2026-06-07","dateModified":"2026-06-07","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Microsoft MAI review, MAI-Thinking-1 benchmarks, MAI-Code-1-Flash, GitHub Copilot model, Microsoft Build 2026, reasoning model, in-house AI"},
+        {"@type":"Review","name":"Microsoft MAI models review","itemReviewed":{"@type":"SoftwareApplication","name":"Microsoft MAI (MAI-Thinking-1 & MAI-Code-1-Flash)","applicationCategory":"DeveloperApplication","operatingSystem":"API (cloud), GitHub Copilot","publisher":{"@type":"Organization","name":"Microsoft"}},"reviewRating":{"@type":"Rating","ratingValue":"4","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-06-07","reviewBody":"Microsoft's first frontier-class in-house models, trained without OpenAI distillation. MAI-Code-1-Flash is the standout — a 5B-active coding model shipping to every GitHub Copilot tier with strong cost efficiency. MAI-Thinking-1 reasons well on math but its launch numbers are self-reported and it is private-preview only. Promising and strategically significant; validate the benchmarks on your own tasks."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"Microsoft MAI-Thinking-1 and MAI-Code-1-Flash Review","item":"https://agentguides.dev/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What did Microsoft announce at Build 2026?","acceptedAnswer":{"@type":"Answer","text":"On June 2, 2026, Microsoft AI announced a family of seven in-house MAI models spanning text, image, voice, speech, reasoning, and coding. The two that matter most for developers are MAI-Thinking-1, its first in-house reasoning model, and MAI-Code-1-Flash, a coding model shipping inside GitHub Copilot."}},
+          {"@type":"Question","name":"Is MAI-Code-1-Flash free?","acceptedAnswer":{"@type":"Answer","text":"It is rolling out through the VS Code model picker to every GitHub Copilot tier, including the Free tier. On first-party APIs Microsoft lists provisional pricing of $0.75 per million input tokens and $4.50 per million output tokens, with $0.075 per million cached input tokens, noting the pricing is still being finalized."}},
+          {"@type":"Question","name":"Was MAI-Thinking-1 trained on OpenAI outputs?","acceptedAnswer":{"@type":"Answer","text":"Microsoft says no. MAI-Thinking-1 is described as its first in-house reasoning model trained from scratch without OpenAI distillation, which is the strategic headline of the launch — Microsoft reducing its dependence on its largest model partner."}},
+          {"@type":"Question","name":"Are the MAI benchmark numbers independently verified?","acceptedAnswer":{"@type":"Answer","text":"Not at launch. The scores come from Microsoft's own technical report and self-reported evaluations. Independent third-party benchmarks had not landed when the models shipped, so the comparisons should be treated as directional and validated on your own tasks."}}
+        ]}
+      ]}
+---
+import { Icon } from 'astro-icon/components';
+
+<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
+<strong>By Parvez Ahmed · Published June 7, 2026.</strong>
+Benchmark figures are Microsoft-reported unless noted; cross-vendor comparisons come from our own <a href="/leaderboard/">models leaderboard</a>. Both models are new enough that independent third-party numbers are still landing — treat vendor claims as directional.
+</aside>
+
+At [Build 2026](https://microsoft.ai) on June 2, Microsoft AI shipped seven in-house **MAI** models across text, image, voice, speech, reasoning, and coding. Two of them matter for the people who read this site: **MAI-Thinking-1**, Microsoft's first in-house reasoning model, and **MAI-Code-1-Flash**, a coding model that is already rolling into GitHub Copilot. The strategic subtext is louder than any single benchmark — these are the first frontier-class models Microsoft says it trained *without* OpenAI distillation, a clear move toward model self-sufficiency from a company whose AI story has been OpenAI's story for three years. This review covers what the two developer-facing models actually are, what the numbers say (and what to distrust about them), and whether either belongs in your stack yet.
+
+## TL;DR verdict
+
+| | MAI-Thinking-1 | MAI-Code-1-Flash |
+|---|---|---|
+| **Type** | Reasoning model | Coding model |
+| **Architecture** | Sparse MoE, ~35B active / ~1T total | Sparse MoE, ~5B active / 137B total |
+| **Context window** | 256K tokens | 256K tokens |
+| **Pricing** | Not finalized (private preview) | ~$0.75 in / $4.50 out per 1M (provisional) |
+| **Headline number** | AIME 2025 97.0% · SWE-bench Pro ~53% | SWE-bench Pro 51.2% vs Haiku 4.5's 35.2% |
+| **Availability** | Private preview — Azure AI Foundry, Baseten, Fireworks, OpenRouter | Every GitHub Copilot tier via VS Code model picker |
+| **Best for** | Math/reasoning evaluation, Foundry pilots | Cheap, fast in-editor coding inside Copilot |
+| **Caveat** | Self-reported launch numbers, no GA | Provisional pricing; new and unproven in the wild |
+
+If you do not read past this: **MAI-Code-1-Flash is the one to actually try** because it is shipping to everyone and is cheap; **MAI-Thinking-1 is a watch-this-space** until it leaves private preview and independent benchmarks land.
+
+## MAI-Code-1-Flash — the one that ships today
+
+This is the model with real reach. MAI-Code-1-Flash is a sparse Mixture-of-Experts model with **137 billion total parameters but only ~5 billion active per token** — Haiku-class in active size, which is what lets Microsoft push it to the Free Copilot tier without melting its serving budget. The context window is **256K tokens**, enough to hold long files plus the history of a refactoring session. Microsoft says it was trained from March to May 2026 on "clean and appropriately licensed data," a pointed contrast it clearly wants drawn against scraped-corpus competitors.
+
+### What the coding numbers say
+
+The benchmark Microsoft leans on is **SWE-bench Pro**, the contamination-resistant variant that has become the more honest signal as the original Verified set saturates (the same shift we flag in the [Claude Opus 4.8 review](/reviews/claude-opus-4-8-review/)):
+
+| Benchmark | MAI-Code-1-Flash | Claude Haiku 4.5 | Notes |
+|---|---|---|---|
+| **SWE-bench Pro** | 51.2% | 35.2% | +16 pts over a same-size peer |
+| **IF Bench** (instruction following) | — | — | Microsoft claims a +28.9-pt lead over Haiku 4.5 |
+| **SWE-bench Verified** | see note | — | Solves with up to 60% fewer tokens, per Microsoft |
+
+The interesting claim is not the raw SWE-bench Pro score — plenty of bigger models beat it — but the **efficiency**: a +16-point lead on a contamination-resistant coding benchmark against a model of comparable active size, plus a token-efficiency story that matters inside an agentic editor loop where every step costs latency and money. For a model that runs on the Free tier, "Haiku-class price, materially better coding" is a genuinely useful position. On our [leaderboard](/leaderboard/) it slots in near the cost-efficient coders, well above the budget tier on SWE-bench.
+
+### What it costs
+
+Microsoft lists provisional first-party pricing, with a model-card note that it is **still being finalized**:
+
+- **Input:** ~$0.75 per 1M tokens
+- **Output:** ~$4.50 per 1M tokens
+- **Cached input:** ~$0.075 per 1M tokens
+
+Inside GitHub Copilot it is surfaced through the VS Code model picker across **Free, Pro, Pro+, and Max** tiers, so for most developers the practical cost is "whatever your Copilot plan already is." That distribution — every Copilot seat, day one — is the real story. Microsoft does not need MAI-Code-1-Flash to top a leaderboard; it needs it to be the cheap default that quietly serves billions of completions a month.
+
+## MAI-Thinking-1 — promising, but read the asterisks
+
+MAI-Thinking-1 is the more strategically loaded release and the more cautious recommendation. It is a sparse MoE with **~35B active parameters and roughly 1T total**, a **256K-token context window**, and it is Microsoft's first reasoning model trained from scratch in-house. The math story is strong: **97.0% on AIME 2025 and 94.5% on AIME 2026**, the hardest publicly circulated math-competition benchmarks. On coding, Microsoft says it **matches Claude Opus 4.6** on SWE-bench Pro (~53%), and in blind side-by-side human evaluations run by Surge — Microsoft's independent rating partner — it was **preferred over Claude Sonnet 4.6**.
+
+Here is the asterisk, and it is a big one: **these are self-reported numbers from Microsoft's 109-page technical report, and independent third-party benchmarks had not landed at launch.** A vendor preferring its own model in its own human eval is the weakest form of evidence in the benchmark hierarchy. The AIME scores are checkable and impressive; the head-to-head preference claims are exactly the kind of number that compresses once neutral evaluators get hold of the model. Until then, treat MAI-Thinking-1's leaderboard placement — including the estimated cells in our own [models table](/leaderboard/), which we have flagged as conservative until vendor or third-party figures land — as provisional.
+
+It is also **private preview only**, available through Azure AI Foundry, Baseten, Fireworks AI, and OpenRouter, with **pricing not yet finalized**. You can pilot it; you cannot build production on it today.
+
+## The real story: Microsoft buying optionality
+
+Strip away the benchmarks and this launch is about leverage. Microsoft has spent three years as OpenAI's largest customer and distribution channel. Shipping a from-scratch reasoning model and a Copilot-default coding model — neither distilled from OpenAI — is Microsoft buying **optionality**: the ability to route Copilot and Foundry traffic to its own weights when price, latency, or contract terms make that the better call. Even if MAI-Thinking-1 never beats Opus or GPT-5.5 on a neutral benchmark, a "good enough, much cheaper, fully owned" model changes Microsoft's negotiating position and its margin structure. That is why seven models dropped at once across every modality: this is a platform bet, not a single-model launch.
+
+For developers, the near-term takeaway is narrower than the press cycle suggests. You get a cheaper coding model in an editor you may already pay for, and a reasoning model worth watching once it is GA.
+
+## Who should care
+
+- **GitHub Copilot users:** Try **MAI-Code-1-Flash** from the model picker. It costs you nothing extra to A/B against your current default on a real refactor, and the token-efficiency claim is easy to verify on your own latency and bill.
+- **Teams on Azure AI Foundry:** A pilot of MAI-Thinking-1 makes sense for math- and reasoning-heavy internal tools, with the explicit caveat that it is preview-grade and the numbers are unverified.
+- **Anyone choosing a production reasoning model today:** Stay on a GA model. Opus 4.8, GPT-5.5, and Gemini 3.1 Pro all have published, independently scrutinized numbers — see the [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) for how to weigh them.
+- **Budget-sensitive coding agents:** Watch MAI-Code-1-Flash's finalized pricing. If the ~$0.75/$4.50 provisional rate holds, it is a strong cheap-tier option for [agentic coding pipelines](/agentic-workflows/multi-agent/).
+
+## FAQ
+
+**What did Microsoft announce at Build 2026?** A family of seven in-house MAI models across text, image, voice, speech, reasoning, and coding. The two developer-relevant ones are MAI-Thinking-1 (reasoning) and MAI-Code-1-Flash (coding).
+
+**Is MAI-Code-1-Flash free?** It ships to every GitHub Copilot tier, including Free, through the VS Code model picker. On first-party APIs it carries provisional pricing of ~$0.75 in / $4.50 out per million tokens.
+
+**Was MAI-Thinking-1 trained on OpenAI outputs?** Microsoft says no — it is described as a from-scratch in-house reasoning model with no OpenAI distillation, which is the launch's strategic headline.
+
+**Are the benchmarks independently verified?** Not at launch. They are self-reported from Microsoft's technical report; independent numbers are still landing. Validate on your own tasks before committing.
+
+**How do these compare to Claude and GPT?** On the contamination-resistant SWE-bench Pro, MAI-Thinking-1 is positioned around Claude Opus 4.6 by Microsoft's own numbers, while frontier leaders like [Claude Opus 4.8](/reviews/claude-opus-4-8-review/) sit higher. The cross-vendor table is on the [leaderboard](/leaderboard/).
+
+## Continue reading
+
+- [AI Models Leaderboard](/leaderboard/) — MAI-Thinking-1 and MAI-Code-1-Flash versus 60+ models on benchmarks, pricing, and context window.
+- [Claude Opus 4.8 Review](/reviews/claude-opus-4-8-review/) — the GA frontier model the MAI reasoning claims are measured against.
+- [Claude Code vs Cursor vs Codex](/reviews/claude-code-vs-cursor-vs-codex/) — where an in-editor coding model like MAI-Code-1-Flash actually competes.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — how to read SWE-bench Pro, AIME, and self-reported numbers without getting fooled.
+- [All Reviews](/reviews/) — index of every head-to-head review on the site.
