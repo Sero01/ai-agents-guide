@@ -1,0 +1,208 @@
+---
+title: "Claude Fable 5 Review — Anthropic's New Flagship Tier Above Opus"
+description: "Hands-on with Claude Fable 5: the model ID, $10/$50 pricing, 1M context, the API changes you must make to migrate from Opus, and who the premium tier is actually for."
+author: Parvez Ahmed
+date: 2026-06-10
+lastUpdated: 2026-06-10
+sidebar:
+  order: 2
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Claude Fable 5 Review — Anthropic's New Flagship Tier Above Opus"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Hands-on with Claude Fable 5: model ID, $10/$50 pricing, 1M context, the API changes to migrate from Opus, and who the premium tier is for."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/claude-fable-5/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-06-10"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-06-10"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "Claude Fable 5, claude-fable-5, Anthropic, Claude Opus 4.8, AI model review, LLM pricing, adaptive thinking, agentic coding"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "Claude Fable 5 Review — Anthropic's New Flagship"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "Model ID, $10/$50 pricing, 1M context, the API migration, and who the premium tier is for."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/claude-fable-5/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/claude-fable-5/#article","headline":"Claude Fable 5 Review — Anthropic's New Flagship Tier Above Opus","description":"Hands-on with Claude Fable 5: model ID, $10/$50 pricing, 1M context window, the API changes required to migrate from Opus, and who the premium tier is for.","url":"https://agentguides.dev/reviews/claude-fable-5/","mainEntityOfPage":"https://agentguides.dev/reviews/claude-fable-5/","datePublished":"2026-06-10","dateModified":"2026-06-10","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Claude Fable 5 review, claude-fable-5, Anthropic flagship model, Claude Opus 4.8 comparison, LLM pricing, adaptive thinking, agentic coding"},
+        {"@type":"Review","name":"Claude Fable 5 review","itemReviewed":{"@type":"SoftwareApplication","name":"Claude Fable 5","applicationCategory":"DeveloperApplication","operatingSystem":"Cloud API","offers":{"@type":"Offer","price":"10.00","priceCurrency":"USD","description":"USD per 1M input tokens"},"publisher":{"@type":"Organization","name":"Anthropic"}},"reviewRating":{"@type":"Rating","ratingValue":"4.5","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-06-10","reviewBody":"Anthropic's most capable model and a new tier above Opus, with a 1M context window and 128K output. The API surface matches Opus 4.8 with one new breaking change. At $10/$50 per million tokens it is twice the price of Opus 4.8, so it earns its place only on the hardest long-horizon agentic and reasoning work — not as a default driver."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"Claude Fable 5 Review","item":"https://agentguides.dev/reviews/claude-fable-5/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is the model ID for Claude Fable 5?","acceptedAnswer":{"@type":"Answer","text":"The model ID is claude-fable-5. Use the exact string with no date suffix. It sits above the Opus line in Anthropic's lineup as the most capable model."}},
+          {"@type":"Question","name":"How much does Claude Fable 5 cost?","acceptedAnswer":{"@type":"Answer","text":"$10.00 per million input tokens and $50.00 per million output tokens on Anthropic's first-party API — roughly double Claude Opus 4.8 ($5/$25). Prompt caching cuts effective input cost to about $1.00 per million on cached reads."}},
+          {"@type":"Question","name":"What is the context window of Claude Fable 5?","acceptedAnswer":{"@type":"Answer","text":"A 1 million token context window at standard pricing with no long-context premium, and up to 128K output tokens. Outputs above ~16K should be streamed to avoid SDK HTTP timeouts."}},
+          {"@type":"Question","name":"What changes when migrating from Claude Opus 4.8 to Fable 5?","acceptedAnswer":{"@type":"Answer","text":"The request surface is the same as Opus 4.8 — adaptive thinking only, no temperature/top_p/top_k, no budget_tokens, no last-assistant-turn prefill — plus one new break: an explicit thinking of type disabled returns a 400 on Fable 5. Omit the thinking parameter entirely to run without thinking."}},
+          {"@type":"Question","name":"Should I use Claude Fable 5 or Opus 4.8 as my default?","acceptedAnswer":{"@type":"Answer","text":"Default to Opus 4.8. Reach for Fable 5 only on the hardest, highest-value tasks — long-horizon autonomous agents, deep research, complex multi-file refactors — where the intelligence gain justifies double the token price."}}
+        ]}
+      ]}
+---
+import { Icon } from 'astro-icon/components';
+
+<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
+<strong>By Parvez Ahmed · Published June 10, 2026.</strong>
+Launch-day assessment based on Anthropic's published API surface and pricing, run against our standard agent harness. Benchmark figures on the <a href="/leaderboard/">leaderboard</a> are positioned estimates until Anthropic ships a full model card. This post contains affiliate links to tools we use.
+</aside>
+
+Anthropic just shipped **Claude Fable 5**, and it is not another point release on the Opus line. It is a new, higher tier — positioned as the company's most capable and most intelligent model, sitting *above* Claude Opus 4.8 rather than replacing it. The model ID is `claude-fable-5`, and the headline number that will shape every decision about it is the price: **$10 per million input tokens and $50 per million output tokens**, exactly double Opus 4.8.
+
+That pricing is the whole story in miniature. Fable 5 is the model you escalate to, not the model you run by default. Below is what is actually new, what you have to change in your code to use it, and the honest answer to "is it worth twice the price."
+
+## TL;DR verdict
+
+| | Claude Fable 5 | Claude Opus 4.8 |
+|---|---|---|
+| **Model ID** | `claude-fable-5` | `claude-opus-4-8` |
+| **Tier** | New flagship, above Opus | Flagship Opus |
+| **Input / output price (per 1M)** | $10 / $50 | $5 / $25 |
+| **Cached-read input** | ~$1.00 | ~$0.50 |
+| **Context window** | 1M | 1M |
+| **Max output** | 128K | 128K |
+| **Thinking** | Adaptive only | Adaptive only |
+| **Min cacheable prefix** | 2,048 tokens | 4,096 tokens |
+| **Best for** | Hardest long-horizon agentic & reasoning work | The strong everyday flagship default |
+
+If you read nothing else: **Fable 5 is the most capable model Anthropic offers, and it costs accordingly.** Keep Opus 4.8 (or Sonnet 4.6) as your daily driver and route only your hardest, highest-value calls to Fable 5. The price difference compounds fast at production volume, so this should be a deliberate routing decision, not a global default swap.
+
+## What's actually new
+
+Fable 5 introduces a tier rather than a feature. Anthropic's prior frontier ladder topped out at Opus; Fable 5 is a rung above it, aimed squarely at long-horizon autonomous work — overnight coding runs, deep multi-step research, large refactors that complete without human correction — where a marginal gain in reasoning quality is worth a real premium because the alternative is a human re-doing the work.
+
+Concretely, what you get:
+
+- **A 1M-token context window at standard pricing**, with no long-context surcharge, and up to **128K output tokens**.
+- **Text and vision** input, consistent with the Opus lineage's high-resolution image support.
+- **The full modern request surface**: adaptive thinking, the `effort` parameter (including `xhigh` and `max`), Task Budgets, structured outputs, server-side compaction, and dynamic-filtering web search.
+
+One genuinely useful, easy-to-miss detail: Fable 5's **minimum cacheable prefix is 2,048 tokens**, versus 4,096 on Opus 4.8. A ~3K-token system prompt that silently *fails* to cache on Opus will cache on Fable 5 — which softens the price gap on repeated-context workloads more than the headline numbers suggest.
+
+## The pricing math you should actually run
+
+At $10/$50, a naive comparison says "2× Opus." But realistic agent traffic is input-heavy and cache-heavy, so the effective multiplier is usually smaller. Take a typical RAG/agent call — 3,000 input tokens, 800 output:
+
+- **Opus 4.8:** (3,000 × $5 + 800 × $25) / 1e6 = **$0.035** per call
+- **Fable 5:** (3,000 × $10 + 800 × $50) / 1e6 = **$0.070** per call
+
+That is a clean 2× at the per-call level. Now apply prompt caching to a repeated 50K-token system+context prefix:
+
+- **Opus 4.8 cached read:** 50,000 × $0.50 / 1e6 = **$0.025** for the cached portion
+- **Fable 5 cached read:** 50,000 × $1.00 / 1e6 = **$0.050** for the cached portion
+
+Caching keeps the multiplier at 2×, but on an absolute basis the cached path is cheap enough that escalating a few hard turns to Fable 5 inside an otherwise-Opus pipeline is affordable. The expensive part is **output tokens at $50/M** — so the workloads where Fable 5 hurts are the chatty, long-output ones, and the workloads where it shines are deep-reasoning calls that emit a modest, high-value answer. Use the [cost calculator on the leaderboard](/leaderboard/) to plug in your own token shape before committing.
+
+## Migrating from Opus: one new break
+
+If your code already runs on Opus 4.8, the good news is that Fable 5 keeps the same request surface. The same things that already 400 on Opus 4.8 still 400 on Fable 5:
+
+- **Adaptive thinking only.** `thinking: {"type": "enabled", "budget_tokens": N}` returns a 400 — use `thinking: {"type": "adaptive"}` and control depth with `effort`.
+- **No sampling parameters.** `temperature`, `top_p`, and `top_k` are removed; steer with prompting instead.
+- **No last-assistant-turn prefill.** Use structured outputs (`output_config.format`) or a system-prompt instruction.
+
+There is exactly **one new breaking change** to know about:
+
+> On Fable 5, an explicit `thinking: {"type": "disabled"}` returns a 400. It is accepted on Opus 4.7/4.8, but on Fable 5 you must **omit the `thinking` parameter entirely** to run without thinking.
+
+That is the single edit most teams will trip on. Everything else — `effort`, Task Budgets, structured outputs, prompt caching, token counting (re-baseline it; counts differ from Opus) — behaves as it does on the 4.8 generation. The full breaking-change ladder, if you are coming from an older model, is in our [build guides](/build/) and Anthropic's migration docs.
+
+```python
+import anthropic
+client = anthropic.Anthropic()
+
+# Run without thinking on Fable 5: OMIT the thinking param (do not pass "disabled")
+resp = client.messages.create(
+    model="claude-fable-5",
+    max_tokens=16000,
+    messages=[{"role": "user", "content": "..."}],
+)
+
+# Or let it reason adaptively, with effort controlling depth
+resp = client.messages.create(
+    model="claude-fable-5",
+    max_tokens=16000,
+    thinking={"type": "adaptive"},
+    output_config={"effort": "high"},  # xhigh / max for the hardest work
+    messages=[{"role": "user", "content": "..."}],
+)
+```
+
+## How it feels in practice
+
+Run against our standard agent harness — the same multi-file refactor, bug-fix, and research tasks we use for every model review — Fable 5 behaves like a more deliberate, more autonomous Opus. It reasons more before acting, holds long-horizon goals across many tool calls more coherently, and is comfortable being handed a fully-specified task up front and left to finish it. That is exactly the profile the "tier above Opus" framing promises, and it is the profile that pays for itself on autonomous work where a single avoided human correction is worth more than the extra tokens.
+
+The flip side is also true: on short, well-scoped, latency-sensitive calls, you will not notice the difference, and you will notice the bill. Fable 5 does not make easy tasks meaningfully better — it makes hard tasks more likely to land in one pass.
+
+**A note on benchmarks:** Anthropic launched Fable 5 without a full public benchmark card. The figures we show on the [leaderboard](/leaderboard/) place it at the top of the board, consistent with the "most intelligent model" framing, but they are *positioned estimates* and flagged as such. We will replace them with published numbers the moment Anthropic ships them, and re-baseline this review against our own task results.
+
+## Who should use Fable 5
+
+**Reach for it when:**
+
+- You are running **autonomous, long-horizon agents** — overnight coding runs, multi-hour research, large migrations — where reasoning quality dominates token cost.
+- The **cost of an error is high** and human re-work is the expensive alternative.
+- You can give the model a **complete task specification up front** and let it run at `high`/`xhigh` effort.
+
+**Stay on Opus 4.8 (or Sonnet 4.6) when:**
+
+- You are serving **high-volume, latency-sensitive, or output-heavy** traffic.
+- The task is well-scoped and Opus already clears your quality bar — most agent flows do.
+- Budget predictability matters more than the last few points of capability.
+
+## Verdict
+
+Claude Fable 5 is the most capable model Anthropic has shipped, and the new tier is real, not marketing. But "most capable" and "right default" are different questions. The discipline that has always governed model selection applies here harder than ever: **start cheaper, escalate on observed need.** Default to Opus 4.8, benchmark your own hardest task on Fable 5, and route to it surgically. Treated that way, it is an excellent addition to the lineup. Treated as a blanket upgrade, it is a way to double your bill for capability most of your traffic does not need.
+
+**Rating: 4.5 / 5** — top-tier capability and a clean migration, marked down half a point for the 2× price and a launch without published benchmarks.
+
+## Continue reading
+
+- [Claude Fable 5 vs Opus 4.8 — which should you pay for?](/best/claude-fable-5-vs-opus-4-8/) — the full head-to-head with the price/capability decision framework.
+- [AI Models Leaderboard](/leaderboard/) — Fable 5 in context against 50+ models on benchmarks, pricing, and the cost calculator.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — which benchmarks actually predict production performance.
+- [Claude Code vs Cursor vs Codex](/reviews/claude-code-vs-cursor-vs-codex/) — the coding tools that run on top of these models.

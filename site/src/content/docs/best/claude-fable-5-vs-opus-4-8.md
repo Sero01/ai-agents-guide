@@ -1,0 +1,158 @@
+---
+title: "Claude Fable 5 vs Opus 4.8 — Which Anthropic Model Should You Pay For?"
+description: "A decision framework for choosing between Claude Fable 5 and Opus 4.8: the price gap, where the capability difference actually shows up, and how to route between them in production."
+author: Parvez Ahmed
+date: 2026-06-10
+lastUpdated: 2026-06-10
+sidebar:
+  order: 5
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Claude Fable 5 vs Opus 4.8 — Which Anthropic Model Should You Pay For?"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Decision framework for Claude Fable 5 vs Opus 4.8: the price gap, where capability actually differs, and how to route between them in production."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/best/claude-fable-5-vs-opus-4-8/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/leaderboard.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-06-10"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-06-10"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Best Of
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "Claude Fable 5, Claude Opus 4.8, Anthropic, model comparison, LLM pricing, agentic coding, AI model routing"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "Claude Fable 5 vs Opus 4.8 — Which to Pay For?"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "The price gap, where capability differs, and how to route between Fable 5 and Opus 4.8 in production."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/leaderboard.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/best/claude-fable-5-vs-opus-4-8/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/best/claude-fable-5-vs-opus-4-8/#article","headline":"Claude Fable 5 vs Opus 4.8 — Which Anthropic Model Should You Pay For?","description":"A decision framework for choosing between Claude Fable 5 and Opus 4.8: the price gap, where the capability difference shows up, and how to route between them in production.","url":"https://agentguides.dev/best/claude-fable-5-vs-opus-4-8/","mainEntityOfPage":"https://agentguides.dev/best/claude-fable-5-vs-opus-4-8/","datePublished":"2026-06-10","dateModified":"2026-06-10","inLanguage":"en-US","articleSection":"Best Of","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/leaderboard.png","keywords":"Claude Fable 5 vs Opus 4.8, Anthropic model comparison, claude-fable-5, claude-opus-4-8, LLM pricing, AI model routing"},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Best Of","item":"https://agentguides.dev/best/"},
+          {"@type":"ListItem","position":3,"name":"Claude Fable 5 vs Opus 4.8","item":"https://agentguides.dev/best/claude-fable-5-vs-opus-4-8/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"Is Claude Fable 5 better than Opus 4.8?","acceptedAnswer":{"@type":"Answer","text":"Fable 5 is Anthropic's most capable model and sits a tier above Opus 4.8, with a measurable edge on long-horizon agentic work and hard reasoning. Opus 4.8 remains the better choice for most production traffic because it delivers frontier quality at half the price."}},
+          {"@type":"Question","name":"How much more expensive is Fable 5 than Opus 4.8?","acceptedAnswer":{"@type":"Answer","text":"Exactly 2x at list price: Fable 5 is $10/$50 per million input/output tokens versus Opus 4.8 at $5/$25. Cached-read input is $1.00 vs $0.50. The output-token premium ($50 vs $25) hurts most on long-output workloads."}},
+          {"@type":"Question","name":"When is Fable 5 worth the extra cost?","acceptedAnswer":{"@type":"Answer","text":"When reasoning quality dominates token cost: autonomous long-horizon agents, deep research, large multi-file refactors, and any task where a human re-doing the work is the expensive alternative. For short, well-scoped, or high-volume calls, Opus 4.8 is the better value."}},
+          {"@type":"Question","name":"Can I use both Fable 5 and Opus 4.8 in one system?","acceptedAnswer":{"@type":"Answer","text":"Yes, and you should. Run Opus 4.8 (or Sonnet 4.6) as the default and escalate only the hardest turns to Fable 5. A tiered router that picks the model per task is the most cost-effective pattern."}}
+        ]}
+      ]}
+---
+
+Anthropic now has two frontier models with overlapping use cases and a 2× price gap between them: **Claude Fable 5** (`claude-fable-5`, $10/$50 per million tokens) and **Claude Opus 4.8** (`claude-opus-4-8`, $5/$25). Both have a 1M context window, both top out at 128K output, and both share the same API surface. So the question is not "which is better" — Fable 5 is the more capable model, by design — it is **"when is the more capable model worth double the price."** This guide gives you a framework instead of a verdict, because the right answer depends on your workload.
+
+## The use case
+
+We are choosing between two Anthropic frontier models for production traffic, optimizing for **cost-adjusted quality** — the best outcome per dollar across a real workload, not the highest score on any single task. The two candidates:
+
+- **Fable 5** — the new tier above Opus, Anthropic's most intelligent model.
+- **Opus 4.8** — the established flagship, frontier-class and half the price.
+
+## How they compare
+
+| Dimension | Claude Fable 5 | Claude Opus 4.8 |
+|---|---|---|
+| **Model ID** | `claude-fable-5` | `claude-opus-4-8` |
+| **Input / output (per 1M)** | $10 / $50 | $5 / $25 |
+| **Cached-read input** | ~$1.00 | ~$0.50 |
+| **Context window** | 1M | 1M |
+| **Max output** | 128K | 128K |
+| **Min cacheable prefix** | 2,048 tokens | 4,096 tokens |
+| **Thinking** | Adaptive only | Adaptive only |
+| **`thinking: disabled`** | 400 — omit the param | Accepted |
+| **Positioning** | Most intelligent; tier above Opus | Frontier flagship |
+| **Best fit** | Hardest long-horizon work | Everyday frontier default |
+
+The capability difference is real but **task-dependent**. On a 200-line bug fix or a single-shot extraction, you will not see it — both models clear the bar, and you are paying double for headroom you do not use. On a multi-hour autonomous refactor or a research task that chains dozens of tool calls, Fable 5's stronger long-horizon coherence is exactly the kind of edge that turns a run that needed human correction into one that finishes clean. That is where the premium pays for itself.
+
+## The pricing reality
+
+The list price is a clean 2× multiplier, but the *effective* gap depends entirely on your token shape. Two worked cases:
+
+**Output-heavy workload** (e.g. long report generation, 2K in / 6K out):
+
+- Opus 4.8: (2,000 × $5 + 6,000 × $25) / 1e6 = **$0.16** per call
+- Fable 5: (2,000 × $10 + 6,000 × $50) / 1e6 = **$0.32** per call
+
+Here the $50/M output rate dominates and Fable 5 is fully 2× — this is the worst case for the premium model. Stay on Opus 4.8 unless the output quality is genuinely the product.
+
+**Reasoning-heavy workload** (e.g. a hard analysis with a short answer, 8K in / 600 out):
+
+- Opus 4.8: (8,000 × $5 + 600 × $25) / 1e6 = **$0.055** per call
+- Fable 5: (8,000 × $10 + 600 × $50) / 1e6 = **$0.11** per call
+
+Still 2× as a ratio, but only **5.5 cents more in absolute terms** for a call where the answer's correctness is worth far more than that. This is the case where escalating to Fable 5 is a no-brainer.
+
+The pattern: **the premium hurts in proportion to output volume.** Fable 5 is cheapest-to-justify on deep-reasoning calls that emit a small, high-value answer, and hardest-to-justify on chatty, long-output traffic. Run your own numbers in the [leaderboard cost calculator](/leaderboard/) before deciding.
+
+## The verdict matrix
+
+- **Overall best value:** **Opus 4.8.** Frontier quality at half the price clears the bar for the large majority of production workloads.
+- **Best for autonomous long-horizon agents:** **Fable 5.** Overnight coding runs, deep research, large migrations — where one avoided human correction outweighs the token premium.
+- **Best for high-volume / latency-sensitive serving:** **Opus 4.8** (or step down to **Sonnet 4.6** at $3/$15).
+- **Best for the hardest single calls in an otherwise-cheap pipeline:** **Fable 5, used surgically** — escalate only the turns that need it.
+
+## How to route between them
+
+The most cost-effective pattern is not "pick one" — it is a **tiered router**:
+
+1. **Default to the cheapest model that clears your quality bar.** For most agent flows that is Opus 4.8 or Sonnet 4.6.
+2. **Escalate on observed need.** When a task is flagged hard — long horizon, high stakes, or a quality regression you can detect — route that specific call to Fable 5.
+3. **Benchmark your own task before committing either way.** The leaderboard tells you which models to consider; only your own eval set tells you which one to ship. Run the cheapest plausible candidate on 30 real examples first.
+
+One caution when you wire Fable 5 in: it has a single new breaking change versus Opus 4.8 — an explicit `thinking: {"type": "disabled"}` returns a 400. **Omit the `thinking` parameter entirely** to run without thinking. Everything else in the request surface is identical to the 4.8 generation. The full walkthrough is in our [Claude Fable 5 review](/reviews/claude-fable-5/).
+
+## Bottom line
+
+Fable 5 is the more capable model and Opus 4.8 is the better default — both statements are true, and they do not conflict. Treat Fable 5 as the escalation tier in a tiered system, not a blanket upgrade. Default cheap, escalate on need, and benchmark your own workload. Do that and you get the capability ceiling of Anthropic's best model on the calls that need it, without paying the premium on the ones that do not.
+
+## Related on this site
+
+- [Claude Fable 5 review](/reviews/claude-fable-5/) — the full hands-on, including the migration details and pricing math.
+- [AI Models Leaderboard](/leaderboard/) — sortable comparison of 50+ models with a cost calculator.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — which benchmarks actually predict production performance.
+- [Best AI Agent Frameworks 2026](/best/ai-agent-frameworks-2026/) — the frameworks you'll run these models inside.

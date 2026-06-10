@@ -125,6 +125,7 @@ export default defineConfig({
 					badge: { text: 'New', variant: 'tip' },
 					items: [
 						{ label: 'All Reviews', slug: 'reviews' },
+						{ label: 'Claude Fable 5 Review', slug: 'reviews/claude-fable-5' },
 						{ label: 'CrewAI vs LangGraph vs AutoGen', slug: 'reviews/crewai-vs-langgraph-vs-autogen' },
 						{ label: 'Claude Code vs Cursor vs Codex', slug: 'reviews/claude-code-vs-cursor-vs-codex' },
 							{ label: 'Claude Opus 4.8 Review', slug: 'reviews/claude-opus-4-8-review' },
@@ -135,6 +136,7 @@ export default defineConfig({
 					label: 'Best Of',
 					items: [
 						{ label: 'All Lists', slug: 'best' },
+						{ label: 'Claude Fable 5 vs Opus 4.8', slug: 'best/claude-fable-5-vs-opus-4-8' },
 						{ label: 'AI Agent Frameworks 2026', slug: 'best/ai-agent-frameworks-2026' },
 						{ label: 'AI Engineer Certifications 2026', slug: 'best/ai-engineer-certifications-2026' },
 						{ label: 'LLM Benchmark Comparison 2026', slug: 'best/llm-benchmark-comparison-2026' },

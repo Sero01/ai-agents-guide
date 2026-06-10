@@ -2,7 +2,7 @@
 title: "AI Tool Reviews — Honest, Tested, Numbers-First"
 description: "Hands-on reviews of AI agent frameworks, LLM coding tools, and developer infrastructure. Every review is run end-to-end on a defined task with recorded numbers."
 author: Parvez Ahmed
-lastUpdated: 2026-05-23
+lastUpdated: 2026-06-10
 sidebar:
   order: 1
 head:
@@ -43,12 +43,13 @@ head:
       type: application/ld+json
     content: |
       {"@context":"https://schema.org","@graph":[
-        {"@type":"CollectionPage","@id":"https://agentguides.dev/reviews/#collection","name":"AI Tool Reviews","headline":"AI Tool Reviews — Honest, Tested, Numbers-First","description":"Reviews of AI agent frameworks, LLM coding tools, and developer infrastructure. Each review is based on tools we have tested ourselves on a defined task.","url":"https://agentguides.dev/reviews/","inLanguage":"en-US","dateModified":"2026-05-23","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png"},
-        {"@type":"ItemList","name":"All Reviews","numberOfItems":4,"itemListElement":[
-          {"@type":"ListItem","position":1,"url":"https://agentguides.dev/reviews/crewai-vs-langgraph-vs-autogen/","name":"CrewAI vs LangGraph vs AutoGen — Head-to-Head, Same Task, Real Numbers"},
-          {"@type":"ListItem","position":2,"url":"https://agentguides.dev/reviews/claude-code-vs-cursor-vs-codex/","name":"Claude Code vs Cursor vs Codex — AI Coding Tools Tested on 3 Real Tasks"},
-          {"@type":"ListItem","position":3,"url":"https://agentguides.dev/reviews/claude-opus-4-8-review/","name":"Claude Opus 4.8 Review — Benchmarks, Effort Controls, and Dynamic Workflows"},
-          {"@type":"ListItem","position":4,"url":"https://agentguides.dev/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/","name":"Microsoft MAI-Thinking-1 and MAI-Code-1-Flash Review — Build 2026 In-House Models"}
+        {"@type":"CollectionPage","@id":"https://agentguides.dev/reviews/#collection","name":"AI Tool Reviews","headline":"AI Tool Reviews — Honest, Tested, Numbers-First","description":"Reviews of AI agent frameworks, LLM coding tools, and developer infrastructure. Each review is based on tools we have tested ourselves on a defined task.","url":"https://agentguides.dev/reviews/","inLanguage":"en-US","dateModified":"2026-06-10","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png"},
+        {"@type":"ItemList","name":"All Reviews","numberOfItems":5,"itemListElement":[
+          {"@type":"ListItem","position":1,"url":"https://agentguides.dev/reviews/claude-fable-5/","name":"Claude Fable 5 Review — Anthropic's New Flagship Tier Above Opus"},
+          {"@type":"ListItem","position":2,"url":"https://agentguides.dev/reviews/crewai-vs-langgraph-vs-autogen/","name":"CrewAI vs LangGraph vs AutoGen — Head-to-Head, Same Task, Real Numbers"},
+          {"@type":"ListItem","position":3,"url":"https://agentguides.dev/reviews/claude-code-vs-cursor-vs-codex/","name":"Claude Code vs Cursor vs Codex — AI Coding Tools Tested on 3 Real Tasks"},
+          {"@type":"ListItem","position":4,"url":"https://agentguides.dev/reviews/claude-opus-4-8-review/","name":"Claude Opus 4.8 Review — Benchmarks, Effort Controls, and Dynamic Workflows"},
+          {"@type":"ListItem","position":5,"url":"https://agentguides.dev/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/","name":"Microsoft MAI-Thinking-1 and MAI-Code-1-Flash Review — Build 2026 In-House Models"}
         ]},
         {"@type":"BreadcrumbList","itemListElement":[
           {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
@@ -77,6 +78,7 @@ Most reviews link out to tools we have an affiliate relationship with. That rela
 
 ## All reviews
 
+- [Claude Fable 5 review](/reviews/claude-fable-5/) — Anthropic's new flagship tier above Opus. Model ID, $10/$50 pricing, 1M context, the one new API break, and who the premium tier is actually for.
 - [CrewAI vs LangGraph vs AutoGen — head-to-head](/reviews/crewai-vs-langgraph-vs-autogen/) — same 3-agent research assistant built in each framework. Token cost, latency, lines of code, and the verdict.
 - [Claude Code vs Cursor vs Codex — AI coding tools tested](/reviews/claude-code-vs-cursor-vs-codex/) — three real tasks (refactor, bug fix, greenfield feature), first-try success rate, and pricing.
 - [Claude Opus 4.8 review](/reviews/claude-opus-4-8-review/) — what changed over Opus 4.7: SWE-bench Pro gains, the new effort parameter, Dynamic Workflows in Claude Code, and pricing.

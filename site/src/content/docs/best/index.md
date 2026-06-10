@@ -2,7 +2,7 @@
 title: "Best-Of Guides — Tested Shortlists for AI Tools and Frameworks"
 description: "Opinionated, tested shortlists of AI tools, frameworks, and certifications. Each list is shaped around a specific job-to-be-done and re-tested on a recurring schedule."
 author: Parvez Ahmed
-lastUpdated: 2026-05-23
+lastUpdated: 2026-06-10
 sidebar:
   order: 1
 head:
@@ -43,11 +43,12 @@ head:
       type: application/ld+json
     content: |
       {"@context":"https://schema.org","@graph":[
-        {"@type":"CollectionPage","@id":"https://agentguides.dev/best/#collection","name":"Best-Of Guides","headline":"Best-Of Guides — Tested Shortlists for AI Tools and Frameworks","description":"Curated, opinionated lists of AI tools, frameworks, and certifications with our verdict on which to pick for each scenario.","url":"https://agentguides.dev/best/","inLanguage":"en-US","dateModified":"2026-05-23","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/best.png"},
-        {"@type":"ItemList","name":"All Best-Of Lists","numberOfItems":3,"itemListElement":[
-          {"@type":"ListItem","position":1,"url":"https://agentguides.dev/best/ai-agent-frameworks-2026/","name":"Best AI Agent Frameworks 2026"},
-          {"@type":"ListItem","position":2,"url":"https://agentguides.dev/best/ai-engineer-certifications-2026/","name":"Best AI Engineer Certifications 2026"},
-          {"@type":"ListItem","position":3,"url":"https://agentguides.dev/best/llm-benchmark-comparison-2026/","name":"LLM Benchmark Comparison 2026"}
+        {"@type":"CollectionPage","@id":"https://agentguides.dev/best/#collection","name":"Best-Of Guides","headline":"Best-Of Guides — Tested Shortlists for AI Tools and Frameworks","description":"Curated, opinionated lists of AI tools, frameworks, and certifications with our verdict on which to pick for each scenario.","url":"https://agentguides.dev/best/","inLanguage":"en-US","dateModified":"2026-06-10","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/best.png"},
+        {"@type":"ItemList","name":"All Best-Of Lists","numberOfItems":4,"itemListElement":[
+          {"@type":"ListItem","position":1,"url":"https://agentguides.dev/best/claude-fable-5-vs-opus-4-8/","name":"Claude Fable 5 vs Opus 4.8 — Which Anthropic Model Should You Pay For?"},
+          {"@type":"ListItem","position":2,"url":"https://agentguides.dev/best/ai-agent-frameworks-2026/","name":"Best AI Agent Frameworks 2026"},
+          {"@type":"ListItem","position":3,"url":"https://agentguides.dev/best/ai-engineer-certifications-2026/","name":"Best AI Engineer Certifications 2026"},
+          {"@type":"ListItem","position":4,"url":"https://agentguides.dev/best/llm-benchmark-comparison-2026/","name":"LLM Benchmark Comparison 2026"}
         ]},
         {"@type":"BreadcrumbList","itemListElement":[
           {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
@@ -72,6 +73,7 @@ Affiliate disclosure applies to most lists on this page. Several categories — 
 
 ## All lists
 
+- [Claude Fable 5 vs Opus 4.8](/best/claude-fable-5-vs-opus-4-8/) — a decision framework for Anthropic's two frontier models. The 2× price gap, where the capability difference actually shows up, and how to route between them in production.
 - [Best AI Agent Frameworks 2026](/best/ai-agent-frameworks-2026/) — 10 frameworks evaluated on the same reference workload. Verdict per use case (prototyping, production, TypeScript, Claude-first, OpenAI-first, RAG-first).
 - [Best AI Engineer Certifications 2026](/best/ai-engineer-certifications-2026/) — 10 certifications reviewed across cost, depth, recognition, and recency. Includes salary-impact data from hiring teams we have advised.
 - [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — long-form analysis behind the [Leaderboard](/leaderboard/). Which benchmarks matter, the price/performance Pareto frontier, and the five cheapest models worth using.
