@@ -84,10 +84,13 @@ head:
       ]}
 ---
 
-<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
-<strong>By Parvez Ahmed · Published May 21, 2026.</strong>
-This tutorial contains affiliate links to tools we use. Disclosure at <a href="/about/">/about</a>.
-</aside>
+import AuthorByline from '../../../components/AuthorByline.astro';
+import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
+import AffiliateLink from '../../../components/AffiliateLink.astro';
+
+<AuthorByline date="2026-05-21" updated="2026-05-23" />
+
+<AffiliateDisclosure />
 
 This is a hands-on build of a three-agent research assistant in CrewAI, end to end. By the time you have read and run it, you will have a working agent that takes a topic, plans subtopics, searches the web, and writes a cited 1,500-word report. The full code is on GitHub at the end of the post. Running the example end-to-end costs roughly **$0.05** in API credit on Claude Sonnet 4.6 (cheaper on Haiku, more expensive on Opus).
 
@@ -105,7 +108,7 @@ The flow is sequential — Planner output flows into Researcher input, Researche
 
 - Python 3.10 or newer
 - An Anthropic API key (any provider compatible with the OpenAI SDK also works, but we use Claude here)
-- A Tavily API key for web search — sign up at <a href="https://tavily.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">tavily.com</a>; the free tier (1,000 requests/month) is enough for this tutorial
+- A Tavily API key for web search — sign up at <AffiliateLink tool="tavily" campaign="research-agent-with-crewai">tavily.com</AffiliateLink>; the free tier (1,000 requests/month) is enough for this tutorial
 - Roughly $0.05 of API credit per run for end-to-end execution
 
 If you are still getting your environment set up, the [Getting Started](/getting-started/) page on this site walks through the basics — Python virtualenvs, key management, and the small amount of shell familiarity assumed here. Skim it first if anything below feels unfamiliar.
@@ -360,7 +363,7 @@ On Claude Sonnet 4.6, the reference topic ran end-to-end at:
 
 Total: **~$0.05–$0.11 per run** depending on caching hit rate and topic depth. For a research agent you run 50 times a month, this is roughly $3–6/month.
 
-If you are running this at higher volume, route through <a href="https://openrouter.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">OpenRouter</a> for unified billing across providers, and add <a href="https://www.helicone.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Helicone</a> for per-call cost tracking — both have generous free tiers.
+If you are running this at higher volume, route through <AffiliateLink tool="openrouter" campaign="research-agent-with-crewai">OpenRouter</AffiliateLink> for unified billing across providers, and add <AffiliateLink tool="helicone" campaign="research-agent-with-crewai">Helicone</AffiliateLink> for per-call cost tracking — both have generous free tiers.
 
 ## Where to take it next
 
@@ -376,7 +379,7 @@ The version we just built is a baseline. Here are concrete directions to extend 
 
 The complete working repository is at <a href="https://github.com/Sero01/ai-agents-guide" target="_blank" rel="noopener">github.com/Sero01/ai-agents-guide</a> under `examples/research-agent-crewai/`.
 
-For a structured course on top of this — covering the CrewAI patterns we did not use here, plus deployment — the <a href="https://www.datacamp.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">DataCamp CrewAI track</a> is the most current option we have used.
+For a structured course on top of this — covering the CrewAI patterns we did not use here, plus deployment — the <AffiliateLink tool="datacamp" campaign="research-agent-with-crewai">DataCamp CrewAI track</AffiliateLink> is the most current option we have used.
 
 ## Continue reading
 

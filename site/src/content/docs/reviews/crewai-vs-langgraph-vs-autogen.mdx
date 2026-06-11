@@ -87,11 +87,13 @@ head:
       ]}
 ---
 import { Icon } from 'astro-icon/components';
+import AuthorByline from '../../../components/AuthorByline.astro';
+import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
+import AffiliateLink from '../../../components/AffiliateLink.astro';
 
-<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
-<strong>By Parvez Ahmed · Published May 21, 2026.</strong>
-This post contains affiliate links. We only recommend tools we have tested ourselves.
-</aside>
+<AuthorByline date="2026-05-21" updated="2026-05-23" />
+
+<AffiliateDisclosure />
 
 There is a version of this comparison that lives on every vendor's marketing page, and it is useless. The version below is what happened when we built the same three-agent research assistant in CrewAI, LangGraph, and AutoGen, ran each one on the same prompt with the same model, and recorded what it cost, how long it took, and what we wanted to throw across the room. If you have read three-way framework comparisons before and they all said "it depends" without telling you what it depends on, this one tries to be more useful.
 
@@ -118,7 +120,7 @@ We built a three-agent research assistant in each framework. The flow:
 2. A **researcher** agent fans out across the subtopics in parallel, calls a web-search tool (Tavily), and returns 3–5 sources per subtopic with extracted summaries.
 3. A **writer** agent takes all summaries and produces a 1,500-word report with inline citations.
 
-Same prompt, same model (Claude Sonnet 4.6 via the Anthropic API), same search backend (<a href="https://tavily.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Tavily</a>), same test machine, same 10 runs averaged. The code for all three implementations is in the [companion repo](https://github.com/Sero01/ai-agents-guide). The numbers in the verdict table above are means of those 10 runs.
+Same prompt, same model (Claude Sonnet 4.6 via the Anthropic API), same search backend (<AffiliateLink tool="tavily" campaign="crewai-vs-langgraph-vs-autogen">Tavily</AffiliateLink>), same test machine, same 10 runs averaged. The code for all three implementations is in the [companion repo](https://github.com/Sero01/ai-agents-guide). The numbers in the verdict table above are means of those 10 runs.
 
 ## Developer experience
 
@@ -132,7 +134,7 @@ Same prompt, same model (Claude Sonnet 4.6 via the Anthropic API), same search b
 
 This is the dimension that most differentiated the three frameworks.
 
-**LangGraph + LangSmith** is the gold standard. Every node execution, every model call, every tool invocation is recorded as a structured trace, and the LangSmith UI lets you click through them in a tree view. When the planner agent produced a malformed subtopic list on run 4 of our test set, we found the cause in under two minutes — the model had injected a stray newline that broke our parser. If you self-host, the equivalent integrations work with <a href="https://langfuse.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Langfuse</a> and <a href="https://www.helicone.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Helicone</a>, both of which have first-class LangChain integrations.
+**LangGraph + LangSmith** is the gold standard. Every node execution, every model call, every tool invocation is recorded as a structured trace, and the LangSmith UI lets you click through them in a tree view. When the planner agent produced a malformed subtopic list on run 4 of our test set, we found the cause in under two minutes — the model had injected a stray newline that broke our parser. If you self-host, the equivalent integrations work with <AffiliateLink tool="langfuse" campaign="crewai-vs-langgraph-vs-autogen">Langfuse</AffiliateLink> and <AffiliateLink tool="helicone" campaign="crewai-vs-langgraph-vs-autogen">Helicone</AffiliateLink>, both of which have first-class LangChain integrations.
 
 **CrewAI** has improved here significantly in 2025–26. The framework now ships with built-in tracing and integrates cleanly with the same observability tools. It is not at LangSmith parity for multi-agent visualisation, but it is no longer the gaping hole it used to be.
 
@@ -222,9 +224,9 @@ The AutoGen version reads cleanest at first glance, but the implicit speaker-sel
 
 ## When each one wins
 
-**Pick CrewAI** when the flow is roughly linear, you are prototyping or demoing, you care about token spend, and your team is small. Pair with <a href="https://www.datacamp.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">DataCamp's CrewAI track</a> for onboarding.
+**Pick CrewAI** when the flow is roughly linear, you are prototyping or demoing, you care about token spend, and your team is small. Pair with <AffiliateLink tool="datacamp" campaign="crewai-vs-langgraph-vs-autogen">DataCamp's CrewAI track</AffiliateLink> for onboarding.
 
-**Pick LangGraph** when the flow has branches, retries, parallel sections, or human-in-the-loop checkpoints, and when you want LangSmith-grade tracing in production. Pair with <a href="https://langfuse.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Langfuse</a> if you self-host.
+**Pick LangGraph** when the flow has branches, retries, parallel sections, or human-in-the-loop checkpoints, and when you want LangSmith-grade tracing in production. Pair with <AffiliateLink tool="langfuse" campaign="crewai-vs-langgraph-vs-autogen">Langfuse</AffiliateLink> if you self-host.
 
 **Pick AutoGen** when emergent multi-agent behavior is what you want — synthetic data, agent-vs-agent debate, research benchmarks. Skip it for deterministic production flows.
 
@@ -236,7 +238,7 @@ The AutoGen version reads cleanest at first glance, but the implicit speaker-sel
 
 **Do any of them support TypeScript?** LangGraph and AutoGen have official TS ports. CrewAI is Python-only as of this writing. For TS-first, look at [Mastra](/best/ai-agent-frameworks-2026/#mastra) instead.
 
-**Which model providers work best?** All three are provider-agnostic in principle. In practice, LangGraph and AutoGen both have richer Claude/OpenAI integration than Gemini or open-weights routing. For the latter, route via <a href="https://openrouter.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">OpenRouter</a>.
+**Which model providers work best?** All three are provider-agnostic in principle. In practice, LangGraph and AutoGen both have richer Claude/OpenAI integration than Gemini or open-weights routing. For the latter, route via <AffiliateLink tool="openrouter" campaign="crewai-vs-langgraph-vs-autogen">OpenRouter</AffiliateLink>.
 
 **What about agents that call dozens of tools?** All three handle it, but LangGraph's explicit state model scales most gracefully. CrewAI starts to feel constrained around 6-8 tools per agent; AutoGen handles it but the conversation length grows quickly and observability becomes essential.
 

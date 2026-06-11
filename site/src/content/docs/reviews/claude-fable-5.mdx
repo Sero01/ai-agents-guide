@@ -85,10 +85,12 @@ head:
       ]}
 ---
 import { Icon } from 'astro-icon/components';
+import AuthorByline from '../../../components/AuthorByline.astro';
+
+<AuthorByline date="2026-06-10" />
 
 <aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
-<strong>By Parvez Ahmed · Published June 10, 2026.</strong>
-Launch-day assessment based on Anthropic's published API surface and pricing, run against our standard agent harness. Benchmark figures on the <a href="/leaderboard/">leaderboard</a> are positioned estimates until Anthropic ships a full model card. This post contains affiliate links to tools we use.
+Launch-day assessment based on Anthropic’s published API surface and pricing, run against our standard agent harness. Benchmark figures on the <a href="/leaderboard/">leaderboard</a> are positioned estimates until Anthropic ships a full model card.
 </aside>
 
 Anthropic just shipped **Claude Fable 5**, and it is not another point release on the Opus line. It is a new, higher tier — positioned as the company's most capable and most intelligent model, sitting *above* Claude Opus 4.8 rather than replacing it. The model ID is `claude-fable-5`, and the headline number that will shape every decision about it is the price: **$10 per million input tokens and $50 per million output tokens**, exactly double Opus 4.8.

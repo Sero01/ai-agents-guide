@@ -96,10 +96,13 @@ head:
       ]}
 ---
 
-<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
-<strong>By Parvez Ahmed · Published May 21, 2026.</strong>
-This post contains affiliate links. If you sign up through these links we may earn a commission at no extra cost to you. We only recommend tools we have tested ourselves.
-</aside>
+import AuthorByline from '../../../components/AuthorByline.astro';
+import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
+import AffiliateLink from '../../../components/AffiliateLink.astro';
+
+<AuthorByline date="2026-05-21" updated="2026-05-23" />
+
+<AffiliateDisclosure />
 
 Picking an AI agent framework in 2026 is harder than it should be. There are now more than a dozen credible options across Python and TypeScript, the marketing copy on every vendor page promises "production-ready", and the trade-offs only become obvious after you have spent a week trying to debug an agent loop. This post is the writeup we wish we had read six months ago — ten frameworks evaluated on the same task, the same criteria, by people who built rather than read about each one.
 
@@ -134,7 +137,7 @@ LangChain is the framework everyone has an opinion about, and most of those opin
 
 LangGraph models an agent system as a directed graph of nodes — each node is a function or a sub-agent, and the edges carry typed state. This is heavier than CrewAI's role-and-task abstraction, but it is the right shape for anything beyond a single-loop agent. Branching, retries, parallelism, and human-in-the-loop checkpoints all compose cleanly because the graph is explicit. The trade-off is that you write more code per feature — there is no `Crew([researcher, writer])` shorthand here.
 
-The observability story is the strongest of any framework on the list. **LangSmith** (LangChain's hosted tracing platform) records every node execution, every tool call, every model response, with a UI that makes the agent loop legible. We have shipped enough LangGraph agents to know that LangSmith is roughly half the value of using LangChain — without it, debugging a non-trivial flow gets painful fast. If you self-host, **Langfuse** and **Helicone** both integrate with LangChain and cover most of the same ground. Both have affiliate programs for new sign-ups: <a href="https://langfuse.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Langfuse</a> and <a href="https://www.helicone.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Helicone</a>.
+The observability story is the strongest of any framework on the list. **LangSmith** (LangChain's hosted tracing platform) records every node execution, every tool call, every model response, with a UI that makes the agent loop legible. We have shipped enough LangGraph agents to know that LangSmith is roughly half the value of using LangChain — without it, debugging a non-trivial flow gets painful fast. If you self-host, **Langfuse** and **Helicone** both integrate with LangChain and cover most of the same ground. Both have affiliate programs for new sign-ups: <AffiliateLink tool="langfuse" campaign="ai-agent-frameworks-2026">Langfuse</AffiliateLink> and <AffiliateLink tool="helicone" campaign="ai-agent-frameworks-2026">Helicone</AffiliateLink>.
 
 **Verdict:** Pick LangChain + LangGraph if your agent system has any branching, retries, or parallelism, and your team can absorb the learning curve. Skip it for one-loop research scripts where CrewAI ships the same thing in twenty fewer lines.
 
@@ -146,7 +149,7 @@ The DX on day one is the best on the list — we had the reference research-agen
 
 The weaknesses are visible once you push past the demo. Branching logic — "if the researcher finds X, do Y, otherwise Z" — is awkward, and the framework rewards you for writing flat sequential tasks rather than dynamic flows. Error handling is workable but you will end up writing custom retry logic for any task that calls flaky external APIs. Observability is improving — CrewAI now ships with built-in tracing — but it is not at LangSmith / Langfuse parity yet.
 
-**Verdict:** Best framework for prototypes, demos, and pipelines where the flow is roughly linear. Pair it with <a href="https://www.datacamp.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">DataCamp's CrewAI track</a> if you are getting your team up to speed. Reach for LangGraph if your flow has branches that can't be flattened.
+**Verdict:** Best framework for prototypes, demos, and pipelines where the flow is roughly linear. Pair it with <AffiliateLink tool="datacamp" campaign="ai-agent-frameworks-2026">DataCamp's CrewAI track</AffiliateLink> if you are getting your team up to speed. Reach for LangGraph if your flow has branches that can't be flattened.
 
 ## AutoGen
 
@@ -180,7 +183,7 @@ Released in early 2026 alongside the GPT-5 family, the OpenAI Agents SDK is a de
 
 The trade-off is portability. The SDK is built around OpenAI-specific tool definitions and the Responses API, and porting an agent to another provider means rewriting the integration layer. The framework is also less flexible for orchestrating multiple non-OpenAI tools than LangGraph or CrewAI.
 
-**Verdict:** Use it if you are 100% OpenAI. Pair with <a href="https://www.helicone.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Helicone</a> for observability. Skip it if you need provider-portability.
+**Verdict:** Use it if you are 100% OpenAI. Pair with <AffiliateLink tool="helicone" campaign="ai-agent-frameworks-2026">Helicone</AffiliateLink> for observability. Skip it if you need provider-portability.
 
 ## Anthropic Claude Agent SDK
 
@@ -227,7 +230,7 @@ The trade-off is ecosystem maturity. Mastra is newer than CrewAI or LangGraph, t
 - **Code-flavored tasks:** Smolagents.
 - **Multi-agent research:** AutoGen.
 
-Pair any of them with an observability layer — <a href="https://langfuse.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Langfuse</a>, <a href="https://www.helicone.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Helicone</a>, or LangSmith. The framework choice matters less than the observability choice, because the first hard debugging session is when you find out whether you can actually inspect what your agent is doing. We have shipped agents in five of the frameworks above to production and every single time, the moment we wired observability properly, the bugs we had been chasing for a week became obvious within twenty minutes.
+Pair any of them with an observability layer — <AffiliateLink tool="langfuse" campaign="ai-agent-frameworks-2026">Langfuse</AffiliateLink>, <AffiliateLink tool="helicone" campaign="ai-agent-frameworks-2026">Helicone</AffiliateLink>, or LangSmith. The framework choice matters less than the observability choice, because the first hard debugging session is when you find out whether you can actually inspect what your agent is doing. We have shipped agents in five of the frameworks above to production and every single time, the moment we wired observability properly, the bugs we had been chasing for a week became obvious within twenty minutes.
 
 ## FAQ
 
@@ -241,7 +244,7 @@ Pair any of them with an observability layer — <a href="https://langfuse.com/?
 
 **Is the framework choice the biggest factor in agent quality?** No. Model choice and prompt design dominate. The framework affects velocity and debuggability more than output quality.
 
-**Where should I learn more?** Pair this post with the [framework comparison](/frameworks/) Learn page for the conceptual background, and read [Agent Patterns](/ai-agents/patterns/) for the recurring shapes that show up across all of them. If you want a structured curriculum on top, the <a href="https://www.datacamp.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">DataCamp AI Engineer track</a> covers most of the above.
+**Where should I learn more?** Pair this post with the [framework comparison](/frameworks/) Learn page for the conceptual background, and read [Agent Patterns](/ai-agents/patterns/) for the recurring shapes that show up across all of them. If you want a structured curriculum on top, the <AffiliateLink tool="datacamp" campaign="ai-agent-frameworks-2026">DataCamp AI Engineer track</AffiliateLink> covers most of the above.
 
 ## Continue reading
 

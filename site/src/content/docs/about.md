@@ -3,6 +3,12 @@ title: "About This Guide"
 description: "About agentguides.dev — a developer-focused reference for building AI agents, agentic workflows, and AI-powered automation systems."
 sidebar:
   order: 2
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/","image":"https://agentguides.dev/profile_pic.jpeg","jobTitle":"Software Developer","description":"Software developer building AI agent systems, agentic automation pipelines, and the infrastructure that makes them reliable in production. Author and maintainer of agentguides.dev.","email":"mailto:126ahmedparvez@gmail.com","sameAs":["https://github.com/Sero01","https://www.linkedin.com/in/parvez-ahmed-b47680124"],"knowsAbout":["AI agents","Agentic workflows","Model Context Protocol","LLM application development","Prompt engineering"],"mainEntityOfPage":"https://agentguides.dev/about/"}}
 ---
 
 ## What This Site Is

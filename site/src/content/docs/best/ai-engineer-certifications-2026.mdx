@@ -97,10 +97,13 @@ head:
       ]}
 ---
 
-<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
-<strong>By Parvez Ahmed · Published May 21, 2026.</strong>
-This post contains affiliate links to education platforms. We only recommend programs we have personally taken or used to onboard team members.
-</aside>
+import AuthorByline from '../../../components/AuthorByline.astro';
+import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
+import AffiliateLink from '../../../components/AffiliateLink.astro';
+
+<AuthorByline date="2026-05-21" updated="2026-05-23" />
+
+<AffiliateDisclosure />
 
 The honest answer to "do AI engineer certifications help my career" is: **sometimes, in specific shapes, and almost never the way the marketing pages claim**. This post breaks down ten programs we have either completed ourselves or used to onboard engineers, scores them on the things that actually matter (cost, depth, recognition by hiring managers, recency of material), and gives a recommendation per career path.
 
@@ -142,7 +145,7 @@ Andrew Ng's organisation is, plainly, the best educational producer in this spac
 
 **Best for:** anyone, at any level, building applications with LLMs. Foundational specialisations build the mental model; the practical tracks build muscle memory.
 
-**Sign up:** <a href="https://www.coursera.org/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Coursera Plus</a> covers all DeepLearning.AI material under one subscription.
+**Sign up:** <AffiliateLink tool="coursera" campaign="ai-engineer-certifications-2026">Coursera Plus</AffiliateLink> covers all DeepLearning.AI material under one subscription.
 
 ## AWS Certified Machine Learning – Specialty (and the new AI Practitioner)
 
@@ -212,7 +215,7 @@ A curated career path of ~25 short courses covering Python for AI, machine learn
 
 **Best for:** intermediate engineers wanting a structured self-paced curriculum.
 
-**Sign up:** the <a href="https://www.datacamp.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">DataCamp AI Engineer Career Track</a> bundles all required courses under one subscription.
+**Sign up:** the <AffiliateLink tool="datacamp" campaign="ai-engineer-certifications-2026">DataCamp AI Engineer Career Track</AffiliateLink> bundles all required courses under one subscription.
 
 ## Stanford Online — CS324 (LLMs), CS336 (Agents)
 
@@ -262,7 +265,7 @@ The pattern: **enterprises value credentials; startups value portfolios.** Pick 
 
 **Which certification is most future-proof?** None of them, individually. The field moves too fast. The most future-proof investment is in fundamentals (linear algebra, probability, systems engineering) and in the habit of building one or two projects per quarter.
 
-**Where do I start if I have no ML background at all?** DeepLearning.AI's *Machine Learning Specialisation* (the new one, taught with Stanford). Three months, $59/month, and you will come out with the foundation everything else builds on. Then jump into the Generative AI and Agentic AI tracks. The combined Coursera Plus subscription via <a href="https://www.coursera.org/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Coursera</a> covers all of it.
+**Where do I start if I have no ML background at all?** DeepLearning.AI's *Machine Learning Specialisation* (the new one, taught with Stanford). Three months, $59/month, and you will come out with the foundation everything else builds on. Then jump into the Generative AI and Agentic AI tracks. The combined Coursera Plus subscription via <AffiliateLink tool="coursera" campaign="ai-engineer-certifications-2026">Coursera</AffiliateLink> covers all of it.
 
 **Where do I learn the agent-specific material on this site?** Start at [AI Agents](/ai-agents/) for concepts, then [Agent Patterns](/ai-agents/patterns/) for design, then [Frameworks](/frameworks/) for tools. The [Build Tutorials](/build/) section pairs working code with each concept.
 

@@ -84,9 +84,16 @@ head:
       ]}
 ---
 
+import AuthorByline from '../../../components/AuthorByline.astro';
+import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
+import AffiliateLink from '../../../components/AffiliateLink.astro';
+
+<AuthorByline date="2026-05-21" updated="2026-05-23" />
+
+<AffiliateDisclosure />
+
 <aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
-<strong>By Parvez Ahmed · Published May 21, 2026.</strong>
-Companion to the interactive <a href="/leaderboard/">AI Models Leaderboard</a>. Contains affiliate links to model routers and observability platforms we use.
+Companion to the interactive <a href="/leaderboard/">AI Models Leaderboard</a>.
 </aside>
 
 The interactive [Leaderboard](/leaderboard/) on this site tracks 50 large language models across pricing, benchmarks, context windows, and throughput. This post is the long-form analysis sitting on top of the same dataset — which numbers actually matter, where the field has shifted in the past six months, and which models we recommend for which workloads. If you only need the table, the leaderboard is faster. If you want to know what the table is telling you, read on.
@@ -141,7 +148,7 @@ For most production agent workloads, **Claude Haiku 4.5** ($2.00 blended, compos
 
 For self-hosting, **Llama 4 Maverick** is the easiest model on this list to deploy on a single 8x H100 node and the benchmark numbers are competitive at that scale. **Llama 4 Scout** is the right pick if you genuinely need the 10M context window — no closed model offers that today.
 
-Pair any of the above with <a href="https://www.together.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Together AI</a> or <a href="https://fireworks.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Fireworks AI</a> if you want hosted access, or <a href="https://openrouter.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">OpenRouter</a> for unified routing across providers.
+Pair any of the above with <AffiliateLink tool="together" campaign="llm-benchmark-comparison-2026">Together AI</AffiliateLink> or <AffiliateLink tool="fireworks" campaign="llm-benchmark-comparison-2026">Fireworks AI</AffiliateLink> if you want hosted access, or <AffiliateLink tool="openrouter" campaign="llm-benchmark-comparison-2026">OpenRouter</AffiliateLink> for unified routing across providers.
 
 ## Best closed model per task
 
@@ -155,7 +162,7 @@ Pair any of the above with <a href="https://www.together.ai/?ref=agentguides" re
 
 ## The Pareto frontier
 
-The price-vs-performance scatter on the [Leaderboard](/leaderboard/) highlights the Pareto-optimal models — the ones that are not dominated by any cheaper alternative at equal-or-higher score. As of {today}, the frontier consists of:
+The price-vs-performance scatter on the [Leaderboard](/leaderboard/) highlights the Pareto-optimal models — the ones that are not dominated by any cheaper alternative at equal-or-higher score. As of May 2026, the frontier consists of:
 
 - **Free-tier compute (open-weights, self-hosted):** Qwen3 7B → Gemma 3 27B → Llama 4 Maverick → DeepSeek V3.1.
 - **Hosted, mid-range:** Gemini 2.5 Flash-Lite → Gemini 2.5 Flash → Claude Haiku 4.5 → Claude Sonnet 4.6.
@@ -179,7 +186,7 @@ Benchmark numbers come from vendor model cards, the LMSYS Chatbot Arena, Artific
 
 Pricing is taken from each provider's first-party API. Open-weights pricing reflects the going rate at OpenRouter / Together / Fireworks. We update the dataset monthly; the last-updated stamp at the top of the [Leaderboard](/leaderboard/) is the source of truth.
 
-For observability on whichever model you end up choosing, <a href="https://www.helicone.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Helicone</a> and <a href="https://langfuse.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Langfuse</a> are both first-rate and both have generous free tiers.
+For observability on whichever model you end up choosing, <AffiliateLink tool="helicone" campaign="llm-benchmark-comparison-2026">Helicone</AffiliateLink> and <AffiliateLink tool="langfuse" campaign="llm-benchmark-comparison-2026">Langfuse</AffiliateLink> are both first-rate and both have generous free tiers.
 
 ## FAQ
 

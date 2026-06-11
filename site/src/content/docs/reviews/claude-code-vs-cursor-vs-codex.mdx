@@ -87,11 +87,13 @@ head:
       ]}
 ---
 import { Icon } from 'astro-icon/components';
+import AuthorByline from '../../../components/AuthorByline.astro';
+import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
+import AffiliateLink from '../../../components/AffiliateLink.astro';
 
-<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
-<strong>By Parvez Ahmed · Published May 21, 2026.</strong>
-This post contains affiliate links. We only recommend tools we have tested ourselves.
-</aside>
+<AuthorByline date="2026-05-21" updated="2026-05-23" />
+
+<AffiliateDisclosure />
 
 There are now three credible answers to "which AI coding tool should I use" and the picture has shifted enough in 2026 that any review from 2024 is misleading. **Claude Code** is Anthropic's terminal-native agent, **Cursor** is the agentic IDE built on a VS Code fork, and **Codex** is OpenAI's coding-specific agent shipped through the ChatGPT and IDE surfaces. They overlap, but the right one for you depends on tasks you do and the surface you prefer.
 
@@ -168,7 +170,7 @@ This is the dimension where you have to be most careful, because the headline pr
 
 **Claude Code** runs against your Claude.ai plan. The Pro plan ($20/mo) gives you a usage-based pool; the Max plans ($100/mo and $200/mo) raise the pool. For heavy daily use we have found the Max $200/mo tier most predictable — under it, a power user can hit limits on the Pro plan in a few hours. API-mode billing is also supported and is what we used for the cost numbers above; in API mode you pay per token, which can be cheaper or more expensive than the subscription depending on usage shape.
 
-**Cursor Pro** is a flat $20/mo for unlimited fast premium-model requests up to a generous cap (currently ~500/month of frontier-model "fast" requests, plus unlimited slower fallback). For most daily-driver users this comes out cheaper than any subscription-only API alternative. The $20/mo is the right tier; the Business tier adds team features but the per-user price doubles. Sign up via the <a href="https://www.cursor.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Cursor referral link</a>.
+**Cursor Pro** is a flat $20/mo for unlimited fast premium-model requests up to a generous cap (currently ~500/month of frontier-model "fast" requests, plus unlimited slower fallback). For most daily-driver users this comes out cheaper than any subscription-only API alternative. The $20/mo is the right tier; the Business tier adds team features but the per-user price doubles. Sign up via the <AffiliateLink tool="cursor" campaign="claude-code-vs-cursor-vs-codex">Cursor referral link</AffiliateLink>.
 
 **Codex** is bundled with ChatGPT Plus ($20/mo) or ChatGPT Pro ($200/mo). The Pro tier is required for the Codex-cloud parallel-task feature, which is the biggest differentiator — Codex can run multiple long-running tasks against your repo in the cloud while you do other work. If that workflow matters to you, the $200 tier is genuinely worth it; if not, Plus is fine.
 
@@ -199,7 +201,7 @@ If you live in VS Code, **Cursor** is the most natural surface — it is a fork,
 - **OpenAI-first stacks:** Codex. If you already pay for ChatGPT Pro, Codex-cloud is the highest-leverage feature in your subscription.
 - **Code reviewers:** Claude Code's `gh pr review` integration is best-in-class. Cursor is workable. Codex is improving.
 
-Pair any of them with an LLM observability platform if you are running them at scale on automated jobs — <a href="https://www.helicone.ai/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Helicone</a> for API-mode usage works well across all three. For tracking team usage and cost across many users, <a href="https://langfuse.com/?ref=agentguides" rel="sponsored nofollow noopener" target="_blank">Langfuse</a> covers the same ground.
+Pair any of them with an LLM observability platform if you are running them at scale on automated jobs — <AffiliateLink tool="helicone" campaign="claude-code-vs-cursor-vs-codex">Helicone</AffiliateLink> for API-mode usage works well across all three. For tracking team usage and cost across many users, <AffiliateLink tool="langfuse" campaign="claude-code-vs-cursor-vs-codex">Langfuse</AffiliateLink> covers the same ground.
 
 ## FAQ
 
