@@ -3,7 +3,7 @@ title: "Build a Research Agent with CrewAI — Step by Step (with Code)"
 description: "End-to-end build of a 3-agent research assistant using CrewAI. Working code, real cost (~$0.05 per run), architecture diagram, and where to take it next."
 author: Parvez Ahmed
 date: 2026-05-21
-lastUpdated: 2026-05-23
+lastUpdated: 2026-06-12
 sidebar:
   order: 2
 head:
@@ -34,7 +34,7 @@ head:
   - tag: meta
     attrs:
       property: article:modified_time
-      content: "2026-05-23"
+      content: "2026-06-12"
   - tag: meta
     attrs:
       property: article:author
@@ -68,7 +68,7 @@ head:
       type: application/ld+json
     content: |
       {"@context":"https://schema.org","@graph":[
-        {"@type":"TechArticle","@id":"https://agentguides.dev/build/research-agent-with-crewai/#article","headline":"Build a Research Agent with CrewAI — Step by Step (with Code)","description":"End-to-end build of a 3-agent research assistant using CrewAI. Includes working code, real cost numbers, an architecture diagram, and concrete extension ideas.","url":"https://agentguides.dev/build/research-agent-with-crewai/","mainEntityOfPage":"https://agentguides.dev/build/research-agent-with-crewai/","datePublished":"2026-05-21","dateModified":"2026-05-23","inLanguage":"en-US","articleSection":"Build Tutorials","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/build.png","keywords":"CrewAI tutorial, build research agent, multi-agent Python, Tavily web search agent, CrewAI example code, AI agent tutorial 2026","proficiencyLevel":"Intermediate"},
+        {"@type":"TechArticle","@id":"https://agentguides.dev/build/research-agent-with-crewai/#article","headline":"Build a Research Agent with CrewAI — Step by Step (with Code)","description":"End-to-end build of a 3-agent research assistant using CrewAI. Includes working code, real cost numbers, an architecture diagram, and concrete extension ideas.","url":"https://agentguides.dev/build/research-agent-with-crewai/","mainEntityOfPage":"https://agentguides.dev/build/research-agent-with-crewai/","datePublished":"2026-05-21","dateModified":"2026-06-12","inLanguage":"en-US","articleSection":"Build Tutorials","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/build.png","keywords":"CrewAI tutorial, build research agent, multi-agent Python, Tavily web search agent, CrewAI example code, AI agent tutorial 2026","proficiencyLevel":"Intermediate"},
         {"@type":"HowTo","name":"Build a 3-agent research assistant with CrewAI","description":"Step-by-step tutorial to build a planner/researcher/writer research agent with CrewAI, Tavily search, and Claude Sonnet 4.6.","totalTime":"PT60M","estimatedCost":{"@type":"MonetaryAmount","currency":"USD","value":"0.05"},"tool":[{"@type":"HowToTool","name":"Python 3.10+"},{"@type":"HowToTool","name":"CrewAI"},{"@type":"HowToTool","name":"Tavily API key"},{"@type":"HowToTool","name":"Anthropic API key"}],"step":[
           {"@type":"HowToStep","position":1,"name":"Set up the project","text":"Create a Python virtualenv, install crewai, anthropic, and tavily-python, and add your API keys to a .env file."},
           {"@type":"HowToStep","position":2,"name":"Define the three agents","text":"Create Planner, Researcher, and Writer agents with explicit roles, goals, and the appropriate tools."},
@@ -88,7 +88,7 @@ import AuthorByline from '../../../components/AuthorByline.astro';
 import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
 import AffiliateLink from '../../../components/AffiliateLink.astro';
 
-<AuthorByline date="2026-05-21" updated="2026-05-23" />
+<AuthorByline date="2026-05-21" updated="2026-06-12" />
 
 <AffiliateDisclosure />
 
@@ -363,7 +363,7 @@ On Claude Sonnet 4.6, the reference topic ran end-to-end at:
 
 Total: **~$0.05–$0.11 per run** depending on caching hit rate and topic depth. For a research agent you run 50 times a month, this is roughly $3–6/month.
 
-If you are running this at higher volume, route through <AffiliateLink tool="openrouter" campaign="research-agent-with-crewai">OpenRouter</AffiliateLink> for unified billing across providers, and add <AffiliateLink tool="helicone" campaign="research-agent-with-crewai">Helicone</AffiliateLink> for per-call cost tracking — both have generous free tiers.
+If you are running this at higher volume, route through <AffiliateLink tool="openrouter" campaign="research-agent-with-crewai">OpenRouter</AffiliateLink> for unified billing across providers, and add <AffiliateLink tool="langfuse" campaign="research-agent-with-crewai">Langfuse</AffiliateLink> for per-call tracing and cost tracking — both have generous free tiers.
 
 ## Where to take it next
 
