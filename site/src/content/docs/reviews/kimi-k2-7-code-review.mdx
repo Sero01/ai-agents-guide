@@ -1,0 +1,174 @@
+---
+title: "Kimi K2.7-Code Review — Moonshot's Open-Weight Coding Model"
+description: "Moonshot AI's Kimi K2.7-Code, released June 12, 2026: 1T-parameter MoE, 256K context, Modified MIT license, $0.95/$4.00 pricing. What the launch numbers show, what they leave out, and whether it belongs in your coding stack."
+author: Parvez Ahmed
+date: 2026-06-14
+lastUpdated: 2026-06-14
+sidebar:
+  order: 6
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Kimi K2.7-Code Review — Moonshot's Open-Weight Coding Model"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Moonshot AI's Kimi K2.7-Code, released June 12, 2026: 1T-parameter MoE, 256K context, Modified MIT license, $0.95/$4.00 pricing. What the launch numbers show and what they leave out."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/kimi-k2-7-code-review/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-06-14"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-06-14"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "Kimi K2.7, Kimi K2.7-Code, Moonshot AI, open weights model, AI coding model, agentic coding, SWE-bench, LLM review"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "Kimi K2.7-Code Review — Moonshot's Open-Weight Coder"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "Moonshot AI's Kimi K2.7-Code: 1T MoE, 256K context, Modified MIT license. Architecture, pricing, what the launch numbers show, and what they leave out."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/kimi-k2-7-code-review/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/kimi-k2-7-code-review/#article","headline":"Kimi K2.7-Code Review — Moonshot's Open-Weight Coding Model","description":"Moonshot AI's Kimi K2.7-Code, released June 12, 2026: 1T-parameter MoE, 256K context, Modified MIT license, $0.95/$4.00 pricing. What the launch numbers show, what they leave out, and whether it belongs in your coding stack.","url":"https://agentguides.dev/reviews/kimi-k2-7-code-review/","mainEntityOfPage":"https://agentguides.dev/reviews/kimi-k2-7-code-review/","datePublished":"2026-06-14","dateModified":"2026-06-14","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Kimi K2.7 review, Kimi K2.7-Code benchmarks, Moonshot AI, open weights coding model, agentic coding, SWE-bench, Modified MIT"},
+        {"@type":"Review","name":"Kimi K2.7-Code review","itemReviewed":{"@type":"SoftwareApplication","name":"Kimi K2.7-Code","applicationCategory":"DeveloperApplication","operatingSystem":"API (cloud), open weights (self-host)","publisher":{"@type":"Organization","name":"Moonshot AI"}},"reviewRating":{"@type":"Rating","ratingValue":"4","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-06-14","reviewBody":"A coding-specialized, open-weight refresh of Kimi K2.6 with a strong token-efficiency story and a permissive Modified MIT license. The headline weakness is that Moonshot shipped only its own proprietary coding benchmarks at launch — no SWE-bench Verified, Aider, or GPQA numbers — so cross-vendor comparisons are estimates until third-party scores land. Cheap, self-hostable, and genuinely good at agentic code; validate it on your own repository before trusting the launch claims."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"Kimi K2.7-Code Review","item":"https://agentguides.dev/reviews/kimi-k2-7-code-review/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is Kimi K2.7-Code?","acceptedAnswer":{"@type":"Answer","text":"Kimi K2.7-Code is Moonshot AI's coding-specialized large language model, released on June 12, 2026. It is a 1-trillion-parameter Mixture-of-Experts model with roughly 32 billion active parameters and 384 experts, a 256K-token context window, and a permissive Modified MIT open-weights license."}},
+          {"@type":"Question","name":"How much does Kimi K2.7-Code cost?","acceptedAnswer":{"@type":"Answer","text":"On Moonshot's first-party API the rates are about $0.95 per million cache-miss input tokens, $0.19 per million cached input tokens, and $4.00 per million output tokens. Because the weights are open under a Modified MIT license, you can also self-host or use third-party providers."}},
+          {"@type":"Question","name":"Is Kimi K2.7-Code better than K2.6 at coding?","acceptedAnswer":{"@type":"Answer","text":"Moonshot reports gains over K2.6 on its own benchmarks: +21.8% on Kimi Code Bench v2, +11.0% on Program Bench, and +31.5% on MLS Bench Lite, while using roughly 30% fewer reasoning tokens. These are proprietary benchmarks; independent SWE-bench Verified and Aider numbers had not been published at launch."}},
+          {"@type":"Question","name":"Does Kimi K2.7-Code have published SWE-bench scores?","acceptedAnswer":{"@type":"Answer","text":"Not at launch. Moonshot released only its own coding benchmarks. Its predecessor, Kimi K2.6, scored 80.2 on SWE-bench Verified, which is the most reasonable anchor for estimating K2.7-Code until third-party results arrive."}}
+        ]}
+      ]}
+---
+import AuthorByline from '../../../components/AuthorByline.astro';
+
+<AuthorByline date="2026-06-14" />
+
+<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
+Every standard-benchmark number for K2.7-Code below is an estimate, not a vendor figure — Moonshot shipped only its own proprietary coding benchmarks at launch. Cross-vendor placements come from our <a href="/leaderboard/">models leaderboard</a> and are anchored to the published Kimi K2.6 predecessor; treat them as directional until third-party scores land.
+</aside>
+
+On **June 12, 2026**, Moonshot AI dropped [Kimi K2.7-Code](https://moonshot.ai) onto Hugging Face — a coding-specialized refresh of the K2 line aimed squarely at long-horizon, agentic software engineering. It is the third Kimi release in roughly two months (K2.6 landed April 20), and it continues Moonshot's pattern: ship frontier-adjacent open weights, price them well below the closed leaders, and let the community do the independent benchmarking afterward. This review covers what K2.7-Code actually is, what its launch numbers do and do not tell you, and where it fits against the open coders it competes with.
+
+## TL;DR verdict
+
+| | Kimi K2.7-Code |
+|---|---|
+| **Type** | Coding-specialized LLM (agentic SWE focus) |
+| **Architecture** | Sparse MoE, ~32B active / ~1T total, 384 experts |
+| **Context window** | 256K tokens (262,144) |
+| **License** | Modified MIT (open weights) |
+| **Pricing** | ~$0.95 in / $4.00 out per 1M · $0.19 cached input |
+| **Headline number** | +21.8% on Kimi Code Bench v2 vs K2.6; ~30% fewer reasoning tokens |
+| **Availability** | Hugging Face weights, Moonshot API, OpenRouter / Fireworks |
+| **Best for** | Cheap self-hostable agentic coding, long-context refactors |
+| **Caveat** | No public SWE-bench / Aider / GPQA numbers at launch |
+
+If you skip the rest: **K2.7-Code is a strong, cheap, genuinely open coding model worth testing** — but its launch numbers are all Moonshot's own benchmarks, so anyone telling you exactly where it lands against Opus or GPT-5.5 is guessing. Run it on your own repo before you trust a ranking.
+
+## What it is
+
+K2.7-Code is a sparse Mixture-of-Experts model with **roughly 1 trillion total parameters and ~32 billion active per token**, spread across **384 experts**. That active-parameter count is what keeps inference cheap enough to justify the pricing, and the MoE routing is the lever Moonshot used to chase its central claim this release: **roughly 30% fewer "thinking" tokens than K2.6** for equal-or-better coding output. In an agentic loop — where the model plans, edits, runs tests, and re-plans across dozens of steps — token efficiency compounds into real latency and cost savings, so a 30% reduction is a more useful headline than another point on a saturated single-shot benchmark.
+
+The context window is **256K tokens (262,144)**, unchanged from K2.6 and enough to hold a mid-sized codebase slice plus the running history of a refactoring session. The license is the important part: **Modified MIT**, putting full weights in your hands. Unlike a Copilot-gated model such as Microsoft's [MAI-Code-1-Flash](/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/), you can self-host K2.7-Code, fine-tune it, and run it inside an air-gapped environment — which for a lot of teams is the entire decision.
+
+## What the launch numbers say
+
+Here is the honest part, and it is the same caveat we put on every fresh open-weights launch: **Moonshot published only its own benchmarks.** The release leans on a suite of proprietary and semi-proprietary tests:
+
+| Benchmark | K2.7-Code vs K2.6 | What it is |
+|---|---|---|
+| **Kimi Code Bench v2** | +21.8% | Moonshot's internal coding suite |
+| **Program Bench** | +11.0% | Program-synthesis evaluation |
+| **MLS Bench Lite** | +31.5% | Multi-language / multi-step coding |
+| **Reasoning tokens** | ~−30% | Tokens spent per solved task |
+
+What is conspicuously **absent**: SWE-bench Verified, SWE-bench Pro, Terminal-Bench, LiveCodeBench, Aider Polyglot, GPQA Diamond, AIME, MMLU-Pro. None of the cross-vendor public benchmarks shipped with the model. That is not unusual for a same-week open-weights drop — the community typically backfills these within a fortnight — but it means any leaderboard placement today is interpolation, not measurement.
+
+The most defensible anchor is the predecessor. **Kimi K2.6 scored 80.2 on SWE-bench Verified** and 87.1 on MMLU-Pro, with strong LiveCodeBench results. Since K2.7-Code is a coding-focused improvement over the same base, a conservative read puts its SWE-bench Verified in the low 80s — competitive with [DeepSeek V4 Pro](/leaderboard/) and GLM-5 in the open tier, below the closed frontier leaders. That is exactly how we placed it in the [models leaderboard](/leaderboard/): coding cells nudged above K2.6's confirmed numbers, general-knowledge and reasoning cells held conservative because a "Code" variant typically trades some breadth for depth, and the multimodal cell left empty because this is a text/code release rather than the multimodal K2.6.
+
+## What it costs
+
+On Moonshot's first-party API:
+
+- **Cache-miss input:** ~$0.95 per 1M tokens
+- **Cached input:** ~$0.19 per 1M tokens
+- **Output:** ~$4.00 per 1M tokens
+
+That output rate is higher than budget open coders like Qwen3 or DeepSeek V4 Flash, but the cached-input price is the number that matters for agentic coding: a coding agent re-sends the same system prompt, repository map, and conversation history on every step, so the **$0.19 cached read** is what your bill actually tracks against once a session warms up. Combined with self-hosting being on the table — open weights, no per-token API at all if you run your own GPUs — the effective cost can land well below the headline. For cost-shaping math against the closed leaders, the calculator on the [leaderboard](/leaderboard/) lets you plug in your own token mix.
+
+## How it compares
+
+K2.7-Code's real competition is the open coding tier, not the closed frontier. Against **DeepSeek V4 Pro** (SWE-bench Verified 80.6, output $2.20/1M), K2.7-Code trades a higher output price for a stronger token-efficiency story and the freshest coding-specific training. Against **GLM-5** (SWE-bench Verified 77.8) it looks like a step up on coding. Against closed leaders like [Claude Opus 4.8](/reviews/claude-opus-4-8-review/) and GPT-5.5, it is cheaper and self-hostable but almost certainly behind on the hardest reasoning and agent-tool benchmarks — the gap the open tier has been narrowing all year but has not closed.
+
+The pattern worth noticing: the open-weights coding tier is now releasing on a roughly monthly cadence, each drop leapfrogging the last on coding while the closed leaders hold the reasoning crown. If your workload is "edit real code across a large repo, cheaply, possibly on your own hardware," that competition is working entirely in your favor.
+
+## Who should care
+
+- **Teams running self-hosted coding agents:** This is the headline use case. Modified MIT weights, 256K context, and a token-efficiency improvement aimed directly at agentic loops. Pull it from Hugging Face and A/B it against your current open coder.
+- **Cost-sensitive agentic pipelines:** If you are paying API rates for a closed model on a high-volume coding workload, K2.7-Code's cached-input price plus the self-host option is worth a serious pilot — see [multi-agent pipelines](/agentic-workflows/multi-agent/) for where a cheap coder slots into a larger workflow.
+- **Anyone benchmarking open vs closed:** Wait for third-party SWE-bench Verified and Aider numbers before you rank it. The launch claims are real but vendor-sourced.
+- **Teams that need vision or broad reasoning:** Look elsewhere. K2.7-Code is a coding specialist; for multimodal work K2.6 or a frontier model is the better fit, and for hardest-reasoning tasks the closed leaders still lead — the [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) covers how to weigh that trade.
+
+## FAQ
+
+**What is Kimi K2.7-Code?** Moonshot AI's coding-specialized LLM, released June 12, 2026. A 1T-parameter MoE (~32B active, 384 experts) with a 256K context window and a Modified MIT open-weights license.
+
+**How much does it cost?** About $0.95 per 1M cache-miss input tokens, $0.19 cached, and $4.00 per 1M output tokens on the Moonshot API. Open weights mean self-hosting is also an option.
+
+**Is it better than K2.6 at coding?** Moonshot reports +21.8% on Kimi Code Bench v2, +11.0% on Program Bench, and +31.5% on MLS Bench Lite versus K2.6, with ~30% fewer reasoning tokens. Those are proprietary benchmarks.
+
+**Does it have SWE-bench scores?** Not at launch. K2.6 scored 80.2 on SWE-bench Verified, which is the best anchor until independent K2.7-Code numbers land.
+
+**Can I self-host it?** Yes — the weights are on Hugging Face under a Modified MIT license, so you can run, fine-tune, and deploy it on your own infrastructure.
+
+## Continue reading
+
+- [AI Models Leaderboard](/leaderboard/) — Kimi K2.7-Code versus 60+ models on benchmarks, pricing, and context window, with a cost calculator.
+- [Microsoft MAI-Thinking-1 & MAI-Code-1-Flash Review](/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/) — the closed-source coding model K2.7-Code's open positioning is a direct answer to.
+- [Claude Code vs Cursor vs Codex](/reviews/claude-code-vs-cursor-vs-codex/) — where an open coding model like this one actually plugs into a coding workflow.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — how to read coding benchmarks and self-reported numbers without getting fooled.
+- [All Reviews](/reviews/) — index of every head-to-head review on the site.
