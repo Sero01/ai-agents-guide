@@ -1,0 +1,173 @@
+---
+title: "GLM-5.2 Review — Zhipu's Open-Weight Coding Flagship"
+description: "Zhipu AI's GLM-5.2, released June 13, 2026: 753B-parameter MoE, 1M context, MIT license, $1.40/$4.40 pricing. The published SWE-bench Pro numbers, what they leave out, and where it lands against GPT-5.5 and the open coding tier."
+author: Parvez Ahmed
+date: 2026-06-21
+lastUpdated: 2026-06-21
+sidebar:
+  order: 7
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "GLM-5.2 Review — Zhipu's Open-Weight Coding Flagship"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Zhipu AI's GLM-5.2, released June 13, 2026: 753B-parameter MoE, 1M context, MIT license, $1.40/$4.40 pricing. The published SWE-bench Pro numbers and what they leave out."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/glm-5-2-review/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-06-21"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-06-21"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "GLM-5.2, Zhipu AI, Z.ai, open weights model, AI coding model, agentic coding, SWE-bench Pro, MIT license, LLM review"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "GLM-5.2 Review — Zhipu's Open-Weight Coding Flagship"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "Zhipu AI's GLM-5.2: 753B MoE, 1M context, MIT license. Architecture, pricing, the published SWE-bench Pro numbers, and where it lands against GPT-5.5."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/glm-5-2-review/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/glm-5-2-review/#article","headline":"GLM-5.2 Review — Zhipu's Open-Weight Coding Flagship","description":"Zhipu AI's GLM-5.2, released June 13, 2026: 753B-parameter MoE, 1M context, MIT license, $1.40/$4.40 pricing. The published SWE-bench Pro numbers, what they leave out, and where it lands against GPT-5.5 and the open coding tier.","url":"https://agentguides.dev/reviews/glm-5-2-review/","mainEntityOfPage":"https://agentguides.dev/reviews/glm-5-2-review/","datePublished":"2026-06-21","dateModified":"2026-06-21","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"GLM-5.2 review, GLM-5.2 benchmarks, Zhipu AI, Z.ai, open weights coding model, agentic coding, SWE-bench Pro, MIT license"},
+        {"@type":"Review","name":"GLM-5.2 review","itemReviewed":{"@type":"SoftwareApplication","name":"GLM-5.2","applicationCategory":"DeveloperApplication","operatingSystem":"API (cloud), open weights (self-host)","publisher":{"@type":"Organization","name":"Zhipu AI"}},"reviewRating":{"@type":"Rating","ratingValue":"4.5","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-06-21","reviewBody":"An open-weights MoE coding flagship that published long-horizon coding benchmarks (SWE-bench Pro 62.1) edging out GPT-5.5 at roughly one-sixth the cost, shipped under an unrestricted MIT license. The caveat is scope: Zhipu published coding and agentic numbers, not the full standard suite, so general-reasoning placements remain estimates. For agentic coding on a budget, possibly self-hosted, it is one of the strongest open options available — validate it on your own repository before trusting the headline ranking."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"GLM-5.2 Review","item":"https://agentguides.dev/reviews/glm-5-2-review/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is GLM-5.2?","acceptedAnswer":{"@type":"Answer","text":"GLM-5.2 is Zhipu AI's open-weight coding flagship, released on June 13, 2026. It is a Mixture-of-Experts model with roughly 753 billion total parameters and about 40 billion active per token, a 1 million token context window, up to 131,072 tokens of output, and an unrestricted MIT open-weights license."}},
+          {"@type":"Question","name":"How much does GLM-5.2 cost?","acceptedAnswer":{"@type":"Answer","text":"On Zhipu's metered API the rates are about $1.40 per million input tokens, $4.40 per million output tokens, and $0.26 per million cached input tokens. A flat GLM Coding Plan subscription starts around $18 per month. Because the weights are MIT-licensed, you can also self-host or use third-party providers."}},
+          {"@type":"Question","name":"Is GLM-5.2 better than GPT-5.5 at coding?","acceptedAnswer":{"@type":"Answer","text":"On the long-horizon coding benchmarks Zhipu published, GLM-5.2 edges GPT-5.5: SWE-bench Pro 62.1 vs 58.6, FrontierSWE 74.4 vs 72.6, and MCP-Atlas 77.0 vs 75.3, at roughly one-sixth the cost. GPT-5.5 still leads on broad reasoning, and these are vendor-published numbers, so independent confirmation is worth waiting for."}},
+          {"@type":"Question","name":"Does GLM-5.2 have published SWE-bench scores?","acceptedAnswer":{"@type":"Answer","text":"Yes. Zhipu published SWE-bench Pro 62.1 on June 17, 2026, along with FrontierSWE 74.4 and MCP-Atlas 77.0. It did not publish the full standard public suite (MMLU-Pro, GPQA Diamond, Aider Polyglot, tau-bench), so those placements remain estimates anchored to GLM-5.1."}}
+        ]}
+      ]}
+---
+import AuthorByline from '../../../components/AuthorByline.astro';
+
+<AuthorByline date="2026-06-21" />
+
+<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
+GLM-5.2's coding and agentic numbers below are vendor-published; its general-reasoning placements (MMLU-Pro, GPQA, Aider, tau-bench) are estimates anchored to the GLM-5.1 predecessor. Cross-vendor positions come from our <a href="/leaderboard/">models leaderboard</a>; treat the estimated cells as directional until third-party scores land.
+</aside>
+
+On **June 13, 2026**, Zhipu AI (Z.ai) released [GLM-5.2](https://z.ai), its open-weight coding flagship, and followed it on June 17 with a benchmark card that did something the Chinese open tier rarely does on day one: it put up cross-vendor coding numbers and **beat GPT-5.5 on every one of them**. The weights ship under an unrestricted MIT license, the metered API undercuts the closed leaders by roughly six-to-one, and the headline is a genuine, third-party benchmark rather than a proprietary suite. This review covers what GLM-5.2 is, which of its numbers are measured versus estimated, and where it actually fits.
+
+## TL;DR verdict
+
+| | GLM-5.2 |
+|---|---|
+| **Type** | Coding-first general LLM (agentic SWE focus) |
+| **Architecture** | Sparse MoE, ~40B active / ~753B total |
+| **Context window** | 1M tokens · up to 131,072 output |
+| **License** | MIT (unrestricted open weights) |
+| **Pricing** | $1.40 in / $4.40 out per 1M · $0.26 cached input |
+| **Headline number** | SWE-bench Pro 62.1 (vs GPT-5.5 58.6) |
+| **Availability** | Hugging Face weights, Z.ai API, GLM Coding Plan, OpenRouter |
+| **Best for** | Cost-sensitive agentic coding, self-hosted SWE agents |
+| **Caveat** | Published coding/agentic numbers only — broad-reasoning cells are estimates |
+
+If you skip the rest: **GLM-5.2 is the strongest open-weights coding model released this month and one of the best-value coders, period.** It published real SWE-bench Pro, FrontierSWE, and MCP-Atlas numbers that edge GPT-5.5 at a fraction of the cost, and it did it under a permissive MIT license. The honest asterisk is that Zhipu led with coding and agentic benchmarks, not the full standard suite — so its general-knowledge ranking is still interpolation.
+
+## What it is
+
+GLM-5.2 is a sparse Mixture-of-Experts model with **roughly 753 billion total parameters and ~40 billion active per token**. That active-parameter count is the lever that keeps inference cheap enough to justify the pricing, and it is the same architectural pattern the whole frontier open tier — [DeepSeek V4 Pro](/leaderboard/), Kimi, Qwen — has converged on. The jump from the [GLM-5.1](/leaderboard/) predecessor is squarely a coding-and-agentic refresh rather than a from-scratch base model.
+
+The context window is **1 million tokens** with up to **131,072 tokens of output**, a real step up from the 200K window the earlier GLM-5 line carried, and enough to hold a substantial repository slice plus the running history of a long agentic session. The license is the part that matters most: **unrestricted MIT**, weights downloadable from Hugging Face. Unlike a subscription-gated closed coder, you can self-host GLM-5.2, fine-tune it, and run it air-gapped — which for a lot of enterprise teams is the entire decision.
+
+## What the launch numbers say
+
+Here is where GLM-5.2 separates itself from a typical open-weights drop. Zhipu published a benchmark card on **June 17, 2026** built around **long-horizon, agentic coding** evaluations — the kind that actually correlate with day-to-day developer work — and reported results above GPT-5.5 on each:
+
+| Benchmark | GLM-5.2 | GPT-5.5 | GLM-5.1 | What it measures |
+|---|---|---|---|---|
+| **SWE-bench Pro** | **62.1** | 58.6 | 58.4 | Hard, contamination-resistant SWE tasks |
+| **FrontierSWE** | **74.4** | 72.6 | — | Long-horizon software engineering |
+| **MCP-Atlas** | **77.0** | 75.3 | — | Agentic tool use over MCP |
+
+Those are vendor-published, so the usual caution applies — wait for independent confirmation before treating a 3.5-point SWE-bench Pro lead as settled. But two things make this card more credible than most launch decks. First, the benchmarks are the **hard, agentic** ones (SWE-bench *Pro*, not the easier Verified or Lite), where headroom is real and gaming is harder. Second, the predecessor anchor is consistent: GLM-5.1 scored **58.4 on SWE-bench Pro**, so a move to 62.1 is a believable single-generation gain rather than an implausible leap.
+
+What is **not** in the card: MMLU-Pro, GPQA Diamond, Aider Polyglot, tau-bench, the full standard public suite. That is why, in our [models leaderboard](/leaderboard/), GLM-5.2's `swe_bench` cell carries the **published SWE-bench Pro 62.1** (matching how the GLM-5.1 row was recorded), while its general-reasoning cells are **conservative estimates anchored to GLM-5.1** — MMLU-Pro and GPQA nudged up modestly, coding and agentic axes (HumanEval, Aider, tau-bench) lifted in line with a coding-first refresh, and the multimodal cell left empty because this is a text/code release.
+
+## What it costs
+
+On Zhipu's first-party API:
+
+- **Input:** ~$1.40 per 1M tokens
+- **Cached input:** ~$0.26 per 1M tokens
+- **Output:** ~$4.40 per 1M tokens
+
+There is also a **GLM Coding Plan** flat subscription starting around **$18/month** for the entry tier, aimed at developers who want a predictable bill rather than metered tokens. The framing that traveled furthest at launch — open-weights GLM-5.2 matching or beating GPT-5.5 on long-horizon coding "for one-sixth the cost" — comes from this gap: GPT-5.5 lists at $5/$30 per 1M, so GLM-5.2's $1.40/$4.40 is a roughly 6× swing on blended cost for a model that, on the published coding benchmarks, lands ahead. And because the weights are MIT-licensed, the metered API is a floor, not a ceiling on savings — run your own GPUs and the per-token cost disappears entirely. The calculator on the [leaderboard](/leaderboard/) lets you plug in your own token mix against the closed leaders.
+
+## How it compares
+
+GLM-5.2's real competition is the open coding tier and the value-priced edge of the closed tier, not the absolute frontier. Against [Kimi K2.7-Code](/reviews/kimi-k2-7-code-review/), released the day before on June 12, GLM-5.2 is the broader generalist of the two and, unlike Kimi, shipped with real cross-vendor coding numbers instead of only proprietary ones — a meaningful credibility edge this week. Against **DeepSeek V4 Pro** (SWE-bench Verified 80.6) it competes on a different benchmark family, but both occupy the same "frontier-adjacent open weights, priced to undercut" niche. Against closed leaders like [Claude Opus 4.8](/reviews/claude-opus-4-8-review/) and the Mythos-class [Claude Fable 5](/reviews/claude-fable-5/), GLM-5.2 is far cheaper and self-hostable, but those models still hold the lead on the hardest reasoning and broad-knowledge benchmarks — the gap the open tier has been closing on coding specifically while the closed leaders keep the reasoning crown.
+
+The pattern worth noticing: the open-weights coding tier is now shipping on a near-weekly cadence — GLM-5.2 and Kimi K2.7-Code landed one day apart — each drop leapfrogging the last on coding benchmarks. If your workload is "edit real code across a large repo, cheaply, possibly on your own hardware," that competition is working entirely in your favor.
+
+## Who should care
+
+- **Teams running self-hosted coding agents:** This is the headline use case. MIT weights, a 1M context window, and benchmarks tuned to long-horizon agentic work. Pull it from Hugging Face and A/B it against your current open coder.
+- **Cost-sensitive agentic pipelines:** If you are paying closed-model API rates on a high-volume coding workload, GLM-5.2's roughly 6× cost advantage plus the self-host option is worth a serious pilot — see [multi-agent pipelines](/agentic-workflows/multi-agent/) for where a cheap, strong coder slots into a larger workflow.
+- **Anyone benchmarking open vs closed:** GLM-5.2 is a genuinely useful data point because it published *hard* coding benchmarks. Still, confirm the SWE-bench Pro lead with third-party runs before you rank it above GPT-5.5 in production planning.
+- **Teams that need vision or broadest reasoning:** Look elsewhere. GLM-5.2 is a text/code model; for multimodal work or the hardest reasoning, a frontier closed model is the better fit — the [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) covers how to weigh that trade.
+
+## FAQ
+
+**What is GLM-5.2?** Zhipu AI's open-weight coding flagship, released June 13, 2026. A sparse MoE (~40B active, ~753B total) with a 1M-token context window, up to 131,072 tokens of output, and an unrestricted MIT open-weights license.
+
+**How much does it cost?** About $1.40 per 1M input tokens, $4.40 per 1M output, and $0.26 cached, on the Z.ai API. A flat GLM Coding Plan starts around $18/month, and MIT weights mean self-hosting is also an option.
+
+**Is it better than GPT-5.5 at coding?** On the benchmarks Zhipu published it edges GPT-5.5 — SWE-bench Pro 62.1 vs 58.6, FrontierSWE 74.4 vs 72.6, MCP-Atlas 77.0 vs 75.3 — at roughly one-sixth the cost. Those are vendor numbers; GPT-5.5 still leads on broad reasoning.
+
+**Does it have published SWE-bench scores?** Yes — SWE-bench Pro 62.1, published June 17, 2026. It did not publish the full standard suite (MMLU-Pro, GPQA, Aider, tau-bench), so those remain estimates anchored to GLM-5.1.
+
+**Can I self-host it?** Yes — the weights are on Hugging Face under an unrestricted MIT license, so you can run, fine-tune, and deploy it on your own infrastructure.
+
+## Continue reading
+
+- [AI Models Leaderboard](/leaderboard/) — GLM-5.2 versus 60+ models on benchmarks, pricing, and context window, with a cost calculator.
+- [Kimi K2.7-Code Review](/reviews/kimi-k2-7-code-review/) — the open coding model released one day before GLM-5.2, and how their launches differ on benchmark transparency.
+- [Claude Code vs Cursor vs Codex](/reviews/claude-code-vs-cursor-vs-codex/) — where an open coding model like this one actually plugs into a coding workflow.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — how to read coding benchmarks and self-reported numbers without getting fooled.
+- [All Reviews](/reviews/) — index of every head-to-head review on the site.
