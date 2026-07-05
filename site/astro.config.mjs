@@ -133,6 +133,7 @@ export default defineConfig({
 							{ label: 'Kimi K2.7-Code Review', slug: 'reviews/kimi-k2-7-code-review' },
 							{ label: 'GLM-5.2 Review', slug: 'reviews/glm-5-2-review' },
 								{ label: 'GPT-5.6 Sol, Terra & Luna Review', slug: 'reviews/gpt-5-6-sol-terra-luna-review' },
+									{ label: 'Claude Sonnet 5 Review', slug: 'reviews/claude-sonnet-5-review' },
 					],
 				},
 				{
