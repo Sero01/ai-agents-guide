@@ -1,0 +1,173 @@
+---
+title: "Grok 4.5 Review — Benchmarks, Pricing, and the Agentic Angle"
+description: "xAI's Grok 4.5, released July 8, 2026: a 500K-token context, $2/$6 pricing, and published agentic scores (SWE-bench Pro 64.7, Terminal-Bench 2.1 83.3). What the numbers cover, what they leave out, and where it lands against Grok 4.3 and the frontier."
+author: Parvez Ahmed
+date: 2026-07-12
+lastUpdated: 2026-07-12
+sidebar:
+  order: 10
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Grok 4.5 Review — Benchmarks, Pricing, and the Agentic Angle"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "xAI's Grok 4.5, released July 8, 2026: a 500K-token context, $2/$6 pricing, and published agentic scores (SWE-bench Pro 64.7, Terminal-Bench 2.1 83.3). What the numbers cover and where it lands against the frontier."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/grok-4-5-review/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-07-12"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-07-12"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "Grok 4.5, xAI, Grok 4.3, agentic coding, SWE-bench Pro, Terminal-Bench, tool use, frontier model, LLM review"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "Grok 4.5 Review — Benchmarks, Pricing, and the Agentic Angle"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "xAI's Grok 4.5: 500K context, $2/$6 pricing, published agentic scores (SWE-bench Pro 64.7, Terminal-Bench 83.3), and where it lands against Grok 4.3 and the frontier."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/grok-4-5-review/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/grok-4-5-review/#article","headline":"Grok 4.5 Review — Benchmarks, Pricing, and the Agentic Angle","description":"xAI's Grok 4.5, released July 8, 2026: a 500K-token context, $2/$6 pricing, and published agentic scores (SWE-bench Pro 64.7, Terminal-Bench 2.1 83.3). What the numbers cover, what they leave out, and where it lands against Grok 4.3 and the frontier.","url":"https://agentguides.dev/reviews/grok-4-5-review/","mainEntityOfPage":"https://agentguides.dev/reviews/grok-4-5-review/","datePublished":"2026-07-12","dateModified":"2026-07-12","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Grok 4.5 review, Grok 4.5 benchmarks, xAI, agentic tool use, SWE-bench Pro, Terminal-Bench, Grok 4.5 pricing"},
+        {"@type":"Review","name":"Grok 4.5 review","itemReviewed":{"@type":"SoftwareApplication","name":"Grok 4.5","applicationCategory":"DeveloperApplication","operatingSystem":"API (cloud)","publisher":{"@type":"Organization","name":"xAI"}},"reviewRating":{"@type":"Rating","ratingValue":"4.3","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-07-12","reviewBody":"A frontier-adjacent model whose strongest claim is intelligence per dollar and agentic tool use. Grok 4.5 published hard agentic evals at launch — SWE-bench Pro 64.7, Terminal-Bench 2.1 83.3, and an Artificial Analysis Intelligence Index of 54 (fourth overall, first on agentic tool use) — at $2/$6 per million tokens with a 500K context. The caveat is scope: xAI led with agentic and coding numbers, not the standard public suite, so its general-reasoning placements remain estimates. For tool-heavy agents on a budget it is one of the strongest options this month; validate it on your own workload before trusting the headline ranking."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"Grok 4.5 Review","item":"https://agentguides.dev/reviews/grok-4-5-review/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is Grok 4.5?","acceptedAnswer":{"@type":"Answer","text":"Grok 4.5 is xAI's frontier-adjacent flagship, released on July 8, 2026. It is a multimodal (text and vision) model with a 500,000-token context window, up to about 32,000 tokens of output, and a focus on agentic tool use and coding over long sessions."}},
+          {"@type":"Question","name":"How much does Grok 4.5 cost?","acceptedAnswer":{"@type":"Answer","text":"On xAI's API the standard rate is about $2 per million input tokens, $0.50 per million cached input tokens, and $6 per million output tokens for prompts up to 200,000 tokens. Prompts above 200,000 tokens are billed at $4 input, $1 cached, and $12 output per million."}},
+          {"@type":"Question","name":"Is Grok 4.5 better than Grok 4.3?","acceptedAnswer":{"@type":"Answer","text":"On the agentic benchmarks xAI published, Grok 4.5 is a clear step up on tool use and long-session coding, and it doubles the usable context to 500K tokens. On broad academic reasoning the two are close; xAI did not publish standard-suite numbers for 4.5, so those comparisons rest on estimates anchored to Grok 4.3."}},
+          {"@type":"Question","name":"Does Grok 4.5 have published benchmark scores?","acceptedAnswer":{"@type":"Answer","text":"Yes, but only agentic and coding ones: SWE-bench Pro 64.7, Terminal-Bench 2.1 83.3, and an Artificial Analysis Intelligence Index of 54 (ranked fourth overall, first on agentic tool use). It did not publish the standard public suite (MMLU-Pro, GPQA Diamond, SWE-bench Verified, HumanEval, MATH-500, MMMU, Aider, tau-bench), so those placements remain estimates anchored to Grok 4.3."}}
+        ]}
+      ]}
+---
+import AuthorByline from '../../../components/AuthorByline.astro';
+
+<AuthorByline date="2026-07-12" />
+
+<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
+Grok 4.5's agentic and coding numbers below are vendor- and aggregator-published; its general-reasoning placements (MMLU-Pro, GPQA, SWE-bench Verified, MMMU) are estimates anchored to the Grok 4.3 predecessor. Cross-vendor positions come from our <a href="/leaderboard/">models leaderboard</a>; treat the estimated cells as directional until third-party scores land.
+</aside>
+
+On **July 8, 2026**, xAI released [Grok 4.5](https://x.ai), and the launch had a distinct emphasis: rather than lead with academic leaderboards, xAI put the model's **agentic tool use and long-session coding** front and center. On the independent Artificial Analysis Intelligence Index it scores **54, ranking fourth overall** — behind [Claude Fable 5](/reviews/claude-fable-5/), [Claude Opus 4.8](/reviews/claude-opus-4-8-review/), and GPT-5.5 — but it **tops the field on agentic tool use**, the axis xAI clearly optimized for. This review covers what Grok 4.5 is, which of its numbers are measured versus estimated, and where it actually fits.
+
+## TL;DR verdict
+
+| | Grok 4.5 |
+|---|---|
+| **Type** | Frontier-adjacent general LLM (agentic + coding focus) |
+| **Context window** | 500,000 tokens · up to ~32,000 output |
+| **Modalities** | Text, vision |
+| **License** | Closed (xAI API) |
+| **Pricing** | $2 in / $6 out per 1M · $0.50 cached input (≤200K prompts) |
+| **Headline numbers** | SWE-bench Pro 64.7 · Terminal-Bench 2.1 83.3 · AA Intelligence Index 54 (#4) |
+| **Availability** | xAI API, OpenRouter, Grok apps |
+| **Best for** | Tool-heavy agents, long-session coding, intelligence-per-dollar |
+| **Caveat** | Published agentic/coding numbers only — broad-reasoning cells are estimates |
+
+If you skip the rest: **Grok 4.5 is one of the strongest agentic models you can run per dollar this month.** It published *hard* agentic and coding numbers — SWE-bench Pro and Terminal-Bench 2.1 rather than the friendlier Verified or Lite tiers — priced at $2/$6 with a 500K context. The honest asterisk is that xAI led with tool-use and coding benchmarks, not the full standard suite, so its general-knowledge ranking is still interpolation.
+
+## What it is
+
+Grok 4.5 is a **multimodal (text + vision)** model with a **500,000-token context window** and up to about **32,000 tokens of output** — double the usable context of the [Grok 4.3](/leaderboard/) predecessor and enough to hold a substantial codebase slice plus the running history of a long agentic session. The framing xAI leaned on at launch is that Grok 4.5 was tuned on **real developer session data** and evaluated on benchmarks designed to measure what a model can actually *do* inside a real codebase over a long session, not what it can recall on a one-shot exam.
+
+That positioning matters because it explains the benchmark choices. xAI did not try to top MMLU-Pro or GPQA leaderboards; it optimized for the axis where an agent's value shows up — planning, iterating, and using tools to finish multi-step command-line and coding workflows — and then published the benchmarks that measure exactly that.
+
+## What the launch numbers say
+
+Here is where Grok 4.5 makes its case. The published, third-party-visible numbers are agentic and coding evaluations, and they are strong:
+
+| Benchmark | Grok 4.5 | What it measures |
+|---|---|---|
+| **AA Intelligence Index** | **54** (#4 overall) | Blended cross-domain intelligence (Artificial Analysis) |
+| **Terminal-Bench 2.1** | **83.3** | Planning + tool use to finish real terminal workflows |
+| **SWE-bench Pro** | **64.7** | Hard, contamination-resistant software-engineering tasks |
+
+Two things make this card more credible than a typical launch deck. First, the benchmarks are the **hard, agentic** ones — SWE-bench *Pro*, not the easier Verified or Lite, and Terminal-Bench 2.1, which drops a model into a real terminal and scores whether it can actually finish the job. Second, the Intelligence Index is an **independent aggregate**, not a vendor-selected slice, and it places Grok 4.5 fourth overall while calling out its **first-place finish on agentic tool use**. That is a coherent story: a model that trades a little raw exam intelligence for a lot of get-things-done-with-tools capability.
+
+What is **not** in the card: MMLU-Pro, GPQA Diamond, SWE-bench Verified, HumanEval, MATH-500, MMMU, Aider Polyglot, tau-bench — the full standard public suite. That is why, in our [models leaderboard](/leaderboard/), **all eight of Grok 4.5's benchmark cells are conservative estimates anchored to Grok 4.3** (MMLU-Pro 87.0, GPQA 90.0, HumanEval 92.0, SWE-bench 73.0, MATH-500 97.0, MMMU 78.0, Aider 78.0, tau-bench 74.0), nudged up on the coding and agentic axes consistent with the confirmed tool-use gains and left flat where there is no signal of a jump. Read those cells as directional placement, not measured fact, until third-party runs of the standard suite land.
+
+## What it costs
+
+On xAI's API, Grok 4.5 uses a two-tier prompt-length pricing structure:
+
+- **Prompts ≤ 200K tokens:** ~$2.00 input · ~$0.50 cached input · ~$6.00 output per 1M
+- **Prompts > 200K tokens:** ~$4.00 input · ~$1.00 cached input · ~$12.00 output per 1M
+
+Our [leaderboard](/leaderboard/) records the **standard ≤200K tier ($2/$6)** as the durable rate, since that is the band most workloads live in; teams routinely feeding 200K-plus prompts should budget the higher tier. Either way, the pricing is the core of the pitch. At $2/$6 the model sits well below the closed frontier leaders — [Claude Opus 4.8](/reviews/claude-opus-4-8-review/) at $5/$25, GPT-5.5 at $5/$30 — while topping them on agentic tool use. That is the **intelligence-per-dollar** argument xAI is making, and on the published agentic benchmarks it holds up. The calculator on the [leaderboard](/leaderboard/) lets you plug your own token mix against the closed leaders to see where the crossover lands.
+
+## How it compares
+
+Grok 4.5's real competition is the **value-priced agentic tier**, not the absolute reasoning frontier. Against its own [Grok 4.3](/leaderboard/) predecessor it is a clear step up on tool use and long-session coding, with double the context (500K vs 256K on Grok 4) and lower pricing than the older Grok 4 line's $3/$15. Against the freshly generally-available [GPT-5.6 family](/reviews/gpt-5-6-sol-terra-luna-review/) — which shipped Sol, Terra, and Luna on July 9 with their own strong Terminal-Bench and SWE-bench Pro numbers — Grok 4.5's Terra-tier rival lands at $2.50/$15, so Grok undercuts it on output pricing while GPT-5.6 posts slightly higher published agentic scores. Against the open coding tier — [GLM-5.2](/reviews/glm-5-2-review/), [Kimi K2.7-Code](/reviews/kimi-k2-7-code-review/), DeepSeek V4 Pro — Grok 4.5 is closed rather than self-hostable, but it competes directly on the "frontier-adjacent, priced to undercut" axis and brings vision that the text-only open coders lack.
+
+The caution worth stating plainly: independent evaluator commentary this month flagged **elevated benchmark-gaming behavior across the newest frontier releases**, so treat headline agentic scores — Grok 4.5's included — as a reason to run your own evaluation, not a substitute for one. A model tuned on developer-session data and scored on agentic benchmarks is exactly the case where your own repository is the only benchmark that counts.
+
+## Who should care
+
+- **Teams building tool-heavy agents:** This is the headline use case. Grok 4.5's first-place agentic-tool-use finish and strong Terminal-Bench 2.1 score, at $2/$6, make it a serious candidate for function-calling and command-line agents. See [multi-agent pipelines](/agentic-workflows/multi-agent/) for where a strong, cheap tool-user slots into a larger workflow.
+- **Cost-sensitive coding workloads:** If you are paying top-tier closed-model rates on a high-volume coding pipeline, Grok 4.5's pricing plus its SWE-bench Pro 64.7 is worth a pilot — A/B it against your current coder on real pull requests.
+- **Long-context agents:** The 500K window (with the higher pricing tier above 200K) suits agents that carry large repository slices or long session histories. Budget for the two-tier pricing if your prompts routinely exceed 200K tokens.
+- **Anyone ranking on broad reasoning:** Wait for third-party standard-suite numbers before you place Grok 4.5 above the frontier leaders on general knowledge. Its published strengths are agentic; its reasoning placement is still an estimate. The [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) covers how to weigh that trade.
+
+## FAQ
+
+**What is Grok 4.5?** xAI's frontier-adjacent flagship, released July 8, 2026. A multimodal (text + vision) model with a 500,000-token context window, up to ~32,000 tokens of output, tuned for agentic tool use and long-session coding.
+
+**How much does it cost?** About $2 per 1M input tokens, $0.50 cached input, and $6 per 1M output for prompts up to 200K tokens; prompts above 200K are billed at $4 / $1 / $12 per 1M.
+
+**Is it better than Grok 4.3?** On the agentic benchmarks xAI published, yes — a clear step up on tool use and long-session coding, with double the context. On broad academic reasoning the two are close, and xAI did not publish standard-suite numbers for 4.5, so those comparisons rest on estimates.
+
+**Does it have published benchmark scores?** Only agentic and coding ones: SWE-bench Pro 64.7, Terminal-Bench 2.1 83.3, and an Artificial Analysis Intelligence Index of 54 (#4 overall, #1 on agentic tool use). The standard public suite was not published, so those cells are estimates anchored to Grok 4.3.
+
+**Is Grok 4.5 open weights?** No. It is a closed model available through the xAI API, OpenRouter, and the Grok apps — not downloadable for self-hosting.
+
+## Continue reading
+
+- [AI Models Leaderboard](/leaderboard/) — Grok 4.5 versus 65+ models on benchmarks, pricing, and context window, with a cost calculator.
+- [GPT-5.6 Review (Sol, Terra & Luna)](/reviews/gpt-5-6-sol-terra-luna-review/) — OpenAI's three-tier family that went generally available the day after Grok 4.5, and the pricing Grok undercuts.
+- [GLM-5.2 Review](/reviews/glm-5-2-review/) — the open-weights coding flagship competing in the same value-priced tier.
+- [Claude Opus 4.8 Review](/reviews/claude-opus-4-8-review/) — one of the frontier leaders Grok 4.5's intelligence-per-dollar pitch is measured against.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — how to read agentic benchmarks and self-reported numbers without getting fooled.
+- [All Reviews](/reviews/) — index of every head-to-head review on the site.
