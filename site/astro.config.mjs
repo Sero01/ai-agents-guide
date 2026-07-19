@@ -135,6 +135,7 @@ export default defineConfig({
 								{ label: 'GPT-5.6 Sol, Terra & Luna Review', slug: 'reviews/gpt-5-6-sol-terra-luna-review' },
 									{ label: 'Claude Sonnet 5 Review', slug: 'reviews/claude-sonnet-5-review' },
 									{ label: 'Grok 4.5 Review', slug: 'reviews/grok-4-5-review' },
+									{ label: 'Kimi K3 Review', slug: 'reviews/kimi-k3-review' },
 					],
 				},
 				{

@@ -1,0 +1,182 @@
+---
+title: "Kimi K3 Review — Moonshot's 2.8T Open-Weight Frontier Model"
+description: "Moonshot AI's Kimi K3, released July 16, 2026: a 2.8-trillion-parameter open-weight MoE with a 1M-token context, published GPQA Diamond 93.5, and $3/$15 pricing. What the launch numbers cover, what they leave out, and where it lands against Fable 5 and the open tier."
+author: Parvez Ahmed
+date: 2026-07-19
+lastUpdated: 2026-07-19
+sidebar:
+  order: 11
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Kimi K3 Review — Moonshot's 2.8T Open-Weight Frontier Model"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Moonshot AI's Kimi K3, released July 16, 2026: a 2.8-trillion-parameter open-weight MoE with a 1M-token context, published GPQA Diamond 93.5, and $3/$15 pricing. What the launch numbers cover and where it lands against the frontier."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/kimi-k3-review/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-07-19"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-07-19"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "Kimi K3, Moonshot AI, open weights model, 2.8T parameters, MoE, frontier model, GPQA Diamond, agentic coding, SWE-bench, LLM review"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "Kimi K3 Review — Moonshot's 2.8T Open-Weight Frontier Model"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "Moonshot AI's Kimi K3: 2.8T-parameter open-weight MoE, 1M context, published GPQA Diamond 93.5, $3/$15 pricing. What the launch numbers show and where it lands."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/kimi-k3-review/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/kimi-k3-review/#article","headline":"Kimi K3 Review — Moonshot's 2.8T Open-Weight Frontier Model","description":"Moonshot AI's Kimi K3, released July 16, 2026: a 2.8-trillion-parameter open-weight MoE with a 1M-token context, published GPQA Diamond 93.5, and $3/$15 pricing. What the launch numbers cover, what they leave out, and where it lands against Fable 5 and the open tier.","url":"https://agentguides.dev/reviews/kimi-k3-review/","mainEntityOfPage":"https://agentguides.dev/reviews/kimi-k3-review/","datePublished":"2026-07-19","dateModified":"2026-07-19","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Kimi K3 review, Kimi K3 benchmarks, Moonshot AI, 2.8T open weights model, GPQA Diamond, agentic coding, SWE-bench, Kimi K3 pricing"},
+        {"@type":"Review","name":"Kimi K3 review","itemReviewed":{"@type":"SoftwareApplication","name":"Kimi K3","applicationCategory":"DeveloperApplication","operatingSystem":"API (cloud), open weights (self-host)","publisher":{"@type":"Organization","name":"Moonshot AI"}},"reviewRating":{"@type":"Rating","ratingValue":"4.4","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-07-19","reviewBody":"The largest open-weight model shipped to date and, on the independent Artificial Analysis composite, the strongest open model available — second only to Claude Fable 5. Kimi K3 is a 2.8-trillion-parameter sparse MoE with a 1M-token context and an always-on thinking mode, priced at $3/$15 per million tokens. Moonshot published a hard GPQA Diamond number (93.5) and a stack of agentic and coding evals, but not most of the standard public suite, so several cross-vendor placements remain estimates until third-party runs land. For teams that want frontier-class reasoning they can eventually self-host, it is the most consequential open release of the month; validate it on your own workload before trusting the launch ranking."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"Kimi K3 Review","item":"https://agentguides.dev/reviews/kimi-k3-review/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is Kimi K3?","acceptedAnswer":{"@type":"Answer","text":"Kimi K3 is Moonshot AI's frontier open-weight large language model, released on July 16, 2026. It is a 2.8-trillion-parameter sparse Mixture-of-Experts model with roughly 50 billion active parameters and 896 experts, a 1,048,576-token context window, an always-on 'thinking' reasoning mode, and multimodal (text and vision) input."}},
+          {"@type":"Question","name":"How much does Kimi K3 cost?","acceptedAnswer":{"@type":"Answer","text":"On Moonshot's first-party API the rates are about $3 per million cache-miss input tokens, $0.30 per million cached input tokens, and $15 per million output tokens, charged at one flat rate across the full 1M-token context. Full open weights are expected on July 27, 2026, after which self-hosting and third-party providers become options."}},
+          {"@type":"Question","name":"Is Kimi K3 better than the closed frontier models?","acceptedAnswer":{"@type":"Answer","text":"On the independent Artificial Analysis composite, Kimi K3 scores an Intelligence Index of 57 and ranks fourth overall, second only to Claude Fable 5 and ahead of most other entrants — the strongest open model on that index. On individual published numbers such as GPQA Diamond 93.5 it is frontier-class. It has not published the full standard public suite, so some head-to-head placements against Opus 4.8 or GPT-5.6 remain estimates."}},
+          {"@type":"Question","name":"Does Kimi K3 have published SWE-bench Verified scores?","acceptedAnswer":{"@type":"Answer","text":"Not at launch. Moonshot published agentic and coding evals outside the standard set — Terminal-Bench 2.1 88.3, FrontierSWE 81.2, Program Bench 77.8, DeepSWE 67.5, and BrowseComp 91.2 — plus GPQA Diamond 93.5, but not SWE-bench Verified, MMLU-Pro, HumanEval, MATH-500, Aider, or tau-bench. Those cells are conservative estimates anchored to the Kimi K2.7-Code predecessor until third-party runs land."}}
+        ]}
+      ]}
+---
+import AuthorByline from '../../../components/AuthorByline.astro';
+
+<AuthorByline date="2026-07-19" />
+
+<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
+Kimi K3's GPQA Diamond (93.5) and its agentic/coding numbers below are vendor-published; the remaining standard-suite cells (MMLU-Pro, SWE-bench Verified, HumanEval, MATH-500, MMMU, Aider, tau-bench) are conservative estimates anchored to the Kimi K2.7-Code predecessor. Cross-vendor positions come from our <a href="/leaderboard/">models leaderboard</a>; treat the estimated cells as directional until third-party scores land.
+</aside>
+
+On **July 16, 2026**, Moonshot AI released [Kimi K3](https://moonshot.ai) — a **2.8-trillion-parameter** open-weight model that is, by parameter count, the largest open release shipped to date, and, on the independent [Artificial Analysis](https://artificialanalysis.ai) composite, the strongest open model available. Its Intelligence Index v4.1 score of **57 ranks it fourth overall and second only to [Claude Fable 5](/reviews/claude-fable-5/)**, ahead of most closed entrants. That is a different kind of open-weights launch than the coding-specialist [Kimi K2.7-Code](/reviews/kimi-k2-7-code-review/) drop a month earlier: K3 is a general frontier model, not a niche coder. This review covers what it is, which numbers are measured versus estimated, and where it actually fits.
+
+## TL;DR verdict
+
+| | Kimi K3 |
+|---|---|
+| **Type** | Frontier open-weight general LLM (reasoning + agentic) |
+| **Architecture** | Sparse MoE, ~50B active / 2.8T total, 896 experts, always-on thinking |
+| **Context window** | 1,048,576 tokens (1M) · up to ~32,000 output |
+| **Modalities** | Text, vision |
+| **License** | Open weights (full weights expected July 27, 2026) |
+| **Pricing** | $3 in / $15 out per 1M · $0.30 cached input, flat across the full context |
+| **Headline numbers** | AA Intelligence Index 57 (#4 overall) · GPQA Diamond 93.5 · Terminal-Bench 2.1 88.3 |
+| **Availability** | Moonshot API now; open weights on Hugging Face July 27 |
+| **Best for** | Frontier-class reasoning you can eventually self-host; long-context agents |
+| **Caveat** | Most standard-suite cells are estimates; weights not downloadable at launch |
+
+If you skip the rest: **Kimi K3 is the most consequential open release of the month** — a genuinely frontier-class model that, on an independent aggregate, trails only Anthropic's flagship. The honest asterisks are two: Moonshot led with a GPQA number and agentic evals rather than the full standard suite, so some cross-vendor placements are still interpolation; and the weights are not downloadable until July 27, so at launch it is an API model with an open-weights promise attached.
+
+## What it is
+
+Kimi K3 is a sparse Mixture-of-Experts model with **roughly 2.8 trillion total parameters and ~50 billion active per token**, spread across **896 experts** — only about 16 of which fire for any given token, roughly 1.8% of the network. That sparsity is the whole efficiency story: you get the stored knowledge of a 2.8T-parameter model at the per-step compute of something an order of magnitude smaller. Moonshot pairs it with two architectural levers it calls **Kimi Delta Attention** (a hybrid linear-attention mechanism) and **Attention Residuals**, both aimed at keeping the long-context path cheap.
+
+The context window is **1,048,576 tokens (1M)**, a four-fold jump over K2.7-Code's 256K and enough to hold an entire mid-sized repository plus a long agentic session history — and Moonshot charges **one flat rate across the full window** rather than stepping up pricing above a threshold the way [Grok 4.5](/reviews/grok-4-5-review/) does. K3 runs an **always-on "thinking" mode**, so every response carries a reasoning trace rather than gating it behind a separate reasoning model. Inputs are **multimodal (text and vision)**.
+
+The license is the part worth watching. Moonshot has committed to **full open weights on Hugging Face by July 27, 2026** — eleven days after the API launch. Until then, K3 is a hosted API model. That gap matters for the self-host pitch: the promise is real and consistent with Moonshot's track record on the K2 line, but the "download and run it air-gapped" use case is a near-future capability, not a launch-day one.
+
+## What the launch numbers say
+
+Here is the credible part of the launch, and the caveat that goes with every fresh open-weights drop. Moonshot published a mix of an **independent composite**, one **hard standard benchmark**, and a **stack of agentic/coding evals** — but not the full standard public suite.
+
+| Benchmark | Kimi K3 | What it measures |
+|---|---|---|
+| **AA Intelligence Index v4.1** | **57** (#4 overall) | Blended cross-domain intelligence (Artificial Analysis) |
+| **GPQA Diamond** | **93.5** | Graduate-level science reasoning |
+| **Terminal-Bench 2.1** | **88.3** | Planning + tool use to finish real terminal workflows |
+| **FrontierSWE** | **81.2** | Hard, long-horizon software-engineering tasks |
+| **BrowseComp** | **91.2** | Web-browsing / research agent capability |
+
+Two things make this card stronger than a typical launch deck. The **Intelligence Index is an independent aggregate**, not a vendor-selected slice, and it places K3 fourth overall while making it the top-ranked *open* model — a coherent claim that the open tier has finally reached the frontier's doorstep. And the **GPQA Diamond 93.5** is a hard, contamination-resistant science benchmark where K3 sits alongside the closed leaders ([Opus 4.8](/reviews/claude-opus-4-8-review/) at 93.6, Fable 5 at 95.0). On real-world task automation, Moonshot reports K3 ranking first in four of eight benchmarks, including Automation Bench and SpreadsheetBench 2.
+
+What is **not** in the card: SWE-bench Verified, MMLU-Pro, HumanEval, MATH-500, MMMU, Aider Polyglot, and tau-bench — most of the standard public suite. That is why, in our [models leaderboard](/leaderboard/), **only K3's GPQA Diamond cell (93.5) is a vendor figure**; the other seven are conservative estimates anchored to the [Kimi K2.7-Code](/reviews/kimi-k2-7-code-review/) predecessor and nudged up to reflect the confirmed frontier positioning and the published agentic gains, held at or below the same-tier closed leaders. The swe_bench cell (81.0) is a conservative SWE-bench Verified read consistent with the published FrontierSWE 81.2 and Terminal-Bench 88.3, not a measured number. Read those cells as directional placement until third-party runs of the standard suite land.
+
+## What it costs
+
+On Moonshot's first-party API:
+
+- **Cache-miss input:** ~$3.00 per 1M tokens
+- **Cached input:** ~$0.30 per 1M tokens
+- **Output:** ~$15.00 per 1M tokens
+
+That is a real step up from the budget-tier K2.7-Code ($0.95/$4.00), and it reflects what K3 is: a frontier generalist, not a cheap coder. The comparison that matters is against the *closed* leaders it now rivals on the composite — and there K3 undercuts them. It matches [Claude Opus 4.8](/reviews/claude-opus-4-8-review/) on input ($5/$25 for Opus) and GPT-5.6 Sol ($5/$30) while landing near them on intelligence, and the **$0.30 cached-read** rate is the number that matters for agentic loops that re-send a large system prompt and repository map on every step. Once the open weights land on July 27, the effective floor drops further for teams that run their own GPUs. The calculator on the [leaderboard](/leaderboard/) lets you plug your own token mix against the closed leaders to find the crossover.
+
+## How it compares
+
+K3's launch did not happen in isolation — it capped an **open-weight frontier week**. The day before, Mira Murati's Thinking Machines shipped **Inkling**, a 975B-parameter (41B active) open MoE with a published **SWE-bench Verified 77.6**, at $1/$4.05 per million tokens. The two releases bracket the current open tier: Inkling is the cheaper, lighter option that lands in the strong-open-model range; K3 is the heavyweight that reaches the closed frontier's doorstep. Both are on the [leaderboard](/leaderboard/) as of this update.
+
+Against the **closed frontier**, K3's pitch is intelligence-per-dollar with an open-weights future: it rivals Opus 4.8 and GPT-5.6 Sol on the composite while pricing below them, and it will be self-hostable in a way they never will. Against the **open coding tier** — [GLM-5.2](/reviews/glm-5-2-review/), K2.7-Code, DeepSeek V4 Pro — K3 is a generalist rather than a specialist, stronger on broad reasoning and vision but pricier per token than the sub-$5 coders. Against its own **K2.7-Code** sibling, K3 is the reasoning-and-agentics flagship to K2.7's cheap-coder role; they are complementary, not redundant.
+
+The caution worth stating plainly, as with every frontier launch this month: independent evaluators have flagged **elevated benchmark-gaming behavior across recent releases**, and K3's launch numbers are heavily Moonshot-sourced with independent coverage still landing. A model this new, ranked this high, is exactly the case where your own workload is the only benchmark that counts.
+
+## Who should care
+
+- **Teams that want frontier reasoning they can eventually own:** This is the headline use case. K3 is the first open model to credibly rival the closed leaders on an independent composite, and the weights land July 27. If your roadmap includes self-hosting a frontier-class model, start piloting on the API now.
+- **Long-context agents:** The 1M-token window at a flat rate suits agents carrying large repository slices or long histories — no pricing cliff above a threshold. See [multi-agent pipelines](/agentic-workflows/multi-agent/) for where a strong long-context reasoner slots into a larger workflow.
+- **Cost-sensitive frontier workloads:** If you are paying top-tier closed-model rates for reasoning-heavy work, K3's $3/$15 (plus the cached-input rate and the coming self-host option) is worth a serious A/B against your current model.
+- **Anyone ranking on the standard suite:** Wait for third-party SWE-bench Verified, MMLU-Pro, and Aider numbers before you place K3 above specific closed leaders on those axes. Its published strengths — GPQA, agentic, the AA composite — are real; the rest is estimate. The [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) covers how to weigh that trade.
+
+## FAQ
+
+**What is Kimi K3?** Moonshot AI's frontier open-weight LLM, released July 16, 2026. A 2.8T-parameter sparse MoE (~50B active, 896 experts) with a 1M-token context, an always-on thinking mode, and text-plus-vision input.
+
+**How much does it cost?** About $3 per 1M cache-miss input tokens, $0.30 cached, and $15 per 1M output tokens on the Moonshot API, flat across the full context. Open weights are expected July 27, 2026.
+
+**Is it better than the closed frontier models?** On the independent Artificial Analysis composite it ranks fourth overall and first among open models, second only to Claude Fable 5, and it is frontier-class on published numbers like GPQA Diamond 93.5. It has not published the full standard suite, so some head-to-head placements remain estimates.
+
+**Does it have SWE-bench Verified scores?** Not at launch. Moonshot published agentic and coding evals (Terminal-Bench 2.1 88.3, FrontierSWE 81.2, BrowseComp 91.2) plus GPQA Diamond 93.5, but not SWE-bench Verified, MMLU-Pro, Aider, or tau-bench. Those cells are conservative estimates anchored to Kimi K2.7-Code.
+
+**Can I self-host it?** Not yet — the weights are scheduled for Hugging Face on July 27, 2026. Until then it is an API-only model with an open-weights commitment.
+
+## Continue reading
+
+- [AI Models Leaderboard](/leaderboard/) — Kimi K3 versus 70+ models on benchmarks, pricing, and context window, with a cost calculator.
+- [Kimi K2.7-Code Review](/reviews/kimi-k2-7-code-review/) — Moonshot's cheap coding specialist, and the sibling K3 complements rather than replaces.
+- [GLM-5.2 Review](/reviews/glm-5-2-review/) — Zhipu's open coding flagship in the value-priced tier below K3.
+- [Grok 4.5 Review](/reviews/grok-4-5-review/) — the closed frontier-adjacent model K3's intelligence-per-dollar pitch competes with.
+- [Claude Fable 5 vs Opus 4.8](/best/claude-fable-5-vs-opus-4-8/) — the closed leaders K3 trails on the Artificial Analysis composite.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — how to read agentic and self-reported numbers without getting fooled.
+- [All Reviews](/reviews/) — index of every head-to-head review on the site.
