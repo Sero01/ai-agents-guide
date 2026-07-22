@@ -1489,7 +1489,7 @@
       },
       "throughput": 180,
       "vendor_link": "https://ai.google.dev",
-      "status": "current",
+      "status": "superseded",
       "benchmarks": {
         "mmlu_pro": {
           "value": 83.0,
@@ -1633,7 +1633,7 @@
       },
       "throughput": 300,
       "vendor_link": "https://ai.google.dev",
-      "status": "current",
+      "status": "superseded",
       "benchmarks": {
         "mmlu_pro": {
           "value": 81.0,
@@ -1804,6 +1804,75 @@
           "measured": "2026-07-22"
         }
       }
+    },
+    {
+      "id": "gemini-3-6-flash",
+      "name": "Gemini 3.6 Flash",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2026-07-21",
+      "status": "current",
+      "context_window": 1048576,
+      "modalities": [
+        "text",
+        "vision",
+        "audio",
+        "video"
+      ],
+      "pricing": {
+        "input": 1.5,
+        "output": 7.5
+      },
+      "benchmarks": {
+        "swe_bench_pro": {
+          "value": 58.7,
+          "source": "vendor",
+          "url": "https://blog.google",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 78.0,
+          "source": "vendor",
+          "url": "https://blog.google",
+          "measured": "2026-07-22"
+        }
+      },
+      "vendor_link": "https://ai.google.dev"
+    },
+    {
+      "id": "gemini-3-5-flash-lite",
+      "name": "Gemini 3.5 Flash-Lite",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2026-07-21",
+      "status": "current",
+      "modalities": [
+        "text",
+        "vision",
+        "audio",
+        "video"
+      ],
+      "pricing": {
+        "input": 0.3,
+        "output": 2.5
+      },
+      "benchmarks": {
+        "swe_bench_pro": {
+          "value": 54.2,
+          "source": "vendor",
+          "url": "https://blog.google",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 54.0,
+          "source": "vendor",
+          "url": "https://blog.google",
+          "measured": "2026-07-22",
+          "note": "Google-reported; up from 31 for 3.1 Flash-Lite."
+        }
+      },
+      "vendor_link": "https://ai.google.dev",
+      "note": "Context window not stated in Google's launch post; left unset rather than assumed."
     },
     {
       "id": "grok-4-5",
