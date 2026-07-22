@@ -55,7 +55,9 @@
   --sl-color-text-accent: var(--accent);
   --sl-color-text-invert: var(--bg);
   --sl-color-white: var(--text-primary);
-  --sl-color-black: var(--text-primary);
+  /* Starlight's light palette inverts the gray scale: --sl-color-black is the
+   * LIGHTEST color (page bg) — Pagefind's search input uses it as background. */
+  --sl-color-black: var(--bg);
 
   --sl-color-accent: var(--accent);
   --sl-color-accent-low: var(--accent-dim);

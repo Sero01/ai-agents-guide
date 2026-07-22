@@ -120,8 +120,11 @@ export default defineConfig({
 				},
 			],
 			sidebar: [
+				{ label: 'Home', link: '/' },
+				{ label: 'AI Models Leaderboard', link: '/leaderboard/', badge: { text: 'New', variant: 'tip' } },
 				{
 					label: 'Reviews',
+					collapsed: true,
 					badge: { text: 'New', variant: 'tip' },
 					items: [
 						{ label: 'All Reviews', slug: 'reviews' },
@@ -140,6 +143,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Best Of',
+					collapsed: true,
 					items: [
 						{ label: 'All Lists', slug: 'best' },
 						{ label: 'Claude Fable 5 vs Opus 4.8', slug: 'best/claude-fable-5-vs-opus-4-8' },
@@ -150,20 +154,15 @@ export default defineConfig({
 				},
 				{
 					label: 'Build Tutorials',
+					collapsed: true,
 					items: [
 						{ label: 'All Tutorials', slug: 'build' },
 						{ label: 'Research Agent with CrewAI', slug: 'build/research-agent-with-crewai' },
 					],
 				},
 				{
-					label: 'Leaderboard',
-					badge: { text: 'New', variant: 'tip' },
-					items: [
-						{ label: 'AI Models Leaderboard', link: '/leaderboard/' },
-					],
-				},
-				{
 					label: 'Learn: AI Agents',
+					collapsed: true,
 					items: [
 						{ label: 'Overview', slug: 'learn' },
 						{ label: 'Concepts & Architecture', slug: 'ai-agents' },
@@ -173,6 +172,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Learn: Agentic Workflows',
+					collapsed: true,
 					items: [
 						{ label: 'Overview', slug: 'agentic-workflows' },
 						{ label: 'Multi-Agent Pipelines', slug: 'agentic-workflows/multi-agent' },
@@ -180,6 +180,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Learn: MCP',
+					collapsed: true,
 					badge: { text: 'Hot', variant: 'tip' },
 					items: [
 						{ label: 'What is MCP?', slug: 'mcp' },
@@ -190,6 +191,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Learn: Frameworks',
+					collapsed: true,
 					items: [
 						{ label: 'Framework Comparison', slug: 'frameworks' },
 						{ label: 'LangChain', slug: 'frameworks/langchain' },
@@ -199,6 +201,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Learn: More',
+					collapsed: true,
 					items: [
 						{ label: 'Getting Started', slug: 'getting-started' },
 						{ label: 'Tools & Memory', slug: 'tools-memory' },
@@ -209,6 +212,7 @@ export default defineConfig({
 				},
 				{
 					label: 'Site',
+					collapsed: true,
 					items: [
 						{ label: 'About', slug: 'about' },
 						{ label: 'Privacy Policy', slug: 'privacy' },

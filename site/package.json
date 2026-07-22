@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "validate:models": "node scripts/validate-models.mjs",
+    "prebuild": "npm run validate:models",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"

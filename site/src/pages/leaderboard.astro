@@ -1,473 +1,163 @@
 ---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import modelsData from '../data/models.json';
-const { last_updated, models } = modelsData as any;
+const { last_updated, models, benchmark_registry } = modelsData as any;
 
-// Compute composite score (mean of normalised benchmarks, 0-100) and blended price (3:1 input:output)
-const BENCHMARK_KEYS = ['mmlu_pro','gpqa_diamond','humaneval','swe_bench','math_500','mmmu','aider_polyglot','tau_bench'];
+// Schema v2: every cell carries {value, source, url}. There is deliberately no
+// composite score. Vendors publish only the benchmarks that flatter them —
+// Anthropic reports HLE (~54 avg) and skips GPQA (~91 avg), Google does the
+// reverse — so averaging across whatever each lab happened to publish ranks
+// publication strategy, not capability. Per-benchmark tables only.
+
+// Sources whose figures may be both scored and published. `estimate` and
+// `unsourced_legacy` are displayed but never ranked.
+const RANKABLE_SOURCES = new Set(['vendor', 'swebench', 'lmarena', 'artificial_analysis']);
+
+// Benchmarks still actively reported in 2026, in display order.
+const LIVE_KEYS = Object.keys(benchmark_registry).filter(
+  (k) => benchmark_registry[k].status === 'live'
+);
+const LEGACY_KEYS = Object.keys(benchmark_registry).filter(
+  (k) => benchmark_registry[k].status === 'legacy'
+);
+
+// Gaps below this are not resolvable — SWE-bench reports to 0.1 on a
+// 500-problem set where one problem is worth 0.2. Rendered as ties.
+const NOISE_FLOOR = 1.0;
 
 const enriched = models.map((m: any) => {
-  const scores = BENCHMARK_KEYS.map(k => m.benchmarks?.[k]).filter((v: any) => typeof v === 'number');
-  const composite = scores.length ? scores.reduce((a: number, b: number) => a + b, 0) / scores.length : null;
+  const cells: Record<string, any> = {};
+  const flat: Record<string, number> = {};   // plain numbers for charts/calculator
+  let sourced = 0;
+
+  for (const [key, cell] of Object.entries((m.benchmarks || {}) as Record<string, any>)) {
+    if (!cell || cell.value == null) continue;
+    const rankable = RANKABLE_SOURCES.has(cell.source);
+    const live = benchmark_registry[key]?.status === 'live';
+    cells[key] = {
+      value: cell.value,
+      source: cell.source,
+      url: cell.url || null,
+      note: cell.note || null,
+      rankable,
+      estimated: cell.source === 'estimate',
+      unsourced: cell.source === 'unsourced_legacy',
+    };
+    if (rankable) {
+      flat[key] = cell.value;
+      if (live) sourced += 1;
+    }
+  }
+
   const blended = m.pricing?.input != null && m.pricing?.output != null
     ? (m.pricing.input * 0.75) + (m.pricing.output * 0.25)
     : null;
-  return { ...m, composite, blended };
+
+  return { ...m, cells, benchmarks: flat, blended, sourced };
 });
 
-// Sort default by composite desc
-enriched.sort((a: any, b: any) => (b.composite ?? -1) - (a.composite ?? -1));
+// Default ordering: SWE-bench Pro has the widest vendor coverage of any live
+// benchmark, so it is the most complete single ranking we can honestly show.
+const DEFAULT_BENCH = 'swe_bench_pro';
+enriched.sort((a: any, b: any) =>
+  (b.benchmarks[DEFAULT_BENCH] ?? -1) - (a.benchmarks[DEFAULT_BENCH] ?? -1));
+
+const rankedCount = enriched.filter((m: any) => m.status === 'current').length;
+const sourcedCells = enriched.reduce(
+  (n: number, m: any) => n + Object.values(m.cells).filter((c: any) => c.rankable).length, 0);
 
 const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Dataset",
+      "@id": "https://agentguides.dev/leaderboard/#dataset",
+      "name": "AI Models Leaderboard — Benchmarks, Pricing, and Sources",
+      "description": `Comparison of ${enriched.length} AI models across currently-reported benchmarks (GPQA Diamond, SWE-bench Verified, SWE-bench Pro, Terminal-Bench 2.1, HLE, MMMU-Pro), pricing per million tokens, and context windows. Every benchmark cell cites its source; estimated and unsourced figures are marked and excluded from all rankings.`,
+      "url": "https://agentguides.dev/leaderboard/",
+      "dateModified": last_updated,
+      "inLanguage": "en-US",
+      "creator": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://github.com/Sero01" },
+      "publisher": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://agentguides.dev/about/" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "keywords": "AI models leaderboard, LLM benchmark comparison, AI model pricing, SWE-bench Pro, Terminal-Bench 2.1, GPQA Diamond, HLE, benchmark provenance",
+      "variableMeasured": [
+        "GPQA Diamond","SWE-bench Verified","SWE-bench Pro","Terminal-Bench 2.1","HLE","MMMU-Pro","Input price per million tokens","Output price per million tokens","Context window","Throughput tokens per second","Benchmark source"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://agentguides.dev/leaderboard/#webpage",
+      "url": "https://agentguides.dev/leaderboard/",
+      "name": `AI Models Leaderboard — Benchmarks, Pricing, and Comparison (${last_updated})`,
+      "description": `Interactive leaderboard comparing ${enriched.length} AI models on benchmarks, pricing, context windows, and throughput. Updated ${last_updated}.`,
+      "inLanguage": "en-US",
+      "isPartOf": { "@type": "WebSite", "name": "AI Agents Guide", "url": "https://agentguides.dev" },
+      "primaryImageOfPage": "https://agentguides.dev/og/leaderboard.png",
+      "dateModified": last_updated,
+      "author": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://github.com/Sero01" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentguides.dev/" },
+        { "@type": "ListItem", "position": 2, "name": "Leaderboard", "item": "https://agentguides.dev/leaderboard/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Why is there no single overall score?", "acceptedAnswer": { "@type": "Answer", "text": "Because vendors publish only the benchmarks that flatter them. Anthropic reports HLE, where frontier models average about 54, and does not report GPQA Diamond, where they average about 91. Google and Alibaba do the reverse. Averaging whatever each lab happened to publish ranks publication strategy rather than capability — in our own testing it moved models by up to six places. We show per-benchmark tables instead and link to Artificial Analysis and LiveBench for overall composites." } },
+        { "@type": "Question", "name": "How do you decide which benchmark numbers to trust?", "acceptedAnswer": { "@type": "Answer", "text": "Every cell records its source and a link. Only figures from a vendor model card, a system card, or an open leaderboard are ranked. Estimates and figures inherited without recorded provenance are shown greyed out and excluded from every ranking. A build-time validator rejects any number that has no attributable source, so an unsourced figure cannot reach the site." } },
+        { "@type": "Question", "name": "Why do some models show tied ranks?", "acceptedAnswer": { "@type": "Answer", "text": "Gaps smaller than one point are not resolvable. SWE-bench reports to one decimal place on a 500-problem set, where a single problem is worth 0.2 points, so a 0.1 difference is noise. Models within one point share a rank rather than being ordered arbitrarily." } },
+        { "@type": "Question", "name": "Which benchmark is the most predictive for AI coding tools?", "acceptedAnswer": { "@type": "Answer", "text": "SWE-bench Pro and Terminal-Bench 2.1. SWE-bench Verified is still useful but is increasingly saturated at the frontier, and SWE-bench Pro is designed to resist memorisation. Note that Pro scores run roughly 20 points below Verified on the same model, so the two are never comparable." } },
+        { "@type": "Question", "name": "Why are some benchmarks greyed out?", "acceptedAnswer": { "@type": "Answer", "text": "They have been retired or superseded. MATH-500 and AIME were dropped from active reporting, tau-squared bench was replaced by tau-cubed Banking, Terminal-Bench Hard and 2.0 were replaced by 2.1, HumanEval is saturated, and the Aider Polyglot leaderboard is unmaintained. Retired columns are kept visible for historical reference but never contribute to a ranking." } }
+      ]
+    }
+  ]
+});
+
+const pageDescription = `Interactive leaderboard comparing ${enriched.length} AI models on benchmarks (MMLU-Pro, GPQA, SWE-bench, MATH-500, MMMU, Aider, tau-bench), pricing, context windows, and throughput. Updated ${last_updated}.`;
+
+const head = [
+  { tag: 'title' as const, content: `AI Models Leaderboard — Benchmarks, Pricing, and Comparison (${last_updated})` },
+  { tag: 'meta' as const, attrs: { property: 'og:title', content: 'AI Models Leaderboard — Benchmarks, Pricing, and Comparison' } },
+  { tag: 'meta' as const, attrs: { property: 'og:description', content: `Compare ${enriched.length} AI models on benchmarks, pricing, and context. Interactive table, charts, and cost calculator. Updated ${last_updated}.` } },
+  { tag: 'meta' as const, attrs: { property: 'og:type', content: 'website' } },
+  { tag: 'meta' as const, attrs: { property: 'og:url', content: 'https://agentguides.dev/leaderboard/' } },
+  { tag: 'meta' as const, attrs: { property: 'og:image', content: 'https://agentguides.dev/og/leaderboard.png' } },
+  { tag: 'meta' as const, attrs: { name: 'twitter:title', content: 'AI Models Leaderboard — Benchmarks, Pricing, Comparison' } },
+  { tag: 'meta' as const, attrs: { name: 'twitter:description', content: `Sortable table of ${enriched.length} AI models with benchmarks, pricing, and a cost calculator. Updated ${last_updated}.` } },
+  { tag: 'meta' as const, attrs: { name: 'twitter:image', content: 'https://agentguides.dev/og/leaderboard.png' } },
+  { tag: 'meta' as const, attrs: { name: 'keywords', content: 'AI models leaderboard, LLM benchmark comparison, MMLU-Pro, GPQA, SWE-bench, AI model pricing, Claude Fable 5, Claude Opus 4.8, Claude Sonnet 5, GPT-5.6, GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna, GPT-5.5, Gemini 3.1, Grok 4.5, Grok 4.3, Microsoft MAI, MAI-Thinking-1, Kimi K3, Kimi K2.7, Inkling, Thinking Machines, GLM-5.2, open weights coding model, AI model context window' } },
+  { tag: 'script' as const, attrs: { type: 'application/ld+json' }, content: jsonLd },
+];
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{`AI Models Leaderboard — Benchmarks, Pricing, and Comparison (${last_updated})`}</title>
-  <meta name="description" content={`Interactive leaderboard comparing ${enriched.length} AI models on benchmarks (MMLU-Pro, GPQA, SWE-bench, MATH-500, MMMU, Aider, tau-bench), pricing, context windows, and throughput. Updated ${last_updated}.`} />
-  <meta name="author" content="Parvez Ahmed" />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <link rel="canonical" href="https://agentguides.dev/leaderboard/" />
-  <meta property="og:title" content="AI Models Leaderboard — Benchmarks, Pricing, and Comparison" />
-  <meta property="og:description" content={`Compare ${enriched.length} AI models on benchmarks, pricing, and context. Interactive table, charts, and cost calculator. Updated ${last_updated}.`} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://agentguides.dev/leaderboard/" />
-  <meta property="og:image" content="https://agentguides.dev/og/leaderboard.png" />
-  <meta property="og:site_name" content="AgentGuide — AI Agents & AI Tools Guide" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="AI Models Leaderboard — Benchmarks, Pricing, Comparison" />
-  <meta name="twitter:description" content={`Sortable table of ${enriched.length} AI models with benchmarks, pricing, and a cost calculator. Updated ${last_updated}.`} />
-  <meta name="twitter:image" content="https://agentguides.dev/og/leaderboard.png" />
-  <meta name="keywords" content="AI models leaderboard, LLM benchmark comparison, MMLU-Pro, GPQA, SWE-bench, AI model pricing, Claude Fable 5, Claude Opus 4.8, Claude Sonnet 5, GPT-5.6, GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna, GPT-5.5, Gemini 3.1, Grok 4.5, Grok 4.3, Microsoft MAI, MAI-Thinking-1, Kimi K3, Kimi K2.7, Inkling, Thinking Machines, GLM-5.2, open weights coding model, AI model context window" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7347042268747630" crossorigin="anonymous"></script>
+<StarlightPage
+  frontmatter={{
+    title: 'AI Models Leaderboard',
+    description: pageDescription,
+    tableOfContents: false,
+    head,
+  }}
+>
+  <div id="leaderboard-app">
+    <p class="updated-pill">Updated {last_updated} · {enriched.length} models · {sourcedCells} sourced benchmark figures</p>
+    <p class="lead">Compare {enriched.length} large language models on the benchmarks vendors actually report in 2026, with pricing, context window, and throughput. <strong>Every figure links to its source.</strong> Estimates and inherited numbers are greyed out and never ranked.</p>
 
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Dataset",
-        "@id": "https://agentguides.dev/leaderboard/#dataset",
-        "name": "AI Models Leaderboard — Benchmarks, Pricing, and Comparison",
-        "description": `Comparison of ${enriched.length} AI models across benchmarks (MMLU-Pro, GPQA Diamond, HumanEval, SWE-bench Verified, MATH-500, MMMU, Aider Polyglot, tau-bench), pricing per million tokens, context windows, and throughput.`,
-        "url": "https://agentguides.dev/leaderboard/",
-        "dateModified": last_updated,
-        "inLanguage": "en-US",
-        "creator": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://github.com/Sero01" },
-        "publisher": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://agentguides.dev/about/" },
-        "license": "https://creativecommons.org/licenses/by/4.0/",
-        "keywords": "AI models leaderboard, LLM benchmark comparison, AI model pricing, AI model context window, SWE-bench, GPQA, MMLU-Pro",
-        "variableMeasured": [
-          "MMLU-Pro","GPQA Diamond","HumanEval","SWE-bench Verified","MATH-500","MMMU","Aider Polyglot","tau-bench","Input price per million tokens","Output price per million tokens","Context window","Throughput tokens per second"
-        ]
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://agentguides.dev/leaderboard/#webpage",
-        "url": "https://agentguides.dev/leaderboard/",
-        "name": `AI Models Leaderboard — Benchmarks, Pricing, and Comparison (${last_updated})`,
-        "description": `Interactive leaderboard comparing ${enriched.length} AI models on benchmarks, pricing, context windows, and throughput. Updated ${last_updated}.`,
-        "inLanguage": "en-US",
-        "isPartOf": { "@type": "WebSite", "name": "AI Agents Guide", "url": "https://agentguides.dev" },
-        "primaryImageOfPage": "https://agentguides.dev/og/leaderboard.png",
-        "dateModified": last_updated,
-        "author": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://github.com/Sero01" }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://agentguides.dev/" },
-          { "@type": "ListItem", "position": 2, "name": "Leaderboard", "item": "https://agentguides.dev/leaderboard/" }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          { "@type": "Question", "name": "How is the composite LLM score calculated?", "acceptedAnswer": { "@type": "Answer", "text": "The composite is the simple mean of every published benchmark for a model (MMLU-Pro, GPQA Diamond, HumanEval, SWE-bench Verified, MATH-500, MMMU, Aider Polyglot, tau-bench). Where a vendor has not reported a benchmark, the cell is empty and the composite excludes it." } },
-          { "@type": "Question", "name": "What does the blended price column mean?", "acceptedAnswer": { "@type": "Answer", "text": "A 3:1 input-to-output weighted average price per million tokens, approximating the cost shape of typical production agent workloads (heavy input from context, smaller output per call)." } },
-          { "@type": "Question", "name": "Which benchmark is the most predictive for AI coding tools?", "acceptedAnswer": { "@type": "Answer", "text": "SWE-bench Verified — it measures whether a model can resolve real GitHub issues end-to-end. Above 70 is frontier; above 50 is shippable for most coding workloads." } },
-          { "@type": "Question", "name": "How often is the leaderboard updated?", "acceptedAnswer": { "@type": "Answer", "text": "Monthly. The last-updated timestamp at the top of the page is the source of truth. New model releases get added within seven days of public availability." } },
-          { "@type": "Question", "name": "Why does pricing differ from a vendor's headline price?", "acceptedAnswer": { "@type": "Answer", "text": "Headline prices are usually input or output alone. The blended price reflects realistic agent traffic, and Anthropic/OpenAI prompt caching can drop the effective input cost by 60-80% on workloads with repeated context." } }
-        ]
-      }
-    ]
-  })} />
-
-  <script is:inline define:vars={{ MODELS: enriched, LAST_UPDATED: last_updated }}>
-    window.__LEADERBOARD = { models: MODELS, lastUpdated: LAST_UPDATED };
-  </script>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <script is:inline>
-    (function() {
-      const s = localStorage.getItem('starlight-theme');
-      if (s === 'dark' || s === 'light') document.documentElement.dataset.theme = s;
-    })();
-  </script>
-
-  <style>
-    @import '../styles/theme.css';
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--sans);
-      font-weight: 300;
-      background: var(--bg);
-      color: var(--text-secondary);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
-    ::selection { background: var(--accent-dim); color: var(--text-primary); }
-
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
-    .container-wide { max-width: 1560px; margin: 0 auto; padding: 0 2rem; }
-    @media (max-width: 768px) {
-      .container, .container-wide { padding: 0 1.25rem; }
-    }
-
-    /* ── Nav (matches homepage) ─────────────────────────────────── */
-    nav.site-nav {
-      position: sticky; top: 0; z-index: 100;
-      background: color-mix(in srgb, var(--bg) 85%, transparent);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: 1280px; margin: 0 auto;
-      padding: 1.25rem 2rem;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 2rem;
-    }
-    .nav-logo {
-      font-family: var(--serif); font-size: 1.5rem; font-weight: 500;
-      letter-spacing: -0.01em; line-height: 1;
-      display: inline-flex; align-items: baseline;
-    }
-    .nav-logo .lm { color: var(--text-primary); }
-    .nav-logo .li { color: var(--accent); font-style: italic; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      font-family: var(--sans); font-size: 0.85rem; font-weight: 500;
-      text-transform: uppercase; letter-spacing: 0.04em;
-      color: var(--text-secondary);
-    }
-    .nav-links a:hover { color: var(--text-primary); }
-    .nav-links a[aria-current="page"] { color: var(--accent); }
-    .nav-right { display: flex; align-items: center; gap: 1.25rem; }
-    .nav-github { font-family: var(--mono); font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.05em; }
-    .nav-github:hover { color: var(--accent); }
-    .theme-toggle {
-      background: transparent; border: none; cursor: pointer;
-      color: var(--text-muted); padding: 0.25rem;
-      display: inline-flex; align-items: center;
-      transition: color 0.3s ease;
-    }
-    .theme-toggle:hover { color: var(--accent); }
-    .theme-toggle svg { width: 1.05rem; height: 1.05rem; }
-    .theme-toggle .icon-sun { display: none; }
-    .theme-toggle .icon-moon { display: inline-block; }
-    :root[data-theme='light'] .theme-toggle .icon-sun  { display: none; }
-    :root[data-theme='light'] .theme-toggle .icon-moon { display: inline-block; }
-    :root[data-theme='dark']  .theme-toggle .icon-sun  { display: inline-block; }
-    :root[data-theme='dark']  .theme-toggle .icon-moon { display: none; }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme='light']) .theme-toggle .icon-sun  { display: inline-block; }
-      :root:not([data-theme='light']) .theme-toggle .icon-moon { display: none; }
-    }
-    @media (max-width: 768px) {
-      .nav-links, .nav-github { display: none; }
-      .nav-inner { padding: 1rem 1.25rem; }
-    }
-
-    /* ── Hero ──────────────────────────────────────────────────── */
-    .hero { padding: 5rem 0 3rem; border-bottom: 1px solid var(--border); }
-    .hero h1 {
-      font-family: var(--serif); font-weight: 400;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: 1.1; letter-spacing: -0.03em;
-      color: var(--text-primary); margin-bottom: 1.25rem;
-    }
-    .hero p {
-      font-family: var(--sans); font-weight: 300;
-      color: var(--text-secondary); max-width: 720px;
-      font-size: 1.05rem; line-height: 1.8;
-    }
-    .updated-pill {
-      display: inline-block;
-      font-family: var(--mono); font-size: 0.7rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 1.5rem;
-    }
-
-    /* ── Filters ───────────────────────────────────────────────── */
-    .filters {
-      display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem;
-      padding: 1.5rem 0; align-items: center;
-      border-bottom: 1px solid var(--border);
-      margin: 0 0 2rem;
-    }
-    .filter-group { display: flex; gap: 0.4rem; align-items: center; }
-    .filter-label {
-      font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: 0.15em;
-      margin-right: 0.5rem;
-    }
-    .chip {
-      font-family: var(--mono); font-size: 0.72rem;
-      letter-spacing: 0.05em; text-transform: lowercase;
-      background: transparent; border: 1px solid var(--accent-dim);
-      color: var(--text-secondary);
-      padding: 0.4rem 0.75rem; border-radius: 2px;
-      cursor: pointer; user-select: none;
-      transition: all 0.3s ease;
-    }
-    .chip:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--text-primary); }
-    .chip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
-    .search-input {
-      font-family: var(--sans); font-weight: 300;
-      background: var(--bg-card); border: 1px solid var(--border);
-      color: var(--text-primary); border-radius: 2px;
-      padding: 0.5rem 0.75rem; font-size: 0.9rem; min-width: 220px;
-      transition: border-color 0.3s ease;
-    }
-    .search-input:focus { outline: none; border-color: var(--accent); }
-    .search-input::placeholder { color: var(--text-muted); }
-
-    /* ── Table ─────────────────────────────────────────────────── */
-    .table-wrap {
-      overflow: auto;
-      border: 1px solid var(--border);
-      margin-bottom: 3rem; max-height: 640px;
-      background: var(--bg-card);
-    }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    thead { position: sticky; top: 0; z-index: 1; }
-    th {
-      font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-muted);
-      text-align: left; padding: 1rem 0.9rem;
-      cursor: pointer; user-select: none;
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-      background: var(--bg-card-hover);
-      white-space: nowrap;
-      transition: color 0.3s ease;
-    }
-    th:last-child, td:last-child { border-right: none; }
-    th:hover { color: var(--accent); }
-    th .sort-indicator { color: var(--accent); font-size: 0.7rem; margin-left: 0.25rem; }
-    td {
-      font-family: var(--sans); font-weight: 300;
-      padding: 1rem 0.9rem;
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
-      color: var(--text-secondary);
-      white-space: nowrap; line-height: 1.5;
-    }
-    td strong { font-family: var(--serif); font-weight: 500; font-size: 1.05rem; color: var(--text-primary); }
-    tr:hover td { background: var(--bg-card-hover); }
-    .vendor-chip { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.05em; }
-    .lic-open { color: var(--accent); font-weight: 500; font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
-    .lic-closed { color: var(--text-muted); font-weight: 500; font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
-    .try-btn {
-      font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      display: inline-block; padding: 0.35rem 0.8rem; border-radius: 2px;
-      background: var(--accent); color: var(--bg);
-      border: 1px solid var(--accent);
-      transition: all 0.3s ease;
-    }
-    .try-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
-    .compare-cb { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent); }
-
-    /* ── Charts ────────────────────────────────────────────────── */
-    .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-bottom: 3rem; background: var(--border); border: 1px solid var(--border); }
-    @media (max-width: 900px) { .charts-row { grid-template-columns: 1fr; } }
-    .chart-card { background: var(--bg-card); padding: 1.75rem; }
-    .chart-card h2 {
-      font-family: var(--serif); font-weight: 400;
-      font-size: 1.5rem; line-height: 1.3;
-      color: var(--text-primary); margin-bottom: 1rem;
-    }
-    .chart-card p { font-family: var(--sans); font-weight: 300; color: var(--text-muted); }
-    .chart-card select {
-      font-family: var(--mono); font-size: 0.78rem;
-      background: var(--bg); border: 1px solid var(--border);
-      color: var(--text-primary); border-radius: 2px;
-      padding: 0.4rem 0.65rem; margin-bottom: 1rem;
-      cursor: pointer;
-    }
-    .chart-card select:focus { outline: none; border-color: var(--accent); }
-
-    .bar-row { display: grid; grid-template-columns: 11rem 1fr 3rem; align-items: center; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; font-family: var(--sans); color: var(--text-secondary); }
-    .bar-track { height: 10px; background: var(--bg); border: 1px solid var(--border); overflow: hidden; }
-    .bar-fill { height: 100%; }
-    .bar-fill.open { background: var(--accent); }
-    .bar-fill.closed { background: var(--text-muted); }
-
-    /* ── Cost calculator ───────────────────────────────────────── */
-    .calc {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 2rem; margin-bottom: 3rem;
-    }
-    .calc h2 {
-      font-family: var(--serif); font-weight: 400;
-      font-size: 1.8rem; line-height: 1.2;
-      color: var(--text-primary); margin-bottom: 1.5rem;
-    }
-    .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
-    .calc-grid label {
-      font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--text-muted);
-      display: block; margin-bottom: 0.5rem;
-    }
-    .calc-grid input, .calc-grid select {
-      font-family: var(--sans); font-weight: 300; font-size: 0.95rem;
-      width: 100%; background: var(--bg);
-      border: 1px solid var(--border); color: var(--text-primary);
-      border-radius: 2px; padding: 0.55rem 0.7rem;
-    }
-    .calc-grid input:focus, .calc-grid select:focus { outline: none; border-color: var(--accent); }
-    .calc-result {
-      background: var(--bg); border: 1px solid var(--border);
-      padding: 1.25rem; font-family: var(--sans); font-weight: 300;
-      color: var(--text-secondary);
-    }
-    .calc-result strong {
-      font-family: var(--serif); font-weight: 500;
-      color: var(--accent); font-size: 1.75rem;
-    }
-
-    /* ── Compare drawer ────────────────────────────────────────── */
-    #compare-bar {
-      position: fixed; bottom: 1.25rem; left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent); color: var(--bg);
-      padding: 0.75rem 1.5rem; border-radius: 2px;
-      font-family: var(--sans); font-weight: 500; font-size: 0.85rem;
-      letter-spacing: 0.05em; text-transform: uppercase;
-      cursor: pointer; display: none;
-      border: 1px solid var(--accent);
-      transition: all 0.3s ease;
-    }
-    #compare-bar:hover { background: var(--accent-hover); }
-    #compare-drawer {
-      position: fixed; top: 0; right: 0; bottom: 0;
-      width: min(95%, 720px); background: var(--bg);
-      border-left: 1px solid var(--border);
-      padding: 2rem; overflow-y: auto;
-      transform: translateX(100%);
-      transition: transform 0.3s ease; z-index: 110;
-    }
-    #compare-drawer.open { transform: translateX(0); }
-    #compare-drawer h2 {
-      font-family: var(--serif); font-weight: 400;
-      font-size: 2rem; color: var(--text-primary);
-    }
-    #compare-drawer .close {
-      float: right; background: none; border: none;
-      color: var(--text-muted); font-size: 1.75rem;
-      cursor: pointer; line-height: 1;
-      transition: color 0.3s ease;
-    }
-    #compare-drawer .close:hover { color: var(--accent); }
-    .compare-table { width: 100%; margin-top: 1.5rem; border-collapse: collapse; font-size: 0.85rem; border: 1px solid var(--border); }
-    .compare-table th, .compare-table td {
-      padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border);
-      text-align: left; font-family: var(--sans); font-weight: 300;
-    }
-    .compare-table th {
-      font-family: var(--mono); font-size: 0.7rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--text-muted); background: var(--bg-card);
-    }
-    .compare-table th:first-child, .compare-table td:first-child { color: var(--text-muted); font-weight: 500; }
-
-    /* ── Prose ─────────────────────────────────────────────────── */
-    .prose { max-width: 760px; margin: 4rem 0 5rem; }
-    .prose h2 {
-      font-family: var(--serif); font-weight: 400;
-      font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1.2;
-      letter-spacing: -0.02em;
-      color: var(--text-primary);
-      margin: 3rem 0 1rem;
-    }
-    .prose h2:first-child { margin-top: 0; }
-    .prose h3 { font-family: var(--serif); font-weight: 400; font-size: 1.4rem; color: var(--text-primary); margin: 2rem 0 0.75rem; }
-    .prose p {
-      font-family: var(--sans); font-weight: 300;
-      color: var(--text-secondary); line-height: 1.85;
-      margin-bottom: 1.25rem; font-size: 1.02rem;
-    }
-    .prose strong { font-weight: 500; color: var(--text-primary); }
-    .prose a { color: var(--accent); }
-    .prose a:hover { color: var(--accent-hover); text-decoration: underline; text-underline-offset: 3px; }
-
-    /* ── Footer ────────────────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 0;
-      font-family: var(--mono); font-size: 0.7rem;
-      letter-spacing: 0.05em;
-      color: var(--text-muted); text-align: center;
-    }
-    footer a { color: var(--text-muted); }
-    footer a:hover { color: var(--accent); }
-  </style>
-</head>
-<body>
-
-<nav class="site-nav">
-  <div class="nav-inner">
-    <a href="/" class="nav-logo" aria-label="AgentGuide home">
-      <span class="lm">agent</span><span class="li">guide</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="/reviews/">Reviews</a></li>
-      <li><a href="/best/">Best Of</a></li>
-      <li><a href="/build/">Tutorials</a></li>
-      <li><a href="/leaderboard/" aria-current="page">Leaderboard</a></li>
-      <li><a href="/learn/">Learn</a></li>
-    </ul>
-    <div class="nav-right">
-      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" title="Toggle theme">
-        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-        </svg>
-        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </button>
-      <a class="nav-github" href="https://github.com/Sero01/ai-agents-guide" target="_blank" rel="noopener noreferrer">github &rarr;</a>
+    <div class="notice">
+      <p><strong>There is no single "best model" score here, on purpose.</strong> Labs publish only the benchmarks that flatter them — Anthropic reports HLE (frontier average ≈54) and skips GPQA Diamond (≈91); Google and Alibaba do the reverse. Averaging across whatever each lab chose to publish ranks publication strategy, not capability: when we tested it, models moved by up to six places depending on which benchmarks they happened to report. Rank on the benchmark that matches your workload, or see <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a> and <a href="https://livebench.ai" target="_blank" rel="noopener">LiveBench</a> for independently-run composites.</p>
     </div>
-  </div>
-</nav>
-
-<main>
-  <section class="hero">
-    <div class="container">
-      <span class="updated-pill">Updated {last_updated} · {enriched.length} models tracked</span>
-      <h1>AI Models Leaderboard</h1>
-      <p>Compare {enriched.length} large language models on benchmarks, pricing, context window, and throughput. Sort and filter the table, see the price-vs-performance frontier in a glance, and use the cost calculator to estimate what each model will actually cost you in production.</p>
-    </div>
-  </section>
-
-  <div class="container-wide">
 
     <div class="filters">
+      <div class="filter-group">
+        <span class="filter-label">Status</span>
+        <span class="chip active" data-status="current">Current</span>
+        <span class="chip" data-status="all">Include superseded</span>
+      </div>
       <div class="filter-group">
         <span class="filter-label">License</span>
         <span class="chip active" data-license="all">All</span>
@@ -494,13 +184,15 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
           <tr>
             <th data-sort="name">Model</th>
             <th data-sort="vendor">Vendor</th>
-            <th data-sort="composite">Score</th>
+            <th data-sort="sourced" title="Number of currently-reported benchmarks with a cited source">Src</th>
             <th data-sort="context_window">Ctx</th>
             <th data-sort="pricing.input">In $/M</th>
             <th data-sort="pricing.output">Out $/M</th>
-            <th data-sort="benchmarks.mmlu_pro">MMLU-Pro</th>
             <th data-sort="benchmarks.gpqa_diamond">GPQA</th>
-            <th data-sort="benchmarks.swe_bench">SWE-bench</th>
+            <th data-sort="benchmarks.swe_bench_verified">SWE-V</th>
+            <th data-sort="benchmarks.swe_bench_pro">SWE-Pro</th>
+            <th data-sort="benchmarks.terminal_bench_2_1">TB 2.1</th>
+            <th data-sort="benchmarks.hle">HLE</th>
           </tr>
         </thead>
         <tbody id="leaderboard-body"></tbody>
@@ -511,20 +203,19 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
       <div class="chart-card">
         <h2>Benchmark Leaders</h2>
         <select id="bench-select">
-          <option value="mmlu_pro">MMLU-Pro (knowledge)</option>
-          <option value="gpqa_diamond">GPQA Diamond (reasoning)</option>
-          <option value="humaneval">HumanEval (code)</option>
-          <option value="swe_bench">SWE-bench Verified (real coding)</option>
-          <option value="math_500">MATH-500</option>
-          <option value="mmmu">MMMU (multimodal)</option>
-          <option value="aider_polyglot">Aider Polyglot</option>
-          <option value="tau_bench">tau-bench (agent tools)</option>
+          <option value="swe_bench_pro">SWE-bench Pro (real coding, memorisation-resistant)</option>
+          <option value="terminal_bench_2_1">Terminal-Bench 2.1 (agentic terminal use)</option>
+          <option value="gpqa_diamond">GPQA Diamond (science reasoning)</option>
+          <option value="swe_bench_verified">SWE-bench Verified (real coding)</option>
+          <option value="hle">HLE (frontier reasoning)</option>
+          <option value="mmmu_pro">MMMU-Pro (multimodal)</option>
         </select>
+        <p class="chart-note">Models within {NOISE_FLOOR} point share a rank — sub-point gaps are below measurement noise. Only sourced figures appear.</p>
         <div id="bar-chart"></div>
       </div>
       <div class="chart-card">
         <h2>Price vs Performance</h2>
-        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem">X: blended $/M (log). Y: composite benchmark score. Pareto-optimal models are highlighted.</p>
+        <p class="chart-note">X: blended $/M (log). Y: score on the benchmark selected at left. Pareto-optimal models are highlighted.</p>
         <div id="scatter-chart"></div>
       </div>
     </div>
@@ -550,25 +241,29 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
         </div>
       </div>
       <div id="calc-output" class="calc-result"></div>
-      <p style="margin-top:0.75rem;font-size:0.85rem;color:var(--text-muted)">
-        Track real spend per provider with <a href="https://www.helicone.ai/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard" rel="sponsored nofollow noopener" target="_blank" style="color:var(--accent)">Helicone</a> or <a href="https://langfuse.com/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard" rel="sponsored nofollow noopener" target="_blank" style="color:var(--accent)">Langfuse</a>. Need access to every model under one bill? <a href="https://openrouter.ai/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard" rel="sponsored nofollow noopener" target="_blank" style="color:var(--accent)">OpenRouter</a> routes to all of them.
+      <p class="calc-note">
+        Track real spend per provider with <a href="https://www.helicone.ai/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard" rel="sponsored nofollow noopener" target="_blank">Helicone</a> or <a href="https://langfuse.com/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard" rel="sponsored nofollow noopener" target="_blank">Langfuse</a>. Need access to every model under one bill? <a href="https://openrouter.ai/?ref=agentguides&utm_source=agentguides.dev&utm_campaign=leaderboard" rel="sponsored nofollow noopener" target="_blank">OpenRouter</a> routes to all of them.
       </p>
     </div>
 
     <div class="prose">
       <h2>How to read this leaderboard</h2>
-      <p>The composite score is the simple mean of every published benchmark for a model. We do not normalise across benchmarks because they are already roughly comparable in their published units (most are 0-100 accuracy). Where a vendor has not reported a benchmark, the cell is empty and the composite excludes it — which means a model with fewer reported benchmarks is comparable to one with more, but tied scores should be read carefully.</p>
+      <p><strong>Every number links to where it came from.</strong> A figure is only ranked if it comes from a vendor model card, a system card, or an open leaderboard. Numbers marked <em>est</em> are estimates, numbers marked <em>?</em> were inherited without recorded provenance, and neither ever contributes to a ranking or a chart. The <strong>Src</strong> column counts how many currently-reported benchmarks a model has a citable source for — a low number means the vendor published little, not that the model is weak.</p>
+      <p><strong>Ranks are assigned in tiers.</strong> Models within one point share a rank. SWE-bench reports to one decimal on a 500-problem set where a single problem is worth 0.2 points, so a 0.1 gap is noise. Ordering two models on that difference would imply a precision the benchmark does not have.</p>
+      <p><strong>Never compare SWE-bench Verified against SWE-bench Pro.</strong> They are different benchmarks and Pro runs roughly 20 points lower on the same model — Claude Opus 4.8 scores 69.2 on Pro and 88.6 on Verified. They get separate columns here for that reason. The same applies to Terminal-Bench 2.0 versus 2.1.</p>
       <p>The blended price column is a 3:1 input-to-output weighted average, which approximates the cost shape of most production agent workloads (heavy input from context and history, smaller output per call). Prompt caching changes this calculus substantially — Anthropic and OpenAI both ship aggressive caching that can drop effective price by 60-80% on repeated-context workloads. If your application is conversational or RAG-heavy, the cached-read price is the one you should optimise against, not the headline input price.</p>
 
       <h2>Which benchmark actually matters</h2>
-      <p><strong>MMLU-Pro</strong> measures broad knowledge across 14 disciplines. Useful as a general capability indicator; weak as a predictor of agent performance.</p>
-      <p><strong>GPQA Diamond</strong> measures graduate-level science reasoning on questions verified to be hard for non-experts. A reliable indicator of how a model handles novel reasoning rather than retrieved facts.</p>
-      <p><strong>HumanEval</strong> is the original "synthesise a Python function from a docstring" benchmark. Saturated for frontier models; treat scores >85% as a baseline competency check, not a differentiator.</p>
-      <p><strong>SWE-bench Verified</strong> measures end-to-end issue resolution on real GitHub repositories — closing tickets, not solving toy problems. The single most predictive benchmark for AI coding tool performance in our experience.</p>
-      <p><strong>MATH-500</strong> measures competition mathematics. Saturated for reasoning-focused models (o3, R1) and a strong indicator of chain-of-thought capability.</p>
-      <p><strong>MMMU</strong> measures multimodal reasoning across images and text. Only matters if your application uses vision.</p>
-      <p><strong>Aider Polyglot</strong> measures multi-language code editing across Python, Go, Rust, TypeScript, JavaScript, and C++. Practical and harder to game than HumanEval.</p>
-      <p><strong>tau-bench</strong> measures tool-use in conversational agent settings (retail and airline scenarios). The best published proxy for "how good is this model as an agent" until a better benchmark replaces it.</p>
+      <p><strong>SWE-bench Pro</strong> measures end-to-end issue resolution on real repositories, built to resist the memorisation that has begun to inflate SWE-bench Verified. Currently the widest-reported coding benchmark and the most predictive single number for AI coding tools.</p>
+      <p><strong>Terminal-Bench 2.1</strong> measures agentic work in a real terminal — multi-step tasks with tool use and recovery from failure. Now the headline agentic eval for most labs, and it replaced Terminal-Bench Hard and 2.0, which are not comparable to it.</p>
+      <p><strong>GPQA Diamond</strong> measures graduate-level science reasoning on questions verified to be hard for non-experts. Still the best indicator of novel reasoning over retrieved facts, though frontier models now cluster above 90, so it is beginning to saturate.</p>
+      <p><strong>SWE-bench Verified</strong> measures issue resolution on real GitHub repositories. Still widely quoted, but frontier scores now sit in the high 70s to 90s and the spread between good models has narrowed considerably.</p>
+      <p><strong>HLE (Humanity's Last Exam)</strong> is the hardest benchmark in general use — frontier models score in the 40s and 50s. Check whether a quoted figure was run with tools, since that shifts results by roughly 5-15 points.</p>
+      <p><strong>MMMU-Pro</strong> measures multimodal reasoning across images and text, and is a harder variant of the original MMMU. Only matters if your application uses vision.</p>
+
+      <h2>Benchmarks we no longer rank</h2>
+      <p>Several benchmarks that used to appear here have been retired or superseded, and are kept as greyed-out columns for historical reference only. <strong>MATH-500</strong> and <strong>AIME</strong> were dropped from active reporting. <strong>τ²-Bench</strong> was replaced by τ³-Banking. <strong>Terminal-Bench Hard</strong> and <strong>2.0</strong> were replaced by 2.1. <strong>HumanEval</strong> is saturated — every frontier model scores 92-96, so it separates nothing. The <strong>Aider Polyglot</strong> leaderboard is unmaintained; its top entry is still GPT-5 and it tracks no model released in 2026. <strong>MMLU-Pro</strong> and <strong>MMMU</strong> remain in use but have been dropped from the major composite indices.</p>
+      <p>This churn is the main reason benchmark tables go stale. A table that keeps demanding numbers the industry stopped publishing will either sit empty or get filled with guesses.</p>
 
       <h2>Picking a model for production</h2>
       <p>Three rules of thumb after spending the past 12 months testing most models on this list in production-shaped workloads:</p>
@@ -577,30 +272,304 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
       <p><strong>3. Benchmark your own task before committing.</strong> Run the cheapest plausible candidate on 30 examples of your real task. The leaderboard tells you which models to consider; only your eval set tells you which model to ship.</p>
 
       <h2>Methodology and sources</h2>
-      <p>Benchmark numbers are aggregated from vendor model cards, the <a href="https://lmarena.ai" target="_blank" rel="noopener">LMSYS Chatbot Arena</a> leaderboard, <a href="https://artificialanalysis.ai" target="_blank" rel="noopener">Artificial Analysis</a>, the <a href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard" target="_blank" rel="noopener">HuggingFace Open LLM Leaderboard</a>, the <a href="https://aider.chat/docs/leaderboards/" target="_blank" rel="noopener">Aider leaderboard</a>, and <a href="https://www.swebench.com" target="_blank" rel="noopener">SWE-bench Verified</a>. Pricing is taken from each provider's first-party API on {last_updated}; open-weights pricing reflects the typical OpenRouter / Together / Fireworks rate. We update the data monthly and bump the timestamp in this page's header on every refresh.</p>
+      <p>Benchmark figures come from vendor model cards and system cards, and from <a href="https://www.swebench.com" target="_blank" rel="noopener">SWE-bench</a>. Each cell stores its own source URL and the date it was read; scores are frozen at that date rather than silently recomputed later. A build-time validator rejects any figure that lacks an attributable source, so an unsourced number cannot reach this page — and it rejects figures sourced to secondary summary sites, several of which publish benchmark scores that appear in no vendor release.</p>
+      <p>Vendor-reported figures are self-run and are labelled as such on hover. We cross-check our orderings against <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a> and <a href="https://livebench.ai" target="_blank" rel="noopener">LiveBench</a>, both of which run their own independent evaluations and publish composite indices. Their numbers are not reproduced here — for an independently-measured overall ranking, go to the source.</p>
+      <p>Pricing is taken from each provider's first-party API on {last_updated}; open-weights pricing reflects the typical OpenRouter / Together / Fireworks rate. Models are marked <em>superseded</em> when a newer model exists in the same series and <em>unreleased</em> when announced without public availability; neither is ranked by default.</p>
       <p>For the long-form analysis behind these numbers — which models we use day-to-day, which we ruled out, and how the landscape shifted in the last six months — read the companion post <a href="/best/llm-benchmark-comparison-2026/">LLM Benchmark Comparison 2026</a>.</p>
     </div>
-  </div>
-</main>
 
-<div id="compare-bar"><span id="compare-count">0</span> selected · Compare →</div>
-<aside id="compare-drawer">
-  <button class="close" aria-label="Close compare">×</button>
-  <h2>Compare</h2>
-  <div id="compare-content"></div>
-</aside>
-
-<footer>
-  <div class="container">
-    © 2026 AgentGuide · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a> · Data updated {last_updated}
+    <div id="compare-bar"><span id="compare-count">0</span> selected · Compare →</div>
+    <aside id="compare-drawer">
+      <button class="close" aria-label="Close compare">×</button>
+      <h2>Compare</h2>
+      <div id="compare-content"></div>
+    </aside>
   </div>
-</footer>
+</StarlightPage>
+
+<style is:global>
+  /* Widen the Starlight content column for this page only (TOC is disabled). */
+  :root:has(#leaderboard-app) {
+    --sl-content-width: min(1560px, 100%);
+  }
+
+  #leaderboard-app {
+    /* Vars consumed by the JS-generated SVG scatter chart */
+    --open: var(--accent);
+    --closed: var(--text-muted);
+    --accent-high: var(--accent-hover);
+    --text: var(--text-secondary);
+  }
+
+  #leaderboard-app .updated-pill {
+    font-family: var(--mono); font-size: 0.7rem;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  #leaderboard-app .lead {
+    max-width: 720px;
+  }
+
+  /* ── Filters ───────────────────────────────────────────────── */
+  #leaderboard-app .filters {
+    display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem;
+    padding: 1.5rem 0; align-items: center;
+    border-bottom: 1px solid var(--border);
+    margin: 0 0 2rem;
+  }
+  #leaderboard-app .filter-group { display: flex; gap: 0.4rem; align-items: center; margin-top: 0; }
+  #leaderboard-app .filter-label {
+    font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.15em;
+    margin-right: 0.5rem;
+  }
+  #leaderboard-app .chip {
+    font-family: var(--mono); font-size: 0.72rem;
+    letter-spacing: 0.05em; text-transform: lowercase;
+    background: transparent; border: 1px solid var(--accent-dim);
+    color: var(--text-secondary);
+    padding: 0.4rem 0.75rem; border-radius: 2px;
+    cursor: pointer; user-select: none;
+    transition: all 0.3s ease;
+    margin-top: 0;
+  }
+  #leaderboard-app .chip:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--text-primary); }
+  #leaderboard-app .chip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  #leaderboard-app .search-input {
+    font-family: var(--sans); font-weight: 300;
+    background: var(--bg-card); border: 1px solid var(--border);
+    color: var(--text-primary); border-radius: 2px;
+    padding: 0.5rem 0.75rem; font-size: 0.9rem; min-width: 220px;
+    transition: border-color 0.3s ease;
+    margin-top: 0;
+  }
+  #leaderboard-app .search-input:focus { outline: none; border-color: var(--accent); }
+  #leaderboard-app .search-input::placeholder { color: var(--text-muted); }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  #leaderboard-app .table-wrap {
+    overflow: auto;
+    border: 1px solid var(--border);
+    margin-bottom: 3rem; max-height: 640px;
+    background: var(--bg-card);
+  }
+  #leaderboard-app table { display: table; width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 0; border: none; }
+  #leaderboard-app thead { position: sticky; top: 0; z-index: 1; }
+  #leaderboard-app th {
+    font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left; padding: 1rem 0.9rem;
+    cursor: pointer; user-select: none;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    background: var(--bg-card-hover);
+    white-space: nowrap;
+    transition: color 0.3s ease;
+  }
+  #leaderboard-app th:last-child, #leaderboard-app td:last-child { border-right: none; }
+  #leaderboard-app th:hover { color: var(--accent); }
+  #leaderboard-app th .sort-indicator { color: var(--accent); font-size: 0.7rem; margin-left: 0.25rem; }
+
+  /* ── Cell provenance ─────────────────────────────────────────────────────
+     A number's visual weight tracks how well it is attributed. Sourced
+     figures read as data; estimates and inherited values are visibly
+     demoted so they cannot be mistaken for measurements. */
+  #leaderboard-app td.cell-src a {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px dotted color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+  #leaderboard-app td.cell-src a:hover { color: var(--accent); border-bottom-style: solid; }
+  #leaderboard-app td.cell-est,
+  #leaderboard-app td.cell-unsourced { color: var(--text-muted); font-style: italic; }
+  #leaderboard-app td.cell-none { color: var(--text-muted); opacity: 0.5; }
+  #leaderboard-app td .prov {
+    font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.08em;
+    vertical-align: super; margin-left: 0.15rem; opacity: 0.7;
+  }
+  #leaderboard-app td.src-count { font-family: var(--mono); color: var(--text-muted); }
+
+  #leaderboard-app .badge {
+    font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.1rem 0.3rem; border-radius: 3px; margin-left: 0.3rem;
+    border: 1px solid currentColor; opacity: 0.75; white-space: nowrap;
+  }
+  #leaderboard-app .badge-old { color: var(--text-muted); }
+  #leaderboard-app .badge-unreleased { color: #c2410c; }
+  #leaderboard-app tr.row-old td { opacity: 0.72; }
+
+  #leaderboard-app .bar-rank {
+    font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted);
+    text-align: right; min-width: 1.4rem;
+  }
+  #leaderboard-app .bar-rank.tied { opacity: 0.45; }
+  #leaderboard-app .empty-note { color: var(--text-muted); font-size: 0.85rem; padding: 1rem 0; }
+
+  #leaderboard-app .notice {
+    border-left: 3px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    padding: 0.85rem 1.1rem; margin: 1.25rem 0; border-radius: 0 4px 4px 0;
+  }
+  #leaderboard-app .notice p {
+    margin: 0; font-family: var(--sans); font-weight: 300;
+    font-size: 0.88rem; line-height: 1.6;
+  }
+  #leaderboard-app td {
+    font-family: var(--sans); font-weight: 300;
+    padding: 1rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-top: none;
+    color: var(--text-secondary);
+    white-space: nowrap; line-height: 1.5;
+  }
+  #leaderboard-app td strong { font-family: var(--serif); font-weight: 500; font-size: 1.05rem; color: var(--text-primary); }
+  #leaderboard-app tr:hover td { background: var(--bg-card-hover); }
+  #leaderboard-app .vendor-chip { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.05em; }
+  #leaderboard-app .lic-open { color: var(--accent); font-weight: 500; font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
+  #leaderboard-app .lic-closed { color: var(--text-muted); font-weight: 500; font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
+  #leaderboard-app .try-btn {
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    display: inline-block; padding: 0.35rem 0.8rem; border-radius: 2px;
+    background: var(--accent); color: var(--bg);
+    border: 1px solid var(--accent);
+    transition: all 0.3s ease;
+  }
+  #leaderboard-app .try-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  #leaderboard-app .compare-cb { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent); }
+
+  /* ── Charts ────────────────────────────────────────────────── */
+  #leaderboard-app .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-bottom: 3rem; background: var(--border); border: 1px solid var(--border); }
+  @media (max-width: 900px) { #leaderboard-app .charts-row { grid-template-columns: 1fr; } }
+  #leaderboard-app .chart-card { background: var(--bg-card); padding: 1.75rem; margin-top: 0; }
+  #leaderboard-app .chart-card h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 1.5rem; line-height: 1.3;
+    color: var(--text-primary); margin: 0 0 1rem;
+  }
+  #leaderboard-app .chart-card p { font-family: var(--sans); font-weight: 300; color: var(--text-muted); }
+  #leaderboard-app .chart-card .chart-note { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 0.5rem; }
+  #leaderboard-app .chart-card select {
+    font-family: var(--mono); font-size: 0.78rem;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text-primary); border-radius: 2px;
+    padding: 0.4rem 0.65rem; margin: 0 0 1rem;
+    cursor: pointer;
+  }
+  #leaderboard-app .chart-card select:focus { outline: none; border-color: var(--accent); }
+
+  #leaderboard-app .bar-row { display: grid; grid-template-columns: 11rem 1fr 3rem; align-items: center; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; font-family: var(--sans); color: var(--text-secondary); margin-top: 0; }
+  #leaderboard-app .bar-track { height: 10px; background: var(--bg); border: 1px solid var(--border); overflow: hidden; }
+  #leaderboard-app .bar-fill { height: 100%; }
+  #leaderboard-app .bar-fill.open { background: var(--accent); }
+  #leaderboard-app .bar-fill.closed { background: var(--text-muted); }
+
+  /* ── Cost calculator ───────────────────────────────────────── */
+  #leaderboard-app .calc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 2rem; margin-bottom: 3rem;
+  }
+  #leaderboard-app .calc h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 1.8rem; line-height: 1.2;
+    color: var(--text-primary); margin: 0 0 1.5rem;
+  }
+  #leaderboard-app .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1.25rem; margin: 0 0 1.5rem; }
+  #leaderboard-app .calc-grid label {
+    font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-muted);
+    display: block; margin-bottom: 0.5rem;
+  }
+  #leaderboard-app .calc-grid input, #leaderboard-app .calc-grid select {
+    font-family: var(--sans); font-weight: 300; font-size: 0.95rem;
+    width: 100%; background: var(--bg);
+    border: 1px solid var(--border); color: var(--text-primary);
+    border-radius: 2px; padding: 0.55rem 0.7rem;
+  }
+  #leaderboard-app .calc-grid input:focus, #leaderboard-app .calc-grid select:focus { outline: none; border-color: var(--accent); }
+  #leaderboard-app .calc-result {
+    background: var(--bg); border: 1px solid var(--border);
+    padding: 1.25rem; font-family: var(--sans); font-weight: 300;
+    color: var(--text-secondary);
+  }
+  #leaderboard-app .calc-result strong {
+    font-family: var(--serif); font-weight: 500;
+    color: var(--accent); font-size: 1.75rem;
+  }
+  #leaderboard-app .calc-note { margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted); }
+  #leaderboard-app .calc-note a { color: var(--accent); }
+
+  /* ── Compare drawer ────────────────────────────────────────── */
+  #leaderboard-app #compare-bar {
+    position: fixed; bottom: 1.25rem; left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent); color: var(--bg);
+    padding: 0.75rem 1.5rem; border-radius: 2px;
+    font-family: var(--sans); font-weight: 500; font-size: 0.85rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; display: none;
+    border: 1px solid var(--accent);
+    transition: all 0.3s ease;
+    z-index: 110;
+  }
+  #leaderboard-app #compare-bar:hover { background: var(--accent-hover); }
+  #leaderboard-app #compare-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: min(95%, 720px); background: var(--bg);
+    border-left: 1px solid var(--border);
+    padding: 2rem; overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease; z-index: 110;
+    margin-top: 0;
+  }
+  #leaderboard-app #compare-drawer.open { transform: translateX(0); }
+  #leaderboard-app #compare-drawer h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 2rem; color: var(--text-primary); margin: 0;
+  }
+  #leaderboard-app #compare-drawer .close {
+    float: right; background: none; border: none;
+    color: var(--text-muted); font-size: 1.75rem;
+    cursor: pointer; line-height: 1;
+    transition: color 0.3s ease;
+  }
+  #leaderboard-app #compare-drawer .close:hover { color: var(--accent); }
+  #leaderboard-app .compare-table { width: 100%; margin-top: 1.5rem; border-collapse: collapse; font-size: 0.85rem; border: 1px solid var(--border); }
+  #leaderboard-app .compare-table th, #leaderboard-app .compare-table td {
+    padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border);
+    text-align: left; font-family: var(--sans); font-weight: 300;
+  }
+  #leaderboard-app .compare-table th {
+    font-family: var(--mono); font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); background: var(--bg-card);
+    cursor: default; white-space: normal;
+  }
+  #leaderboard-app .compare-table th:first-child, #leaderboard-app .compare-table td:first-child { color: var(--text-muted); font-weight: 500; }
+
+  /* ── Prose ─────────────────────────────────────────────────── */
+  #leaderboard-app .prose { max-width: 760px; margin: 4rem 0 2rem; }
+</style>
+
+<script is:inline define:vars={{ MODELS: enriched, LAST_UPDATED: last_updated, REGISTRY: benchmark_registry, NOISE: NOISE_FLOOR, DEFAULT_BENCH }}>
+  window.__LEADERBOARD = {
+    models: MODELS, lastUpdated: LAST_UPDATED,
+    registry: REGISTRY, noise: NOISE, defaultBench: DEFAULT_BENCH,
+  };
+</script>
 
 <script is:inline>
+  const REGISTRY = window.__LEADERBOARD.registry;
+  const NOISE_FLOOR = window.__LEADERBOARD.noise;
+
   const STATE = {
     models: window.__LEADERBOARD.models,
-    sort: { key: 'composite', dir: 'desc' },
-    filters: { license: 'all', ctx: 'all', search: '' },
+    sort: { key: 'benchmarks.' + window.__LEADERBOARD.defaultBench, dir: 'desc' },
+    filters: { license: 'all', ctx: 'all', search: '', status: 'current' },
     selected: new Set(),
   };
 
@@ -621,8 +590,9 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
   function fmtScore(n) { return n == null ? '—' : Number(n).toFixed(1); }
 
   function applyFilters(list) {
-    const { license, ctx, search } = STATE.filters;
+    const { license, ctx, search, status } = STATE.filters;
     return list.filter(m => {
+      if (status === 'current' && m.status !== 'current') return false;
       if (license !== 'all' && m.license !== license) return false;
       if (ctx !== 'all' && (m.context_window || 0) < Number(ctx)) return false;
       if (search) {
@@ -632,6 +602,32 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
       return true;
     });
   }
+
+  // Renders one benchmark cell with its provenance. A number that cannot be
+  // attributed is never shown as if it were measured.
+  function cellHtml(m, key) {
+    const c = m.cells?.[key];
+    if (!c) return '<td class="cell-none">—</td>';
+    const v = Number(c.value).toFixed(1);
+
+    if (c.estimated) {
+      return `<td class="cell-est" title="Estimated, not a published measurement. Excluded from all rankings.">~${v}<span class="prov">est</span></td>`;
+    }
+    if (c.unsourced) {
+      return `<td class="cell-unsourced" title="Inherited without recorded provenance. Excluded from all rankings.">${v}<span class="prov">?</span></td>`;
+    }
+    const label = c.source === 'vendor' ? 'vendor-reported' : c.source;
+    const tip = (c.note ? c.note + ' — ' : '') + label;
+    return c.url
+      ? `<td class="cell-src"><a href="${c.url}" target="_blank" rel="noopener" title="${tip}">${v}</a></td>`
+      : `<td class="cell-src" title="${tip}">${v}</td>`;
+  }
+
+  const STATUS_BADGE = {
+    superseded: '<span class="badge badge-old" title="A newer model in the same series exists">superseded</span>',
+    historical: '<span class="badge badge-old" title="Retained for reference only">historical</span>',
+    unreleased: '<span class="badge badge-unreleased" title="Announced but never publicly released; no first-party API">unreleased</span>',
+  };
 
   function applySort(list) {
     const { key, dir } = STATE.sort;
@@ -652,16 +648,18 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
     const sorted = applySort(filtered);
     const tbody = $('#leaderboard-body');
     tbody.innerHTML = sorted.map(m => `
-      <tr>
-        <td><strong>${m.name}</strong></td>
+      <tr class="${m.status !== 'current' ? 'row-old' : ''}">
+        <td><strong>${m.name}</strong> ${STATUS_BADGE[m.status] || ''}</td>
         <td><span class="vendor-chip">${m.vendor}</span></td>
-        <td><strong>${fmtScore(m.composite)}</strong></td>
+        <td class="src-count" title="${m.sourced} of ${Object.keys(REGISTRY).filter(k => REGISTRY[k].status === 'live').length} currently-reported benchmarks have a cited source">${m.sourced}</td>
         <td>${fmtCtx(m.context_window)}</td>
         <td>${fmtPrice(m.pricing?.input)}</td>
         <td>${fmtPrice(m.pricing?.output)}</td>
-        <td>${fmtScore(m.benchmarks?.mmlu_pro)}</td>
-        <td>${fmtScore(m.benchmarks?.gpqa_diamond)}</td>
-        <td>${fmtScore(m.benchmarks?.swe_bench)}</td>
+        ${cellHtml(m, 'gpqa_diamond')}
+        ${cellHtml(m, 'swe_bench_verified')}
+        ${cellHtml(m, 'swe_bench_pro')}
+        ${cellHtml(m, 'terminal_bench_2_1')}
+        ${cellHtml(m, 'hle')}
       </tr>
     `).join('');
     // update sort indicators
@@ -724,16 +722,15 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
       ['Input $/M', selected.map(m => fmtPrice(m.pricing?.input))],
       ['Output $/M', selected.map(m => fmtPrice(m.pricing?.output))],
       ['Blended $/M', selected.map(m => fmtPrice(m.blended))],
-      ['MMLU-Pro', selected.map(m => fmtScore(m.benchmarks?.mmlu_pro))],
-      ['GPQA Diamond', selected.map(m => fmtScore(m.benchmarks?.gpqa_diamond))],
-      ['HumanEval', selected.map(m => fmtScore(m.benchmarks?.humaneval))],
-      ['SWE-bench', selected.map(m => fmtScore(m.benchmarks?.swe_bench))],
-      ['MATH-500', selected.map(m => fmtScore(m.benchmarks?.math_500))],
-      ['MMMU', selected.map(m => fmtScore(m.benchmarks?.mmmu))],
-      ['Aider Polyglot', selected.map(m => fmtScore(m.benchmarks?.aider_polyglot))],
-      ['tau-bench', selected.map(m => fmtScore(m.benchmarks?.tau_bench))],
-      ['Composite', selected.map(m => `<strong>${fmtScore(m.composite)}</strong>`)],
+      ['Status', selected.map(m => m.status)],
+      ['Sourced benchmarks', selected.map(m => `<strong>${m.sourced}</strong>`)],
     ];
+    // One row per currently-reported benchmark, sourced figures only.
+    for (const [key, spec] of Object.entries(REGISTRY)) {
+      if (spec.status !== 'live') continue;
+      if (!selected.some(m => m.benchmarks?.[key] != null)) continue;
+      rows.push([spec.label, selected.map(m => fmtScore(m.benchmarks?.[key]))]);
+    }
     content.innerHTML = `
       <table class="compare-table">
         <thead><tr><th></th>${selected.map(m => `<th>${m.name}</th>`).join('')}</tr></thead>
@@ -764,7 +761,7 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
       $$('.chip[data-license]').forEach(x => x.classList.remove('active'));
       c.classList.add('active');
       STATE.filters.license = c.getAttribute('data-license');
-      renderTable();
+      renderTable(); renderBarChart(); renderScatter();
     };
   });
   $$('.chip[data-ctx]').forEach(c => {
@@ -775,37 +772,71 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
       renderTable();
     };
   });
+  $$('.chip[data-status]').forEach(c => {
+    c.onclick = () => {
+      $$('.chip[data-status]').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      STATE.filters.status = c.getAttribute('data-status');
+      renderTable(); renderBarChart(); renderScatter();
+    };
+  });
   $('#search-input').oninput = (e) => {
     STATE.filters.search = e.target.value;
     renderTable();
   };
 
-  // Bar chart
+  // Bar chart. Ranks are assigned in tiers: models whose scores fall within
+  // NOISE_FLOOR of the tier leader share a rank. Ordering models by a 0.1
+  // difference implies a precision the benchmarks do not have — SWE-bench
+  // reports to 0.1 on a 500-problem set where one problem is worth 0.2.
+  function rankTiers(list, key) {
+    const sorted = [...list].sort((a, b) => b.benchmarks[key] - a.benchmarks[key]);
+    let rank = 0, tierLead = null;
+    return sorted.map((m, i) => {
+      const v = m.benchmarks[key];
+      if (tierLead === null || (tierLead - v) >= NOISE_FLOOR) {
+        tierLead = v;
+        rank = i + 1;
+      }
+      return { model: m, value: v, rank };
+    });
+  }
+
   function renderBarChart() {
     const key = $('#bench-select').value;
-    const top = [...STATE.models]
-      .filter(m => m.benchmarks?.[key] != null)
-      .sort((a, b) => b.benchmarks[key] - a.benchmarks[key])
-      .slice(0, 15);
-    const max = Math.max(...top.map(m => m.benchmarks[key]));
-    $('#bar-chart').innerHTML = top.map(m => {
-      const pct = (m.benchmarks[key] / max) * 100;
+    // Only sourced figures are ranked; estimates and inherited values are
+    // absent from m.benchmarks by construction.
+    const eligible = applyFilters(STATE.models).filter(m => m.benchmarks?.[key] != null);
+    if (!eligible.length) {
+      $('#bar-chart').innerHTML =
+        `<p class="empty-note">No model has a sourced ${REGISTRY[key]?.label || key} figure yet.</p>`;
+      return;
+    }
+    const rows = rankTiers(eligible, key).slice(0, 15);
+    const max = Math.max(...rows.map(r => r.value));
+    let prevRank = null;
+    $('#bar-chart').innerHTML = rows.map(r => {
+      const tied = r.rank === prevRank;
+      prevRank = r.rank;
+      const pct = (r.value / max) * 100;
       return `
         <div class="bar-row">
-          <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.name}</span>
-          <div class="bar-track"><div class="bar-fill ${m.license}" style="width:${pct}%"></div></div>
-          <span style="text-align:right">${m.benchmarks[key].toFixed(1)}</span>
+          <span class="bar-rank ${tied ? 'tied' : ''}" title="${tied ? 'Tied — within ' + NOISE_FLOOR + ' point of the model above' : ''}">${tied ? '=' : r.rank}</span>
+          <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.model.name}</span>
+          <div class="bar-track"><div class="bar-fill ${r.model.license}" style="width:${pct}%"></div></div>
+          <span style="text-align:right">${r.value.toFixed(1)}</span>
         </div>
       `;
     }).join('');
   }
-  $('#bench-select').onchange = renderBarChart;
+  $('#bench-select').onchange = () => { renderBarChart(); renderScatter(); };
 
   // Scatter chart (SVG)
   function renderScatter() {
-    const pts = STATE.models
-      .filter(m => m.blended != null && m.composite != null && m.blended > 0)
-      .map(m => ({ x: Math.log10(m.blended + 0.01), y: m.composite, name: m.name, license: m.license, blended: m.blended }));
+    const key = $('#bench-select').value;
+    const pts = applyFilters(STATE.models)
+      .filter(m => m.blended != null && m.benchmarks?.[key] != null && m.blended > 0)
+      .map(m => ({ x: Math.log10(m.blended + 0.01), y: m.benchmarks[key], name: m.name, license: m.license, blended: m.blended }));
     if (pts.length === 0) { $('#scatter-chart').innerHTML = '<p>No data.</p>'; return; }
     const W = 560, H = 360, P = 40;
     const xMin = Math.min(...pts.map(p => p.x));
@@ -885,20 +916,6 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
     document.getElementById(id).addEventListener('change', renderCalc);
   });
 
-  // Theme toggle (shared key with Starlight & homepage)
-  const themeBtn = document.getElementById('theme-toggle');
-  if (themeBtn) {
-    themeBtn.addEventListener('click', () => {
-      const stored = localStorage.getItem('starlight-theme');
-      const cur = (stored === 'dark' || stored === 'light')
-        ? stored
-        : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      const next = cur === 'dark' ? 'light' : 'dark';
-      document.documentElement.dataset.theme = next;
-      try { localStorage.setItem('starlight-theme', next); } catch (e) {}
-    });
-  }
-
   // Init
   renderTable();
   renderBarChart();
@@ -906,6 +923,3 @@ const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
   populateCalcModels();
   renderCalc();
 </script>
-
-</body>
-</html>

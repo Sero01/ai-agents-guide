@@ -1,77 +1,4766 @@
 {
-  "last_updated": "2026-07-19",
-  "methodology_note": "Benchmark numbers aggregated from vendor model cards, lmarena.ai, artificialanalysis.ai, HuggingFace Open LLM Leaderboard, the Aider leaderboard, and SWE-bench Verified. Pricing is per 1M tokens in USD on each provider's first-party API. Open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate. Cells set to null indicate the vendor has not published that benchmark or pricing tier. Models superseded by a newer same-vendor entry are retained when still in active use; truly stagnant lines are removed. Claude Fable 5 (added 2026-06-10) launched without a full public benchmark card; its scores are positioned estimates consistent with Anthropic's 'most intelligent model, a new tier above Opus' framing and will be replaced with published figures when available. Kimi K2.7-Code (added 2026-06-14) shipped only Moonshot's proprietary coding benchmarks at launch; its public-benchmark cells are conservative estimates anchored to the published Kimi K2.6 predecessor (SWE-bench Verified 80.2, MMLU-Pro 87.1) and to peer open coders, and will be replaced with third-party figures when available. GLM-5.2 (added 2026-06-21) is Zhipu AI's open-weights coding flagship; its vendor card published long-horizon coding benchmarks (SWE-bench Pro 62.1, FrontierSWE 74.4, MCP-Atlas 77.0) but not the standard public set. Its swe_bench cell carries the vendor's published SWE-bench Pro 62.1, matching how the GLM-5.1 predecessor row was recorded; the remaining cells are conservative estimates anchored to GLM-5.1 (MMLU-Pro 82.0, GPQA 72.0, HumanEval 90.0, MATH-500 92.0, Aider 64.0, tau-bench 56.0), nudged up on coding/agentic axes consistent with a coding-first refresh, and will be replaced with third-party figures when available. GPT-5.6 Sol (added 2026-06-28) is the flagship tier of OpenAI's GPT-5.6 family (Sol/Terra/Luna), previewed 2026-06-26 with limited API access and no published scores on the standard public benchmark set at launch (OpenAI cited only Terminal-Bench 2.1, where Sol Ultra leads at 91.9, which is outside this table's tracked set). Its cells are conservative estimates anchored to the confirmed GPT-5.5 predecessor row (MMLU-Pro 89.0, GPQA 86.0, HumanEval 95.0, SWE-bench 88.7, MATH-500 97.0, MMMU 82.0, Aider 85.0, tau-bench 83.0) and nudged up one notch consistent with OpenAI's 'meaningful leap' framing and the Terminal-Bench gain, kept below the GPT-5.5 Pro heavy-compute tier; pricing and the 1M context are vendor-confirmed for the Sol tier ($5/$30 per 1M), and the benchmark cells will be replaced with published or third-party figures when available. Claude Sonnet 5 (added 2026-07-05) is Anthropic's new mid-tier flagship, released 2026-06-30 with a full public card; its swe_bench cell carries the vendor-published SWE-bench Verified 72.7 and its gpqa_diamond cell the vendor/aggregator-reported GPQA Diamond 91.1, while the remaining cells (mmlu_pro, humaneval, math_500, mmmu, aider_polyglot, tau_bench) are conservative estimates positioned between the Sonnet 4.6 predecessor and the Opus 4.8 sibling and consistent with the published SWE-bench/GPQA gains. Sonnet 5's listed pricing is the standard $3/$15 per 1M rate; an introductory promo of $2/$10 runs through 2026-08-31 and reverts to standard on 2026-09-01, so the durable standard rate is recorded here. GPT-5.6 Terra and GPT-5.6 Luna (added 2026-07-12) are the balanced and fast/cheap tiers of OpenAI's GPT-5.6 family, which reached general availability on 2026-07-09 (Sol was already in the table from the prior preview run). Their pricing and context are vendor-confirmed (Terra $2.50/$15, Luna $1/$6 per 1M; 1M-token context each). At launch OpenAI published only agentic evals outside this table's tracked set — Terminal-Bench 2.1 (Sol 88.8, Terra 87.4, Luna 84.7) and SWE-bench Pro (Sol 64.6, Terra 63.4, Luna 62.7) — and no standard public-suite figures, so every benchmark cell for Terra and Luna is a conservative estimate positioned between the confirmed GPT-5.5 predecessor row (MMLU-Pro 89.0, GPQA 86.0, HumanEval 95.0, SWE-bench 88.7, MATH-500 97.0, MMMU 82.0, Aider 85.0, tau-bench 83.0) and the GPT-5.6 Sol sibling, ranked Sol > Terra > Luna to match the published Terminal-Bench/SWE-bench Pro ordering; they will be replaced with published or third-party figures when available. Grok 4.5 (added 2026-07-12) is xAI's frontier-adjacent flagship, released 2026-07-08 with a 500K-token context and $2/$6 per 1M standard pricing (both vendor-confirmed; a higher tier applies to prompts above 200K). xAI published only agentic/coding evals at launch — SWE-bench Pro 64.7, Terminal-Bench 2.1 83.3, and Artificial Analysis Intelligence Index 54 (#4, topping the field on agentic tool use) — and did not publish the standard public suite (MMLU-Pro, GPQA Diamond, SWE-bench Verified, HumanEval, MATH-500, MMMU, Aider, tau-bench). All eight benchmark cells are therefore conservative estimates anchored to the Grok 4.3 predecessor row (MMLU-Pro 87.0, GPQA 90.0, HumanEval 92.0, SWE-bench 73.0, MATH-500 97.0, MMMU 78.0, Aider 78.0, tau-bench 74.0), nudged up on coding/agentic axes consistent with the model's confirmed agentic strength and Cursor-session training, and will be replaced with third-party figures when available. Kimi K3 (added 2026-07-16) is Moonshot AI's 2.8T-parameter (~50B active, 896 experts) open-weight multimodal reasoning flagship, positioned second only to Claude Fable 5 on the Artificial Analysis composite (Intelligence Index v4.1 = 57, #4 in class) and the largest open model shipped to date. Its gpqa_diamond cell carries Moonshot's published GPQA Diamond 93.5; the remaining seven cells are conservative estimates, because at launch Moonshot published mostly proprietary/agentic evals outside this table's tracked set (Terminal-Bench 2.1 88.3, FrontierSWE 81.2, Program Bench 77.8, BrowseComp 91.2, DeepSWE 67.5) rather than the standard public suite. Those estimates are anchored to the Kimi K2.7-Code predecessor (MMLU-Pro 84.0, HumanEval 92.0, SWE-bench 82.0, MATH-500 92.0, Aider 72.0, tau-bench 62.0) and nudged up to reflect the confirmed frontier positioning and the published GPQA/agentic gains, kept at or below same-tier closed leaders; the swe_bench cell (81.0) reflects a conservative SWE-bench Verified read consistent with the published FrontierSWE/Terminal-Bench numbers, and open weights are expected 2026-07-27. Inkling (added 2026-07-15) is Thinking Machines' first release — a 975B-parameter (41B active) open-weight multimodal MoE. Its swe_bench cell carries the vendor-published SWE-bench Verified 77.6; its mmmu cell (78.0) is a conservative estimate derived upward from the vendor-published MMMU Pro 73.5 (MMMU is the easier variant); the remaining six cells are conservative estimates anchored to peer open flagships and to Inkling's confirmed positioning (Thinking Machines reports it landing between Kimi K2.5 and K2.6, above Nvidia Nemotron 3 Ultra's SWE-bench Verified 71.9), and will be replaced with published or third-party figures when available. Inkling pricing ($1/$4.05 per 1M) is the OpenRouter first-party rate. Update cadence: monthly.",
+  "schema_version": 2,
+  "last_updated": "2026-07-22",
+  "aa_index_version": "v4.1",
+  "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
+  "source_registry": {
+    "artificial_analysis": {
+      "label": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai",
+      "kind": "independent",
+      "scoreable": true,
+      "redistributable": false
+    },
+    "swebench": {
+      "label": "SWE-bench",
+      "url": "https://www.swebench.com",
+      "kind": "independent",
+      "scoreable": true,
+      "redistributable": true
+    },
+    "lmarena": {
+      "label": "LMArena",
+      "url": "https://arena.ai",
+      "kind": "independent",
+      "scoreable": true,
+      "redistributable": true
+    },
+    "vendor": {
+      "label": "Vendor model card",
+      "kind": "vendor",
+      "scoreable": true,
+      "redistributable": true
+    },
+    "estimate": {
+      "label": "Estimated",
+      "kind": "estimate",
+      "scoreable": false,
+      "redistributable": true
+    },
+    "unsourced_legacy": {
+      "label": "Unsourced (pre-2026-07 data)",
+      "kind": "legacy",
+      "scoreable": false,
+      "redistributable": true
+    }
+  },
+  "validation_policy": {
+    "blocked_source_hosts": [
+      "aitoolsreview.co.uk",
+      "automatio.ai",
+      "benchlm.ai",
+      "codingfleet.com",
+      "coursiv.io",
+      "emergent.sh",
+      "gemma4all.com",
+      "iternal.ai",
+      "kingy.ai",
+      "labellerr.com",
+      "llm-boss.com",
+      "localaimaster.com",
+      "metatext.io",
+      "morphllm.com",
+      "o-mega.ai",
+      "requesty.ai",
+      "smartchunks.com",
+      "tech-insider.org",
+      "techsy.io",
+      "theairankings.com",
+      "wan27.org",
+      "whatllm.org"
+    ],
+    "min_scored_cells": 3,
+    "model_statuses": [
+      "current",
+      "historical",
+      "superseded",
+      "unreleased"
+    ],
+    "ranked_statuses": [
+      "current"
+    ]
+  },
+  "benchmark_registry": {
+    "aa_intelligence_index": {
+      "label": "AA Index",
+      "status": "live",
+      "scored": true,
+      "note": "Artificial Analysis Intelligence Index. Version-tagged; scores are frozen at the version they were measured under."
+    },
+    "gpqa_diamond": {
+      "label": "GPQA Diamond",
+      "status": "live",
+      "scored": true
+    },
+    "swe_bench_verified": {
+      "label": "SWE-bench Verified",
+      "status": "live",
+      "scored": true,
+      "note": "Never mix with SWE-bench Pro; Pro runs ~20pt lower on the same model."
+    },
+    "swe_bench_pro": {
+      "label": "SWE-bench Pro",
+      "status": "live",
+      "scored": true
+    },
+    "terminal_bench_2_1": {
+      "label": "Terminal-Bench 2.1",
+      "status": "live",
+      "scored": true,
+      "note": "Supersedes Terminal-Bench Hard (AA Index v4.1)."
+    },
+    "hle": {
+      "label": "HLE",
+      "status": "live",
+      "scored": true,
+      "note": "Humanity's Last Exam. Record whether tools were enabled in the cell note - the two variants differ by ~25pt."
+    },
+    "tau3_banking": {
+      "label": "τ³-Banking",
+      "status": "live",
+      "scored": true,
+      "note": "Supersedes τ²-Bench Telecom (AA Index v4.1)."
+    },
+    "mmmu_pro": {
+      "label": "MMMU-Pro",
+      "status": "live",
+      "scored": true
+    },
+    "mmlu_pro": {
+      "label": "MMLU-Pro",
+      "status": "legacy",
+      "scored": false,
+      "retired": "Dropped from the AA Intelligence Index; still run as a standalone eval but no longer reported by most vendors."
+    },
+    "humaneval": {
+      "label": "HumanEval",
+      "status": "legacy",
+      "scored": false,
+      "retired": "Saturated - frontier models cluster at 92-96%, so it no longer separates them."
+    },
+    "math_500": {
+      "label": "MATH-500",
+      "status": "legacy",
+      "scored": false,
+      "retired": "Retired from active reporting by Artificial Analysis (Index v4.1)."
+    },
+    "mmmu": {
+      "label": "MMMU",
+      "status": "legacy",
+      "scored": false,
+      "retired": "Superseded by the harder MMMU-Pro variant.",
+      "superseded_by": "mmmu_pro"
+    },
+    "aider_polyglot": {
+      "label": "Aider Polyglot",
+      "status": "legacy",
+      "scored": false,
+      "retired": "Upstream leaderboard is unmaintained - its top entry is still GPT-5 (high) at 88.0 and it tracks no 2026 model."
+    },
+    "tau_bench": {
+      "label": "τ²-Bench",
+      "status": "legacy",
+      "scored": false,
+      "retired": "Superseded by τ³-Banking (AA Index v4.1).",
+      "superseded_by": "tau3_banking"
+    },
+    "terminal_bench_2_0": {
+      "label": "Terminal-Bench 2.0",
+      "status": "legacy",
+      "scored": false,
+      "retired": "Superseded by Terminal-Bench 2.1. Kept as its own column because several vendors (DeepSeek, Qwen, MiniMax) published only 2.0 - folding those into the 2.1 column would repeat the version-mixing this schema exists to prevent.",
+      "superseded_by": "terminal_bench_2_1"
+    }
+  },
   "models": [
-    { "id": "claude-fable-5", "name": "Claude Fable 5", "vendor": "Anthropic", "license": "closed", "released": "2026-06-10", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 10.00, "output": 50.00, "cache_write": 12.50, "cache_read": 1.00 }, "benchmarks": { "mmlu_pro": 90.0, "gpqa_diamond": 95.0, "humaneval": 96.0, "swe_bench": 91.0, "math_500": 98.0, "mmmu": 84.0, "aider_polyglot": 88.0, "tau_bench": 86.0 }, "throughput": 72, "vendor_link": "https://anthropic.com/claude" },
-    { "id": "claude-opus-4-8", "name": "Claude Opus 4.8", "vendor": "Anthropic", "license": "closed", "released": "2026-05-28", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 5.00, "output": 25.00, "cache_write": 6.25, "cache_read": 0.50 }, "benchmarks": { "mmlu_pro": 88.5, "gpqa_diamond": 93.6, "humaneval": 94.5, "swe_bench": 88.6, "math_500": 96.8, "mmmu": 81.0, "aider_polyglot": 85.0, "tau_bench": 84.0 }, "throughput": 85, "vendor_link": "https://anthropic.com/claude" },
-    { "id": "claude-opus-4-7", "name": "Claude Opus 4.7", "vendor": "Anthropic", "license": "closed", "released": "2026-04-16", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 5.00, "output": 25.00, "cache_write": 6.25, "cache_read": 0.50 }, "benchmarks": { "mmlu_pro": 88.0, "gpqa_diamond": 94.2, "humaneval": 94.0, "swe_bench": 87.6, "math_500": 96.5, "mmmu": 80.0, "aider_polyglot": 84.0, "tau_bench": 83.0 }, "throughput": 85, "vendor_link": "https://anthropic.com/claude" },
-    { "id": "claude-sonnet-5", "name": "Claude Sonnet 5", "vendor": "Anthropic", "license": "closed", "released": "2026-06-30", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 3.00, "output": 15.00, "cache_write": 3.75, "cache_read": 0.30 }, "benchmarks": { "mmlu_pro": 86.0, "gpqa_diamond": 91.1, "humaneval": 92.5, "swe_bench": 72.7, "math_500": 95.0, "mmmu": 77.0, "aider_polyglot": 81.0, "tau_bench": 80.0 }, "throughput": 92, "vendor_link": "https://anthropic.com/claude" },
-    { "id": "claude-sonnet-4-6", "name": "Claude Sonnet 4.6", "vendor": "Anthropic", "license": "closed", "released": "2025-11-01", "context_window": 200000, "max_output": 16000, "modalities": ["text","vision"], "pricing": { "input": 3.00, "output": 15.00, "cache_write": 3.75, "cache_read": 0.30 }, "benchmarks": { "mmlu_pro": 82.0, "gpqa_diamond": 70.8, "humaneval": 89.5, "swe_bench": 65.4, "math_500": 92.0, "mmmu": 72.1, "aider_polyglot": 76.0, "tau_bench": 74.5 }, "throughput": 95, "vendor_link": "https://anthropic.com/claude" },
-    { "id": "claude-haiku-4-5", "name": "Claude Haiku 4.5", "vendor": "Anthropic", "license": "closed", "released": "2025-10-01", "context_window": 200000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 1.00, "output": 5.00, "cache_write": 1.25, "cache_read": 0.10 }, "benchmarks": { "mmlu_pro": 74.5, "gpqa_diamond": 58.0, "humaneval": 82.0, "swe_bench": 50.2, "math_500": 86.0, "mmmu": 62.0, "aider_polyglot": 60.0, "tau_bench": 62.0 }, "throughput": 140, "vendor_link": "https://anthropic.com/claude" },
-    { "id": "gpt-5-5", "name": "GPT-5.5", "vendor": "OpenAI", "license": "closed", "released": "2026-04-23", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 5.00, "output": 30.00, "cache_read": 0.50 }, "benchmarks": { "mmlu_pro": 89.0, "gpqa_diamond": 86.0, "humaneval": 95.0, "swe_bench": 88.7, "math_500": 97.0, "mmmu": 82.0, "aider_polyglot": 85.0, "tau_bench": 83.0 }, "throughput": 80, "vendor_link": "https://openai.com" },
-    { "id": "gpt-5-5-pro", "name": "GPT-5.5 Pro", "vendor": "OpenAI", "license": "closed", "released": "2026-04-24", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 30.00, "output": 180.00 }, "benchmarks": { "mmlu_pro": 91.0, "gpqa_diamond": 89.0, "humaneval": 96.0, "swe_bench": 90.0, "math_500": 98.0, "mmmu": 84.0, "aider_polyglot": 87.0, "tau_bench": 85.0 }, "throughput": 55, "vendor_link": "https://openai.com" },
-    { "id": "gpt-5-6-sol", "name": "GPT-5.6 Sol", "vendor": "OpenAI", "license": "closed", "released": "2026-06-26", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 5.00, "output": 30.00, "cache_read": 0.50 }, "benchmarks": { "mmlu_pro": 90.0, "gpqa_diamond": 88.0, "humaneval": 96.0, "swe_bench": 90.0, "math_500": 98.0, "mmmu": 84.0, "aider_polyglot": 87.0, "tau_bench": 85.0 }, "throughput": 80, "vendor_link": "https://openai.com" },
-    { "id": "gpt-5-6-terra", "name": "GPT-5.6 Terra", "vendor": "OpenAI", "license": "closed", "released": "2026-07-09", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 2.50, "output": 15.00, "cache_read": 0.25 }, "benchmarks": { "mmlu_pro": 89.5, "gpqa_diamond": 87.0, "humaneval": 95.5, "swe_bench": 89.0, "math_500": 97.5, "mmmu": 83.0, "aider_polyglot": 86.0, "tau_bench": 84.0 }, "throughput": 110, "vendor_link": "https://openai.com" },
-    { "id": "gpt-5-6-luna", "name": "GPT-5.6 Luna", "vendor": "OpenAI", "license": "closed", "released": "2026-07-09", "context_window": 1000000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 1.00, "output": 6.00, "cache_read": 0.10 }, "benchmarks": { "mmlu_pro": 88.0, "gpqa_diamond": 85.0, "humaneval": 94.0, "swe_bench": 87.0, "math_500": 96.5, "mmmu": 81.0, "aider_polyglot": 84.0, "tau_bench": 82.0 }, "throughput": 135, "vendor_link": "https://openai.com" },
-    { "id": "gpt-5", "name": "GPT-5", "vendor": "OpenAI", "license": "closed", "released": "2025-08-07", "context_window": 400000, "max_output": 128000, "modalities": ["text","vision","audio"], "pricing": { "input": 10.00, "output": 30.00, "cache_read": 1.25 }, "benchmarks": { "mmlu_pro": 87.0, "gpqa_diamond": 80.1, "humaneval": 93.0, "swe_bench": 74.9, "math_500": 96.0, "mmmu": 80.0, "aider_polyglot": 80.0, "tau_bench": 80.0 }, "throughput": 80, "vendor_link": "https://openai.com/gpt-5" },
-    { "id": "gpt-5-mini", "name": "GPT-5 mini", "vendor": "OpenAI", "license": "closed", "released": "2025-08-07", "context_window": 400000, "max_output": 128000, "modalities": ["text","vision"], "pricing": { "input": 2.00, "output": 8.00, "cache_read": 0.20 }, "benchmarks": { "mmlu_pro": 78.0, "gpqa_diamond": 65.0, "humaneval": 85.0, "swe_bench": 55.0, "math_500": 88.0, "mmmu": 68.0, "aider_polyglot": 65.0, "tau_bench": 65.0 }, "throughput": 130, "vendor_link": "https://openai.com/gpt-5" },
-    { "id": "gpt-5-nano", "name": "GPT-5 nano", "vendor": "OpenAI", "license": "closed", "released": "2025-08-07", "context_window": 128000, "max_output": 32000, "modalities": ["text"], "pricing": { "input": 0.40, "output": 1.60, "cache_read": 0.04 }, "benchmarks": { "mmlu_pro": 66.0, "gpqa_diamond": 48.0, "humaneval": 72.0, "swe_bench": 35.0, "math_500": 78.0, "mmmu": 54.0, "aider_polyglot": 48.0, "tau_bench": 50.0 }, "throughput": 200, "vendor_link": "https://openai.com/gpt-5" },
-    { "id": "o3", "name": "o3", "vendor": "OpenAI", "license": "closed", "released": "2025-04-16", "context_window": 200000, "max_output": 100000, "modalities": ["text","vision"], "pricing": { "input": 2.00, "output": 8.00, "cache_read": 0.50 }, "benchmarks": { "mmlu_pro": 85.0, "gpqa_diamond": 87.7, "humaneval": 88.0, "swe_bench": 71.7, "math_500": 96.5, "mmmu": 78.0, "aider_polyglot": 78.0, "tau_bench": 73.0 }, "throughput": 60, "vendor_link": "https://openai.com" },
-    { "id": "o4-mini", "name": "o4-mini", "vendor": "OpenAI", "license": "closed", "released": "2025-04-16", "context_window": 200000, "max_output": 100000, "modalities": ["text","vision"], "pricing": { "input": 1.10, "output": 4.40, "cache_read": 0.275 }, "benchmarks": { "mmlu_pro": 80.0, "gpqa_diamond": 81.4, "humaneval": 85.0, "swe_bench": 68.1, "math_500": 95.0, "mmmu": 75.0, "aider_polyglot": 72.0, "tau_bench": 68.0 }, "throughput": 110, "vendor_link": "https://openai.com" },
-    { "id": "gemini-3-1-pro", "name": "Gemini 3.1 Pro", "vendor": "Google", "license": "closed", "released": "2026-02-19", "context_window": 1048576, "max_output": 65536, "modalities": ["text","vision","audio","video"], "pricing": { "input": 2.00, "output": 12.00, "cache_read": 0.50 }, "benchmarks": { "mmlu_pro": 92.5, "gpqa_diamond": 94.3, "humaneval": 94.0, "swe_bench": 80.6, "math_500": 97.0, "mmmu": 83.0, "aider_polyglot": 80.0, "tau_bench": 78.0 }, "throughput": 95, "vendor_link": "https://ai.google.dev" },
-    { "id": "gemini-3-pro", "name": "Gemini 3 Pro", "vendor": "Google", "license": "closed", "released": "2025-11-18", "context_window": 1048576, "max_output": 65536, "modalities": ["text","vision","audio","video"], "pricing": { "input": 2.00, "output": 12.00, "cache_read": 0.50 }, "benchmarks": { "mmlu_pro": 91.8, "gpqa_diamond": 91.9, "humaneval": 93.0, "swe_bench": 76.2, "math_500": 96.5, "mmmu": 81.0, "aider_polyglot": 78.0, "tau_bench": 75.0 }, "throughput": 95, "vendor_link": "https://ai.google.dev" },
-    { "id": "gemini-3-5-flash", "name": "Gemini 3.5 Flash", "vendor": "Google", "license": "closed", "released": "2026-05-19", "context_window": 1048576, "max_output": 65536, "modalities": ["text","vision","audio","video"], "pricing": { "input": 1.50, "output": 9.00, "cache_read": 0.15 }, "benchmarks": { "mmlu_pro": 83.0, "gpqa_diamond": 78.0, "humaneval": 90.0, "swe_bench": 70.0, "math_500": 93.0, "mmmu": 76.0, "aider_polyglot": 70.0, "tau_bench": 65.0 }, "throughput": 180, "vendor_link": "https://ai.google.dev" },
-    { "id": "gemini-3-flash", "name": "Gemini 3 Flash", "vendor": "Google", "license": "closed", "released": "2025-12-17", "context_window": 1048576, "max_output": 65536, "modalities": ["text","vision","audio","video"], "pricing": { "input": 0.50, "output": 3.00, "cache_read": 0.075 }, "benchmarks": { "mmlu_pro": 81.0, "gpqa_diamond": 74.0, "humaneval": 88.0, "swe_bench": 78.0, "math_500": 91.0, "mmmu": 73.0, "aider_polyglot": 66.0, "tau_bench": 62.0 }, "throughput": 200, "vendor_link": "https://ai.google.dev" },
-    { "id": "gemini-3-1-flash-lite", "name": "Gemini 3.1 Flash-Lite", "vendor": "Google", "license": "closed", "released": "2026-05-08", "context_window": 1048576, "max_output": 65536, "modalities": ["text","vision","audio","video"], "pricing": { "input": 0.25, "output": 1.50, "cache_read": 0.04 }, "benchmarks": { "mmlu_pro": 81.0, "gpqa_diamond": 86.9, "humaneval": 87.0, "swe_bench": 55.0, "math_500": 91.0, "mmmu": 76.8, "aider_polyglot": 60.0, "tau_bench": 58.0 }, "throughput": 300, "vendor_link": "https://ai.google.dev" },
-    { "id": "gemini-2-5-pro", "name": "Gemini 2.5 Pro", "vendor": "Google", "license": "closed", "released": "2025-03-26", "context_window": 1000000, "max_output": 65000, "modalities": ["text","vision","audio","video"], "pricing": { "input": 1.25, "output": 10.00, "cache_read": 0.31 }, "benchmarks": { "mmlu_pro": 84.5, "gpqa_diamond": 84.0, "humaneval": 88.0, "swe_bench": 63.8, "math_500": 95.0, "mmmu": 81.7, "aider_polyglot": 72.9, "tau_bench": 68.0 }, "throughput": 100, "vendor_link": "https://ai.google.dev" },
-    { "id": "gemini-2-5-flash-lite", "name": "Gemini 2.5 Flash-Lite", "vendor": "Google", "license": "closed", "released": "2025-06-01", "context_window": 1000000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 0.075, "output": 0.30, "cache_read": 0.019 }, "benchmarks": { "mmlu_pro": 65.0, "gpqa_diamond": 50.0, "humaneval": 72.0, "swe_bench": 30.0, "math_500": 78.0, "mmmu": 60.0, "aider_polyglot": 42.0, "tau_bench": 40.0 }, "throughput": 300, "vendor_link": "https://ai.google.dev" },
-    { "id": "grok-4-5", "name": "Grok 4.5", "vendor": "xAI", "license": "closed", "released": "2026-07-08", "context_window": 500000, "max_output": 32000, "modalities": ["text","vision"], "pricing": { "input": 2.00, "output": 6.00, "cache_read": 0.50 }, "benchmarks": { "mmlu_pro": 88.0, "gpqa_diamond": 91.0, "humaneval": 93.0, "swe_bench": 78.0, "math_500": 97.0, "mmmu": 79.0, "aider_polyglot": 82.0, "tau_bench": 80.0 }, "throughput": 130, "vendor_link": "https://x.ai" },
-    { "id": "grok-4-3", "name": "Grok 4.3", "vendor": "xAI", "license": "closed", "released": "2026-04-30", "context_window": 1000000, "max_output": 32000, "modalities": ["text","vision"], "pricing": { "input": 1.25, "output": 2.50 }, "benchmarks": { "mmlu_pro": 87.0, "gpqa_diamond": 90.0, "humaneval": 92.0, "swe_bench": 73.0, "math_500": 97.0, "mmmu": 78.0, "aider_polyglot": 78.0, "tau_bench": 74.0 }, "throughput": 130, "vendor_link": "https://x.ai" },
-    { "id": "grok-4", "name": "Grok 4", "vendor": "xAI", "license": "closed", "released": "2025-07-09", "context_window": 256000, "max_output": 32000, "modalities": ["text","vision"], "pricing": { "input": 3.00, "output": 15.00 }, "benchmarks": { "mmlu_pro": 86.6, "gpqa_diamond": 88.0, "humaneval": 90.0, "swe_bench": 70.0, "math_500": 96.0, "mmmu": 77.0, "aider_polyglot": 75.0, "tau_bench": 70.0 }, "throughput": 75, "vendor_link": "https://x.ai" },
-    { "id": "grok-4-fast", "name": "Grok 4 Fast", "vendor": "xAI", "license": "closed", "released": "2025-09-19", "context_window": 2000000, "max_output": 32000, "modalities": ["text"], "pricing": { "input": 0.20, "output": 0.50 }, "benchmarks": { "mmlu_pro": 78.0, "gpqa_diamond": 70.0, "humaneval": 84.0, "swe_bench": 50.0, "math_500": 90.0, "mmmu": 68.0, "aider_polyglot": 60.0, "tau_bench": 58.0 }, "throughput": 180, "vendor_link": "https://x.ai" },
-    { "id": "grok-3", "name": "Grok 3", "vendor": "xAI", "license": "closed", "released": "2025-02-17", "context_window": 1000000, "max_output": 16000, "modalities": ["text","vision"], "pricing": { "input": 3.00, "output": 15.00 }, "benchmarks": { "mmlu_pro": 79.9, "gpqa_diamond": 75.4, "humaneval": 86.5, "swe_bench": 53.0, "math_500": 93.3, "mmmu": 73.2, "aider_polyglot": 64.0, "tau_bench": 60.0 }, "throughput": 70, "vendor_link": "https://x.ai" },
-    { "id": "mistral-large-3", "name": "Mistral Large 3", "vendor": "Mistral", "license": "open", "released": "2025-12-02", "context_window": 256000, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 2.00, "output": 6.00 }, "benchmarks": { "mmlu_pro": 80.0, "gpqa_diamond": 68.0, "humaneval": 91.0, "swe_bench": 55.0, "math_500": 91.0, "mmmu": null, "aider_polyglot": 62.0, "tau_bench": 58.0 }, "throughput": 70, "vendor_link": "https://mistral.ai" },
-    { "id": "mistral-medium-3-5", "name": "Mistral Medium 3.5", "vendor": "Mistral", "license": "closed", "released": "2026-03-15", "context_window": 128000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 1.50, "output": 7.50 }, "benchmarks": { "mmlu_pro": 76.0, "gpqa_diamond": 60.0, "humaneval": 88.0, "swe_bench": 48.0, "math_500": 88.0, "mmmu": 68.0, "aider_polyglot": 55.0, "tau_bench": 52.0 }, "throughput": 110, "vendor_link": "https://mistral.ai" },
-    { "id": "mistral-large-2", "name": "Mistral Large 2 (legacy)", "vendor": "Mistral", "license": "closed", "released": "2024-11-18", "context_window": 128000, "max_output": 8000, "modalities": ["text"], "pricing": { "input": 2.00, "output": 6.00 }, "benchmarks": { "mmlu_pro": 73.5, "gpqa_diamond": 53.0, "humaneval": 88.0, "swe_bench": 38.0, "math_500": 84.0, "mmmu": null, "aider_polyglot": 50.0, "tau_bench": 50.0 }, "throughput": 80, "vendor_link": "https://mistral.ai" },
-    { "id": "pixtral-large", "name": "Pixtral Large", "vendor": "Mistral", "license": "open", "released": "2024-11-18", "context_window": 128000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 2.00, "output": 6.00 }, "benchmarks": { "mmlu_pro": 72.5, "gpqa_diamond": 51.0, "humaneval": 86.0, "swe_bench": 35.0, "math_500": 82.0, "mmmu": 64.0, "aider_polyglot": 46.0, "tau_bench": 45.0 }, "throughput": 70, "vendor_link": "https://mistral.ai" },
-    { "id": "command-r-plus", "name": "Command R+", "vendor": "Cohere", "license": "open", "released": "2024-08-30", "context_window": 128000, "max_output": 4000, "modalities": ["text"], "pricing": { "input": 2.50, "output": 10.00 }, "benchmarks": { "mmlu_pro": 68.0, "gpqa_diamond": 42.5, "humaneval": 75.0, "swe_bench": 28.0, "math_500": 72.0, "mmmu": null, "aider_polyglot": 38.0, "tau_bench": 42.0 }, "throughput": 65, "vendor_link": "https://cohere.com" },
-    { "id": "command-r-7b", "name": "Command R 7B", "vendor": "Cohere", "license": "open", "released": "2024-12-13", "context_window": 128000, "max_output": 4000, "modalities": ["text"], "pricing": { "input": 0.0375, "output": 0.15 }, "benchmarks": { "mmlu_pro": 55.0, "gpqa_diamond": 28.0, "humaneval": 65.0, "swe_bench": 18.0, "math_500": 60.0, "mmmu": null, "aider_polyglot": 22.0, "tau_bench": 28.0 }, "throughput": 250, "vendor_link": "https://cohere.com" },
-    { "id": "llama-4-behemoth", "name": "Llama 4 Behemoth", "vendor": "Meta", "license": "open", "released": "2025-04-05", "context_window": 256000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 3.00, "output": 9.00 }, "benchmarks": { "mmlu_pro": 82.2, "gpqa_diamond": 73.7, "humaneval": 89.0, "swe_bench": 55.0, "math_500": 95.0, "mmmu": 76.1, "aider_polyglot": 62.0, "tau_bench": 60.0 }, "throughput": 45, "vendor_link": "https://ai.meta.com/llama" },
-    { "id": "llama-4-maverick", "name": "Llama 4 Maverick", "vendor": "Meta", "license": "open", "released": "2025-04-05", "context_window": 1000000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 0.27, "output": 0.85 }, "benchmarks": { "mmlu_pro": 76.0, "gpqa_diamond": 67.0, "humaneval": 85.0, "swe_bench": 45.0, "math_500": 89.0, "mmmu": 72.5, "aider_polyglot": 55.0, "tau_bench": 52.0 }, "throughput": 100, "vendor_link": "https://ai.meta.com/llama" },
-    { "id": "llama-4-scout", "name": "Llama 4 Scout", "vendor": "Meta", "license": "open", "released": "2025-04-05", "context_window": 10000000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 0.11, "output": 0.34 }, "benchmarks": { "mmlu_pro": 68.0, "gpqa_diamond": 57.2, "humaneval": 78.0, "swe_bench": 32.0, "math_500": 82.0, "mmmu": 69.4, "aider_polyglot": 42.0, "tau_bench": 40.0 }, "throughput": 140, "vendor_link": "https://ai.meta.com/llama" },
-    { "id": "deepseek-v4-pro", "name": "DeepSeek V4 Pro", "vendor": "DeepSeek", "license": "open", "released": "2026-04-24", "context_window": 1000000, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 0.50, "output": 2.20 }, "benchmarks": { "mmlu_pro": 87.0, "gpqa_diamond": 78.0, "humaneval": 93.5, "swe_bench": 80.6, "math_500": 96.0, "mmmu": null, "aider_polyglot": 78.0, "tau_bench": 70.0 }, "throughput": 55, "vendor_link": "https://deepseek.com" },
-    { "id": "deepseek-v4-flash", "name": "DeepSeek V4 Flash", "vendor": "DeepSeek", "license": "open", "released": "2026-04-24", "context_window": 1000000, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 0.14, "output": 0.55 }, "benchmarks": { "mmlu_pro": 78.0, "gpqa_diamond": 65.0, "humaneval": 88.0, "swe_bench": 60.0, "math_500": 91.0, "mmmu": null, "aider_polyglot": 65.0, "tau_bench": 58.0 }, "throughput": 130, "vendor_link": "https://deepseek.com" },
-    { "id": "deepseek-v3-1", "name": "DeepSeek V3.1", "vendor": "DeepSeek", "license": "open", "released": "2025-08-21", "context_window": 128000, "max_output": 8000, "modalities": ["text"], "pricing": { "input": 0.27, "output": 1.10 }, "benchmarks": { "mmlu_pro": 81.2, "gpqa_diamond": 66.4, "humaneval": 90.0, "swe_bench": 54.5, "math_500": 91.0, "mmmu": null, "aider_polyglot": 71.0, "tau_bench": 58.0 }, "throughput": 60, "vendor_link": "https://deepseek.com" },
-    { "id": "deepseek-r1", "name": "DeepSeek R1", "vendor": "DeepSeek", "license": "open", "released": "2025-01-20", "context_window": 128000, "max_output": 8000, "modalities": ["text"], "pricing": { "input": 0.55, "output": 2.19 }, "benchmarks": { "mmlu_pro": 84.0, "gpqa_diamond": 71.5, "humaneval": 91.0, "swe_bench": 49.2, "math_500": 97.3, "mmmu": null, "aider_polyglot": 56.9, "tau_bench": 52.0 }, "throughput": 55, "vendor_link": "https://deepseek.com" },
-    { "id": "qwen-3-7-max", "name": "Qwen 3.7 Max", "vendor": "Alibaba", "license": "closed", "released": "2026-05-19", "context_window": 1000000, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 1.50, "output": 6.00 }, "benchmarks": { "mmlu_pro": 84.0, "gpqa_diamond": 76.0, "humaneval": 92.0, "swe_bench": 65.0, "math_500": 94.0, "mmmu": null, "aider_polyglot": 70.0, "tau_bench": 62.0 }, "throughput": 70, "vendor_link": "https://qwenlm.github.io" },
-    { "id": "qwen3-235b", "name": "Qwen3 235B", "vendor": "Alibaba", "license": "open", "released": "2025-04-29", "context_window": 128000, "max_output": 8000, "modalities": ["text"], "pricing": { "input": 0.50, "output": 1.50 }, "benchmarks": { "mmlu_pro": 80.6, "gpqa_diamond": 70.3, "humaneval": 89.0, "swe_bench": 48.0, "math_500": 93.5, "mmmu": null, "aider_polyglot": 62.0, "tau_bench": 55.0 }, "throughput": 50, "vendor_link": "https://qwenlm.github.io" },
-    { "id": "qwen3-32b", "name": "Qwen3 32B", "vendor": "Alibaba", "license": "open", "released": "2025-04-29", "context_window": 128000, "max_output": 8000, "modalities": ["text"], "pricing": { "input": 0.10, "output": 0.30 }, "benchmarks": { "mmlu_pro": 71.0, "gpqa_diamond": 56.0, "humaneval": 85.0, "swe_bench": 36.0, "math_500": 86.0, "mmmu": null, "aider_polyglot": 50.0, "tau_bench": 45.0 }, "throughput": 130, "vendor_link": "https://qwenlm.github.io" },
-    { "id": "qwen3-7b", "name": "Qwen3 7B", "vendor": "Alibaba", "license": "open", "released": "2025-04-29", "context_window": 128000, "max_output": 8000, "modalities": ["text"], "pricing": { "input": 0.04, "output": 0.10 }, "benchmarks": { "mmlu_pro": 56.0, "gpqa_diamond": 38.0, "humaneval": 74.0, "swe_bench": 20.0, "math_500": 75.0, "mmmu": null, "aider_polyglot": 30.0, "tau_bench": 28.0 }, "throughput": 280, "vendor_link": "https://qwenlm.github.io" },
-    { "id": "mixtral-8x22b", "name": "Mixtral 8x22B", "vendor": "Mistral", "license": "open", "released": "2024-04-17", "context_window": 65000, "max_output": 4000, "modalities": ["text"], "pricing": { "input": 0.90, "output": 0.90 }, "benchmarks": { "mmlu_pro": 56.0, "gpqa_diamond": 35.0, "humaneval": 76.0, "swe_bench": 18.0, "math_500": 65.0, "mmmu": null, "aider_polyglot": 28.0, "tau_bench": 30.0 }, "throughput": 90, "vendor_link": "https://mistral.ai" },
-    { "id": "mai-thinking-1", "name": "MAI-Thinking-1", "vendor": "Microsoft", "license": "closed", "released": "2026-06-02", "context_window": 256000, "max_output": 32000, "modalities": ["text"], "pricing": { "input": 3.00, "output": 15.00 }, "benchmarks": { "mmlu_pro": 87.0, "gpqa_diamond": 89.0, "humaneval": 93.0, "swe_bench": 86.0, "math_500": 97.0, "mmmu": null, "aider_polyglot": 82.0, "tau_bench": 76.0 }, "throughput": 70, "vendor_link": "https://microsoft.ai" },
-    { "id": "mai-code-1-flash", "name": "MAI-Code-1-Flash", "vendor": "Microsoft", "license": "closed", "released": "2026-06-02", "context_window": 256000, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 0.75, "output": 4.50, "cache_read": 0.075 }, "benchmarks": { "mmlu_pro": 70.0, "gpqa_diamond": 56.0, "humaneval": 88.0, "swe_bench": 62.0, "math_500": 86.0, "mmmu": null, "aider_polyglot": 64.0, "tau_bench": 60.0 }, "throughput": 200, "vendor_link": "https://microsoft.ai" },
-    { "id": "phi-4-reasoning-vision-15b", "name": "Phi-4 Reasoning Vision 15B", "vendor": "Microsoft", "license": "open", "released": "2026-03-04", "context_window": 16384, "max_output": 4000, "modalities": ["text","vision"], "pricing": { "input": 0.15, "output": 0.30 }, "benchmarks": { "mmlu_pro": 75.0, "gpqa_diamond": 62.0, "humaneval": 86.0, "swe_bench": 32.0, "math_500": 88.0, "mmmu": 65.0, "aider_polyglot": 42.0, "tau_bench": 38.0 }, "throughput": 250, "vendor_link": "https://huggingface.co/microsoft" },
-    { "id": "phi-4", "name": "Phi-4", "vendor": "Microsoft", "license": "open", "released": "2024-12-12", "context_window": 16000, "max_output": 4000, "modalities": ["text"], "pricing": { "input": 0.07, "output": 0.14 }, "benchmarks": { "mmlu_pro": 70.4, "gpqa_diamond": 56.1, "humaneval": 82.6, "swe_bench": 25.0, "math_500": 80.4, "mmmu": null, "aider_polyglot": 35.0, "tau_bench": 32.0 }, "throughput": 300, "vendor_link": "https://huggingface.co/microsoft/phi-4" },
-    { "id": "phi-4-mini", "name": "Phi-4 mini", "vendor": "Microsoft", "license": "open", "released": "2025-02-26", "context_window": 128000, "max_output": 4000, "modalities": ["text"], "pricing": { "input": 0.02, "output": 0.05 }, "benchmarks": { "mmlu_pro": 58.0, "gpqa_diamond": 38.0, "humaneval": 70.0, "swe_bench": 15.0, "math_500": 71.0, "mmmu": null, "aider_polyglot": 22.0, "tau_bench": 25.0 }, "throughput": 400, "vendor_link": "https://huggingface.co/microsoft" },
-    { "id": "gemma-4-31b", "name": "Gemma 4 31B", "vendor": "Google", "license": "open", "released": "2026-04-02", "context_window": 256000, "max_output": 16000, "modalities": ["text","vision","video"], "pricing": { "input": 0.20, "output": 0.40 }, "benchmarks": { "mmlu_pro": 85.2, "gpqa_diamond": 84.3, "humaneval": 89.0, "swe_bench": 50.0, "math_500": 93.0, "mmmu": 72.0, "aider_polyglot": 58.0, "tau_bench": 86.4 }, "throughput": 140, "vendor_link": "https://deepmind.google/models/gemma/gemma-4/" },
-    { "id": "gemma-3-27b", "name": "Gemma 3 27B", "vendor": "Google", "license": "open", "released": "2025-03-12", "context_window": 128000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 0.10, "output": 0.20 }, "benchmarks": { "mmlu_pro": 67.5, "gpqa_diamond": 48.0, "humaneval": 81.0, "swe_bench": 28.0, "math_500": 80.0, "mmmu": 64.0, "aider_polyglot": 35.0, "tau_bench": 32.0 }, "throughput": 150, "vendor_link": "https://deepmind.google/technologies/gemma" },
-    { "id": "gemma-3-12b", "name": "Gemma 3 12B", "vendor": "Google", "license": "open", "released": "2025-03-12", "context_window": 128000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 0.05, "output": 0.10 }, "benchmarks": { "mmlu_pro": 60.0, "gpqa_diamond": 38.0, "humaneval": 72.0, "swe_bench": 18.0, "math_500": 72.0, "mmmu": 58.0, "aider_polyglot": 25.0, "tau_bench": 25.0 }, "throughput": 220, "vendor_link": "https://deepmind.google/technologies/gemma" },
-    { "id": "yi-large", "name": "Yi-Large", "vendor": "01.AI", "license": "closed", "released": "2024-05-13", "context_window": 32000, "max_output": 4000, "modalities": ["text"], "pricing": { "input": 3.00, "output": 3.00 }, "benchmarks": { "mmlu_pro": 65.0, "gpqa_diamond": 40.0, "humaneval": 78.0, "swe_bench": 20.0, "math_500": 75.0, "mmmu": null, "aider_polyglot": 30.0, "tau_bench": 30.0 }, "throughput": 70, "vendor_link": "https://01.ai" },
-    { "id": "glm-5-2", "name": "GLM-5.2", "vendor": "Zhipu AI", "license": "open", "released": "2026-06-13", "context_window": 1000000, "max_output": 131072, "modalities": ["text"], "pricing": { "input": 1.40, "output": 4.40, "cache_read": 0.26 }, "benchmarks": { "mmlu_pro": 83.0, "gpqa_diamond": 74.0, "humaneval": 92.0, "swe_bench": 62.1, "math_500": 93.0, "mmmu": null, "aider_polyglot": 70.0, "tau_bench": 62.0 }, "throughput": 70, "vendor_link": "https://z.ai" },
-    { "id": "glm-5-1", "name": "GLM-5.1", "vendor": "Zhipu AI", "license": "open", "released": "2026-03-27", "context_window": 200000, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 0.60, "output": 2.20 }, "benchmarks": { "mmlu_pro": 82.0, "gpqa_diamond": 72.0, "humaneval": 90.0, "swe_bench": 58.4, "math_500": 92.0, "mmmu": null, "aider_polyglot": 64.0, "tau_bench": 56.0 }, "throughput": 70, "vendor_link": "https://z.ai" },
-    { "id": "glm-5", "name": "GLM-5", "vendor": "Zhipu AI", "license": "open", "released": "2026-02-11", "context_window": 200000, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 0.60, "output": 2.20 }, "benchmarks": { "mmlu_pro": 80.0, "gpqa_diamond": 70.0, "humaneval": 88.5, "swe_bench": 77.8, "math_500": 90.0, "mmmu": null, "aider_polyglot": 60.0, "tau_bench": 54.0 }, "throughput": 70, "vendor_link": "https://z.ai" },
-    { "id": "glm-4-6", "name": "GLM-4.6", "vendor": "Zhipu AI", "license": "open", "released": "2025-09-25", "context_window": 200000, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 0.60, "output": 2.20 }, "benchmarks": { "mmlu_pro": 78.0, "gpqa_diamond": 65.0, "humaneval": 87.0, "swe_bench": 50.0, "math_500": 88.0, "mmmu": null, "aider_polyglot": 56.0, "tau_bench": 50.0 }, "throughput": 70, "vendor_link": "https://chatglm.cn" },
-    { "id": "kimi-k3", "name": "Kimi K3", "vendor": "Moonshot AI", "license": "open", "released": "2026-07-16", "context_window": 1048576, "max_output": 32000, "modalities": ["text","vision"], "pricing": { "input": 3.00, "output": 15.00, "cache_read": 0.30 }, "benchmarks": { "mmlu_pro": 88.0, "gpqa_diamond": 93.5, "humaneval": 95.0, "swe_bench": 81.0, "math_500": 97.0, "mmmu": 78.0, "aider_polyglot": 83.0, "tau_bench": 82.0 }, "throughput": 55, "vendor_link": "https://moonshot.ai" },
-    { "id": "kimi-k2-7-code", "name": "Kimi K2.7-Code", "vendor": "Moonshot AI", "license": "open", "released": "2026-06-12", "context_window": 262144, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 0.95, "output": 4.00, "cache_read": 0.19 }, "benchmarks": { "mmlu_pro": 84.0, "gpqa_diamond": 78.0, "humaneval": 92.0, "swe_bench": 82.0, "math_500": 92.0, "mmmu": null, "aider_polyglot": 72.0, "tau_bench": 62.0 }, "throughput": 80, "vendor_link": "https://moonshot.ai" },
-    { "id": "kimi-k2", "name": "Kimi K2", "vendor": "Moonshot AI", "license": "open", "released": "2025-07-12", "context_window": 200000, "max_output": 8000, "modalities": ["text"], "pricing": { "input": 0.60, "output": 2.50 }, "benchmarks": { "mmlu_pro": 81.1, "gpqa_diamond": 67.0, "humaneval": 88.0, "swe_bench": 55.0, "math_500": 89.0, "mmmu": null, "aider_polyglot": 60.0, "tau_bench": 55.0 }, "throughput": 50, "vendor_link": "https://moonshot.ai" },
-    { "id": "kimi-k1-5", "name": "Kimi K1.5", "vendor": "Moonshot AI", "license": "closed", "released": "2025-01-15", "context_window": 200000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 0.50, "output": 2.00 }, "benchmarks": { "mmlu_pro": 75.0, "gpqa_diamond": 58.0, "humaneval": 82.0, "swe_bench": 38.0, "math_500": 85.0, "mmmu": 70.0, "aider_polyglot": 45.0, "tau_bench": 42.0 }, "throughput": 75, "vendor_link": "https://moonshot.ai" },
-    { "id": "inkling", "name": "Inkling", "vendor": "Thinking Machines", "license": "open", "released": "2026-07-15", "context_window": 1000000, "max_output": 32000, "modalities": ["text","vision"], "pricing": { "input": 1.00, "output": 4.05 }, "benchmarks": { "mmlu_pro": 84.0, "gpqa_diamond": 76.0, "humaneval": 92.0, "swe_bench": 77.6, "math_500": 93.0, "mmmu": 78.0, "aider_polyglot": 70.0, "tau_bench": 64.0 }, "throughput": 90, "vendor_link": "https://thinkingmachines.ai" },
-    { "id": "granite-3-1-8b", "name": "Granite 3.1 8B", "vendor": "IBM", "license": "open", "released": "2024-12-18", "context_window": 128000, "max_output": 4000, "modalities": ["text"], "pricing": { "input": 0.10, "output": 0.30 }, "benchmarks": { "mmlu_pro": 50.0, "gpqa_diamond": 27.0, "humaneval": 62.0, "swe_bench": 10.0, "math_500": 60.0, "mmmu": null, "aider_polyglot": 18.0, "tau_bench": 20.0 }, "throughput": 280, "vendor_link": "https://ibm.com/granite" },
-    { "id": "olmo-2-32b", "name": "OLMo 2 32B", "vendor": "Allen AI", "license": "open", "released": "2025-03-13", "context_window": 4000, "max_output": 4000, "modalities": ["text"], "pricing": { "input": 0.10, "output": 0.30 }, "benchmarks": { "mmlu_pro": 56.0, "gpqa_diamond": 31.0, "humaneval": 70.0, "swe_bench": 12.0, "math_500": 65.0, "mmmu": null, "aider_polyglot": 20.0, "tau_bench": 20.0 }, "throughput": 100, "vendor_link": "https://allenai.org/olmo" },
-    { "id": "minimax-m2-7", "name": "MiniMax M2.7", "vendor": "MiniMax", "license": "open", "released": "2026-05-28", "context_window": 204800, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 0.30, "output": 1.20 }, "benchmarks": { "mmlu_pro": 80.0, "gpqa_diamond": 87.4, "humaneval": 89.0, "swe_bench": 68.0, "math_500": 92.0, "mmmu": null, "aider_polyglot": 66.0, "tau_bench": 60.0 }, "throughput": 100, "vendor_link": "https://minimax.io" },
-    { "id": "minimax-text-01", "name": "MiniMax-Text-01", "vendor": "MiniMax", "license": "open", "released": "2025-01-14", "context_window": 4000000, "max_output": 16000, "modalities": ["text"], "pricing": { "input": 0.20, "output": 1.10 }, "benchmarks": { "mmlu_pro": 76.0, "gpqa_diamond": 58.0, "humaneval": 79.0, "swe_bench": 32.0, "math_500": 84.0, "mmmu": null, "aider_polyglot": 38.0, "tau_bench": 38.0 }, "throughput": 60, "vendor_link": "https://minimax.io" },
-    { "id": "hunyuan-large", "name": "Hunyuan Large", "vendor": "Tencent", "license": "open", "released": "2024-11-05", "context_window": 256000, "max_output": 4000, "modalities": ["text"], "pricing": { "input": 0.30, "output": 1.10 }, "benchmarks": { "mmlu_pro": 60.0, "gpqa_diamond": 36.0, "humaneval": 71.0, "swe_bench": 16.0, "math_500": 69.0, "mmmu": null, "aider_polyglot": 25.0, "tau_bench": 25.0 }, "throughput": 50, "vendor_link": "https://hunyuan.tencent.com" },
-    { "id": "ernie-4-5", "name": "ERNIE 4.5", "vendor": "Baidu", "license": "closed", "released": "2025-03-16", "context_window": 128000, "max_output": 8000, "modalities": ["text","vision"], "pricing": { "input": 0.55, "output": 2.20 }, "benchmarks": { "mmlu_pro": 72.0, "gpqa_diamond": 55.0, "humaneval": 82.0, "swe_bench": 30.0, "math_500": 82.0, "mmmu": 68.0, "aider_polyglot": 40.0, "tau_bench": 38.0 }, "throughput": 70, "vendor_link": "https://yiyan.baidu.com" },
-    { "id": "stepfun-step-2", "name": "Step-2", "vendor": "StepFun", "license": "closed", "released": "2025-03-25", "context_window": 32000, "max_output": 4000, "modalities": ["text","vision"], "pricing": { "input": 1.50, "output": 4.50 }, "benchmarks": { "mmlu_pro": 70.0, "gpqa_diamond": 52.0, "humaneval": 80.0, "swe_bench": 28.0, "math_500": 80.0, "mmmu": 67.0, "aider_polyglot": 38.0, "tau_bench": 35.0 }, "throughput": 60, "vendor_link": "https://stepfun.com" }
+    {
+      "id": "claude-fable-5",
+      "name": "Claude Fable 5",
+      "vendor": "Anthropic",
+      "license": "closed",
+      "released": "2026-06-10",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 10.0,
+        "output": 50.0,
+        "cache_write": 12.5,
+        "cache_read": 1.0
+      },
+      "throughput": 72,
+      "vendor_link": "https://anthropic.com/claude",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 90.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 95.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "humaneval": {
+          "value": 96.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_verified": {
+          "value": 91.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "math_500": {
+          "value": 98.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "mmmu": {
+          "value": 84.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 88.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 86.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_pro": {
+          "value": 80.3,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 88.0,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "measured": "2026-07-22"
+        },
+        "hle": {
+          "value": 59.0,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "note": "Without tools; 64.5 with tools.",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "claude-opus-4-8",
+      "name": "Claude Opus 4.8",
+      "vendor": "Anthropic",
+      "license": "closed",
+      "released": "2026-05-28",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 5.0,
+        "output": 25.0,
+        "cache_write": 6.25,
+        "cache_read": 0.5
+      },
+      "throughput": 85,
+      "vendor_link": "https://anthropic.com/claude",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 88.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 93.6,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 94.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 88.6,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 96.8,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 81.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 85.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 84.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_pro": {
+          "value": 69.2,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 74.6,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "measured": "2026-07-22"
+        },
+        "hle": {
+          "value": 57.9,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "note": "With tools enabled.",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "claude-opus-4-7",
+      "name": "Claude Opus 4.7",
+      "vendor": "Anthropic",
+      "license": "closed",
+      "released": "2026-04-16",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 5.0,
+        "output": 25.0,
+        "cache_write": 6.25,
+        "cache_read": 0.5
+      },
+      "throughput": 85,
+      "vendor_link": "https://anthropic.com/claude",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 94.2,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 94.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 87.6,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 96.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 84.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 83.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "claude-sonnet-5",
+      "name": "Claude Sonnet 5",
+      "vendor": "Anthropic",
+      "license": "closed",
+      "released": "2026-06-30",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 3.0,
+        "output": 15.0,
+        "cache_write": 3.75,
+        "cache_read": 0.3
+      },
+      "throughput": 92,
+      "vendor_link": "https://anthropic.com/claude",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 86.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 91.1,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "humaneval": {
+          "value": 92.5,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_verified": {
+          "value": 72.7,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "math_500": {
+          "value": 95.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "mmmu": {
+          "value": 77.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 81.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 80.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_pro": {
+          "value": 63.2,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "note": "Claude Sonnet 5 System Card, 2026-06-30.",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 80.4,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "measured": "2026-07-22"
+        },
+        "hle": {
+          "value": 57.4,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "note": "With tools enabled.",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "claude-sonnet-4-6",
+      "name": "Claude Sonnet 4.6",
+      "vendor": "Anthropic",
+      "license": "closed",
+      "released": "2025-11-01",
+      "context_window": 200000,
+      "max_output": 16000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 3.0,
+        "output": 15.0,
+        "cache_write": 3.75,
+        "cache_read": 0.3
+      },
+      "throughput": 95,
+      "vendor_link": "https://anthropic.com/claude",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 70.8,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 89.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 65.4,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 92.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 72.1,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 76.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 74.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "claude-haiku-4-5",
+      "name": "Claude Haiku 4.5",
+      "vendor": "Anthropic",
+      "license": "closed",
+      "released": "2025-10-01",
+      "context_window": 200000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 1.0,
+        "output": 5.0,
+        "cache_write": 1.25,
+        "cache_read": 0.1
+      },
+      "throughput": 140,
+      "vendor_link": "https://anthropic.com/claude",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 74.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 73.3,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-haiku-4-5",
+          "note": "Averaged over 50 trials, 128K thinking budget, full 500-problem set.",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 86.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-5",
+      "name": "GPT-5.5",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2026-04-23",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 5.0,
+        "output": 30.0,
+        "cache_read": 0.5
+      },
+      "throughput": 80,
+      "vendor_link": "https://openai.com",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 89.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 86.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 95.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 88.7,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 97.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 85.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 83.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_pro": {
+          "value": 58.6,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "note": "Reported comparatively in Anthropic's Sonnet 5 release.",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-5-pro",
+      "name": "GPT-5.5 Pro",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2026-04-24",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 30.0,
+        "output": 180.0
+      },
+      "throughput": 55,
+      "vendor_link": "https://openai.com",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 91.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 89.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 96.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 90.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 98.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 84.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 87.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 85.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-6-sol",
+      "name": "GPT-5.6 Sol",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2026-06-26",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 5.0,
+        "output": 30.0,
+        "cache_read": 0.5
+      },
+      "throughput": 80,
+      "vendor_link": "https://openai.com",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 90.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 88.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "humaneval": {
+          "value": 96.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_verified": {
+          "value": 90.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "math_500": {
+          "value": 98.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "mmmu": {
+          "value": 84.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 87.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 85.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_pro": {
+          "value": 64.6,
+          "source": "vendor",
+          "url": "https://openai.com",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 88.8,
+          "source": "vendor",
+          "url": "https://openai.com",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-6-terra",
+      "name": "GPT-5.6 Terra",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2026-07-09",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 2.5,
+        "output": 15.0,
+        "cache_read": 0.25
+      },
+      "throughput": 110,
+      "vendor_link": "https://openai.com",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 89.5,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 87.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "humaneval": {
+          "value": 95.5,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_verified": {
+          "value": 89.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "math_500": {
+          "value": 97.5,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "mmmu": {
+          "value": 83.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 86.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 84.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_pro": {
+          "value": 63.4,
+          "source": "vendor",
+          "url": "https://openai.com",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 87.4,
+          "source": "vendor",
+          "url": "https://openai.com",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-6-luna",
+      "name": "GPT-5.6 Luna",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2026-07-09",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 1.0,
+        "output": 6.0,
+        "cache_read": 0.1
+      },
+      "throughput": 135,
+      "vendor_link": "https://openai.com",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 88.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 85.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "humaneval": {
+          "value": 94.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_verified": {
+          "value": 87.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "math_500": {
+          "value": 96.5,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "mmmu": {
+          "value": 81.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 84.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 82.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_pro": {
+          "value": 62.7,
+          "source": "vendor",
+          "url": "https://openai.com",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 84.7,
+          "source": "vendor",
+          "url": "https://openai.com",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gpt-5",
+      "name": "GPT-5",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2025-08-07",
+      "context_window": 400000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision",
+        "audio"
+      ],
+      "pricing": {
+        "input": 10.0,
+        "output": 30.0,
+        "cache_read": 1.25
+      },
+      "throughput": 80,
+      "vendor_link": "https://openai.com/gpt-5",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 87.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 80.1,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 93.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 74.9,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 96.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-mini",
+      "name": "GPT-5 mini",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2025-08-07",
+      "context_window": 400000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 2.0,
+        "output": 8.0,
+        "cache_read": 0.2
+      },
+      "throughput": 130,
+      "vendor_link": "https://openai.com/gpt-5",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 85.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gpt-5-nano",
+      "name": "GPT-5 nano",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2025-08-07",
+      "context_window": 128000,
+      "max_output": 32000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.4,
+        "output": 1.6,
+        "cache_read": 0.04
+      },
+      "throughput": 200,
+      "vendor_link": "https://openai.com/gpt-5",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 66.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 48.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 72.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 35.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 54.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 48.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "o3",
+      "name": "o3",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2025-04-16",
+      "context_window": 200000,
+      "max_output": 100000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 2.0,
+        "output": 8.0,
+        "cache_read": 0.5
+      },
+      "throughput": 60,
+      "vendor_link": "https://openai.com",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 85.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 87.7,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 71.7,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 96.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 73.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "o4-mini",
+      "name": "o4-mini",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2025-04-16",
+      "context_window": 200000,
+      "max_output": 100000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 1.1,
+        "output": 4.4,
+        "cache_read": 0.275
+      },
+      "throughput": 110,
+      "vendor_link": "https://openai.com",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 81.4,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 85.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 68.1,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 95.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 75.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 72.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-1-pro",
+      "name": "Gemini 3.1 Pro",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2026-02-19",
+      "context_window": 1048576,
+      "max_output": 65536,
+      "modalities": [
+        "text",
+        "vision",
+        "audio",
+        "video"
+      ],
+      "pricing": {
+        "input": 2.0,
+        "output": 12.0,
+        "cache_read": 0.5
+      },
+      "throughput": 95,
+      "vendor_link": "https://ai.google.dev",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 92.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 94.3,
+          "source": "vendor",
+          "url": "https://ai.google.dev",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 94.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 80.6,
+          "source": "vendor",
+          "url": "https://ai.google.dev",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 97.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 83.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_pro": {
+          "value": 54.2,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5",
+          "note": "Reported comparatively in Anthropic's Sonnet 5 release.",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-pro",
+      "name": "Gemini 3 Pro",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2025-11-18",
+      "context_window": 1048576,
+      "max_output": 65536,
+      "modalities": [
+        "text",
+        "vision",
+        "audio",
+        "video"
+      ],
+      "pricing": {
+        "input": 2.0,
+        "output": 12.0,
+        "cache_read": 0.5
+      },
+      "throughput": 95,
+      "vendor_link": "https://ai.google.dev",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 91.8,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 91.9,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 93.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 76.2,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 96.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 81.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 75.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-5-flash",
+      "name": "Gemini 3.5 Flash",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2026-05-19",
+      "context_window": 1048576,
+      "max_output": 65536,
+      "modalities": [
+        "text",
+        "vision",
+        "audio",
+        "video"
+      ],
+      "pricing": {
+        "input": 1.5,
+        "output": 9.0,
+        "cache_read": 0.15
+      },
+      "throughput": 180,
+      "vendor_link": "https://ai.google.dev",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 83.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 92.2,
+          "source": "vendor",
+          "url": "https://blog.google",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 90.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 93.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 76.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_pro": {
+          "value": 55.1,
+          "source": "vendor",
+          "url": "https://blog.google",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 76.2,
+          "source": "vendor",
+          "url": "https://blog.google",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-flash",
+      "name": "Gemini 3 Flash",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2025-12-17",
+      "context_window": 1048576,
+      "max_output": 65536,
+      "modalities": [
+        "text",
+        "vision",
+        "audio",
+        "video"
+      ],
+      "pricing": {
+        "input": 0.5,
+        "output": 3.0,
+        "cache_read": 0.075
+      },
+      "throughput": 200,
+      "vendor_link": "https://ai.google.dev",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 81.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 90.4,
+          "source": "vendor",
+          "url": "https://blog.google/products-and-platforms/products/gemini/gemini-3-flash/",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 91.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 73.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 66.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemini-3-1-flash-lite",
+      "name": "Gemini 3.1 Flash-Lite",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2026-05-08",
+      "context_window": 1048576,
+      "max_output": 65536,
+      "modalities": [
+        "text",
+        "vision",
+        "audio",
+        "video"
+      ],
+      "pricing": {
+        "input": 0.25,
+        "output": 1.5,
+        "cache_read": 0.04
+      },
+      "throughput": 300,
+      "vendor_link": "https://ai.google.dev",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 81.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 86.9,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 87.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 91.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 76.8,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemini-2-5-pro",
+      "name": "Gemini 2.5 Pro",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2025-03-26",
+      "context_window": 1000000,
+      "max_output": 65000,
+      "modalities": [
+        "text",
+        "vision",
+        "audio",
+        "video"
+      ],
+      "pricing": {
+        "input": 1.25,
+        "output": 10.0,
+        "cache_read": 0.31
+      },
+      "throughput": 100,
+      "vendor_link": "https://ai.google.dev",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 84.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 84.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 63.8,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 95.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 81.7,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 72.9,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemini-2-5-flash-lite",
+      "name": "Gemini 2.5 Flash-Lite",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2025-06-01",
+      "context_window": 1000000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 0.075,
+        "output": 0.3,
+        "cache_read": 0.019
+      },
+      "throughput": 300,
+      "vendor_link": "https://ai.google.dev",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 72.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 30.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 42.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 40.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "grok-4-5",
+      "name": "Grok 4.5",
+      "vendor": "xAI",
+      "license": "closed",
+      "released": "2026-07-08",
+      "context_window": 500000,
+      "max_output": 32000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 2.0,
+        "output": 6.0,
+        "cache_read": 0.5
+      },
+      "throughput": 130,
+      "vendor_link": "https://x.ai",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 88.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 91.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "humaneval": {
+          "value": 93.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_verified": {
+          "value": 78.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "math_500": {
+          "value": 97.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "mmmu": {
+          "value": 79.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 82.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 80.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_pro": {
+          "value": 64.7,
+          "source": "vendor",
+          "url": "https://x.ai/news/grok-4-5",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 83.3,
+          "source": "vendor",
+          "url": "https://x.ai/news/grok-4-5",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "grok-4-3",
+      "name": "Grok 4.3",
+      "vendor": "xAI",
+      "license": "closed",
+      "released": "2026-04-30",
+      "context_window": 1000000,
+      "max_output": 32000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 1.25,
+        "output": 2.5
+      },
+      "throughput": 130,
+      "vendor_link": "https://x.ai",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 87.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 90.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 92.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 73.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 97.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 74.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "grok-4",
+      "name": "Grok 4",
+      "vendor": "xAI",
+      "license": "closed",
+      "released": "2025-07-09",
+      "context_window": 256000,
+      "max_output": 32000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 3.0,
+        "output": 15.0
+      },
+      "throughput": 75,
+      "vendor_link": "https://x.ai",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 86.6,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 90.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 96.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 77.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 75.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "grok-4-fast",
+      "name": "Grok 4 Fast",
+      "vendor": "xAI",
+      "license": "closed",
+      "released": "2025-09-19",
+      "context_window": 2000000,
+      "max_output": 32000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.2,
+        "output": 0.5
+      },
+      "throughput": 180,
+      "vendor_link": "https://x.ai",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 84.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 90.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "grok-3",
+      "name": "Grok 3",
+      "vendor": "xAI",
+      "license": "closed",
+      "released": "2025-02-17",
+      "context_window": 1000000,
+      "max_output": 16000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 3.0,
+        "output": 15.0
+      },
+      "throughput": 70,
+      "vendor_link": "https://x.ai",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 79.9,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 75.4,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 86.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 53.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 93.3,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 73.2,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 64.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "mistral-large-3",
+      "name": "Mistral Large 3",
+      "vendor": "Mistral",
+      "license": "open",
+      "released": "2025-12-02",
+      "context_window": 256000,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 2.0,
+        "output": 6.0
+      },
+      "throughput": 70,
+      "vendor_link": "https://mistral.ai",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 91.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 91.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "mistral-medium-3-5",
+      "name": "Mistral Medium 3.5",
+      "vendor": "Mistral",
+      "license": "closed",
+      "released": "2026-03-15",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 1.5,
+        "output": 7.5
+      },
+      "throughput": 110,
+      "vendor_link": "https://mistral.ai",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 76.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 48.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 52.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "mistral-large-2",
+      "name": "Mistral Large 2 (legacy)",
+      "vendor": "Mistral",
+      "license": "closed",
+      "released": "2024-11-18",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 2.0,
+        "output": 6.0
+      },
+      "throughput": 80,
+      "vendor_link": "https://mistral.ai",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 73.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 53.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 84.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "pixtral-large",
+      "name": "Pixtral Large",
+      "vendor": "Mistral",
+      "license": "open",
+      "released": "2024-11-18",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 2.0,
+        "output": 6.0
+      },
+      "throughput": 70,
+      "vendor_link": "https://mistral.ai",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 72.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 51.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 86.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 35.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 64.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 46.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 45.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "command-r-plus",
+      "name": "Command R+",
+      "vendor": "Cohere",
+      "license": "open",
+      "released": "2024-08-30",
+      "context_window": 128000,
+      "max_output": 4000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 2.5,
+        "output": 10.0
+      },
+      "throughput": 65,
+      "vendor_link": "https://cohere.com",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 42.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 75.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 28.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 72.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 42.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "command-r-7b",
+      "name": "Command R 7B",
+      "vendor": "Cohere",
+      "license": "open",
+      "released": "2024-12-13",
+      "context_window": 128000,
+      "max_output": 4000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.0375,
+        "output": 0.15
+      },
+      "throughput": 250,
+      "vendor_link": "https://cohere.com",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 28.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 18.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 22.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 28.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "llama-4-behemoth",
+      "name": "Llama 4 Behemoth",
+      "vendor": "Meta",
+      "license": "open",
+      "released": "2025-04-05",
+      "context_window": 256000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "throughput": 45,
+      "vendor_link": "https://ai.meta.com/llama",
+      "status": "unreleased",
+      "availability_note": "Announced but never publicly released; no first-party API. Retained for reference, excluded from ranking, no pricing shown.",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 82.2,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 73.7,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 89.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 95.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 76.1,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "llama-4-maverick",
+      "name": "Llama 4 Maverick",
+      "vendor": "Meta",
+      "license": "open",
+      "released": "2025-04-05",
+      "context_window": 1000000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 0.27,
+        "output": 0.85
+      },
+      "throughput": 100,
+      "vendor_link": "https://ai.meta.com/llama",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 76.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 67.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 85.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 45.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 89.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 72.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 52.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "llama-4-scout",
+      "name": "Llama 4 Scout",
+      "vendor": "Meta",
+      "license": "open",
+      "released": "2025-04-05",
+      "context_window": 10000000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 0.11,
+        "output": 0.34
+      },
+      "throughput": 140,
+      "vendor_link": "https://ai.meta.com/llama",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 57.2,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 32.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 69.4,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 42.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 40.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "name": "DeepSeek V4 Pro",
+      "vendor": "DeepSeek",
+      "license": "open",
+      "released": "2026-04-24",
+      "context_window": 1000000,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.5,
+        "output": 2.2
+      },
+      "throughput": 55,
+      "vendor_link": "https://deepseek.com",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 87.5,
+          "source": "vendor",
+          "url": "https://arxiv.org/pdf/2606.19348",
+          "measured": "2026-07-22",
+          "note": "V4-Pro-Max effort tier."
+        },
+        "gpqa_diamond": {
+          "value": 90.1,
+          "source": "vendor",
+          "url": "https://arxiv.org/pdf/2606.19348",
+          "measured": "2026-07-22",
+          "note": "V4-Pro-Max effort tier."
+        },
+        "humaneval": {
+          "value": 93.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 80.6,
+          "source": "vendor",
+          "url": "https://arxiv.org/pdf/2606.19348",
+          "measured": "2026-07-22",
+          "note": "V4-Pro-Max effort tier."
+        },
+        "math_500": {
+          "value": 96.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_pro": {
+          "value": 55.4,
+          "source": "vendor",
+          "url": "https://arxiv.org/pdf/2606.19348",
+          "measured": "2026-07-22",
+          "note": "V4-Pro-Max effort tier."
+        },
+        "terminal_bench_2_0": {
+          "value": 67.9,
+          "source": "vendor",
+          "url": "https://arxiv.org/pdf/2606.19348",
+          "measured": "2026-07-22",
+          "note": "Terminal-Bench 2.0, not 2.1. V4-Pro-Max effort tier."
+        }
+      }
+    },
+    {
+      "id": "deepseek-v4-flash",
+      "name": "DeepSeek V4 Flash",
+      "vendor": "DeepSeek",
+      "license": "open",
+      "released": "2026-04-24",
+      "context_window": 1000000,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.14,
+        "output": 0.55
+      },
+      "throughput": 130,
+      "vendor_link": "https://deepseek.com",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 91.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "deepseek-v3-1",
+      "name": "DeepSeek V3.1",
+      "vendor": "DeepSeek",
+      "license": "open",
+      "released": "2025-08-21",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.27,
+        "output": 1.1
+      },
+      "throughput": 60,
+      "vendor_link": "https://deepseek.com",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 81.2,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 66.4,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 90.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 54.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 91.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 71.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "deepseek-r1",
+      "name": "DeepSeek R1",
+      "vendor": "DeepSeek",
+      "license": "open",
+      "released": "2025-01-20",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.55,
+        "output": 2.19
+      },
+      "throughput": 55,
+      "vendor_link": "https://deepseek.com",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 84.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 71.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 91.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 49.2,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 97.3,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 56.9,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 52.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "qwen-3-7-max",
+      "name": "Qwen 3.7 Max",
+      "vendor": "Alibaba",
+      "license": "closed",
+      "released": "2026-05-19",
+      "context_window": 1000000,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 1.5,
+        "output": 6.0
+      },
+      "throughput": 70,
+      "vendor_link": "https://qwenlm.github.io",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 84.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 92.4,
+          "source": "vendor",
+          "url": "https://www.alibabacloud.com/blog/qwen3-7-the-agent-frontier_603154",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 92.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 80.4,
+          "source": "vendor",
+          "url": "https://www.alibabacloud.com/blog/qwen3-7-the-agent-frontier_603154",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 94.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_pro": {
+          "value": 60.6,
+          "source": "vendor",
+          "url": "https://www.alibabacloud.com/blog/qwen3-7-the-agent-frontier_603154",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_0": {
+          "value": 69.7,
+          "source": "vendor",
+          "url": "https://www.alibabacloud.com/blog/qwen3-7-the-agent-frontier_603154",
+          "measured": "2026-07-22",
+          "note": "Terminal-Bench 2.0-Terminus, not 2.1."
+        }
+      }
+    },
+    {
+      "id": "qwen3-235b",
+      "name": "Qwen3 235B",
+      "vendor": "Alibaba",
+      "license": "open",
+      "released": "2025-04-29",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.5,
+        "output": 1.5
+      },
+      "throughput": 50,
+      "vendor_link": "https://qwenlm.github.io",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 80.6,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 70.3,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 89.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 48.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 93.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "qwen3-32b",
+      "name": "Qwen3 32B",
+      "vendor": "Alibaba",
+      "license": "open",
+      "released": "2025-04-29",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.1,
+        "output": 0.3
+      },
+      "throughput": 130,
+      "vendor_link": "https://qwenlm.github.io",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 71.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 56.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 85.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 36.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 86.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 45.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "qwen3-7b",
+      "name": "Qwen3 7B",
+      "vendor": "Alibaba",
+      "license": "open",
+      "released": "2025-04-29",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.04,
+        "output": 0.1
+      },
+      "throughput": 280,
+      "vendor_link": "https://qwenlm.github.io",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 56.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 74.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 20.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 75.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 30.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 28.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "mixtral-8x22b",
+      "name": "Mixtral 8x22B",
+      "vendor": "Mistral",
+      "license": "open",
+      "released": "2024-04-17",
+      "context_window": 65000,
+      "max_output": 4000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.9,
+        "output": 0.9
+      },
+      "throughput": 90,
+      "vendor_link": "https://mistral.ai",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 56.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 35.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 76.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 18.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 28.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 30.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "mai-thinking-1",
+      "name": "MAI-Thinking-1",
+      "vendor": "Microsoft",
+      "license": "closed",
+      "released": "2026-06-02",
+      "context_window": 256000,
+      "max_output": 32000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 3.0,
+        "output": 15.0
+      },
+      "throughput": 70,
+      "vendor_link": "https://microsoft.ai",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 87.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 84.2,
+          "source": "vendor",
+          "url": "https://microsoft.ai/models/mai-thinking-1/",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 93.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 73.5,
+          "source": "vendor",
+          "url": "https://microsoft.ai/models/mai-thinking-1/",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 97.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 76.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_0": {
+          "value": 46.0,
+          "source": "vendor",
+          "url": "https://microsoft.ai/models/mai-thinking-1/",
+          "measured": "2026-07-22",
+          "note": "Terminal-Bench 2.0, not 2.1."
+        }
+      }
+    },
+    {
+      "id": "mai-code-1-flash",
+      "name": "MAI-Code-1-Flash",
+      "vendor": "Microsoft",
+      "license": "closed",
+      "released": "2026-06-02",
+      "context_window": 256000,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.75,
+        "output": 4.5,
+        "cache_read": 0.075
+      },
+      "throughput": 200,
+      "vendor_link": "https://microsoft.ai",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 56.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 86.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 64.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "phi-4-reasoning-vision-15b",
+      "name": "Phi-4 Reasoning Vision 15B",
+      "vendor": "Microsoft",
+      "license": "open",
+      "released": "2026-03-04",
+      "context_window": 16384,
+      "max_output": 4000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 0.15,
+        "output": 0.3
+      },
+      "throughput": 250,
+      "vendor_link": "https://huggingface.co/microsoft",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 75.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 86.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 32.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 42.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "phi-4",
+      "name": "Phi-4",
+      "vendor": "Microsoft",
+      "license": "open",
+      "released": "2024-12-12",
+      "context_window": 16000,
+      "max_output": 4000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.07,
+        "output": 0.14
+      },
+      "throughput": 300,
+      "vendor_link": "https://huggingface.co/microsoft/phi-4",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 70.4,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 56.1,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 82.6,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 25.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 80.4,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 35.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 32.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "phi-4-mini",
+      "name": "Phi-4 mini",
+      "vendor": "Microsoft",
+      "license": "open",
+      "released": "2025-02-26",
+      "context_window": 128000,
+      "max_output": 4000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.02,
+        "output": 0.05
+      },
+      "throughput": 400,
+      "vendor_link": "https://huggingface.co/microsoft",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 15.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 71.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 22.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 25.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemma-4-31b",
+      "name": "Gemma 4 31B",
+      "vendor": "Google",
+      "license": "open",
+      "released": "2026-04-02",
+      "context_window": 256000,
+      "max_output": 16000,
+      "modalities": [
+        "text",
+        "vision",
+        "video"
+      ],
+      "pricing": {
+        "input": 0.2,
+        "output": 0.4
+      },
+      "throughput": 140,
+      "vendor_link": "https://deepmind.google/models/gemma/gemma-4/",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 85.2,
+          "source": "vendor",
+          "url": "https://deepmind.google/models/gemma/gemma-4/",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 84.3,
+          "source": "vendor",
+          "url": "https://deepmind.google/models/gemma/gemma-4/",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 89.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 93.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 72.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 86.4,
+          "source": "vendor",
+          "url": "https://deepmind.google/models/gemma/gemma-4/",
+          "note": "τ²-bench. Not comparable to τ³-Banking; v1 ranked this as the highest tau-bench score of all 71 models by mixing the two.",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemma-3-27b",
+      "name": "Gemma 3 27B",
+      "vendor": "Google",
+      "license": "open",
+      "released": "2025-03-12",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 0.1,
+        "output": 0.2
+      },
+      "throughput": 150,
+      "vendor_link": "https://deepmind.google/technologies/gemma",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 67.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 48.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 81.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 28.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 64.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 35.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 32.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "gemma-3-12b",
+      "name": "Gemma 3 12B",
+      "vendor": "Google",
+      "license": "open",
+      "released": "2025-03-12",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 0.05,
+        "output": 0.1
+      },
+      "throughput": 220,
+      "vendor_link": "https://deepmind.google/technologies/gemma",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 72.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 18.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 72.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 25.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 25.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "yi-large",
+      "name": "Yi-Large",
+      "vendor": "01.AI",
+      "license": "closed",
+      "released": "2024-05-13",
+      "context_window": 32000,
+      "max_output": 4000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 3.0,
+        "output": 3.0
+      },
+      "throughput": 70,
+      "vendor_link": "https://01.ai",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 40.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 20.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 75.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 30.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 30.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "glm-5-2",
+      "name": "GLM-5.2",
+      "vendor": "Zhipu AI",
+      "license": "open",
+      "released": "2026-06-13",
+      "context_window": 1000000,
+      "max_output": 131072,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 1.4,
+        "output": 4.4,
+        "cache_read": 0.26
+      },
+      "throughput": 70,
+      "vendor_link": "https://z.ai",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 83.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 91.2,
+          "source": "vendor",
+          "url": "https://z.ai",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 92.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_pro": {
+          "value": 62.1,
+          "source": "vendor",
+          "url": "https://z.ai",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 93.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 70.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 62.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "hle": {
+          "value": 54.7,
+          "source": "vendor",
+          "url": "https://z.ai",
+          "measured": "2026-07-22",
+          "note": "With tools enabled."
+        }
+      }
+    },
+    {
+      "id": "glm-5-1",
+      "name": "GLM-5.1",
+      "vendor": "Zhipu AI",
+      "license": "open",
+      "released": "2026-03-27",
+      "context_window": 200000,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.6,
+        "output": 2.2
+      },
+      "throughput": 70,
+      "vendor_link": "https://z.ai",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 72.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 90.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_pro": {
+          "value": 58.4,
+          "source": "vendor",
+          "url": "https://z.ai",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 92.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 64.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 56.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "glm-5",
+      "name": "GLM-5",
+      "vendor": "Zhipu AI",
+      "license": "open",
+      "released": "2026-02-11",
+      "context_window": 200000,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.6,
+        "output": 2.2
+      },
+      "throughput": 70,
+      "vendor_link": "https://z.ai",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 88.5,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 77.8,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 90.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 54.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "glm-4-6",
+      "name": "GLM-4.6",
+      "vendor": "Zhipu AI",
+      "license": "open",
+      "released": "2025-09-25",
+      "context_window": 200000,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.6,
+        "output": 2.2
+      },
+      "throughput": 70,
+      "vendor_link": "https://chatglm.cn",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 78.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 87.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 56.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "kimi-k3",
+      "name": "Kimi K3",
+      "vendor": "Moonshot AI",
+      "license": "open",
+      "released": "2026-07-16",
+      "context_window": 1048576,
+      "max_output": 32000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 3.0,
+        "output": 15.0,
+        "cache_read": 0.3
+      },
+      "throughput": 55,
+      "vendor_link": "https://moonshot.ai",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 88.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 93.5,
+          "source": "vendor",
+          "url": "https://moonshot.ai",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 95.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_verified": {
+          "value": 81.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "math_500": {
+          "value": 97.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "mmmu": {
+          "value": 78.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 83.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 82.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "terminal_bench_2_1": {
+          "value": 88.3,
+          "source": "vendor",
+          "url": "https://moonshot.ai",
+          "measured": "2026-07-22"
+        },
+        "hle": {
+          "value": 43.5,
+          "source": "vendor",
+          "url": "https://moonshot.ai",
+          "measured": "2026-07-22",
+          "note": "HLE-Full without tools; 56.0 with tools."
+        }
+      }
+    },
+    {
+      "id": "kimi-k2-7-code",
+      "name": "Kimi K2.7-Code",
+      "vendor": "Moonshot AI",
+      "license": "open",
+      "released": "2026-06-12",
+      "context_window": 262144,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.95,
+        "output": 4.0,
+        "cache_read": 0.19
+      },
+      "throughput": 80,
+      "vendor_link": "https://moonshot.ai",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 84.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 78.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "humaneval": {
+          "value": 92.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_verified": {
+          "value": 82.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "math_500": {
+          "value": 92.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 72.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 62.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        }
+      }
+    },
+    {
+      "id": "kimi-k2",
+      "name": "Kimi K2",
+      "vendor": "Moonshot AI",
+      "license": "open",
+      "released": "2025-07-12",
+      "context_window": 200000,
+      "max_output": 8000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.6,
+        "output": 2.5
+      },
+      "throughput": 50,
+      "vendor_link": "https://moonshot.ai",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 81.1,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 67.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 88.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 89.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "kimi-k1-5",
+      "name": "Kimi K1.5",
+      "vendor": "Moonshot AI",
+      "license": "closed",
+      "released": "2025-01-15",
+      "context_window": 200000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 0.5,
+        "output": 2.0
+      },
+      "throughput": 75,
+      "vendor_link": "https://moonshot.ai",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 75.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 85.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 45.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 42.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "inkling",
+      "name": "Inkling",
+      "vendor": "Thinking Machines",
+      "license": "open",
+      "released": "2026-07-15",
+      "context_window": 1000000,
+      "max_output": 32000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 1.0,
+        "output": 4.05
+      },
+      "throughput": 90,
+      "vendor_link": "https://thinkingmachines.ai",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 84.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "gpqa_diamond": {
+          "value": 87.2,
+          "source": "vendor",
+          "url": "https://thinkingmachines.ai/news/introducing-inkling/",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 92.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_verified": {
+          "value": 77.6,
+          "source": "vendor",
+          "url": "https://thinkingmachines.ai/news/introducing-inkling/",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 93.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "mmmu": {
+          "value": 78.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "aider_polyglot": {
+          "value": 70.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "tau_bench": {
+          "value": 64.0,
+          "source": "estimate",
+          "measured": "2026-07-22",
+          "note": "Carried over from schema v1, where it was recorded as a conservative estimate rather than a published figure."
+        },
+        "swe_bench_pro": {
+          "value": 54.3,
+          "source": "vendor",
+          "url": "https://thinkingmachines.ai/news/introducing-inkling/",
+          "note": "SWE-bench Pro Public.",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 63.8,
+          "source": "vendor",
+          "url": "https://thinkingmachines.ai/news/introducing-inkling/",
+          "measured": "2026-07-22"
+        },
+        "mmmu_pro": {
+          "value": 73.5,
+          "source": "vendor",
+          "url": "https://thinkingmachines.ai/news/introducing-inkling/",
+          "note": "MMMU-Pro Standard 10. v1 recorded a 78.0 'derived upward' MMMU estimate from this figure; the published number is used directly instead.",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "granite-3-1-8b",
+      "name": "Granite 3.1 8B",
+      "vendor": "IBM",
+      "license": "open",
+      "released": "2024-12-18",
+      "context_window": 128000,
+      "max_output": 4000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.1,
+        "output": 0.3
+      },
+      "throughput": 280,
+      "vendor_link": "https://ibm.com/granite",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 50.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 27.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 62.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 10.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 18.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 20.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "olmo-2-32b",
+      "name": "OLMo 2 32B",
+      "vendor": "Allen AI",
+      "license": "open",
+      "released": "2025-03-13",
+      "context_window": 4000,
+      "max_output": 4000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.1,
+        "output": 0.3
+      },
+      "throughput": 100,
+      "vendor_link": "https://allenai.org/olmo",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 56.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 31.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 12.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 65.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 20.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 20.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "minimax-m2-7",
+      "name": "MiniMax M2.7",
+      "vendor": "MiniMax",
+      "license": "open",
+      "released": "2026-05-28",
+      "context_window": 204800,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.3,
+        "output": 1.2
+      },
+      "throughput": 100,
+      "vendor_link": "https://minimax.io",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 89.8,
+          "source": "vendor",
+          "url": "https://www.minimax.io/news/minimax-m27-en",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 89.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 92.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 66.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_pro": {
+          "value": 56.2,
+          "source": "vendor",
+          "url": "https://www.minimax.io/news/minimax-m27-en",
+          "measured": "2026-07-22"
+        },
+        "terminal_bench_2_0": {
+          "value": 57.0,
+          "source": "vendor",
+          "url": "https://www.minimax.io/news/minimax-m27-en",
+          "measured": "2026-07-22",
+          "note": "Terminal-Bench 2.0, not 2.1."
+        }
+      }
+    },
+    {
+      "id": "minimax-text-01",
+      "name": "MiniMax-Text-01",
+      "vendor": "MiniMax",
+      "license": "open",
+      "released": "2025-01-14",
+      "context_window": 4000000,
+      "max_output": 16000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.2,
+        "output": 1.1
+      },
+      "throughput": 60,
+      "vendor_link": "https://minimax.io",
+      "status": "superseded",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 76.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 58.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 79.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 32.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 84.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "hunyuan-large",
+      "name": "Hunyuan Large",
+      "vendor": "Tencent",
+      "license": "open",
+      "released": "2024-11-05",
+      "context_window": 256000,
+      "max_output": 4000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.3,
+        "output": 1.1
+      },
+      "throughput": 50,
+      "vendor_link": "https://hunyuan.tencent.com",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 60.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 36.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 71.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 16.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 69.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 25.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 25.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "ernie-4-5",
+      "name": "ERNIE 4.5",
+      "vendor": "Baidu",
+      "license": "closed",
+      "released": "2025-03-16",
+      "context_window": 128000,
+      "max_output": 8000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 0.55,
+        "output": 2.2
+      },
+      "throughput": 70,
+      "vendor_link": "https://yiyan.baidu.com",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 72.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 55.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 30.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 82.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 68.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 40.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "stepfun-step-2",
+      "name": "Step-2",
+      "vendor": "StepFun",
+      "license": "closed",
+      "released": "2025-03-25",
+      "context_window": 32000,
+      "max_output": 4000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 1.5,
+        "output": 4.5
+      },
+      "throughput": 60,
+      "vendor_link": "https://stepfun.com",
+      "status": "historical",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 70.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "gpqa_diamond": {
+          "value": 52.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "humaneval": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "swe_bench_verified": {
+          "value": 28.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "math_500": {
+          "value": 80.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "mmmu": {
+          "value": 67.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "aider_polyglot": {
+          "value": 38.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        },
+        "tau_bench": {
+          "value": 35.0,
+          "source": "unsourced_legacy",
+          "measured": "2026-07-22"
+        }
+      }
+    }
   ]
 }
