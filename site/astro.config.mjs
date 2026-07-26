@@ -139,6 +139,7 @@ export default defineConfig({
 									{ label: 'Claude Sonnet 5 Review', slug: 'reviews/claude-sonnet-5-review' },
 									{ label: 'Grok 4.5 Review', slug: 'reviews/grok-4-5-review' },
 									{ label: 'Kimi K3 Review', slug: 'reviews/kimi-k3-review' },
+							{ label: 'Claude Opus 5 Review', slug: 'reviews/claude-opus-5-review' },
 					],
 				},
 				{

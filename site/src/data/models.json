@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-07-22",
+  "last_updated": "2026-07-26",
   "aa_index_version": "v4.1",
   "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
   "source_registry": {
@@ -174,6 +174,99 @@
   },
   "models": [
     {
+      "id": "claude-opus-5",
+      "name": "Claude Opus 5",
+      "vendor": "Anthropic",
+      "license": "closed",
+      "released": "2026-07-24",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 5.0,
+        "output": 25.0,
+        "cache_write": 6.25,
+        "cache_read": 0.5
+      },
+      "throughput": 82,
+      "vendor_link": "https://anthropic.com/claude",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 90.0,
+          "source": "estimate",
+          "measured": "2026-07-26",
+          "note": "Conservative estimate anchored to Claude Fable 5; Anthropic has not published a standalone MMLU-Pro figure for Opus 5."
+        },
+        "gpqa_diamond": {
+          "value": 95.0,
+          "source": "estimate",
+          "measured": "2026-07-26",
+          "note": "Conservative estimate anchored to Claude Fable 5 (95.0) and Opus 4.8 (93.6); Opus 5 tops the Artificial Analysis Intelligence Index but Anthropic did not publish a standalone GPQA Diamond cell."
+        },
+        "humaneval": {
+          "value": 96.0,
+          "source": "estimate",
+          "measured": "2026-07-26",
+          "note": "Conservative estimate anchored to Claude Fable 5; benchmark is saturated at the frontier."
+        },
+        "swe_bench_verified": {
+          "value": 96.0,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-opus-5",
+          "note": "Anthropic-reported at launch.",
+          "measured": "2026-07-26"
+        },
+        "math_500": {
+          "value": 98.0,
+          "source": "estimate",
+          "measured": "2026-07-26",
+          "note": "Conservative estimate anchored to Claude Fable 5; MATH-500 is a retired legacy column."
+        },
+        "mmmu": {
+          "value": 84.0,
+          "source": "estimate",
+          "measured": "2026-07-26",
+          "note": "Conservative estimate anchored to Claude Fable 5."
+        },
+        "aider_polyglot": {
+          "value": 88.0,
+          "source": "estimate",
+          "measured": "2026-07-26",
+          "note": "Conservative estimate anchored to Claude Fable 5; Aider Polyglot is an unmaintained legacy column."
+        },
+        "tau_bench": {
+          "value": 86.0,
+          "source": "estimate",
+          "measured": "2026-07-26",
+          "note": "Conservative estimate anchored to Claude Fable 5; τ²-Bench is a retired legacy column."
+        },
+        "swe_bench_pro": {
+          "value": 79.2,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-opus-5",
+          "note": "Anthropic-reported at launch; up ~10 points from Opus 4.8's 69.2.",
+          "measured": "2026-07-26"
+        },
+        "terminal_bench_2_1": {
+          "value": 89.0,
+          "source": "estimate",
+          "measured": "2026-07-26",
+          "note": "Conservative estimate anchored to Claude Fable 5's vendor-published 88.0 and consistent with an independent Adaptive-Reasoning/max-effort measurement of ~89.1; Anthropic did not publish a first-party Terminal-Bench 2.1 cell for Opus 5."
+        },
+        "hle": {
+          "value": 64.7,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-opus-5",
+          "note": "With tools enabled per Anthropic's Opus 5 system card; 56.3 without tools.",
+          "measured": "2026-07-26"
+        }
+      }
+    },
+    {
       "id": "claude-fable-5",
       "name": "Claude Fable 5",
       "vendor": "Anthropic",
@@ -284,7 +377,7 @@
       },
       "throughput": 85,
       "vendor_link": "https://anthropic.com/claude",
-      "status": "current",
+      "status": "superseded",
       "benchmarks": {
         "mmlu_pro": {
           "value": 88.5,
