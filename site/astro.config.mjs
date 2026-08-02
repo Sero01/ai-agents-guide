@@ -140,6 +140,7 @@ export default defineConfig({
 									{ label: 'Grok 4.5 Review', slug: 'reviews/grok-4-5-review' },
 									{ label: 'Kimi K3 Review', slug: 'reviews/kimi-k3-review' },
 							{ label: 'Claude Opus 5 Review', slug: 'reviews/claude-opus-5-review' },
+							{ label: 'DeepSeek V4 Flash 0731 Review', slug: 'reviews/deepseek-v4-flash-0731-review' },
 					],
 				},
 				{

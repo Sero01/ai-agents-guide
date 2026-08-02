@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-07-26",
+  "last_updated": "2026-08-02",
   "aa_index_version": "v4.1",
   "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
   "source_registry": {
@@ -2929,9 +2929,10 @@
           "measured": "2026-07-22"
         },
         "gpqa_diamond": {
-          "value": 65.0,
-          "source": "unsourced_legacy",
-          "measured": "2026-07-22"
+          "value": 91.0,
+          "source": "estimate",
+          "measured": "2026-08-02",
+          "note": "DeepSeek V4 Flash 0731 (Jul 31 2026) re-training. Conservative estimate anchored to DeepSeek V4 Pro's vendor GPQA Diamond of 90.1; independent aggregators place the 0731 checkpoint roughly 1 point above the prior V4 Flash and marginally ahead of V4 Pro. DeepSeek did not publish a first-party GPQA cell."
         },
         "humaneval": {
           "value": 88.0,
@@ -2957,6 +2958,19 @@
           "value": 58.0,
           "source": "unsourced_legacy",
           "measured": "2026-07-22"
+        },
+        "terminal_bench_2_1": {
+          "value": 82.7,
+          "source": "vendor",
+          "url": "https://deepseek.com",
+          "measured": "2026-08-02",
+          "note": "DeepSeek V4 Flash 0731 (Jul 31 2026) re-training; DeepSeek-reported, up from V4-Pro-Preview's 72.1. Same architecture and parameter count as the April V4 Flash — only post-training changed."
+        },
+        "hle": {
+          "value": 37.0,
+          "source": "estimate",
+          "measured": "2026-08-02",
+          "note": "DeepSeek V4 Flash 0731 checkpoint. Conservative estimate; independent aggregators report roughly 37 on Humanity's Last Exam for the re-trained build, up about 5 points over the prior V4 Flash. DeepSeek did not publish a first-party HLE cell."
         }
       }
     },
@@ -3140,6 +3154,47 @@
           "url": "https://www.alibabacloud.com/blog/qwen3-7-the-agent-frontier_603154",
           "measured": "2026-07-22",
           "note": "Terminal-Bench 2.0-Terminus, not 2.1."
+        }
+      }
+    },
+    {
+      "id": "qwen-3-7-flash",
+      "name": "Qwen3.7 Flash",
+      "vendor": "Alibaba",
+      "license": "closed",
+      "released": "2026-07-27",
+      "context_window": 1000000,
+      "max_output": 65536,
+      "modalities": [
+        "text",
+        "vision",
+        "video"
+      ],
+      "pricing": {
+        "input": 0.03,
+        "output": 0.13
+      },
+      "throughput": 200,
+      "vendor_link": "https://qwenlm.github.io",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 74.0,
+          "source": "estimate",
+          "measured": "2026-08-02",
+          "note": "Alibaba published no benchmark suite for the Flash tier; it landed quietly on OpenRouter on Jul 27 2026 with no technical report. Conservative estimate anchored to Qwen 3.7 Max (84.0), scaled to this model's sub-$0.05 price/size class."
+        },
+        "gpqa_diamond": {
+          "value": 70.0,
+          "source": "estimate",
+          "measured": "2026-08-02",
+          "note": "Conservative estimate; no vendor GPQA Diamond figure was published for Qwen3.7 Flash. Anchored to Qwen 3.7 Max's vendor 92.4 and scaled down for a cheap flash tier."
+        },
+        "swe_bench_verified": {
+          "value": 52.0,
+          "source": "estimate",
+          "measured": "2026-08-02",
+          "note": "Conservative estimate anchored to Qwen 3.7 Max's vendor SWE-bench Verified of 80.4, scaled to the Flash tier; Alibaba published no coding benchmark for this model."
         }
       }
     },

@@ -1,0 +1,173 @@
+---
+title: "DeepSeek V4 Flash 0731 Review — A Budget Model That Beats Its Own Flagship"
+description: "DeepSeek's V4-Flash-0731 re-training, released July 31, 2026: same architecture and $0.14/$0.55 pricing as the April build, but a post-training pass that lifts it past DeepSeek V4 Pro on agentic benchmarks (Terminal-Bench 2.1 82.7 vs 72.1). What changed, which numbers are measured, and where it lands."
+author: Parvez Ahmed
+date: 2026-08-02
+lastUpdated: 2026-08-02
+sidebar:
+  order: 14
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "DeepSeek V4 Flash 0731 Review — A Budget Model That Beats Its Own Flagship"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "DeepSeek's V4-Flash-0731 re-training, released July 31, 2026: same architecture and $0.14/$0.55 pricing, but a post-training pass that lifts it past DeepSeek V4 Pro on agentic benchmarks. What changed and where it lands."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/deepseek-v4-flash-0731-review/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-08-02"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-08-02"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "DeepSeek V4 Flash, DeepSeek V4 Pro, DeepSeek, open weights, agentic coding, Terminal-Bench, SWE-bench, post-training, LLM review"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "DeepSeek V4 Flash 0731 Review — A Budget Model That Beats Its Own Flagship"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "DeepSeek's V4-Flash-0731 re-training: same $0.14/$0.55 pricing as April, a post-training pass that beats V4 Pro on agentic benchmarks, and where it lands on the leaderboard."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/deepseek-v4-flash-0731-review/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/deepseek-v4-flash-0731-review/#article","headline":"DeepSeek V4 Flash 0731 Review — A Budget Model That Beats Its Own Flagship","description":"DeepSeek's V4-Flash-0731 re-training, released July 31, 2026: same architecture and $0.14/$0.55 pricing as the April build, but a post-training pass that lifts it past DeepSeek V4 Pro on agentic benchmarks (Terminal-Bench 2.1 82.7 vs 72.1). What changed, which numbers are measured, and where it lands.","url":"https://agentguides.dev/reviews/deepseek-v4-flash-0731-review/","mainEntityOfPage":"https://agentguides.dev/reviews/deepseek-v4-flash-0731-review/","datePublished":"2026-08-02","dateModified":"2026-08-02","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"DeepSeek V4 Flash 0731 review, DeepSeek V4 Flash benchmarks, DeepSeek V4 Pro, open-weight agentic model, Terminal-Bench 2.1, post-training, DeepSeek pricing"},
+        {"@type":"Review","name":"DeepSeek V4 Flash 0731 review","itemReviewed":{"@type":"SoftwareApplication","name":"DeepSeek V4 Flash 0731","applicationCategory":"DeveloperApplication","operatingSystem":"API (cloud), open weights","publisher":{"@type":"Organization","name":"DeepSeek"}},"reviewRating":{"@type":"Rating","ratingValue":"4.4","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-08-02","reviewBody":"An open-weight budget model whose July 31 re-training is the story. V4-Flash-0731 keeps the April build's architecture, parameter count, and $0.14/$0.55 pricing but applies a fresh post-training pass that, by DeepSeek's own agent benchmarks, beats the larger V4 Pro — Terminal-Bench 2.1 82.7 against Pro's 72.1, and a claimed sweep of nine agent evaluations. On the independent Artificial Analysis Intelligence Index it moves to 50, ten points above the prior Flash. The caveat is scope and provenance: the headline gains are agentic and coding, DeepSeek did not publish a full standard suite, and the composite comes from an aggregator whose figures we mark as estimates rather than measurements. For tool-heavy agents on a tight budget it is one of the strongest per-dollar options this month; validate it on your own workload before trusting the sweep."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"DeepSeek V4 Flash 0731 Review","item":"https://agentguides.dev/reviews/deepseek-v4-flash-0731-review/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is DeepSeek V4 Flash 0731?","acceptedAnswer":{"@type":"Answer","text":"DeepSeek V4 Flash 0731 is a re-trained checkpoint of DeepSeek's open-weight V4 Flash model, released as a public beta on July 31, 2026. It shares the same architecture, parameter count, and 1M-token context as the April 2026 V4 Flash; only the post-training changed. It is priced at $0.14 per million input tokens and $0.55 per million output tokens."}},
+          {"@type":"Question","name":"Is DeepSeek V4 Flash 0731 better than DeepSeek V4 Pro?","acceptedAnswer":{"@type":"Answer","text":"On the agent benchmarks DeepSeek published, yes. V4 Flash 0731 scores 82.7 on Terminal-Bench 2.1 against V4 Pro's 72.1, and DeepSeek says it beats V4 Pro on all nine agent benchmarks it reported. On the independent Artificial Analysis Intelligence Index it lands about six points ahead of V4 Pro. Note that Pro still leads on broad reasoning cells like MMLU-Pro, and the two share the same context window."}},
+          {"@type":"Question","name":"How much does DeepSeek V4 Flash 0731 cost?","acceptedAnswer":{"@type":"Answer","text":"Pricing is unchanged from the April V4 Flash: about $0.14 per million input tokens and $0.55 per million output tokens through DeepSeek's API, with the usual open-weight hosted rates on OpenRouter, Together, and Fireworks. It is one of the cheapest models with a strong agentic profile currently available."}},
+          {"@type":"Question","name":"Does DeepSeek V4 Flash 0731 have published benchmark scores?","acceptedAnswer":{"@type":"Answer","text":"DeepSeek published agentic and coding results — Terminal-Bench 2.1 82.7, and internal agent evaluations such as DeepSWE (54.4, up from 7.3) and DSBench-FullStack (68.7, up from 37.0). Its GPQA Diamond (~91) and HLE (~37) figures come from independent aggregators and are treated as estimates on our leaderboard rather than vendor measurements. DeepSeek did not publish the full standard public suite."}}
+        ]}
+      ]}
+---
+import AuthorByline from '../../../components/AuthorByline.astro';
+
+<AuthorByline date="2026-08-02" />
+
+<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
+DeepSeek V4 Flash 0731's Terminal-Bench figure is vendor-reported; its GPQA Diamond and HLE placements come from independent aggregators and are recorded as estimates in our <a href="/leaderboard/">models leaderboard</a>, not as measurements. DeepSeek did not publish a full standard suite for this checkpoint. Treat the estimated cells as directional until third-party runs land.
+</aside>
+
+On **July 31, 2026**, DeepSeek pushed a public beta of [DeepSeek V4 Flash](/leaderboard/) under the build tag **V4-Flash-0731**, and the interesting thing about it is what *did not* change. Same architecture. Same parameter count. Same 1M-token context. Same **$0.14 / $0.55** pricing as the April build. The only thing DeepSeek touched was post-training — and by its own agent benchmarks, that pass is enough to push the budget Flash model **past the larger, pricier V4 Pro**. This review covers what the re-training actually moved, which of the numbers are measured versus interpolated, and where V4 Flash 0731 fits.
+
+## TL;DR verdict
+
+| | DeepSeek V4 Flash 0731 |
+|---|---|
+| **Type** | Open-weight budget model (agentic + coding focus) |
+| **Context window** | 1,000,000 tokens |
+| **Modalities** | Text |
+| **License** | Open weights |
+| **Pricing** | $0.14 in / $0.55 out per 1M — unchanged from the April V4 Flash |
+| **Headline numbers** | Terminal-Bench 2.1 82.7 · AA Intelligence Index 50 (+10 over prior Flash) |
+| **Availability** | DeepSeek API, OpenRouter, Together, Fireworks; weights downloadable |
+| **Best for** | Tool-heavy agents and coding pipelines on a tight budget |
+| **Caveat** | Agentic/coding gains are the published story — broad-reasoning cells are estimates |
+
+If you skip the rest: **V4 Flash 0731 is one of the best intelligence-per-dollar picks for agentic work this month.** DeepSeek re-trained a model it had already shipped and, without changing the architecture or the price, lifted it from a mid-tier flash model to one that — on the agent benchmarks it chose to publish — beats its own flagship. The honest asterisk is that this is a *vendor's* sweep on *vendor-selected* agent evals, and the broad-reasoning placements are still interpolation.
+
+## What changed: post-training, not scale
+
+The headline is a claim about method. V4-Flash-0731 is **the same model** as the April 2026 [V4 Flash](/leaderboard/) — identical architecture, identical parameter budget — with a **new post-training run** layered on top. That framing matters, because it separates two things labs usually ship together: a bigger or re-architected base model, and better alignment/RL on top of it. Here only the second moved, and the deltas DeepSeek reported are large:
+
+- **DeepSWE** (agentic software-engineering eval): **7.3 → 54.4**, roughly a 7× jump in a single post-training cycle.
+- **DSBench-FullStack** (internal full-stack development test): **37.0 → 68.7**.
+- **Terminal-Bench 2.1**: **82.7**, up from V4-Pro-Preview's 72.1 — a **14-point win for the cheaper model** on agentic terminal work.
+
+DeepSeek's summary claim is that **V4 Flash 0731 beats V4-Pro-Preview on all nine agent benchmarks it reported.** Whether or not every one of those nine survives independent replication, the pattern is coherent: a small model that was leaving a lot of capability on the table, unlocked by RL tuned specifically for tool use and multi-step coding rather than one-shot exams.
+
+## What the numbers say
+
+Here is where the case is strongest — and where it needs an asterisk. On the independent [Artificial Analysis](https://artificialanalysis.ai/models/deepseek-v4-flash) Intelligence Index, V4 Flash 0731 scores **50**, a **10-point jump** over the prior V4 Flash and about **six points ahead of DeepSeek V4 Pro**, landing one point behind GPT-5.6 Luna on that composite. That is a genuinely unusual result: a vendor's *budget* tier out-scoring its own *flagship* on an independent blended index.
+
+| Benchmark | V4 Flash 0731 | Provenance |
+|---|---|---|
+| **Terminal-Bench 2.1** | **82.7** | Vendor-reported (up from V4 Pro's 72.1) |
+| **AA Intelligence Index** | **50** | Independent aggregate (Artificial Analysis) |
+| **GPQA Diamond** | **~91** | Aggregator-reported — recorded as an estimate |
+| **HLE** | **~37** | Aggregator-reported — recorded as an estimate |
+
+The provenance column is the part to read carefully. The **Terminal-Bench 2.1** figure is a first-party DeepSeek number. The **Intelligence Index** is an independent composite. But the **GPQA Diamond** and **HLE** placements come from third-party aggregators, not from a DeepSeek model card — so on our [leaderboard](/leaderboard/) they are recorded as **estimates**, greyed out and excluded from every ranking, anchored to [DeepSeek V4 Pro](/leaderboard/)'s vendor GPQA of 90.1. They are directionally useful; they are not measurements. What DeepSeek did *not* publish is the full standard suite (MMLU-Pro, SWE-bench Verified, MATH-500, MMMU-Pro), which is why the row still shows inherited legacy cells for those columns.
+
+## What it costs
+
+Nothing. That is the point. Pricing is **unchanged from the April V4 Flash — about $0.14 per 1M input and $0.55 per 1M output** on DeepSeek's API, with the usual hosted open-weight rates on OpenRouter, Together, and Fireworks. Artificial Analysis notes the 0731 build shares "identical architecture and pricing" with its predecessor, so the entire capability gain arrives at zero marginal cost to anyone already budgeting for V4 Flash.
+
+Put that next to the closed frontier — [Claude Opus 5](/reviews/claude-opus-5-review/) at $5/$25, GPT-5.6 Sol at $5/$30 — and the intelligence-per-dollar argument is stark: on the agentic axis DeepSeek chose to measure, a model **two orders of magnitude cheaper on input** is trading blows near the top. The [cost calculator](/leaderboard/) on the leaderboard lets you plug your own token mix to see where that crossover actually lands for your workload; for high-volume, tool-heavy pipelines it lands early.
+
+## How it compares
+
+V4 Flash 0731's real competition is the **open-weight agentic tier**, not the closed reasoning frontier. Against its own [V4 Pro](/leaderboard/) sibling it is the cheaper model that now wins the agent benchmarks — an odd but welcome inversion that makes Pro harder to justify for pure tool-use workloads. Against the open coding flagships — [GLM-5.2](/reviews/glm-5-2-review/) and [Kimi K2.7-Code](/reviews/kimi-k2-7-code-review/) — V4 Flash 0731 is dramatically cheaper and lighter to serve, though those larger models still lead on the hardest coding evals; the trade is capability-per-parameter versus capability-per-dollar. Against the closed budget tier — Gemini 3.6 Flash, GPT-5.6 Luna — it undercuts on price and matches on the published agentic numbers while giving up multimodality, since V4 Flash is text-only.
+
+The caution worth stating plainly: this is a **vendor sweep on vendor-selected agent benchmarks**, released as a beta. Independent evaluators have flagged elevated benchmark-gaming across the newest releases all year, and a model re-trained specifically to top agent evals is exactly the case where your own repository is the only benchmark that counts. The Intelligence Index result is independent and reassuring; the "beats Pro on all nine" claim is not yet.
+
+## Who should care
+
+- **Teams running tool-heavy agents on a budget:** This is the headline use case. A Terminal-Bench 2.1 of 82.7 at $0.14/$0.55 makes V4 Flash 0731 a serious default for function-calling and command-line agents. See [multi-agent pipelines](/agentic-workflows/multi-agent/) for where a cheap, strong tool-user slots into a larger workflow.
+- **High-volume coding pipelines:** If you are paying closed-frontier rates on a large PR-review or codegen pipeline, A/B this against your current coder on real pull requests before the next billing cycle — the price gap compounds fast.
+- **Anyone who already deployed V4 Flash:** The upgrade is a checkpoint swap at the same price. Re-run your eval set against 0731; the agentic gains may be free money.
+- **Anyone ranking on broad reasoning:** Wait for third-party standard-suite numbers before placing V4 Flash 0731 above frontier models on general knowledge. Its published strengths are agentic; its reasoning placement is an estimate. The [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) covers how to weigh that trade.
+
+## FAQ
+
+**What is DeepSeek V4 Flash 0731?** A re-trained checkpoint of DeepSeek's open-weight V4 Flash, released as a public beta on July 31, 2026. Same architecture, parameter count, and 1M context as the April build; only the post-training changed. Priced at $0.14 in / $0.55 out per 1M.
+
+**Is it better than DeepSeek V4 Pro?** On the agent benchmarks DeepSeek published, yes — Terminal-Bench 2.1 82.7 versus Pro's 72.1, and a claimed sweep of nine agent evals. On the independent Intelligence Index it lands about six points ahead of Pro. Pro still leads on broad reasoning, and the two share a context window.
+
+**How much does it cost?** Unchanged from April: about $0.14 per 1M input and $0.55 per 1M output on DeepSeek's API, with hosted open-weight rates on the usual routers.
+
+**Does it have published benchmark scores?** Agentic and coding ones — Terminal-Bench 2.1 82.7, DeepSWE 54.4 (up from 7.3), DSBench-FullStack 68.7 (up from 37.0). Its GPQA (~91) and HLE (~37) figures come from aggregators and are treated as estimates, not vendor measurements.
+
+**Is it open weights?** Yes. V4 Flash is downloadable and self-hostable, and also available through the DeepSeek API, OpenRouter, Together, and Fireworks.
+
+## Continue reading
+
+- [AI Models Leaderboard](/leaderboard/) — DeepSeek V4 Flash 0731 versus 70+ models on benchmarks, pricing, and context, with a cost calculator.
+- [GLM-5.2 Review](/reviews/glm-5-2-review/) — the open-weight coding flagship in the tier above, and how its published SWE-bench Pro numbers compare.
+- [Kimi K2.7-Code Review](/reviews/kimi-k2-7-code-review/) — Moonshot's open-weight coder, the other value pick in the same conversation.
+- [Claude Opus 5 Review](/reviews/claude-opus-5-review/) — the closed frontier leader V4 Flash 0731's intelligence-per-dollar pitch is measured against.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — how to read agentic benchmarks and vendor sweeps without getting fooled.
+- [All Reviews](/reviews/) — index of every review on the site.
