@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-08-02",
+  "last_updated": "2026-08-09",
   "aa_index_version": "v4.1",
   "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
   "source_registry": {
@@ -2642,6 +2642,54 @@
           "value": 28.0,
           "source": "unsourced_legacy",
           "measured": "2026-07-22"
+        }
+      }
+    },
+    {
+      "id": "muse-spark-1-2",
+      "name": "Muse Spark 1.2",
+      "vendor": "Meta",
+      "license": "closed",
+      "released": "2026-08-05",
+      "context_window": 1048576,
+      "max_output": 131072,
+      "modalities": [
+        "text",
+        "vision",
+        "audio"
+      ],
+      "pricing": {
+        "input": 1.25,
+        "output": 4.25
+      },
+      "throughput": 165,
+      "vendor_link": "https://ai.meta.com",
+      "status": "current",
+      "benchmarks": {
+        "gpqa_diamond": {
+          "value": 90.4,
+          "source": "estimate",
+          "measured": "2026-08-09",
+          "note": "Reported by Artificial Analysis (xhigh reasoning) rather than in a first-party Meta model card; shown for reference and not scored here because Meta did not publish a standalone GPQA Diamond figure."
+        },
+        "swe_bench_verified": {
+          "value": 73.0,
+          "source": "estimate",
+          "measured": "2026-08-09",
+          "note": "Conservative estimate anchored to Muse Spark 1.1's independently-verified Terminal-Bench 2.1 of 76.2 and to same-tier coding models; Meta published DeepSWE v1.1 (59.3) and an internal coding eval (70.6) but no SWE-bench Verified cell."
+        },
+        "swe_bench_pro": {
+          "value": 55.0,
+          "source": "estimate",
+          "measured": "2026-08-09",
+          "note": "Conservative estimate; SWE-bench Pro runs ~20 points below Verified, anchored to same-price peers (Gemini 3.6 Flash 58.7, GPT-5.6 Luna 62.7). Meta did not publish a SWE-bench Pro figure."
+        },
+        "terminal_bench_2_1": {
+          "value": 82.9,
+          "source": "vendor",
+          "url": "https://ai.meta.com/blog/muse-code-muse-spark-1-2/",
+          "note": "Meta-reported at launch, running inside the Muse Code agent. Not yet listed on the public Terminal-Bench 2.1 verified leaderboard as of 2026-08-07; Muse Spark 1.1's independently-verified score is 76.2.",
+          "measured": "2026-08-09"
         }
       }
     },

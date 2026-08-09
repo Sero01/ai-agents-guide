@@ -1,0 +1,190 @@
+---
+title: "Meta Muse Code and Muse Spark 1.2 Review — Meta's First Closed Coding Agent"
+description: "Meta's Muse Code terminal agent and the Muse Spark 1.2 model behind it: features, benchmarks, the $0.10/$0.20 contributor tier and its data-for-training tradeoff, pricing, and how it compares to Claude Code and Codex."
+author: Parvez Ahmed
+date: 2026-08-09
+lastUpdated: 2026-08-09
+sidebar:
+  order: 15
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Meta Muse Code and Muse Spark 1.2 Review — Meta's First Closed Coding Agent"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Meta's Muse Code terminal agent and the Muse Spark 1.2 model behind it: features, benchmarks, the contributor tier's data-for-training tradeoff, pricing, and how it compares to Claude Code and Codex."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/meta-muse-code-muse-spark-1-2-review/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-08-09"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-08-09"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "Meta Muse Code, Muse Spark 1.2, terminal coding agent, Claude Code, OpenAI Codex, contributor tier, closed weights, AI coding model, LLM review"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "Meta Muse Code & Muse Spark 1.2 Review"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "Meta's first terminal coding agent and the Muse Spark 1.2 model behind it: benchmarks, pricing, and the contributor-tier data tradeoff."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/meta-muse-code-muse-spark-1-2-review/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/meta-muse-code-muse-spark-1-2-review/#article","headline":"Meta Muse Code and Muse Spark 1.2 Review — Meta's First Closed Coding Agent","description":"Meta's Muse Code terminal agent and the Muse Spark 1.2 model behind it: features, benchmarks, the contributor tier's data-for-training tradeoff, pricing, and how it compares to Claude Code and Codex.","url":"https://agentguides.dev/reviews/meta-muse-code-muse-spark-1-2-review/","mainEntityOfPage":"https://agentguides.dev/reviews/meta-muse-code-muse-spark-1-2-review/","datePublished":"2026-08-09","dateModified":"2026-08-09","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Meta Muse Code review, Muse Spark 1.2 benchmarks, terminal coding agent, contributor tier, closed weights, Claude Code alternative"},
+        {"@type":"Review","name":"Meta Muse Code and Muse Spark 1.2 review","itemReviewed":{"@type":"SoftwareApplication","name":"Meta Muse Code (Muse Spark 1.2)","applicationCategory":"DeveloperApplication","operatingSystem":"macOS, Linux, API (cloud)","publisher":{"@type":"Organization","name":"Meta"}},"reviewRating":{"@type":"Rating","ratingValue":"3.5","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-08-09","reviewBody":"Meta's first terminal coding agent and its first fully closed-weight model, shipped as a public beta. Muse Code brings genuinely useful ideas — persistent async background agents and a resumable local event log — and Muse Spark 1.2 is a capable, fast, cheap coding model. But the headline benchmark is Meta-reported and not on the public verified board, and the cheap contributor tier trades your prompts and code for training rights, reportedly by default. Worth trying on non-sensitive code; read the tier terms before you type."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"Meta Muse Code and Muse Spark 1.2 Review","item":"https://agentguides.dev/reviews/meta-muse-code-muse-spark-1-2-review/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is Meta Muse Code?","acceptedAnswer":{"@type":"Answer","text":"Muse Code is Meta's first terminal-native coding agent, released in public beta on August 5, 2026 for macOS and Linux. It runs on the Muse Spark 1.2 model and sits in the same category as Anthropic's Claude Code, OpenAI's Codex CLI, and Google's Gemini CLI."}},
+          {"@type":"Question","name":"Is Muse Spark 1.2 open weights?","acceptedAnswer":{"@type":"Answer","text":"No. Muse Spark 1.2 is closed-weights, with no downloadable weights, self-hosting, or fine-tuning. It continues Meta's move away from the open-weight Llama approach."}},
+          {"@type":"Question","name":"How much does Muse Code cost?","acceptedAnswer":{"@type":"Answer","text":"Standard pay-as-you-go pricing is $1.25 per million input tokens and $4.25 per million output tokens. A separate Contributor tier costs about $0.10 input and $0.20 output per million tokens in exchange for permission to train future Meta models on your prompts and completions, with rate limits over a rolling five-hour window and availability limited to selected countries."}},
+          {"@type":"Question","name":"Are Muse Spark 1.2's benchmark numbers verified?","acceptedAnswer":{"@type":"Answer","text":"Partly. The headline 82.9% on Terminal-Bench 2.1 is Meta-reported and was not on the public Terminal-Bench 2.1 verified leaderboard as of August 7, 2026. Muse Spark 1.1's independently verified score on the same benchmark is 76.2%. Treat the launch numbers as directional and validate on your own tasks."}}
+        ]}
+      ]}
+---
+import { Icon } from 'astro-icon/components';
+import AuthorByline from '../../../components/AuthorByline.astro';
+
+<AuthorByline date="2026-08-09" />
+
+<aside style="background:var(--sl-color-bg-nav);border:1px solid var(--sl-color-hairline);border-left:3px solid var(--sl-color-accent);padding:0.75rem 1rem;margin:1rem 0 1.5rem;border-radius:0.375rem;font-size:0.85rem;line-height:1.55">
+Benchmark figures are Meta-reported unless noted; cross-vendor comparisons come from our own <a href="/leaderboard/">models leaderboard</a>. Muse Code shipped as a public beta and independent third-party numbers are still landing — treat vendor claims as directional, and read the contributor-tier terms before you point it at private code.
+</aside>
+
+On August 5, 2026, Meta Superintelligence Labs shipped two things at once: **Muse Code**, its first terminal-native coding agent, and **Muse Spark 1.2**, the coding-focused model that powers it. The move drops Meta into the same arena as [Claude Code, Cursor, and Codex](/reviews/claude-code-vs-cursor-vs-codex/) — the terminal and IDE agents that have become how a lot of engineers actually write software in 2026. Two things make this launch more interesting than a version bump. First, Muse Spark is **closed-weights**, a pointed reversal for the company that made open weights a strategy with Llama. Second, the cheap way to use it — the **contributor tier** — pays for the discount with your prompts and your code. This review covers what Muse Code does, what Muse Spark 1.2's numbers actually say, and the tradeoff you are agreeing to when you install it.
+
+## TL;DR verdict
+
+| | Muse Code | Muse Spark 1.2 |
+|---|---|---|
+| **Type** | Terminal coding agent | Coding-focused reasoning model |
+| **Category peers** | Claude Code, Codex CLI, Gemini CLI | Gemini 3.6 Flash, GPT-5.6 Terra tier |
+| **Platforms** | macOS, Linux (public beta) | API (cloud), closed weights |
+| **Context window** | — | 1,048,576 tokens (~131K max output) |
+| **Standard pricing** | Billed on Muse Spark 1.2 tokens | $1.25 in / $4.25 out per 1M |
+| **Contributor pricing** | ~$0.10 in / $0.20 out per 1M | Your prompts + completions train Meta's models |
+| **Headline number** | — | Terminal-Bench 2.1 **82.9%** (Meta-reported, unverified) |
+| **Best for** | Cheap, resumable agentic sessions on non-sensitive code | High-context coding at a workhorse price |
+| **Caveat** | Contributor tier reportedly defaults on after install | Headline benchmark not on the public verified board |
+
+If you do not read past this: **Muse Code's engineering ideas are genuinely good**, Muse Spark 1.2 is a capable and cheap coding model, and the whole thing is worth a try — on code you are comfortable sending to Meta's training set, or with the Contributor tier explicitly switched off. The rating is held back by unverified launch benchmarks and a default that opts you into data-for-training rather than out of it.
+
+## Muse Code — the agent, and its two good ideas
+
+Muse Code is a terminal-native agent built by Meta Superintelligence Labs, in the same shape as Claude Code and the Codex CLI: you run it in a project directory, it reads and edits files, runs commands, and iterates on multi-step tasks rather than autocompleting single lines. Meta says the model was **co-trained with the agent itself**, which is the pattern every serious lab has converged on — the model and the harness are tuned together rather than bolted together. It runs on macOS and Linux and is in early public beta.
+
+Two features are worth calling out because they are not just re-skins of what exists:
+
+- **Persistent async background agents.** Muse Code keeps specialized sub-agents alive across a session instead of spawning and tearing them down for each subtask. In long refactors, that avoids the repeated cold-start context-rebuilding that makes multi-agent flows expensive and slow. If you have built [multi-agent pipelines](/agentic-workflows/multi-agent/), this is the friction it targets directly.
+- **A resumable local event log.** Every model call, tool run, and code edit is written to a local event log, so an interrupted session can be picked back up with `muse resume`. Losing an agent's working state to a dropped connection or a closed laptop is one of the real daily annoyances of terminal agents, and a durable local log is a clean answer to it.
+
+Neither idea is unique in the abstract, but shipping both in a v1 agent is a credible start. The harder question is the model underneath.
+
+## Muse Spark 1.2 — what the numbers say
+
+Muse Spark 1.2 is a coding-focused reasoning model with a **1,048,576-token context window** and roughly **131K max output tokens**. It accepts text, image, and audio input and returns text — there is no image or video generation here. At its `xhigh` reasoning setting it runs at around **165 tokens/second**, and Artificial Analysis places it at **54 on its Intelligence Index**, ranking it around #13 of the models it tracks — solidly capable, not frontier-topping, which is the right expectation for a model at this price.
+
+The benchmark Meta chose to lead with is **Terminal-Bench 2.1**, the agentic terminal benchmark that has become the headline coding eval for most labs:
+
+| Benchmark | Muse Spark 1.2 (in Muse Code) | Claude Opus 5 | Notes |
+|---|---|---|---|
+| **Terminal-Bench 2.1** | 82.9% | 86.7% | Both Meta-reported on Meta's harness |
+| **DeepSWE v1.1** | 59.3% | 65.0% | Meta-reported |
+| **Meta internal coding eval** | 70.6% | 79.4% | Meta-reported, non-public benchmark |
+
+Read that table honestly and two things fall out. First, on **all three** evals Meta ran, Muse Spark 1.2 finished **second to Claude Opus 5** — Meta is transparently positioning it as a strong runner-up, not a leader. Second, and more important: **the 82.9% Terminal-Bench figure is Meta-reported and was not listed on the public Terminal-Bench 2.1 verified leaderboard when checked on August 7, 2026.** For calibration, Muse Spark **1.1's** independently verified Terminal-Bench 2.1 score is **76.2%**. A jump from a verified 76.2 to a self-reported 82.9 in one point release is plausible for a coding-tuned update — but "plausible and self-reported" is exactly the kind of number that compresses once neutral evaluators run it. On our [leaderboard](/leaderboard/) we store the 82.9 as vendor-reported with that caveat attached, and mark the cells Meta did not publish (SWE-bench Verified, SWE-bench Pro, GPQA) as explicit estimates rather than laundering them into measurements. For how to read self-reported coding numbers without getting fooled, the [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) walks through the hierarchy.
+
+## The pricing — and the catch
+
+This is where Muse Code gets genuinely novel, and genuinely worth reading carefully. There are two ways to pay.
+
+**Standard, pay-as-you-go:**
+
+- **Input:** $1.25 per 1M tokens
+- **Output:** $4.25 per 1M tokens
+
+That is a workhorse price — cheaper than the frontier flagships, in the same neighborhood as Gemini 3.6 Flash and the GPT-5.6 Terra tier, and reasonable for a 1M-context coding model. Pricing is unchanged from Muse Spark 1.1.
+
+**Contributor tier:**
+
+- **Input:** ~$0.10 per 1M tokens
+- **Output:** ~$0.20 per 1M tokens
+
+That is a discount of roughly **12x on input and 21x on output** — an enormous cut. The price of the price cut is spelled out in the tier's terms: **your prompts and completions may be used to train future Meta models.** Contributor access is rate-limited over a rolling five-hour window and is only available in selected countries.
+
+Here is the part that turns a clever pricing experiment into a caution. According to early user reports, **Muse Code defaults to the Contributor tier after install** — meaning you have to actively switch to Standard to *opt out* of data-for-training, rather than opting in. If accurate, that is a consequential default: run `muse` on a private repo without checking your tier and you may have shipped proprietary code and prompts into a training pipeline. Mainstream coverage flagged the same concern, framing the launch around the privacy tradeoff rather than the benchmarks. Treat the tier selector as the first thing to verify, not an afterthought — especially in any environment with a data-handling policy.
+
+## How it stacks up against Claude Code and Codex
+
+Muse Code enters a category with entrenched, mature incumbents. Anthropic's [Claude Code](/reviews/claude-code-vs-cursor-vs-codex/) and OpenAI's Codex CLI have a long head start on ecosystem, MCP support, and the thousand small ergonomics that only surface after months of real use. Muse Code's differentiators — persistent background agents, a resumable event log, and a very cheap (data-funded) tier — are real, but v1-beta rough edges are a near-certainty, and the model sits a tier below the frontier leaders on Meta's own numbers.
+
+The strategic read mirrors the one from the [Microsoft MAI launch](/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/): a big platform company shipping its own coding stack to buy independence and distribution, not necessarily to top a leaderboard. The twist unique to Meta is the funding model. Where Microsoft pushes MAI-Code-1-Flash to every Copilot seat, Meta is offering a near-free tier funded by training data. That is a coherent way to bootstrap usage and a fresh corpus at once — and it is also why the default matters so much.
+
+## Who should care
+
+- **Hobbyists and open-source developers:** The Contributor tier is a legitimately great deal for public code you were going to publish anyway. If the training use does not bother you, ~$0.10/$0.20 for a 1M-context coding agent is hard to beat.
+- **Teams with any data-handling policy:** Do **not** install and run on a client or proprietary repo without first switching to Standard and confirming the tier. The reported opt-out-by-default behavior is a compliance landmine.
+- **Anyone benchmarking coding agents:** Add Muse Code to your bake-off, but weight the 82.9% Terminal-Bench claim as vendor-reported until it appears on the public verified board. Run it on your own task suite next to Claude Code and Codex.
+- **Cost-sensitive agentic pipelines:** At Standard pricing, Muse Spark 1.2 is a plausible cheap default for high-context [agentic coding workflows](/agentic-workflows/multi-agent/) — compare it against the budget coders on the [leaderboard](/leaderboard/) before committing.
+
+## FAQ
+
+**What is Meta Muse Code?** Meta's first terminal-native coding agent, released in public beta on August 5, 2026 for macOS and Linux. It runs on the Muse Spark 1.2 model and competes with Claude Code, Codex CLI, and Gemini CLI.
+
+**Is Muse Spark 1.2 open weights?** No. It is closed-weights — no downloadable weights, no self-hosting, no fine-tuning — continuing Meta's shift away from the open Llama approach.
+
+**How much does it cost?** Standard is $1.25 in / $4.25 out per 1M tokens. The Contributor tier is roughly $0.10 in / $0.20 out per 1M tokens in exchange for permission to train Meta's models on your prompts and completions, with rate limits over a rolling five-hour window and availability in selected countries only.
+
+**Are the benchmark numbers verified?** The 82.9% Terminal-Bench 2.1 figure is Meta-reported and was not on the public verified leaderboard as of August 7, 2026. Muse Spark 1.1's verified score on the same benchmark is 76.2%. Validate on your own tasks.
+
+**Does Muse Code use my code for training?** On the Contributor tier, yes — that is the explicit tradeoff for the discount. Early reports indicate that tier is the post-install default, so verify your tier before running it on anything private.
+
+## Continue reading
+
+- [AI Models Leaderboard](/leaderboard/) — Muse Spark 1.2 versus 75+ models on benchmarks, pricing, context window, and throughput, with every figure sourced.
+- [Claude Code vs Cursor vs Codex](/reviews/claude-code-vs-cursor-vs-codex/) — the incumbent terminal and IDE coding agents Muse Code is up against, tested on real tasks.
+- [Microsoft MAI-Thinking-1 & MAI-Code-1-Flash Review](/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/) — the other big-platform in-house coding launch, and the same buy-independence strategic read.
+- [Claude Opus 5 Review](/reviews/claude-opus-5-review/) — the frontier model Meta benchmarked Muse Spark 1.2 against, and lost to on all three of its own evals.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — how to weigh Terminal-Bench, SWE-bench, and self-reported vendor numbers.
+- [All Reviews](/reviews/) — index of every head-to-head review on the site.

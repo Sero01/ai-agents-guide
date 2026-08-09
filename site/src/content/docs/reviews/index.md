@@ -44,7 +44,7 @@ head:
     content: |
       {"@context":"https://schema.org","@graph":[
         {"@type":"CollectionPage","@id":"https://agentguides.dev/reviews/#collection","name":"AI Tool Reviews","headline":"AI Tool Reviews — Honest, Tested, Numbers-First","description":"Reviews of AI agent frameworks, LLM coding tools, and developer infrastructure. Each review is based on tools we have tested ourselves on a defined task.","url":"https://agentguides.dev/reviews/","inLanguage":"en-US","dateModified":"2026-06-10","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png"},
-        {"@type":"ItemList","name":"All Reviews","numberOfItems":8,"itemListElement":[
+        {"@type":"ItemList","name":"All Reviews","numberOfItems":9,"itemListElement":[
           {"@type":"ListItem","position":1,"url":"https://agentguides.dev/reviews/claude-fable-5/","name":"Claude Fable 5 Review — Anthropic's New Flagship Tier Above Opus"},
           {"@type":"ListItem","position":2,"url":"https://agentguides.dev/reviews/crewai-vs-langgraph-vs-autogen/","name":"CrewAI vs LangGraph vs AutoGen — Head-to-Head, Same Task, Real Numbers"},
           {"@type":"ListItem","position":3,"url":"https://agentguides.dev/reviews/claude-code-vs-cursor-vs-codex/","name":"Claude Code vs Cursor vs Codex — AI Coding Tools Tested on 3 Real Tasks"},
@@ -52,7 +52,8 @@ head:
           {"@type":"ListItem","position":5,"url":"https://agentguides.dev/reviews/microsoft-mai-thinking-1-mai-code-1-flash-review/","name":"Microsoft MAI-Thinking-1 and MAI-Code-1-Flash Review — Build 2026 In-House Models"},
           {"@type":"ListItem","position":6,"url":"https://agentguides.dev/reviews/kimi-k2-7-code-review/","name":"Kimi K2.7-Code Review — Moonshot's Open-Weight Coding Model"},
           {"@type":"ListItem","position":7,"url":"https://agentguides.dev/reviews/glm-5-2-review/","name":"GLM-5.2 Review — Zhipu's Open-Weight Coding Flagship"},
-          {"@type":"ListItem","position":8,"url":"https://agentguides.dev/reviews/deepseek-v4-flash-0731-review/","name":"DeepSeek V4 Flash 0731 Review — A Budget Model That Beats Its Own Flagship"}
+          {"@type":"ListItem","position":8,"url":"https://agentguides.dev/reviews/deepseek-v4-flash-0731-review/","name":"DeepSeek V4 Flash 0731 Review — A Budget Model That Beats Its Own Flagship"},
+          {"@type":"ListItem","position":9,"url":"https://agentguides.dev/reviews/meta-muse-code-muse-spark-1-2-review/","name":"Meta Muse Code and Muse Spark 1.2 Review — Meta's First Closed Coding Agent"}
         ]},
         {"@type":"BreadcrumbList","itemListElement":[
           {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
@@ -89,6 +90,7 @@ Most reviews link out to tools we have an affiliate relationship with. That rela
 - [Kimi K2.7-Code review](/reviews/kimi-k2-7-code-review/) — Moonshot AI's open-weight coding model: 1T-parameter MoE, 256K context, Modified MIT license, the token-efficiency story, and why every cross-vendor number is still an estimate.
 - [GLM-5.2 review](/reviews/glm-5-2-review/) — Zhipu AI's open-weight coding flagship: 753B MoE, 1M context, MIT license, and the published SWE-bench Pro numbers that edge GPT-5.5 at a fraction of the cost.
 - [DeepSeek V4 Flash 0731 review](/reviews/deepseek-v4-flash-0731-review/) — a re-trained checkpoint at the same $0.14/$0.55 price that, on DeepSeek's own agent benchmarks, beats the larger V4 Pro. What the post-training pass moved, and which numbers are measured versus estimated.
+- [Meta Muse Code & Muse Spark 1.2 review](/reviews/meta-muse-code-muse-spark-1-2-review/) — Meta's first terminal coding agent and its first fully closed-weight model: persistent background agents, a resumable event log, the $0.10/$0.20 contributor tier's data-for-training tradeoff, and why the headline benchmark is not yet verified.
 
 More reviews ship on a weekly cadence. The next planned ones cover Anthropic's Claude Agent SDK head-to-head with the OpenAI Agents SDK, an evaluation of LLM observability platforms (Helicone, Langfuse, LangSmith) using the same trace dataset, and a review of agent-friendly model routers comparing OpenRouter, Together AI, and Fireworks AI on latency, cost, and supported features.
 
