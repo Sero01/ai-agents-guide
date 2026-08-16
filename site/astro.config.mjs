@@ -142,6 +142,7 @@ export default defineConfig({
 							{ label: 'Claude Opus 5 Review', slug: 'reviews/claude-opus-5-review' },
 							{ label: 'DeepSeek V4 Flash 0731 Review', slug: 'reviews/deepseek-v4-flash-0731-review' },
 							{ label: 'Meta Muse Code & Muse Spark 1.2 Review', slug: 'reviews/meta-muse-code-muse-spark-1-2-review' },
+							{ label: 'Gemini 3.7 Flash Review', slug: 'reviews/gemini-3-7-flash-review' },
 					],
 				},
 				{

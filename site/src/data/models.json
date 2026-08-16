@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-08-09",
+  "last_updated": "2026-08-16",
   "aa_index_version": "v4.1",
   "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
   "source_registry": {
@@ -1899,12 +1899,64 @@
       }
     },
     {
+      "id": "gemini-3-7-flash",
+      "name": "Gemini 3.7 Flash",
+      "vendor": "Google",
+      "license": "closed",
+      "released": "2026-08-13",
+      "status": "current",
+      "context_window": 1048576,
+      "max_output": 65536,
+      "modalities": [
+        "text",
+        "vision",
+        "audio",
+        "video"
+      ],
+      "pricing": {
+        "input": 0.75,
+        "output": 3.75
+      },
+      "throughput": 190,
+      "vendor_link": "https://ai.google.dev",
+      "note": "Introductory API pricing ($0.75 in / $3.75 out) runs through 2026-12-31; Google has published scheduled rates of $1.50 / $7.50 from 2027-01-01.",
+      "benchmarks": {
+        "gpqa_diamond": {
+          "value": 90.4,
+          "source": "vendor",
+          "url": "https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash",
+          "note": "Google-reported at launch.",
+          "measured": "2026-08-16"
+        },
+        "swe_bench_pro": {
+          "value": 62.0,
+          "source": "estimate",
+          "measured": "2026-08-16",
+          "note": "Conservative estimate anchored to Gemini 3.6 Flash's vendor SWE-bench Pro of 58.7 and Google's reported coding gains (Terminal-Bench 2.1 78.0 -> 85.8, DeepSWE v1.1 48.6 -> 65.3). Google did not publish a first-party SWE-bench Pro cell for 3.7 Flash."
+        },
+        "terminal_bench_2_1": {
+          "value": 85.8,
+          "source": "vendor",
+          "url": "https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash",
+          "note": "Google-reported at launch, up from Gemini 3.6 Flash's 78.0.",
+          "measured": "2026-08-16"
+        },
+        "mmmu_pro": {
+          "value": 81.2,
+          "source": "vendor",
+          "url": "https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash",
+          "note": "Google-reported at launch; comparable to Gemini 3 Pro.",
+          "measured": "2026-08-16"
+        }
+      }
+    },
+    {
       "id": "gemini-3-6-flash",
       "name": "Gemini 3.6 Flash",
       "vendor": "Google",
       "license": "closed",
       "released": "2026-07-21",
-      "status": "current",
+      "status": "superseded",
       "context_window": 1048576,
       "modalities": [
         "text",
@@ -4014,6 +4066,48 @@
       }
     },
     {
+      "id": "glm-5-3",
+      "name": "GLM-5.3",
+      "vendor": "Zhipu AI",
+      "license": "open",
+      "released": "2026-08-14",
+      "context_window": 1000000,
+      "max_output": 131072,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 1.4,
+        "output": 4.4,
+        "cache_read": 0.26
+      },
+      "throughput": 70,
+      "vendor_link": "https://z.ai",
+      "status": "current",
+      "note": "Post-trained on the same 743B base as GLM-5.2; every gain is from post-training. Open weights are staged for release roughly two weeks after launch, not day one. Z.ai has not published a separate 5.3 API rate; the price shown is the GLM-5.2 first-party rate the API currently charges.",
+      "benchmarks": {
+        "gpqa_diamond": {
+          "value": 91.5,
+          "source": "estimate",
+          "measured": "2026-08-16",
+          "note": "Conservative estimate anchored to GLM-5.2's vendor GPQA Diamond of 91.2; GLM-5.3 shares the 743B base and Z.ai did not publish a standalone GPQA cell for 5.3."
+        },
+        "swe_bench_pro": {
+          "value": 65.0,
+          "source": "estimate",
+          "measured": "2026-08-16",
+          "note": "Conservative estimate anchored to GLM-5.2's vendor SWE-bench Pro of 62.1 and Z.ai's reported post-training coding gains (DeepSWE v1.1 66.9). Z.ai published Terminal-Bench 3.0 and DeepSWE figures at launch but no SWE-bench Pro cell for 5.3."
+        },
+        "hle": {
+          "value": 62.5,
+          "source": "vendor",
+          "url": "https://z.ai",
+          "note": "With tools enabled; Z.ai-reported at launch, up from GLM-5.2's 54.7.",
+          "measured": "2026-08-16"
+        }
+      }
+    },
+    {
       "id": "glm-5-2",
       "name": "GLM-5.2",
       "vendor": "Zhipu AI",
@@ -4031,7 +4125,7 @@
       },
       "throughput": 70,
       "vendor_link": "https://z.ai",
-      "status": "current",
+      "status": "superseded",
       "benchmarks": {
         "mmlu_pro": {
           "value": 83.0,
