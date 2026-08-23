@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-08-16",
+  "last_updated": "2026-08-23",
   "aa_index_version": "v4.1",
   "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
   "source_registry": {
@@ -2020,6 +2020,50 @@
       "note": "Context window not stated in Google's launch post; left unset rather than assumed."
     },
     {
+      "id": "grok-4-6",
+      "name": "Grok 4.6",
+      "vendor": "xAI",
+      "license": "closed",
+      "released": "2026-08-12",
+      "context_window": 500000,
+      "max_output": 32000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 2.0,
+        "output": 6.0,
+        "cache_read": 0.5
+      },
+      "throughput": 130,
+      "vendor_link": "https://x.ai",
+      "status": "current",
+      "note": "Scores 61 on the Artificial Analysis Intelligence Index v4.1.1 — tied with GPT-5.6 Sol and two points behind Claude Opus 5 — while holding pricing flat at $2/$6. The base rate covers prompts up to 200K tokens; xAI doubles it to $4/$12 in the long-context band above 200K. Knowledge-work evals sit near the top of the field; software-engineering components trail. Released 2026-08-12, before the 2026-08-16 refresh; added on the 2026-08-23 pass to close the gap.",
+      "benchmarks": {
+        "gpqa_diamond": {
+          "value": 94.9,
+          "source": "vendor",
+          "url": "https://x.ai/news/grok-4-6",
+          "note": "xAI-reported at launch; ties for the top of the GPQA Diamond board. Up from Grok 4.5's estimated 91.0.",
+          "measured": "2026-08-23"
+        },
+        "terminal_bench_2_1": {
+          "value": 88.0,
+          "source": "vendor",
+          "url": "https://x.ai/news/grok-4-6",
+          "note": "xAI-reported at launch, up from Grok 4.5's 83.3; level with the leading agentic-terminal scores (GPT-5.6 Sol 88.8, Fable 5 88.0).",
+          "measured": "2026-08-23"
+        },
+        "swe_bench_pro": {
+          "value": 66.0,
+          "source": "estimate",
+          "measured": "2026-08-23",
+          "note": "Conservative estimate anchored to Grok 4.5's vendor SWE-bench Pro of 64.7. xAI published no SWE-bench Pro cell for 4.6 and independent write-ups note its software-engineering components trail its knowledge scores, so this is nudged only slightly above 4.5 rather than up to the harness-specific SWE-bench (Vals) figure some outlets cite."
+        }
+      }
+    },
+    {
       "id": "grok-4-5",
       "name": "Grok 4.5",
       "vendor": "xAI",
@@ -2038,7 +2082,7 @@
       },
       "throughput": 130,
       "vendor_link": "https://x.ai",
-      "status": "current",
+      "status": "superseded",
       "benchmarks": {
         "mmlu_pro": {
           "value": 88.0,

@@ -143,6 +143,7 @@ export default defineConfig({
 							{ label: 'DeepSeek V4 Flash 0731 Review', slug: 'reviews/deepseek-v4-flash-0731-review' },
 							{ label: 'Meta Muse Code & Muse Spark 1.2 Review', slug: 'reviews/meta-muse-code-muse-spark-1-2-review' },
 							{ label: 'Gemini 3.7 Flash Review', slug: 'reviews/gemini-3-7-flash-review' },
+							{ label: 'Grok 4.6 Review', slug: 'reviews/grok-4-6-review' },
 					],
 				},
 				{
