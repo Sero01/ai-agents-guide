@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-08-23",
+  "last_updated": "2026-08-30",
   "aa_index_version": "v4.1",
   "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
   "source_registry": {
@@ -4148,6 +4148,49 @@
           "url": "https://z.ai",
           "note": "With tools enabled; Z.ai-reported at launch, up from GLM-5.2's 54.7.",
           "measured": "2026-08-16"
+        }
+      }
+    },
+    {
+      "id": "glm-5-3-flash",
+      "name": "GLM-5.3 Flash",
+      "vendor": "Zhipu AI",
+      "license": "open",
+      "released": "2026-08-26",
+      "context_window": 1048576,
+      "max_output": 131072,
+      "modalities": [
+        "text",
+        "vision",
+        "video"
+      ],
+      "pricing": {
+        "input": 0.15,
+        "output": 0.5,
+        "cache_read": 0.03
+      },
+      "throughput": 130,
+      "vendor_link": "https://z.ai",
+      "status": "current",
+      "note": "Natively multimodal 320B-A18B mixture-of-experts (18B active per token) with image and video input; MIT-licensed with weights on Hugging Face. Z.ai reports an Artificial Analysis Intelligence Index of 57 and DeepSWE of 63.4 (up from GLM-5.2's 46.2). Launch list price is $0.15 / $0.50 per 1M tokens; a 50% launch promotion runs input $0.075 / output $0.25 through 2026-09-09.",
+      "benchmarks": {
+        "gpqa_diamond": {
+          "value": 88.0,
+          "source": "estimate",
+          "measured": "2026-08-28",
+          "note": "Conservative estimate anchored to GLM-5.3's 91.5 and GLM-5.2's vendor GPQA Diamond of 91.2, discounted for the smaller Flash active-parameter budget; Z.ai did not publish a standalone GPQA cell for the Flash variant."
+        },
+        "swe_bench_pro": {
+          "value": 58.0,
+          "source": "estimate",
+          "measured": "2026-08-28",
+          "note": "Conservative estimate anchored to GLM-5.2's vendor SWE-bench Pro of 62.1 and GLM-5.3's estimated 65.0, discounted for the Flash tier; Z.ai published DeepSWE (63.4) at launch but no SWE-bench Pro cell for the Flash variant."
+        },
+        "hle": {
+          "value": 50.0,
+          "source": "estimate",
+          "measured": "2026-08-28",
+          "note": "Conservative estimate anchored to GLM-5.3's vendor HLE of 62.5 and GLM-5.2's 54.7 (both with tools), discounted for the Flash tier; Z.ai did not publish a standalone HLE cell for the Flash variant."
         }
       }
     },
