@@ -13,6 +13,7 @@ export default defineConfig({
 		starlight({
 			components: {
 				ThemeSelect: './src/components/ThemeSelect.astro',
+				MobileMenuToggle: './src/components/MobileMenuToggle.astro',
 			},
 			title: 'AI Agents & Agentic Workflows Guide',
 			description: 'A free, code-first reference for developers building AI agents and agentic systems. Covers MCP, LangChain, CrewAI, AutoGen, prompt engineering, and agent design patterns. Updated 2026.',
@@ -29,14 +30,22 @@ export default defineConfig({
 			},
 			customCss: ['./src/styles/custom.css'],
 			head: [
-				// Google Fonts — Cormorant Garamond (serif), Libre Franklin (sans), JetBrains Mono
+				// Apply the stored sidebar state before first paint so a collapsed
+				// sidebar does not flash open on load. Pairs with MobileMenuToggle.astro.
+				{
+					tag: 'script',
+					content:
+						"try{if(localStorage.getItem('agentguides-sidebar')==='collapsed')" +
+						"document.documentElement.setAttribute('data-sidebar','collapsed')}catch(e){}",
+				},
+				// Google Fonts — Cormorant Garamond (display), Lora (body), JetBrains Mono
 				{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
 				{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' } },
 				{
 					tag: 'link',
 					attrs: {
 						rel: 'stylesheet',
-						href: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap',
+						href: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap',
 					},
 				},
 				// SEO meta tags applied to all Starlight doc pages
@@ -54,7 +63,11 @@ export default defineConfig({
 				},
 				{
 					tag: 'meta',
-					attrs: { name: 'theme-color', content: '#0c0c0c' },
+					attrs: { name: 'theme-color', content: '#f3f2f2', media: '(prefers-color-scheme: light)' },
+				},
+				{
+					tag: 'meta',
+					attrs: { name: 'theme-color', content: '#1b1a19', media: '(prefers-color-scheme: dark)' },
 				},
 				{
 					tag: 'meta',

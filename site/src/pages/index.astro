@@ -119,7 +119,8 @@ const LEARN_PATHS = [
   <meta name="keywords" content="AI agents, AI tools, agentic workflows, MCP, Model Context Protocol, LangChain, CrewAI, AutoGen, AI frameworks, prompt engineering, multi-agent systems, AI agents 2026" />
   <meta name="author" content="Parvez Ahmed" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-  <meta name="theme-color" content="#0c0c0c" />
+  <meta name="theme-color" content="#f3f2f2" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1b1a19" media="(prefers-color-scheme: dark)" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
   <!-- Open Graph -->
@@ -139,7 +140,7 @@ const LEARN_PATHS = [
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Libre+Franklin:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -224,7 +225,7 @@ const LEARN_PATHS = [
   <!-- ── Hero ──────────────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-inner">
-      <p class="eyebrow fade-1">Tested · Open Source · Updated May 2026</p>
+      <p class="eyebrow fade-1">Tested · Open Source · Updated September 2026</p>
       <h1 class="fade-2">Reviews, comparisons<br/>&amp; builds for <em>AI systems</em>.</h1>
       <p class="hero-lede fade-3">
         Hands-on reviews of AI agent frameworks, head-to-head comparisons of LLM coding
@@ -465,8 +466,8 @@ const LEARN_PATHS = [
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: var(--sans);
-    font-weight: 300;
+    font-family: var(--body);
+    font-weight: 400;
     background: var(--bg);
     color: var(--text-secondary);
     line-height: 1.8;
@@ -499,7 +500,7 @@ const LEARN_PATHS = [
     gap: 2rem;
   }
   .logo {
-    font-family: var(--serif);
+    font-family: var(--display);
     font-size: 1.5rem;
     font-weight: 500;
     letter-spacing: -0.01em;
@@ -516,11 +517,10 @@ const LEARN_PATHS = [
     gap: 2rem;
   }
   .nav-links a {
-    font-family: var(--sans);
+    font-family: var(--body);
     font-size: 0.85rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    font-weight: 400;
+    letter-spacing: 0.01em;
     color: var(--text-secondary);
   }
   .nav-links a:hover { color: var(--text-primary); }
@@ -578,7 +578,7 @@ const LEARN_PATHS = [
     text-align: center;
   }
   .hero h1 {
-    font-family: var(--serif);
+    font-family: var(--display);
     font-weight: 400;
     font-size: clamp(3rem, 7.5vw, 6rem);
     line-height: 1.05;
@@ -592,8 +592,8 @@ const LEARN_PATHS = [
     font-weight: 500;
   }
   .hero-lede {
-    font-family: var(--sans);
-    font-weight: 300;
+    font-family: var(--body);
+    font-weight: 400;
     font-size: 1.1rem;
     line-height: 1.8;
     color: var(--text-secondary);
@@ -645,42 +645,37 @@ const LEARN_PATHS = [
   /* ── Shared typography utilities ────────────────────────────────── */
   .eyebrow {
     font-family: var(--mono);
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--accent);
   }
 
   .btn {
     display: inline-block;
-    font-family: var(--sans);
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 0.875rem 1.75rem;
-    border-radius: 2px;
-    transition: all 0.3s ease;
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 0 0 0.35rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
     cursor: pointer;
   }
   .btn-primary {
-    background: var(--accent);
-    color: var(--bg);
-    border: 1px solid var(--accent);
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
   }
   .btn-primary:hover {
-    background: var(--accent-hover);
-    border-color: var(--accent-hover);
-    transform: translateY(-1px);
+    color: var(--accent-hover);
+    border-bottom-color: var(--accent-hover);
   }
   .btn-ghost {
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-hover);
   }
   .btn-ghost:hover {
-    border-color: var(--border-hover);
-    color: var(--text-primary);
+    color: var(--accent);
+    border-bottom-color: var(--accent);
   }
 
   /* ── Sections ───────────────────────────────────────────────────── */
@@ -697,7 +692,7 @@ const LEARN_PATHS = [
   }
   .section-header .eyebrow { display: block; margin-bottom: var(--space-md); }
   .section-header h2 {
-    font-family: var(--serif);
+    font-family: var(--display);
     font-weight: 400;
     font-size: clamp(2.2rem, 4.5vw, 3.2rem);
     line-height: 1.15;
@@ -707,8 +702,8 @@ const LEARN_PATHS = [
     margin-bottom: var(--space-sm);
   }
   .section-header .section-desc {
-    font-family: var(--sans);
-    font-weight: 300;
+    font-family: var(--body);
+    font-weight: 400;
     font-size: 1rem;
     line-height: 1.8;
     color: var(--text-secondary);
@@ -719,30 +714,29 @@ const LEARN_PATHS = [
     .section { padding: var(--space-lg) 1.25rem; }
   }
 
-  /* ── Card grid (1px border = gap) ──────────────────────────────── */
+  /* ── Card grid (hairline-separated, no boxes) ──────────────────── */
   .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
+    column-gap: 3rem;
+    row-gap: 0;
+    border-top: 1px solid var(--border);
   }
   .card {
-    background: var(--bg-card);
-    padding: 2rem;
+    background: transparent;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     color: inherit;
-    transition: background 0.3s ease;
+    transition: color 0.3s ease;
     position: relative;
-    min-height: 220px;
   }
-  .card:hover { background: var(--bg-card-hover); }
+  .card:hover h3 { color: var(--accent); }
   .card-meta {
     font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
     color: var(--text-muted);
     margin-bottom: 1.25rem;
     display: flex;
@@ -752,21 +746,19 @@ const LEARN_PATHS = [
   }
   .card-badge {
     color: var(--accent);
-    border: 1px solid var(--accent-dim);
-    padding: 0.1rem 0.5rem;
-    border-radius: 2px;
   }
   .card h3 {
-    font-family: var(--serif);
-    font-weight: 400;
+    font-family: var(--display);
+    font-weight: 600;
+    transition: color 0.3s ease;
     font-size: 1.5rem;
     line-height: 1.3;
     color: var(--text-primary);
     margin-bottom: 0.75rem;
   }
   .card p {
-    font-family: var(--sans);
-    font-weight: 300;
+    font-family: var(--body);
+    font-weight: 400;
     font-size: 0.95rem;
     line-height: 1.7;
     color: var(--text-secondary);
@@ -774,9 +766,8 @@ const LEARN_PATHS = [
   }
   .card-arrow {
     font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
     color: var(--accent);
     margin-top: 1.5rem;
     opacity: 0;
@@ -791,28 +782,25 @@ const LEARN_PATHS = [
 
   /* ── Learning paths (split rows) ───────────────────────────────── */
   .paths {
-    border: 1px solid var(--border);
+    border-top: 1px solid var(--border);
   }
   .path-row {
     display: grid;
     grid-template-columns: 220px 1fr;
+    gap: 2rem;
     border-bottom: 1px solid var(--border);
-    background: var(--bg-card);
-    transition: background 0.3s ease;
+    background: transparent;
   }
-  .path-row:last-child { border-bottom: none; }
-  .path-row:hover { background: var(--bg-card-hover); }
 
   .path-label {
-    padding: 2rem;
-    border-right: 1px solid var(--border);
+    padding: 2rem 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.5rem;
   }
   .path-label em {
-    font-family: var(--serif);
+    font-family: var(--display);
     font-style: italic;
     font-weight: 500;
     font-size: 1.4rem;
@@ -820,43 +808,40 @@ const LEARN_PATHS = [
   }
   .path-label .path-tag {
     font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
     color: var(--text-muted);
   }
 
   .path-body {
-    padding: 2rem;
+    padding: 2rem 0;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
   }
   .path-body p {
-    font-family: var(--sans);
-    font-weight: 300;
+    font-family: var(--body);
+    font-weight: 400;
     color: var(--text-secondary);
     line-height: 1.7;
   }
   .path-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 1.5rem;
   }
   .path-links a {
     font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.05em;
-    text-transform: lowercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
     color: var(--text-secondary);
-    border: 1px solid var(--accent-dim);
-    padding: 0.4rem 0.75rem;
-    transition: all 0.3s ease;
+    border-bottom: 1px solid var(--accent-dim);
+    padding: 0 0 0.25rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
   }
   .path-links a:hover {
-    background: var(--accent-dim);
-    border-color: var(--accent);
-    color: var(--text-primary);
+    border-bottom-color: var(--accent);
+    color: var(--accent);
   }
 
   @media (max-width: 768px) {
@@ -867,8 +852,8 @@ const LEARN_PATHS = [
 
   /* ── Prose / About ──────────────────────────────────────────────── */
   .prose p {
-    font-family: var(--sans);
-    font-weight: 300;
+    font-family: var(--body);
+    font-weight: 400;
     font-size: 1.05rem;
     line-height: 1.85;
     color: var(--text-secondary);
@@ -913,7 +898,7 @@ const LEARN_PATHS = [
     border: 1px solid var(--border);
   }
   .author-name {
-    font-family: var(--serif);
+    font-family: var(--display);
     font-size: 1.1rem;
     color: var(--text-primary);
     font-weight: 500;
@@ -925,8 +910,8 @@ const LEARN_PATHS = [
     color: var(--text-muted);
   }
   .author-bio {
-    font-family: var(--sans);
-    font-weight: 300;
+    font-family: var(--body);
+    font-weight: 400;
     font-size: 0.9rem;
     line-height: 1.7;
     color: var(--text-secondary);
@@ -947,17 +932,16 @@ const LEARN_PATHS = [
 
   .footer-col h4 {
     font-family: var(--mono);
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--text-muted);
     margin-bottom: 1.25rem;
   }
   .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
   .footer-col a {
-    font-family: var(--sans);
-    font-weight: 300;
+    font-family: var(--body);
+    font-weight: 400;
     font-size: 0.9rem;
     color: var(--text-secondary);
   }

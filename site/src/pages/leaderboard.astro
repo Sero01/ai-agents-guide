@@ -303,7 +303,7 @@ const head = [
 
   #leaderboard-app .updated-pill {
     font-family: var(--mono); font-size: 0.7rem;
-    letter-spacing: 0.15em; text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--accent);
   }
   #leaderboard-app .lead {
@@ -321,50 +321,50 @@ const head = [
   #leaderboard-app .filter-label {
     font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
     color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.15em;
+    letter-spacing: 0.02em;
     margin-right: 0.5rem;
   }
   #leaderboard-app .chip {
-    font-family: var(--mono); font-size: 0.72rem;
-    letter-spacing: 0.05em; text-transform: lowercase;
-    background: transparent; border: 1px solid var(--accent-dim);
-    color: var(--text-secondary);
-    padding: 0.4rem 0.75rem; border-radius: 2px;
+    font-family: var(--mono); font-size: 0.75rem;
+    letter-spacing: 0.02em; text-transform: lowercase;
+    background: transparent; border: none;
+    border-bottom: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 0 0 0.25rem;
     cursor: pointer; user-select: none;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease, border-color 0.3s ease;
     margin-top: 0;
   }
-  #leaderboard-app .chip:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--text-primary); }
-  #leaderboard-app .chip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  #leaderboard-app .chip:hover { color: var(--text-primary); border-bottom-color: var(--border-hover); }
+  #leaderboard-app .chip.active { color: var(--accent-hover); border-bottom-color: var(--accent); }
   #leaderboard-app .search-input {
-    font-family: var(--sans); font-weight: 300;
-    background: var(--bg-card); border: 1px solid var(--border);
-    color: var(--text-primary); border-radius: 2px;
-    padding: 0.5rem 0.75rem; font-size: 0.9rem; min-width: 220px;
+    font-family: var(--body); font-weight: 400;
+    background: transparent; border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary); border-radius: 0;
+    padding: 0.5rem 0; font-size: 0.9rem; min-width: 220px;
     transition: border-color 0.3s ease;
     margin-top: 0;
   }
-  #leaderboard-app .search-input:focus { outline: none; border-color: var(--accent); }
+  #leaderboard-app .search-input:focus { outline: none; border-bottom-color: var(--accent); }
   #leaderboard-app .search-input::placeholder { color: var(--text-muted); }
 
   /* ── Table ─────────────────────────────────────────────────── */
   #leaderboard-app .table-wrap {
     overflow: auto;
-    border: 1px solid var(--border);
     margin-bottom: 3rem; max-height: 640px;
-    background: var(--bg-card);
+    background: transparent;
   }
   #leaderboard-app table { display: table; width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 0; border: none; }
   #leaderboard-app thead { position: sticky; top: 0; z-index: 1; }
   #leaderboard-app th {
     font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
-    letter-spacing: 0.12em; text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--text-muted);
-    text-align: left; padding: 1rem 0.9rem;
+    text-align: left; padding: 1rem 0.9rem 0.7rem 0;
     cursor: pointer; user-select: none;
-    border-bottom: 1px solid var(--border);
-    border-right: 1px solid var(--border);
-    background: var(--bg-card-hover);
+    border-bottom: 1px solid var(--border-hover);
+    background: var(--bg);
     white-space: nowrap;
     transition: color 0.3s ease;
   }
@@ -385,18 +385,19 @@ const head = [
   #leaderboard-app td.cell-unsourced { color: var(--text-muted); font-style: italic; }
   #leaderboard-app td.cell-none { color: var(--text-muted); opacity: 0.5; }
   #leaderboard-app td .prov {
-    font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.08em;
+    font-size: 0.62rem; letter-spacing: 0.02em;
     vertical-align: super; margin-left: 0.15rem; opacity: 0.7;
   }
   #leaderboard-app td.src-count { font-family: var(--mono); color: var(--text-muted); }
 
   #leaderboard-app .badge {
-    font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.08em;
-    padding: 0.1rem 0.3rem; border-radius: 3px; margin-left: 0.3rem;
-    border: 1px solid currentColor; opacity: 0.75; white-space: nowrap;
+    font-family: var(--mono);
+    font-size: 0.65rem; letter-spacing: 0.02em;
+    margin-left: 0.4rem;
+    opacity: 0.85; white-space: nowrap;
   }
   #leaderboard-app .badge-old { color: var(--text-muted); }
-  #leaderboard-app .badge-unreleased { color: #c2410c; }
+  #leaderboard-app .badge-unreleased { color: var(--status-unreleased); }
   #leaderboard-app tr.row-old td { opacity: 0.72; }
 
   #leaderboard-app .bar-rank {
@@ -407,97 +408,100 @@ const head = [
   #leaderboard-app .empty-note { color: var(--text-muted); font-size: 0.85rem; padding: 1rem 0; }
 
   #leaderboard-app .notice {
-    border-left: 3px solid var(--accent);
-    background: color-mix(in srgb, var(--accent) 6%, transparent);
-    padding: 0.85rem 1.1rem; margin: 1.25rem 0; border-radius: 0 4px 4px 0;
+    border-left: 2px solid var(--accent);
+    background: transparent;
+    padding: 0.25rem 0 0.25rem 1.1rem; margin: 1.25rem 0; border-radius: 0;
   }
   #leaderboard-app .notice p {
-    margin: 0; font-family: var(--sans); font-weight: 300;
+    margin: 0; font-family: var(--body); font-weight: 400;
     font-size: 0.88rem; line-height: 1.6;
   }
   #leaderboard-app td {
-    font-family: var(--sans); font-weight: 300;
-    padding: 1rem 0.9rem;
+    font-family: var(--body); font-weight: 400;
+    padding: 0.85rem 0.9rem 0.85rem 0;
     border-bottom: 1px solid var(--border);
-    border-right: 1px solid var(--border);
     border-top: none;
     color: var(--text-secondary);
     white-space: nowrap; line-height: 1.5;
   }
-  #leaderboard-app td strong { font-family: var(--serif); font-weight: 500; font-size: 1.05rem; color: var(--text-primary); }
-  #leaderboard-app tr:hover td { background: var(--bg-card-hover); }
+  #leaderboard-app td strong { font-family: var(--display); font-weight: 500; font-size: 1.05rem; color: var(--text-primary); }
+  #leaderboard-app tr:hover td { background: var(--accent-dim); }
   #leaderboard-app .vendor-chip { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.05em; }
-  #leaderboard-app .lic-open { color: var(--accent); font-weight: 500; font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
-  #leaderboard-app .lic-closed { color: var(--text-muted); font-weight: 500; font-size: 0.72rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; }
+  #leaderboard-app .lic-open { color: var(--accent); font-weight: 500; font-size: 0.75rem; font-family: var(--mono); letter-spacing: 0.02em; }
+  #leaderboard-app .lic-closed { color: var(--text-muted); font-weight: 500; font-size: 0.75rem; font-family: var(--mono); letter-spacing: 0.02em; }
   #leaderboard-app .try-btn {
-    font-family: var(--sans); font-size: 0.72rem; font-weight: 500;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    display: inline-block; padding: 0.35rem 0.8rem; border-radius: 2px;
-    background: var(--accent); color: var(--bg);
-    border: 1px solid var(--accent);
-    transition: all 0.3s ease;
+    font-family: var(--display); font-size: 0.95rem; font-weight: 600;
+    letter-spacing: 0.01em;
+    display: inline-block; padding: 0 0 0.15rem;
+    background: transparent; color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    transition: color 0.3s ease, border-color 0.3s ease;
   }
-  #leaderboard-app .try-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); transform: translateY(-1px); }
+  #leaderboard-app .try-btn:hover { color: var(--accent-hover); border-bottom-color: var(--accent-hover); }
   #leaderboard-app .compare-cb { width: 16px; height: 16px; cursor: pointer; accent-color: var(--accent); }
 
   /* ── Charts ────────────────────────────────────────────────── */
-  #leaderboard-app .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-bottom: 3rem; background: var(--border); border: 1px solid var(--border); }
+  #leaderboard-app .charts-row { display: grid; grid-template-columns: 1fr 1fr; column-gap: 3rem; row-gap: 0; margin-bottom: 3rem; border-top: 1px solid var(--border); }
   @media (max-width: 900px) { #leaderboard-app .charts-row { grid-template-columns: 1fr; } }
-  #leaderboard-app .chart-card { background: var(--bg-card); padding: 1.75rem; margin-top: 0; }
+  /* min-width:0 — grid items default to min-width:auto, so the long <select>
+     option text forces the track wider than the viewport on narrow screens. */
+  #leaderboard-app .chart-card { background: transparent; padding: 1.75rem 0; border-bottom: 1px solid var(--border); margin-top: 0; min-width: 0; }
   #leaderboard-app .chart-card h2 {
-    font-family: var(--serif); font-weight: 400;
+    font-family: var(--display); font-weight: 400;
     font-size: 1.5rem; line-height: 1.3;
     color: var(--text-primary); margin: 0 0 1rem;
   }
-  #leaderboard-app .chart-card p { font-family: var(--sans); font-weight: 300; color: var(--text-muted); }
+  #leaderboard-app .chart-card p { font-family: var(--body); font-weight: 400; color: var(--text-muted); }
   #leaderboard-app .chart-card .chart-note { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 0.5rem; }
   #leaderboard-app .chart-card select {
     font-family: var(--mono); font-size: 0.78rem;
-    background: var(--bg); border: 1px solid var(--border);
-    color: var(--text-primary); border-radius: 2px;
-    padding: 0.4rem 0.65rem; margin: 0 0 1rem;
+    background: transparent; border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary); border-radius: 0;
+    padding: 0.4rem 0; margin: 0 0 1rem;
+    max-width: 100%;
     cursor: pointer;
   }
-  #leaderboard-app .chart-card select:focus { outline: none; border-color: var(--accent); }
+  #leaderboard-app .chart-card select:focus { outline: none; border-bottom-color: var(--accent); }
 
-  #leaderboard-app .bar-row { display: grid; grid-template-columns: 11rem 1fr 3rem; align-items: center; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; font-family: var(--sans); color: var(--text-secondary); margin-top: 0; }
-  #leaderboard-app .bar-track { height: 10px; background: var(--bg); border: 1px solid var(--border); overflow: hidden; }
+  #leaderboard-app .bar-row { display: grid; grid-template-columns: 1.6rem 9rem 1fr 3rem; align-items: center; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; font-family: var(--body); color: var(--text-secondary); margin-top: 0; }
+  #leaderboard-app .bar-track { height: 10px; background: var(--accent-dim); overflow: hidden; }
   #leaderboard-app .bar-fill { height: 100%; }
   #leaderboard-app .bar-fill.open { background: var(--accent); }
   #leaderboard-app .bar-fill.closed { background: var(--text-muted); }
 
   /* ── Cost calculator ───────────────────────────────────────── */
   #leaderboard-app .calc {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 2rem; margin-bottom: 3rem;
+    background: transparent;
+    border-top: 1px solid var(--border);
+    padding: 2rem 0; margin-bottom: 3rem;
   }
   #leaderboard-app .calc h2 {
-    font-family: var(--serif); font-weight: 400;
+    font-family: var(--display); font-weight: 400;
     font-size: 1.8rem; line-height: 1.2;
     color: var(--text-primary); margin: 0 0 1.5rem;
   }
   #leaderboard-app .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1.25rem; margin: 0 0 1.5rem; }
   #leaderboard-app .calc-grid label {
     font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
-    letter-spacing: 0.15em; text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--text-muted);
     display: block; margin-bottom: 0.5rem;
   }
   #leaderboard-app .calc-grid input, #leaderboard-app .calc-grid select {
-    font-family: var(--sans); font-weight: 300; font-size: 0.95rem;
-    width: 100%; background: var(--bg);
-    border: 1px solid var(--border); color: var(--text-primary);
-    border-radius: 2px; padding: 0.55rem 0.7rem;
+    font-family: var(--body); font-weight: 400; font-size: 0.95rem;
+    width: 100%; background: transparent;
+    border: none; border-bottom: 1px solid var(--border); color: var(--text-primary);
+    border-radius: 0; padding: 0.55rem 0;
   }
-  #leaderboard-app .calc-grid input:focus, #leaderboard-app .calc-grid select:focus { outline: none; border-color: var(--accent); }
+  #leaderboard-app .calc-grid input:focus, #leaderboard-app .calc-grid select:focus { outline: none; border-bottom-color: var(--accent); }
   #leaderboard-app .calc-result {
-    background: var(--bg); border: 1px solid var(--border);
-    padding: 1.25rem; font-family: var(--sans); font-weight: 300;
+    background: transparent; border-top: 1px solid var(--border);
+    padding: 1.25rem 0 0; font-family: var(--body); font-weight: 400;
     color: var(--text-secondary);
   }
   #leaderboard-app .calc-result strong {
-    font-family: var(--serif); font-weight: 500;
+    font-family: var(--display); font-weight: 500;
     color: var(--accent); font-size: 1.75rem;
   }
   #leaderboard-app .calc-note { margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted); }
@@ -507,12 +511,12 @@ const head = [
   #leaderboard-app #compare-bar {
     position: fixed; bottom: 1.25rem; left: 50%;
     transform: translateX(-50%);
-    background: var(--accent); color: var(--bg);
-    padding: 0.75rem 1.5rem; border-radius: 2px;
-    font-family: var(--sans); font-weight: 500; font-size: 0.85rem;
-    letter-spacing: 0.05em; text-transform: uppercase;
+    background: var(--text-primary); color: var(--bg);
+    padding: 0.75rem 1.5rem; border-radius: 0;
+    font-family: var(--body); font-weight: 500; font-size: 0.9rem;
+    letter-spacing: 0.01em;
     cursor: pointer; display: none;
-    border: 1px solid var(--accent);
+    border: none;
     transition: all 0.3s ease;
     z-index: 110;
   }
@@ -528,7 +532,7 @@ const head = [
   }
   #leaderboard-app #compare-drawer.open { transform: translateX(0); }
   #leaderboard-app #compare-drawer h2 {
-    font-family: var(--serif); font-weight: 400;
+    font-family: var(--display); font-weight: 400;
     font-size: 2rem; color: var(--text-primary); margin: 0;
   }
   #leaderboard-app #compare-drawer .close {
@@ -538,15 +542,15 @@ const head = [
     transition: color 0.3s ease;
   }
   #leaderboard-app #compare-drawer .close:hover { color: var(--accent); }
-  #leaderboard-app .compare-table { width: 100%; margin-top: 1.5rem; border-collapse: collapse; font-size: 0.85rem; border: 1px solid var(--border); }
+  #leaderboard-app .compare-table { width: 100%; margin-top: 1.5rem; border-collapse: collapse; font-size: 0.85rem; }
   #leaderboard-app .compare-table th, #leaderboard-app .compare-table td {
-    padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border);
-    text-align: left; font-family: var(--sans); font-weight: 300;
+    padding: 0.6rem 0.75rem 0.6rem 0; border-bottom: 1px solid var(--border);
+    text-align: left; font-family: var(--body); font-weight: 400;
   }
   #leaderboard-app .compare-table th {
     font-family: var(--mono); font-size: 0.7rem;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--text-muted); background: var(--bg-card);
+    letter-spacing: 0.02em;
+    color: var(--text-muted); background: transparent;
     cursor: default; white-space: normal;
   }
   #leaderboard-app .compare-table th:first-child, #leaderboard-app .compare-table td:first-child { color: var(--text-muted); font-weight: 500; }
@@ -863,12 +867,17 @@ const head = [
       </circle>
     `).join('');
 
-    const labels = pareto.map(p => `
-      <text x="${sx(p.x) + 8}" y="${sy(p.y) - 6}" font-size="10" fill="var(--text)">${p.name}</text>
-    `).join('');
+    // Anchor labels inward near the right edge so they cannot spill past the viewBox.
+    const labels = pareto.map(p => {
+      const near = sx(p.x) > W - 120;
+      return `
+      <text x="${sx(p.x) + (near ? -8 : 8)}" y="${sy(p.y) - 6}" font-size="10"
+        text-anchor="${near ? 'end' : 'start'}" fill="var(--text)">${p.name}</text>
+      `;
+    }).join('');
 
     $('#scatter-chart').innerHTML = `
-      <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;background:var(--bg);border-radius:0.375rem">
+      <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;background:var(--bg);border-radius:0">
         <line x1="${P}" y1="${H - P}" x2="${W - P}" y2="${H - P}" stroke="var(--border)" />
         <line x1="${P}" y1="${P}" x2="${P}" y2="${H - P}" stroke="var(--border)" />
         <text x="${W / 2}" y="${H - 8}" text-anchor="middle" font-size="11" fill="var(--text-muted)">Blended price per 1M tokens (log10)</text>

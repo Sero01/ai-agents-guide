@@ -1,63 +1,34 @@
 /* AgentGuide — Starlight overrides
- * Warm editorial minimalism applied to docs pages.
- * Tokens shared with the homepage via theme.css.
+ * Classical system applied to docs pages: paper ground, hairline rules,
+ * sentence case, no boxes. Tokens shared with the homepage via theme.css.
  */
 
 @import './theme.css';
 
 /* ── Starlight token mapping ─────────────────────────────────────── */
 :root {
-  --sl-font: var(--sans);
-  --sl-font-system: var(--sans);
+  --sl-font: var(--body);
+  --sl-font-system: var(--body);
   --sl-font-system-mono: var(--mono);
   --sl-text-base: 1rem;
   --sl-line-height: 1.8;
 }
 
-/* Dark (default) — Starlight applies these when not data-theme='light' */
-:root,
-:root:not([data-theme='light']) {
+/* Starlight tokens map onto the theme.css vars, which swap themselves —
+ * so one mapping serves both themes. --sl-color-black is the page ground in
+ * Starlight's light palette and the true black in its dark one; var(--bg) is
+ * correct for both. Pagefind's search input reads it as a background. */
+:root {
   --sl-color-bg: var(--bg);
   --sl-color-bg-nav: color-mix(in srgb, var(--bg) 85%, transparent);
   --sl-color-bg-sidebar: var(--bg);
-  --sl-color-bg-inline-code: var(--accent-dim);
-
-  --sl-color-text: var(--text-secondary);
-  --sl-color-text-accent: var(--accent);
-  --sl-color-text-invert: var(--bg);
-  --sl-color-white: var(--text-primary);
-
-  --sl-color-accent: var(--accent);
-  --sl-color-accent-low: var(--accent-dim);
-  --sl-color-accent-high: var(--accent-hover);
-
-  --sl-color-gray-1: var(--text-primary);
-  --sl-color-gray-2: var(--text-secondary);
-  --sl-color-gray-3: var(--text-secondary);
-  --sl-color-gray-4: var(--text-muted);
-  --sl-color-gray-5: var(--text-muted);
-  --sl-color-gray-6: var(--bg-card);
-  --sl-color-gray-7: var(--bg-card-hover);
-
-  --sl-color-hairline: var(--border);
-  --sl-color-hairline-light: var(--border);
-  --sl-color-hairline-shade: var(--border);
-}
-
-/* Light overrides */
-:root[data-theme='light'] {
-  --sl-color-bg: var(--bg);
-  --sl-color-bg-nav: color-mix(in srgb, var(--bg) 85%, transparent);
-  --sl-color-bg-sidebar: var(--bg);
-  --sl-color-bg-inline-code: var(--accent-dim);
-
-  --sl-color-text: var(--text-secondary);
-  --sl-color-text-accent: var(--accent);
-  --sl-color-text-invert: var(--bg);
-  --sl-color-white: var(--text-primary);
-  /* Starlight's light palette inverts the gray scale: --sl-color-black is the
-   * LIGHTEST color (page bg) — Pagefind's search input uses it as background. */
+  --sl-color-bg-inline-code: transparent;
   --sl-color-black: var(--bg);
+
+  --sl-color-text: var(--text-secondary);
+  --sl-color-text-accent: var(--accent);
+  --sl-color-text-invert: var(--bg);
+  --sl-color-white: var(--text-primary);
 
   --sl-color-accent: var(--accent);
   --sl-color-accent-low: var(--accent-dim);
@@ -78,8 +49,8 @@
 
 /* ── Global typography on Starlight pages ────────────────────────── */
 body {
-  font-family: var(--sans);
-  font-weight: 300;
+  font-family: var(--body);
+  font-weight: 400;
   background: var(--bg);
   color: var(--text-secondary);
   -webkit-font-smoothing: antialiased;
@@ -87,7 +58,7 @@ body {
 
 /* Logo / site title in header */
 .site-title {
-  font-family: var(--serif) !important;
+  font-family: var(--display) !important;
   font-weight: 500 !important;
   font-size: 1.4rem !important;
   letter-spacing: -0.01em;
@@ -108,7 +79,7 @@ header.header {
 /* Nav links — uppercase mono-ish */
 .sl-nav-mobile-link,
 header.header a[href]:not(.site-title):not(.social-icons) {
-  font-family: var(--sans);
+  font-family: var(--body);
 }
 
 /* ── Sidebar ─────────────────────────────────────────────────────── */
@@ -118,16 +89,15 @@ nav.sidebar {
 }
 nav.sidebar ul.top-level > li > a,
 nav.sidebar ul.top-level > li > details > summary {
-  font-family: var(--mono);
-  font-size: 0.72rem !important;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  font-family: var(--display);
+  font-size: 1.05rem !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
 }
 nav.sidebar a {
-  font-family: var(--sans);
-  font-weight: 300;
+  font-family: var(--body);
+  font-weight: 400;
   color: var(--text-secondary);
   transition: color 0.3s ease;
 }
@@ -140,8 +110,8 @@ nav.sidebar a[aria-current='page'] {
 
 /* ── Article body ────────────────────────────────────────────────── */
 .sl-markdown-content {
-  font-family: var(--sans);
-  font-weight: 300;
+  font-family: var(--body);
+  font-weight: 400;
   font-size: 1.02rem;
   line-height: 1.8;
   color: var(--text-secondary);
@@ -156,7 +126,7 @@ nav.sidebar a[aria-current='page'] {
 h1.title,
 .page-title,
 [data-page-title] {
-  font-family: var(--serif) !important;
+  font-family: var(--display) !important;
   font-weight: 400 !important;
   color: var(--text-primary);
   letter-spacing: -0.02em;
@@ -191,17 +161,16 @@ h1.title,
 .sl-markdown-content code:not(pre code) {
   font-family: var(--mono);
   font-size: 0.88em;
-  background: var(--accent-dim);
-  color: var(--text-primary);
-  padding: 2px 0.4em;
-  border-radius: 2px;
+  color: var(--accent-hover);
 }
 .sl-markdown-content pre {
   font-family: var(--mono);
-  background: var(--bg-card) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 2px !important;
-  padding: 1.25rem !important;
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+  padding: 1.25rem 0 !important;
 }
 .sl-markdown-content pre code { font-family: var(--mono); font-weight: 400; }
 
@@ -210,27 +179,23 @@ h1.title,
   border-collapse: collapse;
   width: 100%;
   font-size: 0.92rem;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
 }
 .sl-markdown-content th {
-  background: var(--bg-card-hover);
-  color: var(--text-primary);
+  color: var(--text-muted);
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.75rem 1rem;
+  letter-spacing: 0.02em;
+  padding: 0.75rem 1rem 0.6rem 0;
   text-align: left;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-hover);
 }
 .sl-markdown-content td {
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1rem 0.75rem 0;
   border-top: 1px solid var(--border);
   color: var(--text-secondary);
 }
-.sl-markdown-content tr:hover td { background: var(--bg-card-hover); }
+.sl-markdown-content tr:hover td { color: var(--text-primary); }
 
 /* ── Blockquotes ─────────────────────────────────────────────────── */
 .sl-markdown-content blockquote {
@@ -240,7 +205,7 @@ h1.title,
   margin: 1.5rem 0;
   color: var(--text-secondary);
   font-style: italic;
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 1.1rem;
 }
 
@@ -253,43 +218,45 @@ h1.title,
 
 /* ── Asides / callouts ───────────────────────────────────────────── */
 .sl-markdown-content aside.starlight-aside {
-  background: var(--bg-card);
-  border-radius: 2px;
+  background: transparent;
+  border-radius: 0;
   border-inline-start: 2px solid var(--accent);
-  padding: 1rem 1.25rem;
+  padding: 0.25rem 0 0.25rem 1.25rem;
 }
 .sl-markdown-content aside.starlight-aside .starlight-aside__title {
   font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
   color: var(--accent);
   font-weight: 500;
 }
 
 /* ── Pagination links ────────────────────────────────────────────── */
 .pagination-links a {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  padding-top: 0.75rem;
+  transition: color 0.3s ease;
 }
 .pagination-links a:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--border-hover);
+  background: transparent;
+  color: var(--accent);
 }
 
 /* ── Search button ───────────────────────────────────────────────── */
 site-search button {
   font-family: var(--mono) !important;
   font-size: 0.75rem !important;
-  background: var(--bg-card) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 2px !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-radius: 0 !important;
   color: var(--text-muted) !important;
 }
 site-search button:hover {
-  border-color: var(--border-hover) !important;
+  border-bottom-color: var(--accent) !important;
   color: var(--text-secondary) !important;
 }
 
@@ -300,15 +267,96 @@ site-search button:hover {
   width: 1em;
   height: 1em;
 }
-.sl-markdown-content .status-pass     { color: #16a34a; }
-.sl-markdown-content .status-warn     { color: #d97706; }
-.sl-markdown-content .status-fail     { color: #dc2626; }
-.sl-markdown-content .status-good     { color: #16a34a; fill: currentColor; }
-.sl-markdown-content .status-partial  { color: #eab308; fill: currentColor; }
+.sl-markdown-content .status-pass     { color: #4f7a3f; }
+.sl-markdown-content .status-warn     { color: #a06f24; }
+.sl-markdown-content .status-fail     { color: #a33a2b; }
+.sl-markdown-content .status-good     { color: #4f7a3f; fill: currentColor; }
+.sl-markdown-content .status-partial  { color: #9a7d1e; fill: currentColor; }
 .sl-markdown-content .inline-icon     { vertical-align: -0.2em; }
 
-:root:not([data-theme='light']) .sl-markdown-content .status-pass    { color: #4ade80; }
-:root:not([data-theme='light']) .sl-markdown-content .status-warn    { color: #fbbf24; }
-:root:not([data-theme='light']) .sl-markdown-content .status-fail    { color: #f87171; }
-:root:not([data-theme='light']) .sl-markdown-content .status-good    { color: #4ade80; }
-:root:not([data-theme='light']) .sl-markdown-content .status-partial { color: #facc15; }
+:root[data-theme='dark'] .sl-markdown-content .status-pass    { color: #8fbf7a; }
+:root[data-theme='dark'] .sl-markdown-content .status-warn    { color: #e1ad66; }
+:root[data-theme='dark'] .sl-markdown-content .status-fail    { color: #d98a7a; }
+:root[data-theme='dark'] .sl-markdown-content .status-good    { color: #8fbf7a; }
+:root[data-theme='dark'] .sl-markdown-content .status-partial { color: #d4b463; }
+
+/* ── Starlight chrome: badges and copy button ────────────────────── */
+/* Sidebar/nav badges ship as filled, rounded, off-palette pills. */
+.sl-badge {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: var(--accent) !important;
+  font-family: var(--mono);
+  font-size: 0.7rem !important;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0 !important;
+  margin-inline-start: 0.4rem;
+  text-transform: none !important;
+}
+
+/* Code-block copy button. The visible box is a bordered ::before plus a filled
+ * inner div, not the button itself — both have to go. */
+.expressive-code {
+  --ec-frm-inlBtnBrdOpa: 0;
+  --ec-frm-inlBtnBgIdleOpa: 0;
+  --ec-frm-inlBtnBgHovOpa: 0;
+  --ec-frm-inlBtnBgActOpa: 0;
+}
+.expressive-code .copy button {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.expressive-code .copy button::before { border: none !important; }
+.expressive-code .copy button div { background: transparent !important; }
+.expressive-code .copy button::after { opacity: 0.5; }
+.expressive-code .copy button:hover::after,
+.expressive-code .copy button:focus-visible::after { opacity: 1; }
+
+/* Expressive-code frames are boxes by default — reduce to rules. */
+.expressive-code .frame pre {
+  background: transparent !important;
+  border: none !important;
+  border-top: 1px solid var(--border) !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+  padding-inline: 0 !important;
+}
+.expressive-code .frame {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* ── Collapsible sidebar (desktop) ───────────────────────────────────
+ * Starlight derives the content offset from --sl-sidebar-width
+ * ([data-has-sidebar] in Page.astro), so zeroing that one variable
+ * collapses the pane and reflows both the content and the header.
+ * Below 50rem the sidebar is already a mobile drawer, so this is
+ * desktop-only. */
+/* Starlight's default sidebar width, kept as our own token because the
+ * collapsed state zeroes --sl-sidebar-width and we still need the real
+ * measurement for the right-hand table of contents (below). */
+:root {
+  --ag-sidebar-width: 18.75rem;
+}
+
+@media (min-width: 50rem) {
+  :root[data-sidebar='collapsed'] {
+    --sl-sidebar-width: 0rem;
+  }
+  :root[data-sidebar='collapsed'] .sidebar-pane {
+    visibility: hidden;
+    overflow: hidden;
+    border-inline-end: none;
+  }
+  /* PageSidebar.astro sizes the right-hand "On this page" panel from
+   * --sl-sidebar-width too (.sl-container), so zeroing that variable would
+   * compute a negative width and crush the TOC to one character per line.
+   * Pin it to the real width instead. */
+  :root[data-sidebar='collapsed'] .right-sidebar .sl-container {
+    width: calc(var(--ag-sidebar-width) - 2 * var(--sl-sidebar-pad-x));
+  }
+}

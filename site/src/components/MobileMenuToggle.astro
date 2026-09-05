@@ -1,0 +1,123 @@
+---
+// Overrides Starlight's MobileMenuToggle so we can add a desktop sidebar
+// collapse handle alongside it.
+//
+// This component renders inside <nav class="sidebar"> but OUTSIDE
+// <div class="sidebar-pane"> — which is why the handle stays visible after the
+// pane collapses. Starlight's own mobile hamburger is rendered unchanged via
+// <Default />, so small-screen behaviour is untouched.
+//
+// Collapsing works by zeroing --sl-sidebar-width on <html data-sidebar>;
+// Starlight derives --sl-content-inline-start from it, so the content and
+// header reflow on their own. See src/styles/custom.css.
+import Default from '@astrojs/starlight/components/MobileMenuToggle.astro';
+---
+
+<Default {...Astro.props}><slot /></Default>
+
+<button
+  id="sidebar-collapse-toggle"
+  class="sidebar-collapse-toggle print:hidden"
+  aria-controls="starlight__sidebar"
+  aria-expanded="true"
+  aria-label="Collapse sidebar"
+  title="Collapse sidebar"
+>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M15 6l-6 6 6 6"></path>
+  </svg>
+</button>
+
+<style>
+  .sidebar-collapse-toggle {
+    display: none;
+  }
+
+  @media (min-width: 50rem) {
+    .sidebar-collapse-toggle {
+      position: fixed;
+      z-index: calc(var(--sl-z-index-navbar) + 1);
+      inset-block-start: calc(var(--sl-nav-height) + 0.75rem);
+      /* Sits on the pane's edge when open; clamped so it stays fully on-screen
+       * (and therefore clickable) once the pane collapses to zero width. */
+      inset-inline-start: max(0.35rem, calc(var(--sl-sidebar-width) - 0.8rem));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      padding: 0;
+      background: var(--sl-color-bg);
+      border: none;
+      border-radius: 0;
+      color: var(--sl-color-gray-4);
+      cursor: pointer;
+      /* No transition on inset-inline-start: it is derived from
+       * --sl-sidebar-width, and transitioning a layout property driven by a
+       * custom property leaves it stranded at the old value. Colour only. */
+      transition: color 0.2s ease;
+    }
+
+    .sidebar-collapse-toggle:hover,
+    .sidebar-collapse-toggle:focus-visible {
+      color: var(--sl-color-text-accent);
+    }
+
+    .sidebar-collapse-toggle svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    /* Point the chevron outward once the pane is collapsed. */
+    :global(:root[data-sidebar='collapsed']) .sidebar-collapse-toggle svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar-collapse-toggle { transition: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var KEY = 'agentguides-sidebar';
+    var root = document.documentElement;
+
+    function apply(state) {
+      if (state === 'collapsed') root.setAttribute('data-sidebar', 'collapsed');
+      else root.removeAttribute('data-sidebar');
+      try { localStorage.setItem(KEY, state); } catch (e) {}
+      var btn = document.getElementById('sidebar-collapse-toggle');
+      if (btn) {
+        var open = state !== 'collapsed';
+        btn.setAttribute('aria-expanded', String(open));
+        var label = open ? 'Collapse sidebar' : 'Expand sidebar';
+        btn.setAttribute('aria-label', label);
+        btn.setAttribute('title', label);
+      }
+    }
+
+    function stored() {
+      try {
+        var v = localStorage.getItem(KEY);
+        return v === 'collapsed' ? 'collapsed' : 'expanded';
+      } catch (e) { return 'expanded'; }
+    }
+
+    // Re-sync on every navigation (is:inline re-runs across view transitions).
+    apply(stored());
+
+    // Bind the click handler once, guarded against duplicate registration.
+    if (!window.__sidebarToggleBound) {
+      window.__sidebarToggleBound = true;
+      document.addEventListener('click', function (e) {
+        var t = e.target;
+        if (!t || !t.closest) return;
+        if (!t.closest('#sidebar-collapse-toggle')) return;
+        apply(root.getAttribute('data-sidebar') === 'collapsed' ? 'expanded' : 'collapsed');
+      });
+    }
+  })();
+</script>

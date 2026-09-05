@@ -1,17 +1,27 @@
 /* AgentGuide Theme — design tokens
  *
- * Default = dark (warm editorial minimalism per AGENTGUIDE-THEME.md).
- * Light theme is a warm parchment adaptation that preserves the same
- * typographic hierarchy and borders-only structure.
+ * Classical system, ported from the "AgentGuides Screens" design canvas.
+ * Warm editorial: paper ground, ink text, single gold accent, hairline rules.
  *
- * Both themes load the same fonts. Color is the only thing that swaps.
+ * Default = paper (light). The dark theme is the canvas's dark screen (1b),
+ * not an inversion — it keeps its own warmer gold so the accent still reads.
+ *
+ * Two house rules carried over from the design and enforced site-wide:
+ *   1. No full-caps rendering. Sentence case everywhere; acronyms excepted.
+ *   2. No boxes. Structure comes from rules, spacing and colour — not from
+ *      borders, fills, radii or shadows.
+ *
+ * Both themes load the same fonts. Colour is the only thing that swaps.
  */
 
 :root {
-  /* Type families */
-  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-  --sans:  'Libre Franklin', system-ui, -apple-system, sans-serif;
-  --mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  /* Type families.
+   * --display  headings and figures        Cormorant Garamond
+   * --body     running text and UI         Lora
+   * --mono     numbers, labels, code       JetBrains Mono */
+  --display: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --body:    'Lora', Georgia, 'Times New Roman', serif;
+  --mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* Spacing scale */
   --space-xs: 0.5rem;
@@ -22,58 +32,61 @@
 
   --max-w: 1100px;
 
-  /* === Dark (default) === */
-  --bg:             #0c0c0c;
-  --bg-card:        #141414;
-  --bg-card-hover:  #1a1a1a;
-  --text-primary:   #e8e4df;
-  --text-secondary: #8a8580;
-  --text-muted:     #5a5550;
-  --accent:         #c8a882;
-  --accent-hover:   #d4b896;
-  --accent-dim:     rgba(200, 168, 130, 0.12);
-  --border:         #222222;
-  --border-hover:   #333333;
-  --hero-glow:      rgba(200, 168, 130, 0.06);
-
-  color-scheme: dark;
-}
-
-/* === Light theme === */
-:root[data-theme='light'] {
-  --bg:             #faf7f2;
-  --bg-card:        #f3eee5;
-  --bg-card-hover:  #ebe5d9;
-  --text-primary:   #1a1612;
-  --text-secondary: #5a534b;
-  --text-muted:     #8a8378;
-  --accent:         #8b6f47;
-  --accent-hover:   #74592f;
-  --accent-dim:     rgba(139, 111, 71, 0.10);
-  --border:         #d8d0c2;
-  --border-hover:   #b8ac98;
-  --hero-glow:      rgba(139, 111, 71, 0.05);
+  /* === Paper (default) === */
+  --bg:             #f3f2f2;
+  --bg-card:        #eae9e9;
+  --bg-card-hover:  #e4e2df;
+  --text-primary:   #201f1d;
+  --text-secondary: #45423e;
+  --text-muted:     #6e6b66;
+  --accent:         #b68235;
+  --accent-hover:   #7d5411;
+  --accent-dim:     rgba(182, 130, 53, 0.12);
+  --border:         rgba(32, 31, 29, 0.16);
+  --border-hover:   rgba(32, 31, 29, 0.30);
+  --hero-glow:      rgba(182, 130, 53, 0.05);
+  --status-unreleased: #9c5a2e;
 
   color-scheme: light;
 }
 
-/* OS-preference fallback before JS resolves (avoids flash on a light-OS user
- * arriving with no stored preference). Dark is our default, so we only need
- * to flip when the OS prefers light AND no explicit theme is set. */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme='dark']):not([data-theme='light']) {
-    --bg:             #faf7f2;
-    --bg-card:        #f3eee5;
-    --bg-card-hover:  #ebe5d9;
-    --text-primary:   #1a1612;
-    --text-secondary: #5a534b;
-    --text-muted:     #8a8378;
-    --accent:         #8b6f47;
-    --accent-hover:   #74592f;
-    --accent-dim:     rgba(139, 111, 71, 0.10);
-    --border:         #d8d0c2;
-    --border-hover:   #b8ac98;
-    --hero-glow:      rgba(139, 111, 71, 0.05);
-    color-scheme: light;
+/* === Dark theme (canvas screen 1b) === */
+:root[data-theme='dark'] {
+  --bg:             #1b1a19;
+  --bg-card:        #232120;
+  --bg-card-hover:  #2a2826;
+  --text-primary:   #f0ede9;
+  --text-secondary: #b3aea8;
+  --text-muted:     #85807a;
+  --accent:         #e1ad66;
+  --accent-hover:   #f2c98a;
+  --accent-dim:     rgba(225, 173, 102, 0.14);
+  --border:         rgba(240, 237, 233, 0.14);
+  --border-hover:   rgba(240, 237, 233, 0.28);
+  --hero-glow:      rgba(225, 173, 102, 0.06);
+  --status-unreleased: #d99a6c;
+
+  color-scheme: dark;
+}
+
+/* OS-preference fallback before JS resolves (avoids a flash on a dark-OS user
+ * arriving with no stored preference). Paper is our default, so we only need
+ * to flip when the OS prefers dark AND no explicit theme is set. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) {
+    --bg:             #1b1a19;
+    --bg-card:        #232120;
+    --bg-card-hover:  #2a2826;
+    --text-primary:   #f0ede9;
+    --text-secondary: #b3aea8;
+    --text-muted:     #85807a;
+    --accent:         #e1ad66;
+    --accent-hover:   #f2c98a;
+    --accent-dim:     rgba(225, 173, 102, 0.14);
+    --border:         rgba(240, 237, 233, 0.14);
+    --border-hover:   rgba(240, 237, 233, 0.28);
+    --hero-glow:      rgba(225, 173, 102, 0.06);
+    --status-unreleased: #d99a6c;
+    color-scheme: dark;
   }
 }
