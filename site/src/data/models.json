@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-08-30",
+  "last_updated": "2026-09-06",
   "aa_index_version": "v4.1",
   "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
   "source_registry": {
@@ -267,6 +267,115 @@
       }
     },
     {
+      "id": "gpt-6-astra",
+      "name": "GPT-6 Astra",
+      "vendor": "OpenAI",
+      "license": "closed",
+      "released": "2026-09-03",
+      "context_window": 1050000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 10.0,
+        "output": 50.0,
+        "cache_read": 1.0
+      },
+      "throughput": 75,
+      "vendor_link": "https://openai.com",
+      "status": "current",
+      "benchmarks": {
+        "gpqa_diamond": {
+          "value": 96.0,
+          "source": "vendor",
+          "url": "https://openai.com/index/gpt-6-astra",
+          "note": "OpenAI-reported in the GPT-6 Astra launch materials; ties the current frontier.",
+          "measured": "2026-09-06"
+        },
+        "swe_bench_verified": {
+          "value": 90.0,
+          "source": "estimate",
+          "measured": "2026-09-06",
+          "note": "Conservative estimate anchored to GPT-5.6 Sol's estimated 90.0; OpenAI led the launch with DeepSWE v1.1 74.1 rather than a first-party SWE-bench Verified cell."
+        },
+        "swe_bench_pro": {
+          "value": 70.0,
+          "source": "estimate",
+          "measured": "2026-09-06",
+          "note": "Conservative estimate anchored to GPT-5.6 Sol's vendor 64.6 and held below the confirmed frontier coding leaders (Fable 5.1 81.2, Opus 5 79.2); OpenAI did not publish a first-party SWE-bench Pro cell."
+        },
+        "terminal_bench_2_1": {
+          "value": 89.0,
+          "source": "estimate",
+          "measured": "2026-09-06",
+          "note": "Conservative estimate anchored to GPT-5.6 Sol's vendor 88.8; Astra is stronger on long-horizon computer-use tasks (OSWorld 2.0 72.6 vendor) but OpenAI did not publish a Terminal-Bench 2.1 cell."
+        },
+        "hle": {
+          "value": 63.0,
+          "source": "estimate",
+          "measured": "2026-09-06",
+          "note": "Conservative estimate anchored to the frontier tools-enabled range (Opus 5 64.7 with tools); OpenAI did not publish an HLE cell at launch."
+        }
+      }
+    },
+    {
+      "id": "claude-fable-5-1",
+      "name": "Claude Fable 5.1",
+      "vendor": "Anthropic",
+      "license": "closed",
+      "released": "2026-09-01",
+      "context_window": 1000000,
+      "max_output": 128000,
+      "modalities": [
+        "text",
+        "vision"
+      ],
+      "pricing": {
+        "input": 10.0,
+        "output": 50.0,
+        "cache_write": 12.5,
+        "cache_read": 0.25
+      },
+      "throughput": 72,
+      "vendor_link": "https://anthropic.com/claude",
+      "status": "current",
+      "benchmarks": {
+        "gpqa_diamond": {
+          "value": 95.0,
+          "source": "estimate",
+          "measured": "2026-09-06",
+          "note": "Conservative estimate carried from Claude Fable 5 (95.0); Anthropic did not publish a standalone GPQA Diamond cell for 5.1."
+        },
+        "swe_bench_verified": {
+          "value": 91.0,
+          "source": "estimate",
+          "measured": "2026-09-06",
+          "note": "Conservative estimate carried from Claude Fable 5; Anthropic's 5.1 system card led with SWE-bench Pro, Multilingual, and Multimodal rather than a first-party Verified cell."
+        },
+        "swe_bench_pro": {
+          "value": 81.2,
+          "source": "vendor",
+          "url": "https://www.anthropic.com/news/claude-fable-5-1",
+          "note": "Claude Fable 5.1 system card, 2026-09-01; up from Fable 5's 80.3 and the highest sourced SWE-bench Pro figure on this table.",
+          "measured": "2026-09-06"
+        },
+        "terminal_bench_2_1": {
+          "value": 88.5,
+          "source": "estimate",
+          "measured": "2026-09-06",
+          "note": "Conservative estimate anchored to Fable 5's vendor 88.0; Anthropic reported gains on Terminal-Bench-Science 0.1 (24.7 to 52.6), a harder variant that does not map to this column."
+        },
+        "hle": {
+          "value": 59.0,
+          "source": "estimate",
+          "measured": "2026-09-06",
+          "note": "Conservative estimate carried from Claude Fable 5's vendor 59.0 (without tools); Anthropic did not publish a standalone HLE cell for 5.1."
+        }
+      }
+    },
+    {
       "id": "claude-fable-5",
       "name": "Claude Fable 5",
       "vendor": "Anthropic",
@@ -286,7 +395,7 @@
       },
       "throughput": 72,
       "vendor_link": "https://anthropic.com/claude",
-      "status": "current",
+      "status": "superseded",
       "benchmarks": {
         "mmlu_pro": {
           "value": 90.0,
@@ -877,7 +986,7 @@
       },
       "throughput": 80,
       "vendor_link": "https://openai.com",
-      "status": "current",
+      "status": "superseded",
       "benchmarks": {
         "mmlu_pro": {
           "value": 90.0,

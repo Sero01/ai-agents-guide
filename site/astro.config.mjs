@@ -158,6 +158,7 @@ export default defineConfig({
 							{ label: 'Gemini 3.7 Flash Review', slug: 'reviews/gemini-3-7-flash-review' },
 							{ label: 'Grok 4.6 Review', slug: 'reviews/grok-4-6-review' },
 							{ label: 'GLM-5.3 Flash Review', slug: 'reviews/glm-5-3-flash-review' },
+							{ label: 'GPT-6 Astra Review', slug: 'reviews/gpt-6-astra-review' },
 					],
 				},
 				{
