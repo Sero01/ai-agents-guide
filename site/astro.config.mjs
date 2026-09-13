@@ -159,6 +159,7 @@ export default defineConfig({
 							{ label: 'Grok 4.6 Review', slug: 'reviews/grok-4-6-review' },
 							{ label: 'GLM-5.3 Flash Review', slug: 'reviews/glm-5-3-flash-review' },
 							{ label: 'GPT-6 Astra Review', slug: 'reviews/gpt-6-astra-review' },
+							{ label: 'DeepSeek V4.1 Flash Review', slug: 'reviews/deepseek-v4-1-flash-review' },
 					],
 				},
 				{

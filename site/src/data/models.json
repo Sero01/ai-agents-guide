@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-09-06",
+  "last_updated": "2026-09-13",
   "aa_index_version": "v4.1",
   "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
   "source_registry": {
@@ -3174,7 +3174,7 @@
       },
       "throughput": 130,
       "vendor_link": "https://deepseek.com",
-      "status": "current",
+      "status": "superseded",
       "benchmarks": {
         "mmlu_pro": {
           "value": 78.0,
@@ -3224,6 +3224,91 @@
           "source": "estimate",
           "measured": "2026-08-02",
           "note": "DeepSeek V4 Flash 0731 checkpoint. Conservative estimate; independent aggregators report roughly 37 on Humanity's Last Exam for the re-trained build, up about 5 points over the prior V4 Flash. DeepSeek did not publish a first-party HLE cell."
+        }
+      }
+    },
+    {
+      "id": "deepseek-v4-1-flash",
+      "name": "DeepSeek V4.1 Flash",
+      "vendor": "DeepSeek",
+      "license": "open",
+      "released": "2026-09-10",
+      "context_window": 1048576,
+      "max_output": 384000,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.15,
+        "output": 0.6,
+        "cache_read": 0.003
+      },
+      "throughput": 190,
+      "vendor_link": "https://deepseek.com",
+      "status": "current",
+      "benchmarks": {
+        "mmlu_pro": {
+          "value": 84.0,
+          "source": "estimate",
+          "measured": "2026-09-13",
+          "note": "Conservative estimate between DeepSeek V4 Flash's 78 and V4 Pro's vendor 87.5; DeepSeek did not publish a first-party MMLU-Pro cell. Legacy column, never scored."
+        },
+        "gpqa_diamond": {
+          "value": 90.9,
+          "source": "vendor",
+          "url": "https://deepseek.com",
+          "measured": "2026-09-13",
+          "note": "DeepSeek-reported at the V4.1 Flash launch (Sep 10 2026); essentially flat versus the V4 Flash 0731 checkpoint (~91) — the V4.1 gains are concentrated in agentic coding, not reasoning."
+        },
+        "humaneval": {
+          "value": 92.0,
+          "source": "estimate",
+          "measured": "2026-09-13",
+          "note": "Conservative estimate anchored to DeepSeek V4 Pro's 93.5; HumanEval is saturated at the frontier. Legacy column, never scored."
+        },
+        "swe_bench_verified": {
+          "value": 72.0,
+          "source": "estimate",
+          "measured": "2026-09-13",
+          "note": "Conservative estimate anchored to DeepSeek's vendor DeepSWE v1.1 of 74.2 and held a couple of points below it; DeepSeek led the launch with DeepSWE and Terminal-Bench 2.1, not a first-party SWE-bench Verified cell."
+        },
+        "math_500": {
+          "value": 95.0,
+          "source": "estimate",
+          "measured": "2026-09-13",
+          "note": "Conservative estimate between DeepSeek V4 Pro's vendor 96.0 and V4 Flash's 91.0. Retired legacy column, never scored."
+        },
+        "aider_polyglot": {
+          "value": 71.0,
+          "source": "estimate",
+          "measured": "2026-09-13",
+          "note": "Conservative estimate between DeepSeek V4 Flash's 65 and V4 Pro's 78. Unmaintained legacy column, never scored."
+        },
+        "tau_bench": {
+          "value": 66.0,
+          "source": "estimate",
+          "measured": "2026-09-13",
+          "note": "Conservative estimate between DeepSeek V4 Flash's 58 and V4 Pro's 70. Retired legacy column, never scored."
+        },
+        "swe_bench_pro": {
+          "value": 58.0,
+          "source": "estimate",
+          "measured": "2026-09-13",
+          "note": "Conservative estimate anchored to DeepSeek V4 Pro's vendor 55.4, nudged up for V4.1's agentic-coding gains and held well below the frontier coding leaders (Claude Fable 5.1 81.2, Opus 5 79.2). No first-party SWE-bench Pro cell."
+        },
+        "terminal_bench_2_1": {
+          "value": 90.6,
+          "source": "vendor",
+          "url": "https://deepseek.com",
+          "measured": "2026-09-13",
+          "note": "DeepSeek-reported at launch; up from the V4 Flash 0731 checkpoint's 82.7 and among the highest Terminal-Bench 2.1 figures on the table."
+        },
+        "hle": {
+          "value": 63.9,
+          "source": "vendor",
+          "url": "https://deepseek.com",
+          "measured": "2026-09-13",
+          "note": "DeepSeek-reported with tools enabled; a large jump over the V4 Flash 0731 checkpoint's ~37, competitive with the frontier tools-enabled range."
         }
       }
     },

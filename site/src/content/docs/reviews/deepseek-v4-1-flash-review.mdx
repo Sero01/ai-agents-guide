@@ -1,0 +1,177 @@
+---
+title: "DeepSeek V4.1 Flash Review — Frontier Agentic Scores at Flash Pricing"
+description: "DeepSeek V4.1 Flash, released September 10, 2026: a sparse mixture-of-experts open-weight model at $0.15/$0.60 that posts vendor numbers of Terminal-Bench 2.1 90.6, GPQA Diamond 90.9, and HLE-with-tools 63.9. What DeepSeek measured, which cells are estimates, and where it lands."
+author: Parvez Ahmed
+date: 2026-09-13
+lastUpdated: 2026-09-13
+sidebar:
+  order: 20
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "DeepSeek V4.1 Flash Review — Frontier Agentic Scores at Flash Pricing"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "DeepSeek V4.1 Flash, released September 10, 2026: a sparse MoE open-weight model at $0.15/$0.60 that posts vendor numbers of Terminal-Bench 2.1 90.6, GPQA Diamond 90.9, and HLE-with-tools 63.9. What's measured and where it lands."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/deepseek-v4-1-flash-review/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-09-13"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-09-13"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "DeepSeek V4.1 Flash, DeepSeek V4 Flash, DeepSeek, open weights, agentic coding, Terminal-Bench 2.1, SWE-bench, mixture of experts, LLM review"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "DeepSeek V4.1 Flash Review — Frontier Agentic Scores at Flash Pricing"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "DeepSeek V4.1 Flash: a $0.15/$0.60 open-weight MoE that posts Terminal-Bench 2.1 90.6 and HLE-with-tools 63.9, and where it lands on the leaderboard."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/deepseek-v4-1-flash-review/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/deepseek-v4-1-flash-review/#article","headline":"DeepSeek V4.1 Flash Review — Frontier Agentic Scores at Flash Pricing","description":"DeepSeek V4.1 Flash, released September 10, 2026: a sparse mixture-of-experts open-weight model at $0.15/$0.60 that posts vendor numbers of Terminal-Bench 2.1 90.6, GPQA Diamond 90.9, and HLE-with-tools 63.9. What DeepSeek measured, which cells are estimates, and where it lands.","url":"https://agentguides.dev/reviews/deepseek-v4-1-flash-review/","mainEntityOfPage":"https://agentguides.dev/reviews/deepseek-v4-1-flash-review/","datePublished":"2026-09-13","dateModified":"2026-09-13","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"DeepSeek V4.1 Flash review, DeepSeek V4.1 Flash benchmarks, DeepSeek V4.1 Flash pricing, open-weight agentic model, Terminal-Bench 2.1, mixture of experts, DeepSeek API"},
+        {"@type":"Review","name":"DeepSeek V4.1 Flash review","itemReviewed":{"@type":"SoftwareApplication","name":"DeepSeek V4.1 Flash","applicationCategory":"DeveloperApplication","operatingSystem":"API (cloud), open weights","publisher":{"@type":"Organization","name":"DeepSeek"}},"reviewRating":{"@type":"Rating","ratingValue":"4.5","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-09-13","reviewBody":"An open-weight budget model whose agentic ceiling is the story. V4.1 Flash is a sparse mixture-of-experts build on DeepSeek's Causal Encoder-Decoder architecture — it activates roughly 8B parameters on input and 16B on output from a 552B backbone — and DeepSeek reports Terminal-Bench 2.1 90.6, GPQA Diamond 90.9, HLE-with-tools 63.9, DeepSWE v1.1 74.2, and a 3,471 Codeforces rating, all at off-peak pricing of about $0.15 per million input and $0.60 per million output. The caveat is scope and provenance: the strongest published numbers are agentic and coding, DeepSeek did not publish a full standard suite, so SWE-bench Pro/Verified and the broad-reasoning cells on our leaderboard are conservative estimates rather than measurements. For tool-heavy agents and coding pipelines on a tight budget it is among the strongest per-dollar options this month; validate it on your own workload before trusting the sweep."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"DeepSeek V4.1 Flash Review","item":"https://agentguides.dev/reviews/deepseek-v4-1-flash-review/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is DeepSeek V4.1 Flash?","acceptedAnswer":{"@type":"Answer","text":"DeepSeek V4.1 Flash is an open-weight sparse mixture-of-experts model released on September 10, 2026. Built on DeepSeek's Causal Encoder-Decoder architecture, it activates roughly 8B parameters on input and 16B on output from a 552B-parameter backbone, ships a ~1,048,576-token context window, and is priced at about $0.15 per million input tokens and $0.60 per million output tokens off-peak."}},
+          {"@type":"Question","name":"Is DeepSeek V4.1 Flash better than DeepSeek V4 Flash?","acceptedAnswer":{"@type":"Answer","text":"On the agentic and coding benchmarks DeepSeek published, clearly yes. V4.1 Flash reports Terminal-Bench 2.1 90.6 against the V4 Flash 0731 checkpoint's 82.7, and HLE-with-tools of 63.9 against roughly 37 for the earlier build. Reasoning is closer: its GPQA Diamond of 90.9 is essentially flat versus the prior Flash's ~91. The V4.1 gains are concentrated in tool use and coding, not broad knowledge."}},
+          {"@type":"Question","name":"How much does DeepSeek V4.1 Flash cost?","acceptedAnswer":{"@type":"Answer","text":"DeepSeek lists off-peak pricing of about $0.15 per million input tokens, $0.60 per million output tokens, and $0.003 per million cache-hit input tokens, with higher peak-hour rates near $0.30 and $1.20. As an open-weight model it is also served by OpenRouter, Together, and Fireworks. It is one of the cheapest models with a frontier-level agentic profile currently available."}},
+          {"@type":"Question","name":"Does DeepSeek V4.1 Flash have published benchmark scores?","acceptedAnswer":{"@type":"Answer","text":"DeepSeek published agentic, coding, and reasoning results: Terminal-Bench 2.1 90.6, GPQA Diamond 90.9, HLE-with-tools 63.9, DeepSWE v1.1 74.2, a 3,471 Codeforces rating, CyberGym 88.1, and NL2Repo-Bench 65.4. It did not publish a first-party SWE-bench Verified, SWE-bench Pro, or MMLU-Pro cell, so those figures on our leaderboard are conservative estimates anchored to DeepSeek V4 Pro, not vendor measurements."}}
+        ]}
+      ]}
+---
+import AuthorByline from '../../../components/AuthorByline.astro';
+
+<AuthorByline date="2026-09-13" />
+
+<aside style="border-left:2px solid var(--sl-color-accent);padding:0.25rem 0 0.25rem 1rem;margin:1rem 0 1.5rem;font-size:0.85rem;line-height:1.55">
+DeepSeek V4.1 Flash's Terminal-Bench 2.1, GPQA Diamond, and HLE figures are vendor-reported and recorded as measurements in our <a href="/leaderboard/">models leaderboard</a>. Its SWE-bench Pro, SWE-bench Verified, and broad-reasoning cells are <strong>conservative estimates</strong>, anchored to DeepSeek V4 Pro and excluded from the composite score, because DeepSeek did not publish a full standard suite. Treat the estimated cells as directional until third-party runs land.
+</aside>
+
+On **September 10, 2026**, DeepSeek released [DeepSeek V4.1 Flash](/leaderboard/), and the headline is not the price — that barely moved — but the agentic ceiling the price now buys. V4.1 Flash is a **sparse mixture-of-experts** model that, by DeepSeek's own numbers, posts **Terminal-Bench 2.1 of 90.6** and **HLE-with-tools of 63.9** while still charging roughly **$0.15 / $0.60** per million tokens off-peak. Those are frontier-tier agentic scores at a fraction of frontier pricing. This review covers the architecture change underneath the jump, which of the numbers are measured versus estimated, and where V4.1 Flash actually fits.
+
+## TL;DR verdict
+
+| | DeepSeek V4.1 Flash |
+|---|---|
+| **Type** | Open-weight sparse-MoE model (agentic + coding focus) |
+| **Context window** | 1,048,576 tokens (384K max output) |
+| **Modalities** | Text |
+| **License** | Open weights |
+| **Pricing** | ~$0.15 in / $0.60 out per 1M off-peak ($0.003 cache-hit input; ~$0.30 / $1.20 peak) |
+| **Headline numbers** | Terminal-Bench 2.1 90.6 · GPQA Diamond 90.9 · HLE-with-tools 63.9 · DeepSWE v1.1 74.2 |
+| **Availability** | DeepSeek API, OpenRouter, Together, Fireworks; weights downloadable |
+| **Best for** | Tool-heavy agents and coding pipelines on a tight budget |
+| **Caveat** | Published story is agentic/coding — SWE-bench Pro and broad-reasoning cells are estimates |
+
+If you skip the rest: **V4.1 Flash is one of the strongest intelligence-per-dollar picks for agentic work this month.** DeepSeek moved its budget Flash line onto a sparse mixture-of-experts base and tuned hard for tool use and coding — and the agentic numbers it chose to publish now sit near the closed frontier while the price stays in Flash territory. The honest asterisk is unchanged from last quarter: these are *vendor-selected* agent benchmarks, and the broad-reasoning and SWE-bench Pro placements on our board are still interpolation.
+
+## What changed: a sparse-MoE base, tuned for tools
+
+The prior [V4 Flash 0731](/reviews/deepseek-v4-flash-0731-review/) story was a post-training pass on a fixed base model. V4.1 is different: DeepSeek describes it as a **sparse mixture-of-experts** build on the company's **Causal Encoder-Decoder (CED)** architecture, activating roughly **8B parameters on input and 16B on output** from a **552B-parameter backbone**. In other words, most of the network stays dormant on any given token — which is how a model with a frontier-size parameter count keeps Flash-tier serving costs and speed.
+
+The deltas DeepSeek reported over the previous Flash checkpoint are concentrated where you would expect from that design plus tool-focused RL:
+
+- **Terminal-Bench 2.1**: **90.6**, up from the V4 Flash 0731 checkpoint's 82.7 — among the highest figures on our board for agentic terminal work, cheaper tier or not.
+- **HLE (with tools)**: **63.9**, a large jump over the earlier build's ~37 and inside the frontier tools-enabled range.
+- **DeepSWE v1.1**: **74.2**, with a **3,471 Codeforces** rating and **NL2Repo-Bench 65.4** on the coding side.
+
+The reasoning cell barely moved: **GPQA Diamond 90.9** is essentially flat against the prior Flash's ~91. That is the tell — V4.1 is not a broad-knowledge leap, it is an agentic-execution one. DeepSeek also leads with a security figure, **CyberGym 88.1**, consistent with the cyber-capable framing across this month's releases.
+
+## What the numbers say
+
+Here is where the case is strongest — and where it needs an asterisk. The vendor-published cells are agentic and reasoning; the coding-suite and broad-knowledge cells are not.
+
+| Benchmark | V4.1 Flash | Provenance |
+|---|---|---|
+| **Terminal-Bench 2.1** | **90.6** | Vendor-reported (up from 82.7) |
+| **GPQA Diamond** | **90.9** | Vendor-reported |
+| **HLE (with tools)** | **63.9** | Vendor-reported |
+| **SWE-bench Verified** | **~72** | Estimate — anchored to DeepSWE v1.1 74.2 |
+| **SWE-bench Pro** | **~58** | Estimate — anchored to V4 Pro's 55.4 |
+
+The provenance column is the part to read carefully. **Terminal-Bench 2.1**, **GPQA Diamond**, and **HLE** are first-party DeepSeek numbers, recorded on our [leaderboard](/leaderboard/) as vendor measurements and scored. But DeepSeek did **not** publish a first-party **SWE-bench Verified** or **SWE-bench Pro** cell — it led with DeepSWE v1.1 (74.2) instead — so those columns are **conservative estimates**, greyed out and excluded from every ranking, anchored to [DeepSeek V4 Pro](/leaderboard/)'s vendor SWE-bench Pro of 55.4 and held well below the frontier coding leaders ([Claude Fable 5.1](/reviews/claude-fable-5/) 81.2, [Claude Opus 5](/reviews/claude-opus-5-review/) 79.2). The legacy columns — MMLU-Pro, HumanEval, MATH-500 — are likewise estimated and never scored. They are directionally useful; they are not measurements.
+
+## What it costs
+
+Almost nothing changes from the prior Flash. DeepSeek lists **off-peak pricing of about $0.15 per 1M input and $0.60 per 1M output**, with **$0.003 per 1M cache-hit input tokens** and higher peak-hour rates near **$0.30 / $1.20**. As an open-weight model it is also served at the usual hosted rates on OpenRouter, Together, and Fireworks. The cache-hit tier is the quiet story for agent builders: long, reused system prompts and tool specifications — the bulk of an agent's input on every step — bill at a fraction of a cent per million tokens.
+
+Put that next to the closed frontier — [Claude Opus 5](/reviews/claude-opus-5-review/) at $5/$25, [GPT-6 Astra](/reviews/gpt-6-astra-review/) at $10/$50 — and the intelligence-per-dollar argument is stark: on the agentic axis DeepSeek chose to measure, a model **one to two orders of magnitude cheaper on input** is trading blows near the top. The [cost calculator](/leaderboard/) on the leaderboard lets you plug your own token mix to see where that crossover lands for your workload; for high-volume, tool-heavy pipelines it lands early.
+
+## How it compares
+
+V4.1 Flash's real competition is the **open-weight agentic tier**, not the closed reasoning frontier. Against its own [V4 Pro](/leaderboard/) sibling it is the cheaper model that now wins the agent benchmarks decisively, which makes Pro hard to justify for pure tool-use workloads. Against the open coding flagships — [GLM-5.3 Flash](/reviews/glm-5-3-flash-review/) and [Kimi K2.7-Code](/reviews/kimi-k2-7-code-review/) — V4.1 Flash is cheaper to serve and posts a higher published Terminal-Bench figure, though those models still have first-party SWE-bench Pro numbers that V4.1 Flash currently lacks; the trade is published coding depth versus per-dollar agentic throughput. Against the closed budget tier — Gemini 3.8 Flash, GPT-5.6 Luna — it undercuts on price and matches or beats on the published agentic numbers while giving up multimodality, since V4.1 Flash is text-only.
+
+The caution worth stating plainly: this is a **vendor sweep on vendor-selected agent benchmarks**. Independent evaluators have flagged elevated benchmark-gaming across the newest releases all year, and a model tuned specifically to top agent evals is exactly the case where your own repository is the only benchmark that counts. The reasoning cell (GPQA) and the agentic cells (Terminal-Bench, HLE) are first-party and internally coherent; the coding-suite placement is still an estimate until third-party SWE-bench runs land.
+
+## Who should care
+
+- **Teams running tool-heavy agents on a budget:** This is the headline use case. A Terminal-Bench 2.1 of 90.6 at $0.15/$0.60 — with cache-hit input at $0.003 — makes V4.1 Flash a serious default for function-calling and command-line agents. See [multi-agent pipelines](/agentic-workflows/multi-agent/) for where a cheap, strong tool-user slots into a larger workflow.
+- **High-volume coding pipelines:** If you are paying closed-frontier rates on a large PR-review or codegen pipeline, A/B this against your current coder on real pull requests before the next billing cycle — the price gap compounds fast, and the DeepSWE figure says the raw capability is there.
+- **Anyone who already deployed V4 Flash:** The upgrade is a generational one — a new MoE base, not a checkpoint swap — so re-run your eval set rather than assuming drop-in parity, then capture the agentic gains.
+- **Anyone ranking on broad reasoning or coding suites:** Wait for third-party SWE-bench and standard-suite numbers before placing V4.1 Flash above frontier models on those axes. Its published strengths are agentic; its SWE-bench placement is an estimate. The [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) covers how to weigh that trade.
+
+## FAQ
+
+**What is DeepSeek V4.1 Flash?** An open-weight sparse mixture-of-experts model released September 10, 2026. Built on DeepSeek's Causal Encoder-Decoder architecture, it activates roughly 8B parameters on input and 16B on output from a 552B backbone, ships a ~1,048,576-token context, and is priced around $0.15 in / $0.60 out per 1M off-peak.
+
+**Is it better than DeepSeek V4 Flash?** On the agentic and coding benchmarks DeepSeek published, clearly — Terminal-Bench 2.1 90.6 versus 82.7, and HLE-with-tools 63.9 versus ~37. Reasoning is flat (GPQA ~91 either way). The gains are in tool use and coding, not broad knowledge.
+
+**How much does it cost?** About $0.15 per 1M input and $0.60 per 1M output off-peak, with $0.003 per 1M cache-hit input and peak rates near $0.30 / $1.20. Hosted open-weight rates apply on OpenRouter, Together, and Fireworks.
+
+**Does it have published benchmark scores?** Agentic and reasoning ones — Terminal-Bench 2.1 90.6, GPQA Diamond 90.9, HLE-with-tools 63.9, DeepSWE v1.1 74.2, Codeforces 3471, CyberGym 88.1, NL2Repo-Bench 65.4. Its SWE-bench Verified, SWE-bench Pro, and MMLU-Pro cells come from estimates anchored to DeepSeek V4 Pro, not vendor measurements.
+
+**Is it open weights?** Yes. V4.1 Flash is downloadable and self-hostable, and also available through the DeepSeek API, OpenRouter, Together, and Fireworks.
+
+## Continue reading
+
+- [AI Models Leaderboard](/leaderboard/) — DeepSeek V4.1 Flash versus 80+ models on benchmarks, pricing, and context, with a cost calculator.
+- [DeepSeek V4 Flash 0731 Review](/reviews/deepseek-v4-flash-0731-review/) — the prior Flash checkpoint this build supersedes, and how the numbers moved.
+- [GLM-5.3 Flash Review](/reviews/glm-5-3-flash-review/) — the open-weight coding flash in the same value tier, with first-party SWE-bench Pro numbers.
+- [Kimi K2.7-Code Review](/reviews/kimi-k2-7-code-review/) — Moonshot's open-weight coder, the other value pick in the same conversation.
+- [GPT-6 Astra Review](/reviews/gpt-6-astra-review/) — the closed agentic flagship V4.1 Flash's intelligence-per-dollar pitch is measured against.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — how to read agentic benchmarks and vendor sweeps without getting fooled.
+- [All Reviews](/reviews/) — index of every review on the site.
