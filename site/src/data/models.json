@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-09-13",
+  "last_updated": "2026-09-20",
   "aa_index_version": "v4.1",
   "methodology_note": "Every benchmark cell carries its own source. Cells marked 'estimate' are explicitly not measurements and never contribute to the composite score; cells marked 'unsourced_legacy' predate provenance tracking and are shown for reference only. The composite is computed solely from independently-sourced or vendor-published figures on the live benchmark set. Benchmarks retired by Artificial Analysis Intelligence Index v4.1 (MATH-500, τ²-Bench, Terminal-Bench Hard) and unmaintained ones (Aider Polyglot) are retained as legacy columns, displayed but never scored, following the demote-don't-delete convention used by Artificial Analysis (https://artificialanalysis.ai/methodology/intelligence-benchmarking). Model scores are frozen at the date they were measured and are not silently recomputed. Pricing is per 1M tokens on each provider's first-party API; open-weights pricing reflects the typical Together / Fireworks / OpenRouter rate.",
   "source_registry": {
@@ -3309,6 +3309,60 @@
           "url": "https://deepseek.com",
           "measured": "2026-09-13",
           "note": "DeepSeek-reported with tools enabled; a large jump over the V4 Flash 0731 checkpoint's ~37, competitive with the frontier tools-enabled range."
+        }
+      }
+    },
+    {
+      "id": "atria-dawn-preview",
+      "name": "Atria Dawn Preview",
+      "vendor": "Shanghai AI Lab",
+      "license": "open",
+      "released": "2026-09-11",
+      "context_window": 262144,
+      "max_output": 65536,
+      "modalities": [
+        "text"
+      ],
+      "pricing": {
+        "input": 0.9,
+        "output": 2.9
+      },
+      "throughput": 40,
+      "vendor_link": "https://huggingface.co/internlm/Atria-Dawn-Preview",
+      "status": "current",
+      "note": "Open-weight 744B agentic mixture-of-experts post-trained on the GLM-5.2 base by Shanghai AI Lab; released under MIT with FP8 and BF16 checkpoints on Hugging Face and ModelScope. Shanghai AI Lab published no first-party hosted API rate - the price shown is a typical third-party hosted rate for a 744B open-weight MoE (OpenRouter / Together / Fireworks tier), following the open-weights pricing convention used elsewhere on this table. Atria led its launch with agentic evals (DeepSearchQA, BrowseComp, MLE-bench Lite, BFCL v4, CyberGym) rather than the standard reasoning/coding suite, so only its SWE-bench Pro and Terminal-Bench 2.1 figures map onto this board as measurements.",
+      "benchmarks": {
+        "swe_bench_pro": {
+          "value": 59.6,
+          "source": "vendor",
+          "url": "https://huggingface.co/internlm/Atria-Dawn-Preview",
+          "measured": "2026-09-20",
+          "note": "Shanghai AI Lab-reported on the Atria Dawn Preview model card; comparable to DeepSeek V4 Pro's 55.4 and just below GLM-5.3."
+        },
+        "terminal_bench_2_1": {
+          "value": 78.3,
+          "source": "vendor",
+          "url": "https://huggingface.co/internlm/Atria-Dawn-Preview",
+          "measured": "2026-09-20",
+          "note": "Shanghai AI Lab-reported on the model card; roughly level with DeepSeek V4 Pro on agentic terminal work."
+        },
+        "swe_bench_verified": {
+          "value": 78.0,
+          "source": "estimate",
+          "measured": "2026-09-20",
+          "note": "Conservative estimate. SWE-bench Verified typically runs ~20 points above the vendor SWE-bench Pro of 59.6, and this is anchored to the shared GLM-5.2 lineage; Atria did not publish a first-party SWE-bench Verified cell."
+        },
+        "gpqa_diamond": {
+          "value": 90.0,
+          "source": "estimate",
+          "measured": "2026-09-20",
+          "note": "Conservative estimate anchored to the GLM-5.2/5.3 base lineage (GLM-5.3 estimated 91.5) and DeepSeek V4 Pro's vendor 90.1; Atria led with agentic evals and did not publish a standalone GPQA Diamond cell."
+        },
+        "hle": {
+          "value": 58.0,
+          "source": "estimate",
+          "measured": "2026-09-20",
+          "note": "Conservative estimate anchored to the GLM-5.2 base sibling GLM-5.3 (vendor 62.5) and held below it; Atria published research-agent evals (DeepSearchQA 96.0, BrowseComp 92.5) rather than a first-party HLE cell."
         }
       }
     },

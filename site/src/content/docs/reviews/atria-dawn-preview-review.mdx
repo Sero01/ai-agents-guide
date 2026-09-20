@@ -1,0 +1,185 @@
+---
+title: "Atria Dawn Preview Review — An Open-Weight 744B Agentic MoE from Shanghai AI Lab"
+description: "Atria Dawn Preview, released September 11, 2026: an MIT-licensed 744B mixture-of-experts agent model post-trained on the GLM-5.2 base. Vendor SWE-bench Pro 59.6 and Terminal-Bench 2.1 78.3, an agentic-eval launch, and which leaderboard cells are estimates."
+author: Parvez Ahmed
+date: 2026-09-20
+lastUpdated: 2026-09-20
+sidebar:
+  order: 21
+head:
+  - tag: meta
+    attrs:
+      property: og:type
+      content: article
+  - tag: meta
+    attrs:
+      property: og:title
+      content: "Atria Dawn Preview Review — An Open-Weight 744B Agentic MoE from Shanghai AI Lab"
+  - tag: meta
+    attrs:
+      property: og:description
+      content: "Atria Dawn Preview, released September 11, 2026: an MIT-licensed 744B MoE agent model post-trained on the GLM-5.2 base. Vendor SWE-bench Pro 59.6 and Terminal-Bench 2.1 78.3, and which leaderboard cells are estimates."
+  - tag: meta
+    attrs:
+      property: og:url
+      content: https://agentguides.dev/reviews/atria-dawn-preview-review/
+  - tag: meta
+    attrs:
+      property: og:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: meta
+    attrs:
+      property: article:published_time
+      content: "2026-09-20"
+  - tag: meta
+    attrs:
+      property: article:modified_time
+      content: "2026-09-20"
+  - tag: meta
+    attrs:
+      property: article:author
+      content: Parvez Ahmed
+  - tag: meta
+    attrs:
+      property: article:section
+      content: Reviews
+  - tag: meta
+    attrs:
+      property: article:tag
+      content: "Atria Dawn Preview, Shanghai AI Lab, InternLM, open weights, MIT license, agentic model, mixture of experts, GLM-5.2, SWE-bench Pro, Terminal-Bench 2.1, LLM review"
+  - tag: meta
+    attrs:
+      name: twitter:title
+      content: "Atria Dawn Preview Review — An Open-Weight 744B Agentic MoE from Shanghai AI Lab"
+  - tag: meta
+    attrs:
+      name: twitter:description
+      content: "Atria Dawn Preview: an MIT-licensed 744B MoE agent model with vendor SWE-bench Pro 59.6 and Terminal-Bench 2.1 78.3, and where it lands on the leaderboard."
+  - tag: meta
+    attrs:
+      name: twitter:image
+      content: https://agentguides.dev/og/reviews.png
+  - tag: link
+    attrs:
+      rel: canonical
+      href: https://agentguides.dev/reviews/atria-dawn-preview-review/
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: |
+      {"@context":"https://schema.org","@graph":[
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/atria-dawn-preview-review/#article","headline":"Atria Dawn Preview Review — An Open-Weight 744B Agentic MoE from Shanghai AI Lab","description":"Atria Dawn Preview, released September 11, 2026: an MIT-licensed 744B mixture-of-experts agent model post-trained on the GLM-5.2 base. Vendor SWE-bench Pro 59.6 and Terminal-Bench 2.1 78.3, an agentic-eval launch, and which leaderboard cells are estimates.","url":"https://agentguides.dev/reviews/atria-dawn-preview-review/","mainEntityOfPage":"https://agentguides.dev/reviews/atria-dawn-preview-review/","datePublished":"2026-09-20","dateModified":"2026-09-20","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Atria Dawn Preview review, Atria Dawn Preview benchmarks, Shanghai AI Lab agent model, open-weight agentic MoE, GLM-5.2 base, SWE-bench Pro, Terminal-Bench 2.1, MIT license LLM"},
+        {"@type":"Review","name":"Atria Dawn Preview review","itemReviewed":{"@type":"SoftwareApplication","name":"Atria Dawn Preview","applicationCategory":"DeveloperApplication","operatingSystem":"Open weights (self-host); third-party hosted APIs","publisher":{"@type":"Organization","name":"Shanghai AI Lab"}},"reviewRating":{"@type":"Rating","ratingValue":"4","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-09-20","reviewBody":"An MIT-licensed, open-weight agent model whose story is scope, not a leaderboard sweep. Atria Dawn Preview is a 744B mixture-of-experts model post-trained on the GLM-5.2 base by Shanghai AI Lab, released with FP8 and BF16 checkpoints and a 256K context window. Shanghai AI Lab led the launch with agentic and research evals — DeepSearchQA 96.0, BrowseComp 92.5, MLE-bench Lite 86.2, BFCL v4 77.0, CyberGym 86.5 — plus SWE-bench Pro 59.6 and Terminal-Bench 2.1 78.3 on the coding axis. The two caveats are real: none of the numbers has been independently reproduced, and the launch skipped the standard reasoning suite, so GPQA Diamond, HLE, and SWE-bench Verified on our leaderboard are conservative estimates anchored to the shared GLM-5.2 lineage rather than measurements. For teams building long-horizon research and tool-use agents on open weights it is one of the more interesting releases of the month; validate it on your own environment before trusting the sweep."},
+        {"@type":"BreadcrumbList","itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
+          {"@type":"ListItem","position":2,"name":"Reviews","item":"https://agentguides.dev/reviews/"},
+          {"@type":"ListItem","position":3,"name":"Atria Dawn Preview Review","item":"https://agentguides.dev/reviews/atria-dawn-preview-review/"}
+        ]},
+        {"@type":"FAQPage","mainEntity":[
+          {"@type":"Question","name":"What is Atria Dawn Preview?","acceptedAnswer":{"@type":"Answer","text":"Atria Dawn Preview is an open-weight 744B-parameter mixture-of-experts agent model released by Shanghai AI Lab on September 11, 2026. It is post-trained on the GLM-5.2 base, ships FP8 and BF16 checkpoints under the MIT license on Hugging Face and ModelScope, carries a 256K-token context window, and is aimed at long-horizon research and tool-use agents."}},
+          {"@type":"Question","name":"Is Atria Dawn Preview open source?","acceptedAnswer":{"@type":"Answer","text":"The weights are open under the MIT license, which permits commercial use and modification. Shanghai AI Lab published FP8 (about 756GB) and BF16 (about 1.5TB) checkpoints, so running it requires either substantial local hardware or a third-party host. There is no first-party hosted API with published per-token pricing as of launch."}},
+          {"@type":"Question","name":"What benchmark scores did Atria Dawn Preview report?","acceptedAnswer":{"@type":"Answer","text":"Shanghai AI Lab reported an agentic-heavy table: DeepSearchQA 96.0 and BrowseComp 92.5 for research, MLE-bench Lite 86.2 and SWE-bench Pro 59.6 for engineering, BFCL v4 77.0 and AutomationBench 53.8 for tool use, Workspace-Bench 65.0 and JobBench 50.3 for delivery, Terminal-Bench 2.1 78.3, and CyberGym 86.5 for security. It did not publish first-party GPQA Diamond, HLE, or SWE-bench Verified cells, so those figures on our leaderboard are conservative estimates."}},
+          {"@type":"Question","name":"How does Atria Dawn Preview compare to GLM-5.3?","acceptedAnswer":{"@type":"Answer","text":"They share the same GLM-5.2 base and differ in post-training. Atria was tuned for long-horizon research and tool-use agents via a verifiable-experience pipeline, and its published SWE-bench Pro of 59.6 sits just below GLM-5.3, while GLM-5.3 leads on the broad coding and reasoning cells vendors reported. The honest comparison is that both are strong open-weight options with different launch emphases; independent runs on the standard suite have not yet reconciled them."}}
+        ]}
+      ]}
+---
+import AuthorByline from '../../../components/AuthorByline.astro';
+
+<AuthorByline date="2026-09-20" />
+
+<aside style="border-left:2px solid var(--sl-color-accent);padding:0.25rem 0 0.25rem 1rem;margin:1rem 0 1.5rem;font-size:0.85rem;line-height:1.55">
+Atria Dawn Preview's SWE-bench Pro and Terminal-Bench 2.1 figures are vendor-reported and recorded as measurements in our <a href="/leaderboard/">models leaderboard</a>. Its GPQA Diamond, HLE, and SWE-bench Verified cells are <strong>conservative estimates</strong>, anchored to the shared GLM-5.2 lineage and excluded from every ranking, because Shanghai AI Lab led with agentic evals and did not publish those standard cells. None of the vendor numbers has been independently reproduced yet — treat the whole table as the lab's pitch until third-party runs land.
+</aside>
+
+On **September 11, 2026**, Shanghai AI Lab quietly shipped [Atria Dawn Preview](/leaderboard/): an **open-weight, MIT-licensed 744B mixture-of-experts** model aimed squarely at long-horizon research and tool-use agents. There was no hosted flagship API and no pricing page — just FP8 and BF16 checkpoints on Hugging Face and ModelScope, a technical report, and a 16-row benchmark table that leads with agent evals rather than the usual reasoning sweep. This review covers what the model actually is, which of its numbers are measured versus estimated on our board, and who it is genuinely for.
+
+## TL;DR verdict
+
+| | Atria Dawn Preview |
+|---|---|
+| **Type** | Open-weight sparse-MoE agent model (research + tool-use focus) |
+| **Parameters** | 744B mixture-of-experts, post-trained on the GLM-5.2 base |
+| **Context window** | 262,144 tokens (~65K max output) |
+| **Modalities** | Text |
+| **License** | MIT (open weights: FP8 ≈ 756GB, BF16 ≈ 1.5TB) |
+| **Pricing** | No first-party API; open-weight hosted rates (~$0.9 / $2.9 per 1M is a typical third-party estimate) |
+| **Headline numbers** | SWE-bench Pro 59.6 · Terminal-Bench 2.1 78.3 · DeepSearchQA 96.0 · BrowseComp 92.5 · CyberGym 86.5 |
+| **Availability** | Self-host from Hugging Face / ModelScope; third-party hosts route the weights |
+| **Best for** | Long-horizon research and tool-use agents on open weights |
+| **Caveat** | Agentic-eval launch, no standard reasoning suite, and no independent reproduction yet |
+
+If you skip the rest: **Atria Dawn Preview is one of the more interesting open-weight agent releases of the month, but it is a preview and its numbers are the lab's own.** Shanghai AI Lab took the same [GLM-5.2](/reviews/glm-5-2-review/) base that [GLM-5.3](/leaderboard/) is built on and post-trained it in a different direction — toward research browsing, tool orchestration, and computer-use tasks — then published the benchmarks that direction flatters. The result is a genuinely strong agentic profile at an MIT license, wrapped in the two asterisks that come with every preview: the standard suite is missing, and nobody outside the lab has reproduced the table.
+
+## What it is: a second post-training of the GLM-5.2 base
+
+The most useful frame for Atria Dawn Preview is not "a new model" but **a second post-training of a base you already know**. Shanghai AI Lab built it on the **744B-parameter GLM-5.2 mixture-of-experts foundation** — the same base [GLM-5.3](/reviews/glm-5-3-flash-review/) is post-trained from — and steered it toward agentic work instead of general chat and coding.
+
+The distinctive piece is the training recipe. Shanghai AI Lab describes a **Verifiable Experience Pipeline**: every training task runs inside a real execution environment, and only trajectories whose outcomes are confirmed by an external signal — a passing test, a correct retrieval, a completed workflow — are kept. That is the same "verifiable rewards" idea driving most of this year's agent training, applied at the data-curation layer rather than only in the RL loop. It explains the shape of the results: Atria is strongest exactly where an execution-grounded signal is cheap to compute (research retrieval, tool calls, security tasks) and softer where it is not (broad reasoning, which the launch simply did not measure).
+
+Practically, this is an **open-weight model with no vendor endpoint**. The MIT license permits commercial use and modification, but the FP8 checkpoint is roughly 756GB and the BF16 is about 1.5TB, so you are either standing up serious local hardware or renting it through a third-party host. There is no first-party per-token price to quote.
+
+## What the numbers say
+
+Here is where the case is strongest — and where the asterisks live. Atria's launch table is **agentic and research-heavy**, and it is impressive on its own terms:
+
+- **Research / browsing:** DeepSearchQA **96.0**, BrowseComp **92.5**
+- **Engineering:** MLE-bench Lite **86.2**, SWE-bench Pro **59.6**
+- **Tool use:** BFCL v4 **77.0**, AutomationBench **53.8**
+- **Delivery / computer-use:** Workspace-Bench **65.0**, JobBench **50.3**
+- **Terminal:** Terminal-Bench 2.1 **78.3**
+- **Security:** CyberGym **86.5**
+
+Shanghai AI Lab says Atria posts the highest reported score on five of its sixteen benchmarks and is competitive with frontier agents across the rest. The problem for a cross-model leaderboard is that most of those rows have no column on our board — DeepSearchQA and BrowseComp are not part of the standard reasoning/coding suite. Only two cells map cleanly:
+
+| Benchmark | Atria Dawn Preview | Provenance |
+|---|---|---|
+| **SWE-bench Pro** | **59.6** | Vendor-reported (≈ DeepSeek V4 Pro 55.4) |
+| **Terminal-Bench 2.1** | **78.3** | Vendor-reported (≈ DeepSeek V4 Pro) |
+| **SWE-bench Verified** | **~78** | Estimate — Pro runs ~20 pts below Verified |
+| **GPQA Diamond** | **~90** | Estimate — anchored to the GLM-5.2/5.3 lineage |
+| **HLE** | **~58** | Estimate — anchored below GLM-5.3's 62.5 |
+
+Read the provenance column carefully. **SWE-bench Pro** and **Terminal-Bench 2.1** are first-party Shanghai AI Lab numbers, recorded on our [leaderboard](/leaderboard/) as vendor measurements and scored. But Atria did **not** publish first-party **GPQA Diamond**, **HLE**, or **SWE-bench Verified** cells — it led with agentic evals instead — so those columns are **conservative estimates**, greyed out and excluded from every ranking, anchored to the [GLM-5.2](/reviews/glm-5-2-review/) base lineage and DeepSeek V4 Pro's vendor 90.1. They are directionally useful; they are not measurements. With only two mapped vendor cells, Atria sits below our three-cell floor for a full ranking — it shows on the per-benchmark tables it has data for and nowhere else.
+
+The larger caveat is independence. As with most of this month's launches, **none of the Atria numbers has been reproduced by a third party**. A model explicitly trained against execution-verified agent trajectories, then evaluated on agent benchmarks, is exactly the case where your own environment is the only score that counts.
+
+## What it costs
+
+There is no first-party API and therefore no official token price. As an open-weight model Atria is served at the usual hosted rates by third-party routers and inference providers; our leaderboard shows a **typical third-party estimate of roughly $0.9 / $2.9 per million tokens** for a 744B open MoE, in line with how [GLM-5.3](/reviews/glm-5-3-flash-review/) and other open-weight entries are priced when the lab publishes no first-party rate. The real cost story for most teams is self-hosting: a 756GB FP8 checkpoint is a multi-GPU deployment, so the "free weights" are only free if you already have — or are willing to rent — the hardware to serve them.
+
+Put against the closed agentic frontier — [Claude Opus 5](/reviews/claude-opus-5-review/) at $5/$25, [GPT-6 Astra](/reviews/gpt-6-astra-review/) at $10/$50 — the pitch is control and license, not just price: you get an MIT-licensed agent model you can pin, audit, and run in your own environment. The [cost calculator](/leaderboard/) on the leaderboard lets you plug your own token mix and a hosted rate to see where that lands for your workload.
+
+## How it compares
+
+Atria's real peer set is the **open-weight agent tier**, not the closed reasoning frontier. Against its sibling [GLM-5.3](/reviews/glm-5-3-flash-review/) — same GLM-5.2 base, different post-training — it is the research-and-tool-use specialist to GLM-5.3's broader coding-and-reasoning profile; its published SWE-bench Pro of 59.6 sits just below GLM-5.3, while GLM-5.3 leads on the standard cells vendors reported. Against [DeepSeek V4 Pro](/leaderboard/) it is roughly level on the two coding cells that overlap, with a stronger research-agent story and a more permissive license. Against [Kimi K3](/reviews/kimi-k3-review/), the other large open-weight release this quarter, the trade is Atria's agentic-eval breadth versus Kimi's first-party reasoning numbers and multimodality — Atria is text-only.
+
+Where it clearly gives ground is **general software engineering and terminal coding against the closed frontier**: the model card itself shows notable gaps versus [Claude Opus 5](/reviews/claude-opus-5-review/) on those axes. Atria is not trying to win the coding leaderboard; it is trying to win long-horizon research and computer-use agents, and that is where its published numbers concentrate.
+
+## Who should care
+
+- **Teams building research and browsing agents:** This is the headline use case. DeepSearchQA 96.0 and BrowseComp 92.5 are the numbers Shanghai AI Lab wants you to look at, and an MIT license on a 744B agent model is a genuine draw for anyone who needs to self-host a retrieval-and-reasoning loop. See [multi-agent pipelines](/agentic-workflows/multi-agent/) for where a strong research specialist slots into a larger workflow.
+- **Anyone who needs open weights they can pin and audit:** The MIT license and downloadable FP8/BF16 checkpoints make Atria a fit for regulated or air-gapped deployments where a closed API is a non-starter — provided you have the hardware budget.
+- **Security and computer-use builders:** CyberGym 86.5 and the workspace/automation cells point at vulnerability-analysis and desktop-agent workloads. Treat the numbers as a starting hypothesis and benchmark on your own tasks.
+- **Anyone ranking on broad reasoning or standard coding suites:** Wait for third-party GPQA, HLE, and SWE-bench runs before placing Atria against frontier models on those axes. Its published strengths are agentic; its standard-suite cells are estimates. The [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) covers how to weigh that trade without getting fooled by a vendor sweep.
+
+## FAQ
+
+**What is Atria Dawn Preview?** An open-weight 744B mixture-of-experts agent model released by Shanghai AI Lab on September 11, 2026, post-trained on the GLM-5.2 base. It ships FP8 and BF16 checkpoints under the MIT license, carries a 256K-token context window, and targets long-horizon research and tool-use agents.
+
+**Is it open source?** The weights are open under MIT, which allows commercial use and modification. There is no first-party hosted API with published pricing; you either self-host the large checkpoints or use a third-party host.
+
+**What did it score?** An agentic-heavy table — DeepSearchQA 96.0, BrowseComp 92.5, MLE-bench Lite 86.2, SWE-bench Pro 59.6, BFCL v4 77.0, Terminal-Bench 2.1 78.3, CyberGym 86.5, and more. It did not publish first-party GPQA Diamond, HLE, or SWE-bench Verified, so those cells on our leaderboard are conservative estimates.
+
+**How does it compare to GLM-5.3?** Same GLM-5.2 base, different post-training. Atria is the research-and-tool-use specialist; GLM-5.3 leads on the broad coding and reasoning cells vendors reported. Both are strong open-weight options with different launch emphases.
+
+**Have the numbers been verified?** Not independently, as of publication. The table is Shanghai AI Lab's own; benchmark on your own environment before trusting it.
+
+## Continue reading
+
+- [AI Models Leaderboard](/leaderboard/) — Atria Dawn Preview versus 80+ models on benchmarks, pricing, and context, with a cost calculator and per-cell provenance.
+- [GLM-5.3 Flash Review](/reviews/glm-5-3-flash-review/) — the other post-training of the GLM-5.2 base, with first-party SWE-bench Pro numbers.
+- [GLM-5.2 Review](/reviews/glm-5-2-review/) — the shared base model both Atria and GLM-5.3 are built on.
+- [DeepSeek V4.1 Flash Review](/reviews/deepseek-v4-1-flash-review/) — the budget open-weight agent model in the same value conversation, and how to read a vendor agentic sweep.
+- [Kimi K3 Review](/reviews/kimi-k3-review/) — the other large open-weight release this quarter, with first-party reasoning numbers.
+- [LLM Benchmark Comparison 2026](/best/llm-benchmark-comparison-2026/) — how to weigh agentic benchmarks and unverified vendor tables.
+- [All Reviews](/reviews/) — index of every review on the site.
