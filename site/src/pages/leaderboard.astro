@@ -4,10 +4,10 @@ import modelsData from '../data/models.json';
 const { last_updated, models, benchmark_registry } = modelsData as any;
 
 // Schema v2: every cell carries {value, source, url}. There is deliberately no
-// composite score. Vendors publish only the benchmarks that flatter them —
-// Anthropic reports HLE (~54 avg) and skips GPQA (~91 avg), Google does the
-// reverse — so averaging across whatever each lab happened to publish ranks
-// publication strategy, not capability. Per-benchmark tables only.
+// composite score. Vendors publish only the benchmarks that flatter them, and
+// the set shifts between releases, so averaging across whatever each lab
+// happened to publish ranks publication strategy, not capability.
+// Per-benchmark tables only.
 
 // Sources whose figures may be both scored and published. `estimate` and
 // `unsourced_legacy` are displayed but never ranked.
@@ -56,9 +56,10 @@ const enriched = models.map((m: any) => {
   return { ...m, cells, benchmarks: flat, blended, sourced };
 });
 
-// Default ordering: SWE-bench Pro has the widest vendor coverage of any live
-// benchmark, so it is the most complete single ranking we can honestly show.
-const DEFAULT_BENCH = 'swe_bench_pro';
+// Default ordering: Terminal-Bench 4.0 is the agentic benchmark most vendors
+// reported through autumn 2026, so it is the most complete recent ranking we
+// can honestly show.
+const DEFAULT_BENCH = 'terminal_bench_4_0';
 enriched.sort((a: any, b: any) =>
   (b.benchmarks[DEFAULT_BENCH] ?? -1) - (a.benchmarks[DEFAULT_BENCH] ?? -1));
 
@@ -68,6 +69,10 @@ const sourcedCells = enriched.reduce(
 
 const vendors = Array.from(new Set(enriched.map((m: any) => m.vendor))).sort();
 
+const updatedMonth = new Date(`${last_updated}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const pageTitle = `AI Model Leaderboard: LLM Benchmarks and API Pricing (${updatedMonth})`;
+const pageDescription = `Compare ${enriched.length} LLMs including GPT-6, Claude Opus 5.5, and Gemini 4 on Terminal-Bench 4.0, DeepSWE, and GPQA, with API prices. Estimates are flagged.`;
+
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
@@ -75,14 +80,14 @@ const jsonLd = JSON.stringify({
       "@type": "Dataset",
       "@id": "https://agentguides.dev/leaderboard/#dataset",
       "name": "AI Models Leaderboard — Benchmarks, Pricing, and Sources",
-      "description": `Comparison of ${enriched.length} AI models across currently-reported benchmarks (GPQA Diamond, SWE-bench Verified, SWE-bench Pro, Terminal-Bench 2.1, HLE, MMMU-Pro), pricing per million tokens, and context windows. Every benchmark cell cites its source; estimated and unsourced figures are marked and excluded from all rankings.`,
+      "description": `Comparison of ${enriched.length} AI models across currently-reported benchmarks (Terminal-Bench 4.0, DeepSWE, GPQA Diamond, SWE-bench Verified, SWE-bench Pro, Terminal-Bench 2.1, HLE, MMMU-Pro), pricing per million tokens, and context windows. Every benchmark cell cites its source; estimated and unsourced figures are marked and excluded from all rankings.`,
       "url": "https://agentguides.dev/leaderboard/",
       "dateModified": last_updated,
       "inLanguage": "en-US",
       "creator": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://github.com/Sero01" },
       "publisher": { "@type": "Person", "name": "Parvez Ahmed", "url": "https://agentguides.dev/about/" },
       "license": "https://creativecommons.org/licenses/by/4.0/",
-      "keywords": "AI models leaderboard, LLM benchmark comparison, AI model pricing, SWE-bench Pro, Terminal-Bench 2.1, GPQA Diamond, HLE, benchmark provenance",
+      "keywords": "AI models leaderboard, LLM benchmark comparison, AI model pricing, Terminal-Bench 4.0, DeepSWE, SWE-bench Pro, Terminal-Bench 2.1, GPQA Diamond, HLE, benchmark provenance",
       "variableMeasured": [
         "GPQA Diamond","SWE-bench Verified","SWE-bench Pro","Terminal-Bench 2.1","HLE","MMMU-Pro","Input price per million tokens","Output price per million tokens","Context window","Throughput tokens per second","Benchmark source"
       ]
@@ -91,8 +96,8 @@ const jsonLd = JSON.stringify({
       "@type": "WebPage",
       "@id": "https://agentguides.dev/leaderboard/#webpage",
       "url": "https://agentguides.dev/leaderboard/",
-      "name": `AI Models Leaderboard — Benchmarks, Pricing, and Comparison (${last_updated})`,
-      "description": `Interactive leaderboard comparing ${enriched.length} AI models on benchmarks, pricing, context windows, and throughput. Updated ${last_updated}.`,
+      "name": pageTitle,
+      "description": pageDescription,
       "inLanguage": "en-US",
       "isPartOf": { "@type": "WebSite", "name": "AI Agents Guide", "url": "https://agentguides.dev" },
       "primaryImageOfPage": "https://agentguides.dev/og/leaderboard.png",
@@ -119,19 +124,17 @@ const jsonLd = JSON.stringify({
   ]
 });
 
-const pageDescription = `Interactive leaderboard comparing ${enriched.length} AI models on benchmarks (MMLU-Pro, GPQA, SWE-bench, MATH-500, MMMU, Aider, tau-bench), pricing, context windows, and throughput. Updated ${last_updated}.`;
-
 const head = [
-  { tag: 'title' as const, content: `AI Models Leaderboard — Benchmarks, Pricing, and Comparison (${last_updated})` },
-  { tag: 'meta' as const, attrs: { property: 'og:title', content: 'AI Models Leaderboard — Benchmarks, Pricing, and Comparison' } },
+  { tag: 'title' as const, content: pageTitle },
+  { tag: 'meta' as const, attrs: { property: 'og:title', content: pageTitle } },
   { tag: 'meta' as const, attrs: { property: 'og:description', content: `Compare ${enriched.length} AI models on benchmarks, pricing, and context. Interactive table, charts, and cost calculator. Updated ${last_updated}.` } },
   { tag: 'meta' as const, attrs: { property: 'og:type', content: 'website' } },
   { tag: 'meta' as const, attrs: { property: 'og:url', content: 'https://agentguides.dev/leaderboard/' } },
   { tag: 'meta' as const, attrs: { property: 'og:image', content: 'https://agentguides.dev/og/leaderboard.png' } },
-  { tag: 'meta' as const, attrs: { name: 'twitter:title', content: 'AI Models Leaderboard — Benchmarks, Pricing, Comparison' } },
+  { tag: 'meta' as const, attrs: { name: 'twitter:title', content: pageTitle } },
   { tag: 'meta' as const, attrs: { name: 'twitter:description', content: `Sortable table of ${enriched.length} AI models with benchmarks, pricing, and a cost calculator. Updated ${last_updated}.` } },
   { tag: 'meta' as const, attrs: { name: 'twitter:image', content: 'https://agentguides.dev/og/leaderboard.png' } },
-  { tag: 'meta' as const, attrs: { name: 'keywords', content: 'AI models leaderboard, LLM benchmark comparison, MMLU-Pro, GPQA, SWE-bench, AI model pricing, GPT-6 Astra, Claude Fable 5.1, Claude Opus 5, Claude Fable 5, Claude Opus 4.8, Claude Sonnet 5, GPT-5.6, GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna, GPT-5.5, Gemini 3.7 Flash, Gemini 3.1, Grok 4.6, Grok 4.5, Grok 4.3, Microsoft MAI, MAI-Thinking-1, Kimi K3, Kimi K2.7, Inkling, Thinking Machines, GLM-5.3, GLM-5.3 Flash, GLM-5.2, Qwen3.7 Flash, DeepSeek V4.1 Flash, DeepSeek V4 Flash 0731, DeepSeek V4 Pro, Meta Muse Spark 1.2, Muse Code, open weights coding model, cheap multimodal model, AI model context window' } },
+  { tag: 'meta' as const, attrs: { name: 'keywords', content: 'AI models leaderboard, LLM benchmark comparison, Terminal-Bench 4.0, DeepSWE, GPQA, SWE-bench, AI model pricing, GPT-6 Astra, GPT-6.1 Sol, GPT-6.1 Terra, GPT-6 Luna, Claude Fable 5.1, Claude Opus 5.5, Claude Sonnet 5.5, Claude Haiku 5.5, Gemini 4 Argon, Gemini 4 Carbon, Gemini 3.8 Flash, Grok 4.7, Kimi K3.1 Pro, MiniMax M3.1 Flash, DeepSeek V4.1 Flash 1017, Mistral Large 4, Muse Spark Open, Qwen3.8, Claude Opus 5, Claude Fable 5, Claude Opus 4.8, Claude Sonnet 5, GPT-5.6, GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna, GPT-5.5, Gemini 3.7 Flash, Gemini 3.1, Grok 4.6, Grok 4.5, Grok 4.3, Microsoft MAI, MAI-Thinking-1, Kimi K3, Kimi K2.7, Inkling, Thinking Machines, GLM-5.3, GLM-5.3 Flash, GLM-5.2, Qwen3.7 Flash, DeepSeek V4.1 Flash, DeepSeek V4 Flash 0731, DeepSeek V4 Pro, Meta Muse Spark 1.2, Muse Code, open weights coding model, cheap multimodal model, AI model context window' } },
   { tag: 'script' as const, attrs: { type: 'application/ld+json' }, content: jsonLd },
 ];
 ---
@@ -149,7 +152,7 @@ const head = [
     <p class="lead">Compare {enriched.length} large language models on the benchmarks vendors actually report in 2026, with pricing, context window, and throughput. <strong>Every figure links to its source.</strong> Estimates and inherited numbers are greyed out and never ranked.</p>
 
     <div class="notice">
-      <p><strong>There is no single "best model" score here, on purpose.</strong> Labs publish only the benchmarks that flatter them — Anthropic reports HLE (frontier average ≈54) and skips GPQA Diamond (≈91); Google and Alibaba do the reverse. Averaging across whatever each lab chose to publish ranks publication strategy, not capability: when we tested it, models moved by up to six places depending on which benchmarks they happened to report. Rank on the benchmark that matches your workload, or see <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a> and <a href="https://livebench.ai" target="_blank" rel="noopener">LiveBench</a> for independently-run composites.</p>
+      <p><strong>There is no single "best model" score here, on purpose.</strong> Labs publish only the benchmarks that flatter them, and the set shifts between releases — the Gemini 4 Argon model card reports Terminal-Bench 4.0 and DeepSWE but not GPQA Diamond or HLE, while Anthropic's Claude 5.5 pages report GPQA Diamond, HLE, and Terminal-Bench 4.0 but not DeepSWE. Averaging across whatever each lab chose to publish ranks publication strategy, not capability: when we tested it, models moved by up to six places depending on which benchmarks they happened to report. Rank on the benchmark that matches your workload, or see <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a> and <a href="https://livebench.ai" target="_blank" rel="noopener">LiveBench</a> for independently-run composites.</p>
     </div>
 
     <div class="filters">
@@ -188,6 +191,8 @@ const head = [
             <th data-sort="context_window">Ctx</th>
             <th data-sort="pricing.input">In $/M</th>
             <th data-sort="pricing.output">Out $/M</th>
+            <th data-sort="benchmarks.terminal_bench_4_0">TB 4.0</th>
+            <th data-sort="benchmarks.deepswe_1_1">DeepSWE</th>
             <th data-sort="benchmarks.gpqa_diamond">GPQA</th>
             <th data-sort="benchmarks.swe_bench_verified">SWE-V</th>
             <th data-sort="benchmarks.swe_bench_pro">SWE-Pro</th>
@@ -203,8 +208,10 @@ const head = [
       <div class="chart-card">
         <h2>Benchmark Leaders</h2>
         <select id="bench-select">
+          <option value="terminal_bench_4_0">Terminal-Bench 4.0 (agentic terminal use)</option>
+          <option value="deepswe_1_1">DeepSWE v1.1 (long-horizon coding)</option>
           <option value="swe_bench_pro">SWE-bench Pro (real coding, memorisation-resistant)</option>
-          <option value="terminal_bench_2_1">Terminal-Bench 2.1 (agentic terminal use)</option>
+          <option value="terminal_bench_2_1">Terminal-Bench 2.1 (older version)</option>
           <option value="gpqa_diamond">GPQA Diamond (science reasoning)</option>
           <option value="swe_bench_verified">SWE-bench Verified (real coding)</option>
           <option value="hle">HLE (frontier reasoning)</option>
@@ -250,15 +257,17 @@ const head = [
       <h2>How to read this leaderboard</h2>
       <p><strong>Every number links to where it came from.</strong> A figure is only ranked if it comes from a vendor model card, a system card, or an open leaderboard. Numbers marked <em>est</em> are estimates, numbers marked <em>?</em> were inherited without recorded provenance, and neither ever contributes to a ranking or a chart. The <strong>Src</strong> column counts how many currently-reported benchmarks a model has a citable source for — a low number means the vendor published little, not that the model is weak.</p>
       <p><strong>Ranks are assigned in tiers.</strong> Models within one point share a rank. SWE-bench reports to one decimal on a 500-problem set where a single problem is worth 0.2 points, so a 0.1 gap is noise. Ordering two models on that difference would imply a precision the benchmark does not have.</p>
-      <p><strong>Never compare SWE-bench Verified against SWE-bench Pro.</strong> They are different benchmarks and Pro runs roughly 20 points lower on the same model — Claude Opus 4.8 scores 69.2 on Pro and 88.6 on Verified. They get separate columns here for that reason. The same applies to Terminal-Bench 2.0 versus 2.1.</p>
+      <p><strong>Never compare SWE-bench Verified against SWE-bench Pro.</strong> They are different benchmarks and Pro runs roughly 20 points lower on the same model — Claude Opus 4.8 scores 69.2 on Pro and 88.6 on Verified. They get separate columns here for that reason. The same applies to Terminal-Bench versions: Gemini 3.8 Flash scores 89.4 on 2.1 and 19.1 on 4.0.</p>
       <p>The blended price column is a 3:1 input-to-output weighted average, which approximates the cost shape of most production agent workloads (heavy input from context and history, smaller output per call). Prompt caching changes this calculus substantially — Anthropic and OpenAI both ship aggressive caching that can drop effective price by 60-80% on repeated-context workloads. If your application is conversational or RAG-heavy, the cached-read price is the one you should optimise against, not the headline input price.</p>
 
       <h2>Which benchmark actually matters</h2>
-      <p><strong>SWE-bench Pro</strong> measures end-to-end issue resolution on real repositories, built to resist the memorisation that has begun to inflate SWE-bench Verified. Currently the widest-reported coding benchmark and the most predictive single number for AI coding tools.</p>
-      <p><strong>Terminal-Bench 2.1</strong> measures agentic work in a real terminal — multi-step tasks with tool use and recovery from failure. Now the headline agentic eval for most labs, and it replaced Terminal-Bench Hard and 2.0, which are not comparable to it.</p>
+      <p><strong>Terminal-Bench 4.0</strong> tests agents on complex terminal-based tasks, including software engineering, system configuration, and data analysis. It is the agentic eval most labs reported in late 2026, and it runs far harder than 2.1, so scores are much lower and the two are not comparable.</p>
+      <p><strong>DeepSWE v1.1</strong> has agents solve original, long-horizon software engineering tasks. Vendors report it at different effort settings, so hover a score to see which one applies.</p>
+      <p><strong>SWE-bench Pro</strong> measures end-to-end issue resolution on real repositories, built to resist the memorisation that has begun to inflate SWE-bench Verified. Coverage has thinned as labs moved to newer coding evals.</p>
+      <p><strong>Terminal-Bench 2.1</strong> is the previous version of the same terminal eval. It replaced Terminal-Bench Hard and 2.0, and a few labs still report it, but most new releases have moved to 4.0.</p>
       <p><strong>GPQA Diamond</strong> measures graduate-level science reasoning on questions verified to be hard for non-experts. Still the best indicator of novel reasoning over retrieved facts, though frontier models now cluster above 90, so it is beginning to saturate.</p>
       <p><strong>SWE-bench Verified</strong> measures issue resolution on real GitHub repositories. Still widely quoted, but frontier scores now sit in the high 70s to 90s and the spread between good models has narrowed considerably.</p>
-      <p><strong>HLE (Humanity's Last Exam)</strong> is the hardest benchmark in general use — frontier models score in the 40s and 50s. Check whether a quoted figure was run with tools, since that shifts results by roughly 5-15 points.</p>
+      <p><strong>HLE (Humanity's Last Exam)</strong> is one of the hardest benchmarks in general use — frontier models score in the 40s to 60s. Check whether a quoted figure was run with tools, since that shifts results by roughly 5-15 points.</p>
       <p><strong>MMMU-Pro</strong> measures multimodal reasoning across images and text, and is a harder variant of the original MMMU. Only matters if your application uses vision.</p>
 
       <h2>Benchmarks we no longer rank</h2>
@@ -274,7 +283,7 @@ const head = [
       <h2>Methodology and sources</h2>
       <p>Benchmark figures come from vendor model cards and system cards, and from <a href="https://www.swebench.com" target="_blank" rel="noopener">SWE-bench</a>. Each cell stores its own source URL and the date it was read; scores are frozen at that date rather than silently recomputed later. A build-time validator rejects any figure that lacks an attributable source, so an unsourced number cannot reach this page — and it rejects figures sourced to secondary summary sites, several of which publish benchmark scores that appear in no vendor release.</p>
       <p>Vendor-reported figures are self-run and are labelled as such on hover. We cross-check our orderings against <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a> and <a href="https://livebench.ai" target="_blank" rel="noopener">LiveBench</a>, both of which run their own independent evaluations and publish composite indices. Their numbers are not reproduced here — for an independently-measured overall ranking, go to the source.</p>
-      <p>Pricing is taken from each provider's first-party API on {last_updated}; open-weights pricing reflects the typical OpenRouter / Together / Fireworks rate. Models are marked <em>superseded</em> when a newer model exists in the same series and <em>unreleased</em> when announced without public availability; neither is ranked by default.</p>
+      <p>Pricing comes from each provider's first-party rate card where one is published. We last checked on {last_updated}; some vendors publish no per-token price, so those rows show a dash or an older figure. Where a price depends on prompt length, time of day, or an introductory period, hover the model name for details. Open-weights rows without a first-party API reflect the typical OpenRouter / Together / Fireworks rate. Models are marked <em>superseded</em> when a newer model exists in the same series and <em>unreleased</em> when announced without public availability; neither is ranked by default.</p>
       <p>For the long-form analysis behind these numbers — which models we use day-to-day, which we ruled out, and how the landscape shifted in the last six months — read the companion post <a href="/best/llm-benchmark-comparison-2026/">LLM Benchmark Comparison 2026</a>.</p>
     </div>
 
@@ -653,12 +662,14 @@ const head = [
     const tbody = $('#leaderboard-body');
     tbody.innerHTML = sorted.map(m => `
       <tr class="${m.status !== 'current' ? 'row-old' : ''}">
-        <td><strong>${m.name}</strong> ${STATUS_BADGE[m.status] || ''}</td>
+        <td title="${(m.availability_note || m.note || '').replace(/"/g, '&quot;')}"><strong>${m.name}</strong> ${STATUS_BADGE[m.status] || ''}</td>
         <td><span class="vendor-chip">${m.vendor}</span></td>
         <td class="src-count" title="${m.sourced} of ${Object.keys(REGISTRY).filter(k => REGISTRY[k].status === 'live').length} currently-reported benchmarks have a cited source">${m.sourced}</td>
         <td>${fmtCtx(m.context_window)}</td>
         <td>${fmtPrice(m.pricing?.input)}</td>
         <td>${fmtPrice(m.pricing?.output)}</td>
+        ${cellHtml(m, 'terminal_bench_4_0')}
+        ${cellHtml(m, 'deepswe_1_1')}
         ${cellHtml(m, 'gpqa_diamond')}
         ${cellHtml(m, 'swe_bench_verified')}
         ${cellHtml(m, 'swe_bench_pro')}

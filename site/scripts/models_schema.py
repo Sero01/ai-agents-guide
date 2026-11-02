@@ -160,6 +160,22 @@ BENCHMARKS = {
         "scale": "pct",
         "note": "Supersedes Terminal-Bench Hard (AA Index v4.1).",
     },
+    "terminal_bench_4_0": {
+        "label": "Terminal-Bench 4.0",
+        "status": "live",
+        "scored": True,
+        "scale": "pct",
+        "note": "Much harder than 2.1 and not comparable to it: Gemini 3.8 "
+                "Flash scores 89.4 on 2.1 and 19.1 on 4.0.",
+    },
+    "deepswe_1_1": {
+        "label": "DeepSWE v1.1",
+        "status": "live",
+        "scored": True,
+        "scale": "pct",
+        "note": "Long-horizon software engineering tasks. Vendors report it at "
+                "different effort settings; check the cell note.",
+    },
     "hle": {
         "label": "HLE",
         "status": "live",
