@@ -8,20 +8,18 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"MCP Setup and Installation: Claude Desktop and Claude Code","description":"Step-by-step instructions for setting up MCP with Claude Desktop and Claude Code. Covers config file locations, adding servers, transport types, environment variables, and troubleshooting.","url":"https://agentguides.dev/mcp/setup/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"MCP setup, MCP installation, Model Context Protocol setup, Claude Desktop MCP, Claude Code MCP, MCP tutorial, AI tools setup"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"MCP Setup and Installation: Claude Desktop and Claude Code","description":"Step-by-step instructions for setting up MCP with Claude Desktop and Claude Code. Covers config file locations, adding servers, transport types, environment variables, and troubleshooting.","url":"https://agentguides.dev/mcp/setup/","datePublished":"2026-01-01","dateModified":"2026-11-03","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"MCP setup, MCP installation, Model Context Protocol setup, Claude Desktop MCP, Claude Code MCP, MCP tutorial, AI tools setup"}
   - tag: script
     attrs:
       type: application/ld+json
     content: |
       {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},{"@type":"ListItem","position":2,"name":"MCP","item":"https://agentguides.dev/mcp/"},{"@type":"ListItem","position":3,"name":"Setup & Installation","item":"https://agentguides.dev/mcp/setup/"}]}
 ---
-import { Icon } from 'astro-icon/components';
-
 This tutorial gets you from zero to a working MCP setup in under 10 minutes.
 
 ## Prerequisites
 
-- Node.js 18+ or Python 3.10+
+- Node.js 18+ or Python 3.11+
 - Claude Desktop (for local testing) or Claude Code CLI
 
 Node.js is required for most official MCP servers, which are distributed as npm packages. Even if your own MCP servers are Python-based, you'll likely need Node.js for the official servers in the ecosystem.
@@ -34,11 +32,13 @@ Download and install Claude Desktop from the Anthropic website.
 
 ### 2. Configure MCP Servers
 
-Claude Desktop reads MCP configuration from a JSON file:
+Claude Desktop reads MCP configuration from a JSON file. To open it, click the Claude menu in your system's menu bar, select **Settings...**, open the **Developer** tab, and click **Edit Config**.
 
-**macOS/Linux:**
+The file is at:
+
+**macOS:**
 ```bash
-~/.config/claude/claude_desktop_config.json
+~/Library/Application Support/Claude/claude_desktop_config.json
 ```
 
 **Windows:**
@@ -46,7 +46,10 @@ Claude Desktop reads MCP configuration from a JSON file:
 %APPDATA%\Claude\claude_desktop_config.json
 ```
 
-If the file doesn't exist yet, create it. If the directory doesn't exist, create that too.
+**Linux:**
+```bash
+~/.config/Claude/claude_desktop_config.json
+```
 
 ### 3. Add a Server
 
@@ -73,23 +76,35 @@ The `command` and `args` array tells Claude Desktop how to start the server. Cla
 
 ### 4. Restart Claude Desktop
 
-After saving the config, restart Claude Desktop. You'll see a tools icon (<Icon name="lucide:wrench" class="inline-icon" />) in the chat input — click it to verify your servers loaded.
+Completely quit and restart Claude Desktop after saving the config. Then click the **Add files, connectors, and more** button in the chat input, hover over **Connectors**, and click **Manage connectors**. Your server should be in the list, and selecting it shows its tools.
 
-If the tools icon doesn't appear, or if it shows fewer tools than expected, check the troubleshooting section below.
+If it doesn't appear, or if it shows fewer tools than expected, check the troubleshooting section below.
 
 ### 5. Verify the Setup
 
-In a new chat session, ask Claude: "What tools do you have access to?" It should list the tools exposed by your configured servers. For the filesystem server, you should see tools like `read_file`, `write_file`, `list_directory`, and others.
+In a new chat session, ask Claude: "What tools do you have access to?" It should list the tools exposed by your configured servers. For the filesystem server, you should see tools like `read_text_file`, `write_file`, `list_directory`, and others.
 
 ## Option B: Claude Code CLI
 
-Claude Code reads MCP config from `.claude/settings.json` in your project root, or from `~/.claude/settings.json` globally.
+Add servers to Claude Code with the `claude mcp add` command. Its `--scope` option sets where the server is stored and who gets it:
 
-The project-level config applies only when you run Claude Code from within that project directory. The global config applies in all sessions. Most developers use the project-level config for project-specific tools (filesystem, project database) and the global config for universal tools (web search, memory).
+| Scope | Stored in | Applies to |
+|-------|-----------|------------|
+| `local` (default) | `~/.claude.json`, under the project's path | You, in this project |
+| `project` | `.mcp.json` in your project root | Everyone on the project, through version control |
+| `user` | `~/.claude.json` | You, in all projects |
 
-### Project-level config
+Most developers use project scope for tools the whole team needs (filesystem, project database) and user scope for universal tools (web search, memory).
 
-Create `.claude/settings.json` in your project root:
+### Project scope
+
+From your project root, run:
+
+```bash
+claude mcp add --scope project --transport stdio filesystem -- npx -y @modelcontextprotocol/server-filesystem .
+```
+
+Everything after `--` is the command that starts the server. This creates a `.mcp.json` file you can commit:
 
 ```json
 {
@@ -97,13 +112,6 @@ Create `.claude/settings.json` in your project root:
     "filesystem": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
-    },
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_TOKEN": "your-github-token"
-      }
     }
   }
 }
@@ -111,40 +119,33 @@ Create `.claude/settings.json` in your project root:
 
 The `"."` path for the filesystem server grants access to the current directory (your project root). This is a common pattern for development workflows where Claude needs to read and write project files.
 
-### Global config
+Claude Code asks you to approve servers from a `.mcp.json` file before it uses them.
 
-Create `~/.claude/settings.json`:
+### User scope
 
-```json
-{
-  "mcpServers": {
-    "memory": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"]
-    }
-  }
-}
+```bash
+claude mcp add --scope user --transport stdio memory -- npx -y @modelcontextprotocol/server-memory
 ```
 
-The memory server is a good candidate for global config because you generally want persistent memory available across all Claude Code sessions, not just in specific projects.
+The memory server is a good candidate for user scope because you generally want persistent memory available across all Claude Code sessions, not just in specific projects.
 
 ### Verify it's working
 
 ```bash
-# List available MCP tools in the current project
+# List configured servers and their connection status
 claude mcp list
 ```
 
-This command shows which servers are configured and which tools they expose in the current session.
+This command shows each server with a status such as `✔ Connected` or `✘ Failed to connect`. Inside a Claude Code session, run `/mcp` to see each server's status and tool count.
 
 ## Transport Types
 
-MCP supports two transport mechanisms:
+MCP defines two standard transports:
 
 | Transport | Use Case |
 |-----------|----------|
 | **stdio** | Local servers (most common) — server runs as a subprocess |
-| **SSE** | Remote servers — server runs as an HTTP service |
+| **Streamable HTTP** | Remote servers — server runs as an HTTP service |
 
 **stdio config** (local subprocess):
 ```json
@@ -156,14 +157,30 @@ MCP supports two transport mechanisms:
 
 The `command` and `args` fields are required for stdio transport. Claude Desktop or Claude Code will spawn this process when starting a session.
 
-**SSE config** (remote HTTP):
+**Streamable HTTP in Claude Code** (remote server):
+
+```bash
+claude mcp add --transport http notion https://mcp.notion.com/mcp
+```
+
+In a `.mcp.json` file, the same server looks like this. The `type` field is required, because Claude Code rejects a `url` entry without one:
+
 ```json
 {
-  "url": "http://localhost:8080/sse"
+  "mcpServers": {
+    "notion": {
+      "type": "http",
+      "url": "https://mcp.notion.com/mcp"
+    }
+  }
 }
 ```
 
-SSE transport is used for remote servers. Instead of spawning a subprocess, the MCP client connects to the specified URL. This is useful for server-side deployments where the MCP server is running independently.
+Instead of spawning a subprocess, the MCP client connects to the specified URL. This is useful for server-side deployments where the MCP server is running independently. In Claude Desktop, the config file examples above cover local servers only. See the [guide to connecting remote servers](https://modelcontextprotocol.io/docs/2026-07-28/develop/connect-remote-servers) for that app.
+
+:::caution[SSE is deprecated]
+Older guides use the HTTP+SSE transport, usually with a URL ending in `/sse`. It has been [deprecated since 2025](https://modelcontextprotocol.io/specification/2026-07-28/changelog), and the Claude Code docs say to use HTTP servers instead where available. If a server you depend on offers Streamable HTTP, switch to it. Claude Code can still connect to an SSE-only server with `--transport sse`.
+:::
 
 ## Adding Environment Variables
 
@@ -192,6 +209,20 @@ Never hardcode secrets in your config files. Use environment variable references
 
 For local development, the `env` field in the config is convenient. For production or shared environments, use environment variables set in your shell or a secrets manager, and access them in the server code via `os.environ`.
 
+In a `.mcp.json` file, Claude Code expands `${VAR}` and `${VAR:-default}`, so you can commit the file without committing the secret:
+
+```json
+{
+  "mcpServers": {
+    "my-server": {
+      "command": "python",
+      "args": ["server.py"],
+      "env": { "API_KEY": "${MY_SERVER_API_KEY}" }
+    }
+  }
+}
+```
+
 ## Configuring Multiple Servers
 
 You can run multiple servers simultaneously:
@@ -203,10 +234,9 @@ You can run multiple servers simultaneously:
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
     },
-    "github": {
+    "memory": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": { "GITHUB_TOKEN": "ghp_..." }
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
     },
     "database": {
       "command": "python",
@@ -226,7 +256,7 @@ Keys in the `mcpServers` object are server names — they're used for display pu
 **Server not appearing in Claude Desktop:**
 - Check the config file is valid JSON: `python3 -m json.tool < config.json`
 - Ensure the command is in your `PATH`: run `which npx` or `which python3`
-- Check Claude Desktop logs: `~/Library/Logs/Claude/` (macOS) or `%APPDATA%\Claude\logs\` (Windows)
+- Check Claude Desktop logs: `~/Library/Logs/Claude/` (macOS), `%APPDATA%\Claude\logs\` (Windows), or `~/.config/Claude/logs/` (Linux). `mcp.log` covers connections, and `mcp-server-SERVERNAME.log` holds each server's stderr.
 
 **Server crashes immediately:**
 - Run the server command manually in your terminal to see error output
@@ -239,9 +269,10 @@ Keys in the `mcpServers` object are server names — they're used for display pu
 - Look at the server's logs (written to stderr by convention)
 
 **`claude mcp list` shows no servers:**
-- Check that `.claude/settings.json` exists and is valid JSON
-- Verify you're running Claude Code from the correct project directory
-- Try the global config at `~/.claude/settings.json` as a fallback
+- MCP servers don't go in `.claude/settings.json`. Add them with `claude mcp add` or in `.mcp.json`
+- Check that `.mcp.json` is valid JSON and sits in your project root
+- Verify you're running Claude Code from the correct project directory, since `local` and `project` servers only apply there
+- A status of `Pending approval` means Claude Code hasn't been allowed to use a `.mcp.json` server yet. Run `claude` to approve it
 
 ## Security Considerations
 
@@ -250,7 +281,7 @@ MCP servers can read files, query databases, make HTTP requests, and take other 
 - **What can it access?** Check the server's documentation and source code to understand what data it can read.
 - **What can it write?** Some servers can write or delete data. Understand the blast radius if the server behaves unexpectedly.
 - **Where does the data go?** Does the server send data to external services? Is that appropriate for your data?
-- **Who maintains it?** Official Anthropic servers are reviewed and maintained. Community servers vary. Review the source before adding.
+- **Who maintains it?** Check that the project is still maintained, since even some official reference servers have been deprecated. Community servers vary. Review the source before adding.
 
 The filesystem server is worth special attention: specify the minimum directory necessary, not your entire home directory. A server with access to `/` on your system can read any file you have access to.
 

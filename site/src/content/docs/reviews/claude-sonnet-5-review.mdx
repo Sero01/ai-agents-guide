@@ -3,7 +3,7 @@ title: "Claude Sonnet 5 Review — Benchmarks, Pricing, and the Agent Angle"
 description: "Anthropic released Claude Sonnet 5 on June 30, 2026: SWE-bench Verified 72.7, GPQA Diamond 91.1, a 1M-token context, $2/$10 pricing, and a new tokenizer. What changed from Sonnet 4.6, how it lands against Opus 4.8, and who should switch."
 author: Parvez Ahmed
 date: 2026-07-05
-lastUpdated: 2026-07-05
+lastUpdated: 2026-11-03
 sidebar:
   order: 9
 head:
@@ -34,7 +34,7 @@ head:
   - tag: meta
     attrs:
       property: article:modified_time
-      content: "2026-07-05"
+      content: "2026-11-03"
   - tag: meta
     attrs:
       property: article:author
@@ -68,7 +68,7 @@ head:
       type: application/ld+json
     content: |
       {"@context":"https://schema.org","@graph":[
-        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/claude-sonnet-5-review/#article","headline":"Claude Sonnet 5 Review — Benchmarks, Pricing, and the Agent Angle","description":"Anthropic released Claude Sonnet 5 on June 30, 2026: SWE-bench Verified 72.7, GPQA Diamond 91.1, a 1M-token context, $2/$10 pricing, and a new tokenizer. What changed from Sonnet 4.6, how it lands against Opus 4.8, and who should switch.","url":"https://agentguides.dev/reviews/claude-sonnet-5-review/","mainEntityOfPage":"https://agentguides.dev/reviews/claude-sonnet-5-review/","datePublished":"2026-07-05","dateModified":"2026-07-05","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Claude Sonnet 5 review, Claude Sonnet 5 benchmarks, Anthropic, SWE-bench Verified, agentic coding, tokenizer, Opus 4.8"},
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/claude-sonnet-5-review/#article","headline":"Claude Sonnet 5 Review — Benchmarks, Pricing, and the Agent Angle","description":"Anthropic released Claude Sonnet 5 on June 30, 2026: SWE-bench Verified 72.7, GPQA Diamond 91.1, a 1M-token context, $2/$10 pricing, and a new tokenizer. What changed from Sonnet 4.6, how it lands against Opus 4.8, and who should switch.","url":"https://agentguides.dev/reviews/claude-sonnet-5-review/","mainEntityOfPage":"https://agentguides.dev/reviews/claude-sonnet-5-review/","datePublished":"2026-07-05","dateModified":"2026-11-03","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Claude Sonnet 5 review, Claude Sonnet 5 benchmarks, Anthropic, SWE-bench Verified, agentic coding, tokenizer, Opus 4.8"},
         {"@type":"Review","name":"Claude Sonnet 5 review","itemReviewed":{"@type":"SoftwareApplication","name":"Claude Sonnet 5","applicationCategory":"DeveloperApplication","operatingSystem":"API (cloud)","publisher":{"@type":"Organization","name":"Anthropic"}},"reviewRating":{"@type":"Rating","ratingValue":"4.5","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-07-05","reviewBody":"A large step for the mid-tier line. Sonnet 5 posts SWE-bench Verified 72.7 and GPQA Diamond 91.1 — a real jump over the Sonnet 4.6 generation — while keeping a 1M-token context and launching at $2/$10 per million tokens, a price Anthropic later made permanent. It sits below Opus 4.8 on the hardest agentic coding, but its price-to-capability ratio is the story: near-frontier reasoning at a mid-tier rate, aimed squarely at running agents cheaply. Note the new tokenizer, which can map the same input to 1.0-1.35x more tokens, and re-test prompt scaffolding before switching production traffic."},
         {"@type":"BreadcrumbList","itemListElement":[
           {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
@@ -88,6 +88,7 @@ import AuthorByline from '../../../components/AuthorByline.astro';
 <AuthorByline date="2026-07-05" />
 
 <aside style="border-left:2px solid var(--sl-color-accent);padding:0.25rem 0 0.25rem 1rem;margin:1rem 0 1.5rem;font-size:0.85rem;line-height:1.55">
+<strong>Newer model available.</strong> Anthropic released Claude Sonnet 5.5 on September 28, 2026, at the same $2/$10 per million tokens, and our <a href="/leaderboard/">models leaderboard</a> now marks Claude Sonnet 5 as superseded. We haven't reviewed Claude Sonnet 5.5 yet, so this review still describes Claude Sonnet 5 as it launched.<br /><br />
 Claude Sonnet 5 shipped on June 30, 2026 with a full public benchmark card. Pricing corrected in November 2026: Anthropic cancelled the planned rise to $3/$15, so the $2/$10 launch price is now standard. Our <a href="/leaderboard/">models leaderboard</a> records that rate, with SWE-bench Verified and GPQA cells vendor-sourced and the remaining cells estimated between Sonnet 4.6 and Opus 4.8.
 </aside>
 

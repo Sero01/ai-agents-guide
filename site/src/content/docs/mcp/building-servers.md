@@ -1,6 +1,6 @@
 ---
 title: "Build Your Own MCP Server: A Python Tutorial"
-description: "How to build a custom MCP server from scratch using the Python SDK. Covers tools, resources, error handling, and how to register your server with Claude Code and Claude Desktop."
+description: "How to build a custom MCP server with the Python SDK v2. Covers tools, resources, error handling, Streamable HTTP, and how to register your server with Claude Code and Claude Desktop."
 sidebar:
   order: 4
 head:
@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"Build Your Own MCP Server: A Python Tutorial","description":"How to build a custom MCP server from scratch using the Python SDK. Covers tools, resources, error handling, and how to register your server with Claude Code and Claude Desktop.","url":"https://agentguides.dev/mcp/building-servers/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"build MCP server, MCP server tutorial, custom MCP server, Python MCP server, MCP server from scratch, Model Context Protocol development"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Build Your Own MCP Server: A Python Tutorial","description":"How to build a custom MCP server with the Python SDK v2. Covers tools, resources, error handling, Streamable HTTP, and how to register your server with Claude Code and Claude Desktop.","url":"https://agentguides.dev/mcp/building-servers/","datePublished":"2026-01-01","dateModified":"2026-11-03","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"build MCP server, MCP server tutorial, custom MCP server, Python MCP server, MCP server from scratch, Model Context Protocol development"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -28,102 +28,75 @@ This is a toy example, but the structure is identical to what you'd use for real
 
 ## Install the SDK
 
+The code on this page was tested with version 2.3.0 of the [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk), which requires Python 3.11 or later.
+
 ```bash
-pip install mcp
+pip install "mcp[cli]"
 ```
 
-The `mcp` package provides the server framework, protocol types, and stdio/SSE transport implementations.
+The `mcp` package provides the server framework, protocol types, and the stdio and Streamable HTTP transports. The `cli` extra adds the `mcp` command-line tool.
+
+:::note[Coming from v1?]
+SDK v2 renamed `FastMCP` to `MCPServer`, and importing from `mcp.server.fastmcp` now fails. The low-level `Server` class dropped its `@app.list_tools()` and `@app.call_tool()` decorators, so older tutorials that use them no longer run. See the [migration guide](https://py.sdk.modelcontextprotocol.io/migration/).
+:::
 
 ## Complete Server (Python)
 
 ```python
-# server.py — A complete MCP server in ~60 lines
-import json
-import asyncio
-from pathlib import Path
-from mcp.server import Server
-from mcp.server.stdio import stdio_server
-from mcp import types
+# server.py: a complete MCP server
+from mcp.server import MCPServer
+from mcp.server.mcpserver.exceptions import ToolError
 
-# ── In-memory note store (replace with a real DB in production) ──────
+# In-memory note store (replace with a real DB in production)
 NOTES: dict[str, str] = {
     "1": "MCP stands for Model Context Protocol.",
-    "2": "MCP uses JSON-RPC 2.0 over stdio or SSE.",
+    "2": "MCP uses JSON-RPC 2.0 over stdio or Streamable HTTP.",
     "3": "Tools are functions; Resources are data.",
 }
 
-# ── Server setup ──────────────────────────────────────────────────────
-app = Server("notes-server")
+mcp = MCPServer("notes-server")
 
-@app.list_tools()
-async def list_tools() -> list[types.Tool]:
-    """Tell MCP clients what tools this server provides."""
-    return [
-        types.Tool(
-            name="read_note",
-            description="Read a note by its ID.",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "id": {"type": "string", "description": "The note ID"}
-                },
-                "required": ["id"],
-            },
-        ),
-        types.Tool(
-            name="list_notes",
-            description="List all available note IDs.",
-            inputSchema={
-                "type": "object",
-                "properties": {},
-            },
-        ),
-    ]
 
-@app.call_tool()
-async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
-    """Handle tool calls from MCP clients."""
-    if name == "read_note":
-        note_id = arguments.get("id")
-        note = NOTES.get(note_id)
-        if note:
-            return [types.TextContent(type="text", text=note)]
-        else:
-            return [types.TextContent(type="text", text=f"No note found with ID: {note_id}")]
+@mcp.tool()
+def read_note(id: str) -> str:
+    """Read a note by its ID."""
+    note = NOTES.get(id)
+    if note is None:
+        raise ToolError(f"No note found with ID: {id}")
+    return note
 
-    elif name == "list_notes":
-        note_list = "\n".join(f"- {k}: {v[:50]}..." for k, v in NOTES.items())
-        return [types.TextContent(type="text", text=f"Available notes:\n{note_list}")]
 
-    else:
-        raise ValueError(f"Unknown tool: {name}")
+@mcp.tool()
+def list_notes() -> str:
+    """List all available note IDs."""
+    return "\n".join(f"- {k}: {v[:50]}" for k, v in NOTES.items())
 
-# ── Run the server ─────────────────────────────────────────────────────
-async def main():
-    async with stdio_server() as (read_stream, write_stream):
-        await app.run(read_stream, write_stream, app.create_initialization_options())
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    mcp.run()
 ```
 
 Let's walk through the key parts of this code.
 
-The `Server("notes-server")` creates a server instance with the name "notes-server". This name is what MCP clients see when they connect.
+`MCPServer("notes-server")` creates a server instance with the name "notes-server". This name is what MCP clients see when they connect.
 
-The `@app.list_tools()` decorator registers an async function that the MCP SDK calls when a client asks "what tools does this server provide?" The function returns a list of `types.Tool` objects, each describing a tool with its name, a description the model uses to decide when to call it, and an input schema.
+The `@mcp.tool()` decorator registers a function as a tool. The SDK builds the tool definition from the function itself: the function name becomes the tool name, the docstring becomes the description the model uses to decide when to call it, and the type hints become the input schema.
 
 The tool descriptions are important. "Read a note by its ID" tells the model what the tool does. The input schema tells the model what arguments to provide. Write descriptions that are specific enough for the model to choose the right tool, but concise enough not to be confusing.
 
-The `@app.call_tool()` decorator registers the function that handles actual tool calls. When the model calls `read_note` with `{"id": "1"}`, this function is invoked with `name="read_note"` and `arguments={"id": "1"}`. It looks up the note and returns a `TextContent` object with the result.
+When the model calls `read_note` with `{"id": "1"}`, the SDK validates the arguments and calls `read_note(id="1")`. A returned string reaches the model as text.
 
-Tool handlers must return a list of content objects. The `types.TextContent` with `type="text"` is the simplest — it returns a plain string to the model. There are also content types for images and structured data.
-
-The `main()` function starts the stdio server, which listens on stdin for incoming MCP protocol messages and writes responses to stdout. This is why you should never write diagnostic output to stdout in an MCP server — use stderr for logging.
+`mcp.run()` with no arguments starts the server on the stdio transport, which listens on stdin for incoming MCP protocol messages and writes responses to stdout. This is why you should never write diagnostic output to stdout in an MCP server — use stderr for logging.
 
 ## Register with Claude Code
 
-Add to your `.claude/settings.json` or `~/.claude/settings.json`:
+Add the server with the `claude mcp add` command. Everything after `--` is the command that starts the server:
+
+```bash
+claude mcp add --transport stdio notes -- python /absolute/path/to/server.py
+```
+
+To share the server with your team, add `--scope project`, which writes it to a `.mcp.json` file in your project root that you can commit:
 
 ```json
 {
@@ -136,68 +109,64 @@ Add to your `.claude/settings.json` or `~/.claude/settings.json`:
 }
 ```
 
-Use an absolute path. Relative paths can break depending on what directory Claude Code is launched from.
+Use an absolute path. Relative paths can break depending on what directory Claude Code is launched from. If your dependencies live in a virtual environment, point `command` at that environment's Python.
+
+For Claude Desktop, add the same `notes` block under `mcpServers` in `claude_desktop_config.json`. The [setup guide](/mcp/setup/) lists where that file lives.
 
 ## Test It
 
-```bash
-# Run the server directly to see what it exposes
-python server.py
-```
-
-Or use the MCP inspector (official debugging tool):
+Use the MCP Inspector (official debugging tool):
 
 ```bash
 npx @modelcontextprotocol/inspector python server.py
 ```
 
+Or use the SDK's shortcut for the same tool:
+
+```bash
+mcp dev server.py
+```
+
 This opens a browser UI where you can call your tools manually. The inspector is invaluable for development — you can test every tool call interactively without needing to configure the server in Claude Desktop.
+
+Running `python server.py` on its own prints nothing and appears to hang. That's expected: the server is waiting for protocol messages on stdin.
 
 ## Adding Resources
 
-Resources expose data (not actions). The model can read them to get context without triggering side effects.
+Resources expose data (not actions). Clients can read them to get context without triggering side effects. Add `import json` at the top of `server.py`, then register a resource above the `if __name__` line:
 
 ```python
-@app.list_resources()
-async def list_resources() -> list[types.Resource]:
-    return [
-        types.Resource(
-            uri="notes://all",
-            name="All Notes",
-            description="Complete notes database",
-            mimeType="application/json",
-        )
-    ]
-
-@app.read_resource()
-async def read_resource(uri: str) -> str:
-    if uri == "notes://all":
-        return json.dumps(NOTES, indent=2)
-    raise ValueError(f"Unknown resource: {uri}")
+@mcp.resource("notes://all", mime_type="application/json")
+def all_notes() -> str:
+    """Complete notes database."""
+    return json.dumps(NOTES, indent=2)
 ```
 
-Resources are identified by URIs. The URI scheme (`notes://`) is defined by your server — choose something meaningful. When a client requests a resource by URI, your `read_resource` handler returns its contents as a string.
+Resources are identified by URIs. The URI scheme (`notes://`) is defined by your server — choose something meaningful. When a client requests a resource by URI, the SDK calls your function and returns its result.
 
 The distinction between tools and resources is meaningful: tools are for actions (write a file, send a message, run a query), resources are for data (read this document, get this database snapshot). Using the right type makes your server's intent clear to the model.
 
 ## Error Handling Best Practices
 
+Raise `ToolError` for failures the model can act on:
+
 ```python
-@app.call_tool()
-async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
-    try:
-        # ... your tool logic
-        pass
-    except KeyError as e:
-        # Return a helpful error message (don't crash the server)
-        return [types.TextContent(type="text", text=f"Missing required argument: {e}")]
-    except Exception as e:
-        return [types.TextContent(type="text", text=f"Tool error: {str(e)}")]
+from mcp.server.mcpserver.exceptions import ToolError
+
+@mcp.tool()
+def read_note(id: str) -> str:
+    """Read a note by its ID."""
+    note = NOTES.get(id)
+    if note is None:
+        raise ToolError(f"No note found with ID: {id}")
+    return note
 ```
 
-Return errors as `TextContent` rather than raising exceptions. If the server crashes, the MCP client can't recover gracefully — it will report a connection error to the user. If you return an error as text, the model can read the error and decide how to respond: retry with different arguments, try a different approach, or inform the user.
+The SDK returns this to the model as an error result, with your message: `Error executing tool read_note: No note found with ID: 99`. The server keeps running.
 
-The model can adapt to error messages that describe what went wrong. "No note found with ID: 99" is actionable — the model can try a different ID or ask the user for clarification. A server crash just terminates the connection.
+Any other exception is also returned as an error result, but the model only sees `Error executing tool read_note`. The details go to your server's log. That keeps internal details from reaching the model, so catch the failures you expect and re-raise them as `ToolError` with a useful message.
+
+The model can adapt to error messages that describe what went wrong. "No note found with ID: 99" is actionable — the model can try a different ID or ask the user for clarification. A generic error gives it nothing to work with.
 
 ## Wrapping a Real Database
 
@@ -205,93 +174,92 @@ Here's how the same pattern looks when wrapping a real SQLite database:
 
 ```python
 import sqlite3
-from mcp.server import Server
-from mcp.server.stdio import stdio_server
-from mcp import types
-import asyncio
+
+from mcp.server import MCPServer
+from mcp.server.mcpserver.exceptions import ToolError
 
 DB_PATH = "data.db"
-app = Server("sqlite-notes")
+MAX_ROWS = 100
 
-def get_db():
-    return sqlite3.connect(DB_PATH)
+mcp = MCPServer("sqlite-notes")
 
-@app.list_tools()
-async def list_tools() -> list[types.Tool]:
-    return [
-        types.Tool(
-            name="query",
-            description="Run a read-only SQL SELECT query against the database.",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "sql": {"type": "string", "description": "SQL SELECT statement"},
-                },
-                "required": ["sql"],
-            },
-        ),
-    ]
 
-@app.call_tool()
-async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
-    if name == "query":
-        sql = arguments.get("sql", "")
+@mcp.tool()
+def query(sql: str) -> str:
+    """Run a read-only SQL query against the database."""
+    # mode=ro makes SQLite reject writes, whatever the SQL says
+    conn = sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
+    try:
+        cursor = conn.execute(sql)
+        if cursor.description is None:
+            return "Query returned no rows."
+        columns = [description[0] for description in cursor.description]
+        rows = cursor.fetchmany(MAX_ROWS + 1)
+    except sqlite3.Error as e:
+        raise ToolError(f"Query error: {e}")
+    finally:
+        conn.close()
 
-        # Basic safety check — only allow SELECT
-        if not sql.strip().upper().startswith("SELECT"):
-            return [types.TextContent(type="text", text="Error: Only SELECT queries are allowed.")]
+    if not rows:
+        return "Query returned no rows."
 
-        try:
-            with get_db() as conn:
-                cursor = conn.execute(sql)
-                columns = [description[0] for description in cursor.description]
-                rows = cursor.fetchall()
+    # Format as a readable table
+    result = " | ".join(columns) + "\n"
+    result += "-" * len(result) + "\n"
+    result += "\n".join(" | ".join(str(v) for v in row) for row in rows[:MAX_ROWS])
 
-            if not rows:
-                return [types.TextContent(type="text", text="Query returned no rows.")]
+    if len(rows) > MAX_ROWS:
+        result += f"\n... more than {MAX_ROWS} rows, showing the first {MAX_ROWS}"
 
-            # Format as a readable table
-            result = " | ".join(columns) + "\n"
-            result += "-" * len(result) + "\n"
-            result += "\n".join(" | ".join(str(v) for v in row) for row in rows[:100])
+    return result
 
-            if len(rows) > 100:
-                result += f"\n... and {len(rows) - 100} more rows"
-
-            return [types.TextContent(type="text", text=result)]
-
-        except Exception as e:
-            return [types.TextContent(type="text", text=f"Query error: {str(e)}")]
-
-    return [types.TextContent(type="text", text=f"Unknown tool: {name}")]
-
-async def main():
-    async with stdio_server() as (read_stream, write_stream):
-        await app.run(read_stream, write_stream, app.create_initialization_options())
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    mcp.run()
 ```
 
-A few things worth noting in this real-world example: the `SELECT`-only check prevents the model from accidentally (or via prompt injection) running `DELETE` or `UPDATE` queries. The row limit (100) prevents enormous result sets from filling the context window. Both are practical safety measures for database-facing tools.
+A few things worth noting in this real-world example: opening the connection read-only stops the model from accidentally (or via prompt injection) running `DELETE` or `UPDATE` queries, because SQLite refuses the write. That's stronger than checking whether the SQL starts with `SELECT`. The row limit prevents enormous result sets from filling the context window. Both are practical safety measures for database-facing tools.
+
+The model can still read every table in the file, so don't point this at a database that holds anything it shouldn't see.
+
+## Serving Over Streamable HTTP
+
+Stdio works when the client can start your server as a local process. To run the server as a service that several people or machines connect to, use Streamable HTTP. Only the last line changes:
+
+```python
+if __name__ == "__main__":
+    mcp.run(transport="streamable-http")
+```
+
+The server now listens at `http://127.0.0.1:8000/mcp`. Pass `host`, `port`, and `streamable_http_path` to `mcp.run()` to change that address. Connect Claude Code to it with:
+
+```bash
+claude mcp add --transport http notes http://127.0.0.1:8000/mcp
+```
+
+The default address only accepts connections from your own machine. A server that's exposed to a network needs authentication and TLS in front of it, because anyone who can reach it can call its tools.
+
+The older HTTP+SSE transport is [deprecated](https://modelcontextprotocol.io/specification/2026-07-28/changelog). Don't build new servers on it.
 
 ## Production Checklist
 
-- [ ] Input validation (don't trust `arguments` blindly)
-- [ ] Error handling (never crash the server process)
-- [ ] Logging (write to stderr, not stdout — stdout is used by the protocol)
+- [ ] Input validation (type hints check types, not whether a value is safe)
+- [ ] Error handling (raise `ToolError` with a message the model can act on)
+- [ ] Logging (write to stderr, not stdout — on stdio, stdout is used by the protocol)
 - [ ] Secrets via environment variables, not hardcoded
 - [ ] Rate limiting if wrapping external APIs
 - [ ] Read-only mode where possible (minimize write access)
+- [ ] Authentication and TLS for anything served over HTTP
 - [ ] Test with the MCP inspector before connecting to Claude
+- [ ] Pin the SDK's major version (`mcp>=2,<3`) so an upgrade can't break your server
 
 ## Debugging Tips
 
-MCP servers communicate over stdio, which means you can't use `print()` for debugging — it interferes with the protocol. Always use `sys.stderr` for any diagnostic output:
+Stdio servers communicate over stdin and stdout, which means you can't use `print()` for debugging — it interferes with the protocol. Always use `sys.stderr` for any diagnostic output:
 
 ```python
 import sys
-sys.stderr.write(f"Debug: received arguments {arguments}\n")
+sys.stderr.write(f"Debug: received id {id}\n")
 sys.stderr.flush()
 ```
 

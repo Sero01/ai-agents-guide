@@ -3,7 +3,7 @@ title: "Kimi K3 Review — Moonshot's 2.8T Open-Weight Frontier Model"
 description: "Moonshot AI's Kimi K3, released July 16, 2026: a 2.8-trillion-parameter open-weight MoE with a 1M-token context, published GPQA Diamond 93.5, and $3/$15 pricing. What the launch numbers cover, what they leave out, and where it lands against Fable 5 and the open tier."
 author: Parvez Ahmed
 date: 2026-07-19
-lastUpdated: 2026-07-19
+lastUpdated: 2026-11-03
 sidebar:
   order: 11
 head:
@@ -34,7 +34,7 @@ head:
   - tag: meta
     attrs:
       property: article:modified_time
-      content: "2026-07-19"
+      content: "2026-11-03"
   - tag: meta
     attrs:
       property: article:author
@@ -68,7 +68,7 @@ head:
       type: application/ld+json
     content: |
       {"@context":"https://schema.org","@graph":[
-        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/kimi-k3-review/#article","headline":"Kimi K3 Review — Moonshot's 2.8T Open-Weight Frontier Model","description":"Moonshot AI's Kimi K3, released July 16, 2026: a 2.8-trillion-parameter open-weight MoE with a 1M-token context, published GPQA Diamond 93.5, and $3/$15 pricing. What the launch numbers cover, what they leave out, and where it lands against Fable 5 and the open tier.","url":"https://agentguides.dev/reviews/kimi-k3-review/","mainEntityOfPage":"https://agentguides.dev/reviews/kimi-k3-review/","datePublished":"2026-07-19","dateModified":"2026-07-19","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Kimi K3 review, Kimi K3 benchmarks, Moonshot AI, 2.8T open weights model, GPQA Diamond, agentic coding, SWE-bench, Kimi K3 pricing"},
+        {"@type":"TechArticle","@id":"https://agentguides.dev/reviews/kimi-k3-review/#article","headline":"Kimi K3 Review — Moonshot's 2.8T Open-Weight Frontier Model","description":"Moonshot AI's Kimi K3, released July 16, 2026: a 2.8-trillion-parameter open-weight MoE with a 1M-token context, published GPQA Diamond 93.5, and $3/$15 pricing. What the launch numbers cover, what they leave out, and where it lands against Fable 5 and the open tier.","url":"https://agentguides.dev/reviews/kimi-k3-review/","mainEntityOfPage":"https://agentguides.dev/reviews/kimi-k3-review/","datePublished":"2026-07-19","dateModified":"2026-11-03","inLanguage":"en-US","articleSection":"Reviews","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"},"image":"https://agentguides.dev/og/reviews.png","keywords":"Kimi K3 review, Kimi K3 benchmarks, Moonshot AI, 2.8T open weights model, GPQA Diamond, agentic coding, SWE-bench, Kimi K3 pricing"},
         {"@type":"Review","name":"Kimi K3 review","itemReviewed":{"@type":"SoftwareApplication","name":"Kimi K3","applicationCategory":"DeveloperApplication","operatingSystem":"API (cloud), open weights (self-host)","publisher":{"@type":"Organization","name":"Moonshot AI"}},"reviewRating":{"@type":"Rating","ratingValue":"4.4","bestRating":"5","worstRating":"1"},"author":{"@type":"Person","name":"Parvez Ahmed"},"datePublished":"2026-07-19","reviewBody":"The largest open-weight model shipped to date and, on the independent Artificial Analysis composite, the strongest open model available — second only to Claude Fable 5. Kimi K3 is a 2.8-trillion-parameter sparse MoE with a 1M-token context and an always-on thinking mode, priced at $3/$15 per million tokens. Moonshot published a hard GPQA Diamond number (93.5) and a stack of agentic and coding evals, but not most of the standard public suite, so several cross-vendor placements remain estimates until third-party runs land. For teams that want frontier-class reasoning they can eventually self-host, it is the most consequential open release of the month; validate it on your own workload before trusting the launch ranking."},
         {"@type":"BreadcrumbList","itemListElement":[
           {"@type":"ListItem","position":1,"name":"Home","item":"https://agentguides.dev/"},
@@ -88,6 +88,7 @@ import AuthorByline from '../../../components/AuthorByline.astro';
 <AuthorByline date="2026-07-19" />
 
 <aside style="border-left:2px solid var(--sl-color-accent);padding:0.25rem 0 0.25rem 1rem;margin:1rem 0 1.5rem;font-size:0.85rem;line-height:1.55">
+<strong>Newer model available.</strong> Moonshot released Kimi K3.1 Pro on October 24, 2026, at $2/$10 per million tokens, and our <a href="/leaderboard/">models leaderboard</a> now marks Kimi K3 as superseded. We haven't reviewed Kimi K3.1 Pro yet, so this review still describes Kimi K3 as it launched.<br /><br />
 Kimi K3's GPQA Diamond (93.5) and its agentic/coding numbers below are vendor-published; the remaining standard-suite cells (MMLU-Pro, SWE-bench Verified, HumanEval, MATH-500, MMMU, Aider, tau-bench) are conservative estimates anchored to the Kimi K2.7-Code predecessor. Cross-vendor positions come from our <a href="/leaderboard/">models leaderboard</a>; treat the estimated cells as directional until third-party scores land.
 </aside>
 
