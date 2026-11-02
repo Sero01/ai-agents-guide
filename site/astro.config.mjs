@@ -175,6 +175,13 @@ export default defineConfig({
 					],
 				},
 				{
+					label: 'Research',
+					collapsed: true,
+					items: [
+						{ label: 'YC Startup Outcomes 2015–2025', slug: 'research/yc-startup-outcomes-2015-2025' },
+					],
+				},
+				{
 					label: 'Build Tutorials',
 					collapsed: true,
 					items: [
