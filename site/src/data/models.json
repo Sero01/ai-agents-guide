@@ -742,7 +742,8 @@
           "value": 70.6,
           "source": "vendor",
           "url": "https://www.anthropic.com/news/claude-sonnet-5-5",
-          "measured": "2026-11-02"
+          "measured": "2026-11-02",
+          "note": "Effort level not stated by Anthropic; the Opus 5.5 figure it is compared against (66.4) is at xhigh effort."
         },
         "hle": {
           "value": 64.5,

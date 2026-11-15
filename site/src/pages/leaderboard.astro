@@ -56,10 +56,12 @@ const enriched = models.map((m: any) => {
   return { ...m, cells, benchmarks: flat, blended, sourced };
 });
 
-// Default ordering: Terminal-Bench 4.0 is the agentic benchmark most vendors
-// reported through autumn 2026, so it is the most complete recent ranking we
-// can honestly show.
-const DEFAULT_BENCH = 'terminal_bench_4_0';
+// Default ordering: HLE (with tools). Terminal-Bench 4.0 has slightly wider
+// coverage, but vendors report it at mismatched effort levels (Anthropic's
+// Opus 5.5 figure is at xhigh, Sonnet 5.5's effort is unstated), which put a
+// cheaper tier above its own flagship by a gap within the stated error bars.
+// Every column stays sortable; this only sets the first view.
+const DEFAULT_BENCH = 'hle';
 enriched.sort((a: any, b: any) =>
   (b.benchmarks[DEFAULT_BENCH] ?? -1) - (a.benchmarks[DEFAULT_BENCH] ?? -1));
 
@@ -214,7 +216,7 @@ const head = [
           <option value="terminal_bench_2_1">Terminal-Bench 2.1 (older version)</option>
           <option value="gpqa_diamond">GPQA Diamond (science reasoning)</option>
           <option value="swe_bench_verified">SWE-bench Verified (real coding)</option>
-          <option value="hle">HLE (frontier reasoning)</option>
+          <option value="hle" selected>HLE (frontier reasoning)</option>
           <option value="mmmu_pro">MMMU-Pro (multimodal)</option>
         </select>
         <p class="chart-note">Models within {NOISE_FLOOR} point share a rank — sub-point gaps are below measurement noise. Only sourced figures appear.</p>
