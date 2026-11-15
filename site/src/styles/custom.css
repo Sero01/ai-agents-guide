@@ -17,8 +17,13 @@
 /* Starlight tokens map onto the theme.css vars, which swap themselves —
  * so one mapping serves both themes. --sl-color-black is the page ground in
  * Starlight's light palette and the true black in its dark one; var(--bg) is
- * correct for both. Pagefind's search input reads it as a background. */
-:root {
+ * correct for both. Pagefind's search input reads it as a background.
+ * The [data-theme] selectors matter: Starlight defines its own palette on
+ * :root[data-theme='light'], which outranks a bare :root and turned the
+ * accent blue once a theme had been chosen. */
+:root,
+:root[data-theme='light'],
+:root[data-theme='dark'] {
   --sl-color-bg: var(--bg);
   --sl-color-bg-nav: color-mix(in srgb, var(--bg) 85%, transparent);
   --sl-color-bg-sidebar: var(--bg);
@@ -124,16 +129,22 @@ nav.sidebar a[aria-current='page'] {
 .sl-markdown-content h5,
 .sl-markdown-content h6,
 h1.title,
+h1#_top,
 .page-title,
 [data-page-title] {
   font-family: var(--display) !important;
-  font-weight: 400 !important;
+  font-weight: 500 !important;
   color: var(--text-primary);
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
-.sl-markdown-content h1, h1.title { font-size: clamp(2.5rem, 5vw, 3.5rem); letter-spacing: -0.03em; line-height: 1.1; }
-.sl-markdown-content h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin-top: 3rem; }
+.sl-markdown-content h1, h1.title, h1#_top {
+  font-size: clamp(2.1rem, 4.4vw, 3.2rem);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.sl-markdown-content h2 { font-size: clamp(1.65rem, 3vw, 2.2rem); margin-top: 3rem; text-wrap: balance; }
 .sl-markdown-content h3 { font-size: 1.4rem; margin-top: 2rem; }
 .sl-markdown-content h4 { font-size: 1.15rem; }
 
@@ -142,13 +153,15 @@ h1.title,
 
 .sl-markdown-content a {
   color: var(--accent);
-  text-decoration: none;
-  transition: color 0.3s ease;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 .sl-markdown-content a:hover {
   color: var(--accent-hover);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration-color: currentColor;
 }
 
 .sl-markdown-content p,
@@ -160,8 +173,13 @@ h1.title,
 /* ── Code ─────────────────────────────────────────────────────────── */
 .sl-markdown-content code:not(pre code) {
   font-family: var(--mono);
-  font-size: 0.88em;
+  font-size: 0.86em;
   color: var(--accent-hover);
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  padding: 0.08em 0.3em;
+  margin: 0;
+  border-radius: 0;
+  overflow-wrap: anywhere;
 }
 .sl-markdown-content pre {
   font-family: var(--mono);
@@ -191,6 +209,8 @@ h1.title,
   border-bottom: 1px solid var(--border-hover);
 }
 .sl-markdown-content td {
+  line-height: 1.6;
+  vertical-align: top;
   padding: 0.75rem 1rem 0.75rem 0;
   border-top: 1px solid var(--border);
   color: var(--text-secondary);
@@ -359,4 +379,105 @@ site-search button:hover {
   :root[data-sidebar='collapsed'] .right-sidebar .sl-container {
     width: calc(var(--ag-sidebar-width) - 2 * var(--sl-sidebar-pad-x));
   }
+}
+
+
+/* ── Polish pass (2026-11) ─────────────────────────────────────────
+ * Smoother motion, a consistent wordmark, and a calmer mobile header.
+ * Everything here stays inside the Classical rules: no boxes, sentence
+ * case, hairlines for structure. */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--sl-nav-height) + 1.5rem);
+}
+::selection {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  color: var(--text-primary);
+}
+:where(a, button, summary, input):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Wordmark: match the homepage's "agent guide" mark instead of the long
+ * site title, which truncated on phones. The full title stays in the DOM
+ * (and in <title>) for screen readers and search engines. */
+.site-title span {
+  position: relative;
+  font-size: 0 !important;
+  line-height: 1;
+}
+.site-title span::before,
+.site-title span::after {
+  font-family: var(--display);
+  font-size: 1.55rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.site-title span::before { content: 'agent' / ''; color: var(--text-primary); }
+.site-title span::after { content: 'guide' / ''; color: var(--accent); font-style: italic; }
+.site-title img { height: 1.6rem; }
+
+/* Right-hand table of contents heading in the display face. */
+.right-sidebar h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--text-primary);
+}
+.right-sidebar a { transition: color 0.2s ease; }
+
+/* Sidebar: softer hover, clear current-page marker. */
+nav.sidebar a { transition: color 0.2s ease; }
+nav.sidebar ul ul a[aria-current='page'] {
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+/* Mobile menu button: a plain icon, not Starlight's filled circle. */
+starlight-menu-button button {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: var(--text-primary) !important;
+  transition: color 0.2s ease;
+}
+starlight-menu-button[aria-expanded='true'] button {
+  color: var(--accent) !important;
+}
+
+/* Mobile "On this page" bar: hairline, not a rounded box. */
+mobile-starlight-toc .toggle {
+  border: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid var(--border) !important;
+  background: transparent !important;
+  font-family: var(--body);
+}
+
+/* Mobile drawer: fade and slide in rather than appearing abruptly.
+ * Starlight toggles `visibility`; delaying the visibility change on close
+ * lets the fade finish before the pane stops receiving taps. */
+@media (max-width: 49.9375rem) {
+  .sidebar-pane {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+  }
+  body[data-mobile-menu-expanded] .sidebar-pane {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
+  }
+  nav.sidebar ul.top-level > li > a,
+  nav.sidebar ul.top-level > li > details > summary {
+    font-size: 1.15rem !important;
+  }
+  .sl-markdown-content h2 { margin-top: 2.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .sidebar-pane,
+  body[data-mobile-menu-expanded] .sidebar-pane { transition: none !important; transform: none !important; }
 }
