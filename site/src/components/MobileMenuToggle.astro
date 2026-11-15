@@ -7,6 +7,11 @@
 // pane collapses. Starlight's own mobile hamburger is rendered unchanged via
 // <Default />, so small-screen behaviour is untouched.
 //
+// IMPORTANT: this button must never carry `aria-expanded`. Starlight shows the
+// mobile drawer with `[aria-expanded='true'] ~ .sidebar-pane`, and this button
+// is a preceding sibling of that pane — an aria-expanded="true" here kept the
+// drawer permanently open on phones. We use `aria-pressed` instead.
+//
 // Collapsing works by zeroing --sl-sidebar-width on <html data-sidebar>;
 // Starlight derives --sl-content-inline-start from it, so the content and
 // header reflow on their own. See src/styles/custom.css.
@@ -19,7 +24,7 @@ import Default from '@astrojs/starlight/components/MobileMenuToggle.astro';
   id="sidebar-collapse-toggle"
   class="sidebar-collapse-toggle print:hidden"
   aria-controls="starlight__sidebar"
-  aria-expanded="true"
+  aria-pressed="false"
   aria-label="Collapse sidebar"
   title="Collapse sidebar"
 >
@@ -92,7 +97,7 @@ import Default from '@astrojs/starlight/components/MobileMenuToggle.astro';
       var btn = document.getElementById('sidebar-collapse-toggle');
       if (btn) {
         var open = state !== 'collapsed';
-        btn.setAttribute('aria-expanded', String(open));
+        btn.setAttribute('aria-pressed', String(!open));
         var label = open ? 'Collapse sidebar' : 'Expand sidebar';
         btn.setAttribute('aria-label', label);
         btn.setAttribute('title', label);
@@ -117,6 +122,28 @@ import Default from '@astrojs/starlight/components/MobileMenuToggle.astro';
         if (!t || !t.closest) return;
         if (!t.closest('#sidebar-collapse-toggle')) return;
         apply(root.getAttribute('data-sidebar') === 'collapsed' ? 'expanded' : 'collapsed');
+      });
+
+      // Mobile drawer hygiene. Starlight's own toggle only reacts to its button
+      // and Escape, so the drawer could be left open (with the page scroll-locked)
+      // in three situations we handle here.
+      var closeDrawer = function () {
+        var menu = document.querySelector('starlight-menu-button');
+        if (menu && menu.getAttribute('aria-expanded') === 'true') {
+          menu.setAttribute('aria-expanded', 'false');
+          document.body.removeAttribute('data-mobile-menu-expanded');
+        }
+      };
+      // 1. Back/forward cache restores the page exactly as it was left — drawer open.
+      window.addEventListener('pageshow', function (e) { if (e.persisted) closeDrawer(); });
+      // 2. Rotating or resizing past the desktop breakpoint.
+      var mq = window.matchMedia('(min-width: 50rem)');
+      var onMq = function (e) { if (e.matches) closeDrawer(); };
+      if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq);
+      // 3. Tapping an in-page (#hash) link inside the drawer, which does not reload.
+      document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest && e.target.closest('#starlight__sidebar a[href]');
+        if (a && a.hash && a.pathname === location.pathname) closeDrawer();
       });
     }
   })();
