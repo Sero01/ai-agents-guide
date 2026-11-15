@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"Getting Started with AI Agents: A Developer's Introduction","description":"A code-first introduction to AI agents and agentic workflows for developers.","url":"https://agentguides.dev/getting-started/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"getting started AI agents, AI agents beginner guide, learn AI agents, AI agent tutorial, AI tools introduction"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Getting Started with AI Agents: A Developer's Introduction","description":"A code-first introduction to AI agents and agentic workflows for developers.","url":"https://agentguides.dev/getting-started/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"getting started AI agents, AI agents beginner guide, learn AI agents, AI agent tutorial, AI tools introduction"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -84,8 +84,8 @@ def run_agent(task: str) -> str:
     messages = [{"role": "user", "content": task}]
     for _ in range(10):
         response = client.messages.create(
-            model="claude-opus-4-6",
-            max_tokens=1024,
+            model="claude-opus-5-5",
+            max_tokens=16000,
             tools=TOOLS,
             messages=messages,
         )

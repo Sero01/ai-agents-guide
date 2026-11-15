@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"Prompt Engineering for AI Agents: Techniques and Patterns","description":"How to write system prompts for AI agent loops, not single-turn chat. Covers chain-of-thought, few-shot examples, anti-hallucination strategies, and common mistakes to avoid.","url":"https://agentguides.dev/prompt-engineering/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"prompt engineering, AI agent prompts, chain-of-thought, few-shot prompting, system prompts, anti-hallucination, prompt templates, AI prompt patterns"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Prompt Engineering for AI Agents: Techniques and Patterns","description":"How to write system prompts for AI agent loops, not single-turn chat. Covers chain-of-thought, few-shot examples, anti-hallucination strategies, and common mistakes to avoid.","url":"https://agentguides.dev/prompt-engineering/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"prompt engineering, AI agent prompts, chain-of-thought, few-shot prompting, system prompts, anti-hallucination, prompt templates, AI prompt patterns"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -61,28 +61,28 @@ Notice that the tools section in the system prompt is separate from (and complem
 
 The "how to work" section is where you encode your agent's decision-making process. Without this, the agent makes up its own process, which may work most of the time but fails in specific situations you could have anticipated.
 
-## Chain-of-Thought for Agents
+## Reasoning Before Tool Calls
 
-Encourage explicit reasoning before tool calls. This reduces errors and makes debugging easier.
+Older prompting guides told you to make the model write its reasoning in `<thinking>` tags before acting. Current frontier models reason natively. On Claude Opus 5.5, Sonnet 5.5 and Fable 5.2, thinking is on by default (adaptive), and you control how much the model thinks with the `effort` setting rather than with prompt text:
 
-```
-Bad:  "Search for X"  → calls search immediately
-Good: "I need X to answer this. Let me search for it." → calls search
-```
-
-Use XML tags to separate reasoning from actions:
-
-```
-<thinking>
-The user wants the latest AAPL price. I should search for this rather than
-use potentially outdated training data.
-</thinking>
-<action>search("AAPL stock price today")</action>
+```python
+response = client.messages.create(
+    model="claude-opus-5-5",
+    max_tokens=16000,
+    output_config={"effort": "high"},          # low | medium | high | xhigh | max
+    thinking={"type": "adaptive", "display": "summarized"},  # return a readable summary of the reasoning
+    tools=TOOLS,
+    messages=messages,
+)
 ```
 
-When you can read the agent's reasoning trace, you can spot where it went wrong. "I thought the user wanted X, so I searched for Y" is much more useful for debugging than just seeing that the agent called the wrong search query.
+What still belongs in the prompt:
 
-For Claude specifically, the model already does significant internal reasoning before generating responses. Instructing it to make reasoning visible doesn't make it more accurate by itself — but it makes the agent's behavior interpretable, which helps you improve the prompts over time.
+- **When to think harder.** "Before editing a file you haven't read this session, read it first" works better than "think step by step".
+- **What to report.** Ask for a one-line note of intent before each risky action ("About to delete 40 rows from `orders` because…"). It gives you an audit trail without asking for the model's full reasoning.
+- **No made-up reasoning tags.** Asking for `<thinking>` text in the visible reply duplicates the model's built-in reasoning, costs output tokens, and on some models leaks internal tags into the answer.
+
+For debugging, request a reasoning summary (`display: "summarized"`) and read it alongside the tool calls. "I assumed the user wanted X, so I searched for Y" is far more useful than the bare tool call.
 
 ## Few-Shot Examples in Agent Prompts
 
@@ -96,8 +96,8 @@ Assistant: 4.
 (Note: No tools needed for simple arithmetic. Answer directly.)
 
 User: Who won the 2024 US election?
-Assistant: <thinking>This is recent news, I should search.</thinking>
-[calls search("2024 US election results")]
+Assistant: [calls search("2024 US election results")]
+(Note: recent events need a search; training data may be out of date.)
 Based on the search results, ...
 ```
 
@@ -124,7 +124,7 @@ The example above teaches the agent that simple arithmetic doesn't need the calc
 ```python
 # Request structured output to reduce hallucination
 response = client.messages.create(
-    model="claude-opus-4-6",
+    model="claude-opus-5-5",
     system="Always respond in valid JSON matching the provided schema.",
     messages=[{"role": "user", "content": f"Schema: {schema}\n\nTask: {task}"}],
 )

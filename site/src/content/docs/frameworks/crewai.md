@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"CrewAI Tutorial: Role-Based Multi-Agent AI Systems","description":"How to build multi-agent systems with CrewAI. Covers agents, tasks, crews, process types, and practical examples of role-based agent workflows.","url":"https://agentguides.dev/frameworks/crewai/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"CrewAI, CrewAI tutorial, CrewAI guide, multi-agent AI, role-based agents, CrewAI framework, AI agent teams"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"CrewAI Tutorial: Role-Based Multi-Agent AI Systems","description":"How to build multi-agent systems with CrewAI. Covers agents, tasks, crews, process types, and practical examples of role-based agent workflows.","url":"https://agentguides.dev/frameworks/crewai/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"CrewAI, CrewAI tutorial, CrewAI guide, multi-agent AI, role-based agents, CrewAI framework, AI agent teams"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -107,7 +107,7 @@ crew = Crew(
     agents=[researcher, analyst, writer],
     tasks=[complex_task],  # A single high-level task
     process=Process.hierarchical,
-    manager_llm=ChatAnthropic(model="claude-opus-4-6"),
+    manager_llm=ChatAnthropic(model="claude-opus-5-5"),
     verbose=True,
 )
 ```

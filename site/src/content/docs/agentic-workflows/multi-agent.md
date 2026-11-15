@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"Multi-Agent Pipelines: Sequential, Parallel, and Hierarchical Topologies","description":"How to build multi-agent pipelines. Covers sequential, parallel fan-out, and hierarchical agent topologies with complete Python code examples.","url":"https://agentguides.dev/agentic-workflows/multi-agent/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"multi-agent pipelines, multi-agent systems, AI agent topologies, sequential agents, parallel agents, hierarchical agents, AI automation"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Multi-Agent Pipelines: Sequential, Parallel, and Hierarchical Topologies","description":"How to build multi-agent pipelines. Covers sequential, parallel fan-out, and hierarchical agent topologies with complete Python code examples.","url":"https://agentguides.dev/agentic-workflows/multi-agent/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"multi-agent pipelines, multi-agent systems, AI agent topologies, sequential agents, parallel agents, hierarchical agents, AI automation"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -93,8 +93,8 @@ client = anthropic.Anthropic()
 
 async def run_agent(task: str, system: str) -> str:
     response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=1024,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         system=system,
         messages=[{"role": "user", "content": task}]
     )
@@ -126,8 +126,8 @@ async_client = AsyncAnthropic()
 
 async def run_agent_async(task: str, system: str) -> str:
     response = await async_client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=1024,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         system=system,
         messages=[{"role": "user", "content": task}]
     )
@@ -159,8 +159,8 @@ client = anthropic.Anthropic()
 def research_agent(subtopic: str) -> str:
     """Specialist: gathers factual information."""
     response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=1024,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         system="You are a factual research specialist. Provide accurate, detailed information.",
         messages=[{"role": "user", "content": f"Research: {subtopic}"}]
     )
@@ -169,8 +169,8 @@ def research_agent(subtopic: str) -> str:
 def analysis_agent(research: str, question: str) -> str:
     """Specialist: draws insights from research."""
     response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=1024,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         system="You are an analytical specialist. Draw clear, evidence-based insights.",
         messages=[{
             "role": "user",
@@ -183,8 +183,8 @@ def orchestrator(task: str) -> str:
     """Orchestrator: plans and delegates the task."""
     # Step 1: Planning
     plan_response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=512,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         system="You are an orchestrator. Break tasks into clear research subtopics.",
         messages=[{
             "role": "user",
@@ -209,8 +209,8 @@ def orchestrator(task: str) -> str:
 
     # Step 4: Synthesize final answer
     final = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=1024,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         system="You synthesize research into clear, actionable summaries.",
         messages=[{
             "role": "user",
@@ -238,8 +238,8 @@ async def resilient_agent(task: str, system: str, retries: int = 2) -> Optional[
     for attempt in range(retries + 1):
         try:
             response = client.messages.create(
-                model="claude-opus-4-6",
-                max_tokens=1024,
+                model="claude-opus-5-5",
+                max_tokens=16000,
                 system=system,
                 messages=[{"role": "user", "content": task}]
             )
@@ -254,6 +254,38 @@ async def resilient_agent(task: str, system: str, retries: int = 2) -> Optional[
 
 Retry with exponential backoff handles transient API failures. For more serious errors (the agent produces unusable output, not just an exception), you may need a fallback path — a simpler agent, a cached result, or a human escalation.
 
+## Subagents: Multi-Agent Without the Plumbing
+
+The code above wires agents together by hand. Agent harnesses now provide this as a built-in: the main agent calls a subagent with a task description, the subagent runs its own loop in a **fresh context window** with its own tools, and only its final report comes back.
+
+```python
+from claude_agent_sdk import query, ClaudeAgentOptions, AgentDefinition
+
+options = ClaudeAgentOptions(
+    agents={
+        "researcher": AgentDefinition(
+            description="Finds and summarises sources on one sub-question. Use for any reading-heavy task.",
+            prompt="Research the question you are given. Return 5 key facts with source URLs.",
+            tools=["WebSearch", "WebFetch"],
+            model="haiku",
+        ),
+    },
+    max_budget_usd=5.00,  # covers every subagent
+)
+
+async for message in query(prompt="Compare the three most-used Python agent frameworks", options=options):
+    print(message)
+```
+
+What changes compared with hand-wiring:
+
+- **Context isolation is automatic.** A subagent that reads 200 pages adds only its summary to the orchestrator's context.
+- **Delegation is the model's decision.** The orchestrator decides when to call a subagent, based on each subagent's `description`. Write descriptions as "use when…" rules.
+- **Limits apply to the whole tree.** In the Claude Agent SDK, subagents can spawn their own subagents, by default up to three layers deep and 20 at once, and the spend cap covers all of them.
+- **Scale.** Published runs now coordinate more than 1,000 subagents over several days (Anthropic, Claude Fable 5.2 launch, November 2026). At that scale, how you split the work and check the results matters more than any single agent's prompt.
+
+The OpenAI Agents SDK expresses the same idea as *handoffs* (control passes to another agent) and *agents-as-tools* (another agent is called like a function). For more on the runtime, see [What Is an Agent Harness?](/ai-agents/agent-harness/#8-delegation-subagents).
+
 ## When Multi-Agent Systems Are Worth It
 
 Multi-agent systems add complexity. They're worth it when:
@@ -261,7 +293,7 @@ Multi-agent systems add complexity. They're worth it when:
 - **The task genuinely benefits from specialization**: A researcher agent with a specific persona and search tools produces better research than a generalist agent doing everything.
 - **Stages can run in parallel**: If three subtasks are independent, running them in parallel is faster than running them sequentially.
 - **You need isolation**: Agents that operate in separate contexts don't contaminate each other's reasoning.
-- **Different stages need different models**: You might use a cheaper model for data gathering and a more capable model for synthesis.
+- **Different stages need different models**: You might use a cheaper model for data gathering and a more capable model for synthesis. With small models such as Claude Haiku 5.5 and GPT-6 Luna at $0.10/$0.50 per million tokens, this split is often the main cost lever.
 
 Avoid multi-agent complexity when a well-prompted single agent can do the job. More agents means more API calls, more latency, more failure points, and more debugging surface area.
 

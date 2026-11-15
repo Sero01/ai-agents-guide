@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"AutoGen: Microsoft's Conversational Multi-Agent Framework","description":"How to build multi-agent systems with Microsoft AutoGen. Covers two-agent conversations, GroupChat, code execution, and when to choose AutoGen.","url":"https://agentguides.dev/frameworks/autogen/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AutoGen, Microsoft AutoGen, AutoGen tutorial, multi-agent framework, AI agent conversations, GroupChat, AutoGen guide"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"AutoGen: Microsoft's Conversational Multi-Agent Framework","description":"How to build multi-agent systems with Microsoft AutoGen. Covers two-agent conversations, GroupChat, code execution, and when to choose AutoGen.","url":"https://agentguides.dev/frameworks/autogen/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AutoGen, Microsoft AutoGen, AutoGen tutorial, multi-agent framework, AI agent conversations, GroupChat, AutoGen guide"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -35,7 +35,7 @@ The simplest AutoGen pattern: one AssistantAgent paired with one UserProxyAgent.
 ```python
 import autogen
 
-config_list = [{"model": "claude-opus-4-6", "api_key": "YOUR_KEY", "api_type": "anthropic"}]
+config_list = [{"model": "claude-opus-5-5", "api_key": "YOUR_KEY", "api_type": "anthropic"}]
 
 # Assistant that can write and execute code
 assistant = autogen.AssistantAgent(

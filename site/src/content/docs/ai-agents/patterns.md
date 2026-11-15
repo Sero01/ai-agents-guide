@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Design Patterns: ReAct, Reflection, Plan-and-Execute, and More","description":"Core AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and the Critic Loop pattern.","url":"https://agentguides.dev/ai-agents/patterns/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent patterns, ReAct pattern, reflection pattern, plan-and-execute, multi-agent orchestration, AI design patterns, AI agent architecture"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Design Patterns: ReAct, Reflection, Plan-and-Execute, and More","description":"Core AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and the Critic Loop pattern.","url":"https://agentguides.dev/ai-agents/patterns/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent patterns, ReAct pattern, reflection pattern, plan-and-execute, multi-agent orchestration, AI design patterns, AI agent architecture"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -60,15 +60,15 @@ client = anthropic.Anthropic()
 def reflection_agent(task: str) -> str:
     # First pass
     initial = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=2048,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         messages=[{"role": "user", "content": task}],
     ).content[0].text
 
     # Self-critique
     critique = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=1024,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         messages=[{
             "role": "user",
             "content": f"Review this response to the task: '{task}'\n\nResponse:\n{initial}\n\nIdentify specific problems, errors, or gaps."
@@ -77,8 +77,8 @@ def reflection_agent(task: str) -> str:
 
     # Revised response
     final = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=2048,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         messages=[{
             "role": "user",
             "content": f"Task: {task}\n\nInitial response:\n{initial}\n\nCritique:\n{critique}\n\nWrite an improved response that addresses the critique."
@@ -159,6 +159,31 @@ def critic_loop(task: str, max_iterations: int = 3) -> str:
 
 **Limitation**: LLM critics can be inconsistent. The same output may receive different critiques on different runs. For truly high-stakes decisions, combine the critic pattern with human review rather than relying on LLM critique alone.
 
+## Advisor (Planner + Workers)
+
+A strong, expensive model plans and reviews; cheaper, faster models do most of the work.
+
+**How it works**: The worker model runs the main loop. At hard decision points (planning, debugging a stubborn failure, reviewing the final result) it consults the stronger model, or the stronger model runs the loop and hands routine sub-tasks down. Anthropic's Claude Fable 5.2 launch in November 2026 described both directions: an *advisor* that smaller models consult and an *orchestrator* that delegates simpler tasks to smaller models.
+
+**When to use**: Long agentic runs where most tokens are spent reading and editing, not deciding. With small models now priced around $0.10 per million input tokens, the savings are large.
+
+**What to measure**: Cost per *completed task* against the strongest model at lower effort. On current models, one capable model at `medium` effort is sometimes cheaper overall than a cascade, because it needs fewer retries.
+
+## Verify-and-Retry
+
+The loop does not end when the model says it is done. It ends when an external check passes.
+
+```python
+result = run_agent(task)
+for attempt in range(3):
+    report = run_checks()          # tests, type checker, linter, schema validation
+    if report.passed:
+        break
+    result = run_agent(task, extra_context=f"Checks failed:\n{report.output}")
+```
+
+**When to use**: Any task with a machine-checkable definition of done: code, data transformations, structured extraction. It is the cheapest reliability improvement available for long-horizon agents. See [The Agentic Loop](/ai-agents/agent-loop/#verification-done-is-a-claim-not-a-fact).
+
 ## Choosing a Pattern
 
 | Pattern | Task type | Latency | Cost | Interpretability |
@@ -168,11 +193,15 @@ def critic_loop(task: str, max_iterations: int = 3) -> str:
 | Plan-and-Execute | Long-horizon, structured | Medium | Medium | High |
 | Multi-Agent | Complex, parallelizable | Variable | High | Medium |
 | Critic Loop | High-stakes outputs | High | High | Medium |
+| Advisor | Long runs, cost-sensitive | Medium | Low–Medium | Medium |
+| Verify-and-Retry | Checkable outputs | Medium | Low | High |
 
 In practice, production agents often combine patterns. A Plan-and-Execute structure at the top level, with ReAct agents executing individual steps, and a Critic Loop before delivering the final result, is a reasonable architecture for high-quality, complex tasks.
 
 ## See Also
 
 - [AI Agents: Concepts & Architecture](/ai-agents/) — The fundamental agent loop
+- [The Agentic Loop](/ai-agents/agent-loop/) — Stop conditions, compaction, budgets and verification
+- [What Is an Agent Harness?](/ai-agents/agent-harness/) — The runtime these patterns run inside
 - [Multi-Agent Pipelines](/agentic-workflows/multi-agent/) — Implementing multi-agent coordination
 - [Prompt Engineering for Agents](/prompt-engineering/) — Writing prompts that make these patterns work

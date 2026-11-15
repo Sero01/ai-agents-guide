@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Code Examples: Runnable Python Code for Every Concept","description":"Complete, runnable Python code examples for AI agents: ReAct agents from scratch, parallel multi-agent patterns, MCP server implementations, and tool calling with the Claude API.","url":"https://agentguides.dev/code-examples/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent code examples, Python AI agent, ReAct agent code, multi-agent code, MCP server code, LangChain examples, CrewAI examples, AutoGen examples"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Code Examples: Runnable Python Code for Every Concept","description":"Complete, runnable Python code examples for AI agents: ReAct agents from scratch, parallel multi-agent patterns, MCP server implementations, and tool calling with the Claude API.","url":"https://agentguides.dev/code-examples/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent code examples, Python AI agent, ReAct agent code, multi-agent code, MCP server code, LangChain examples, CrewAI examples, AutoGen examples"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -74,8 +74,8 @@ def run_agent(user_message: str, max_turns: int = 10) -> str:
 
     for _ in range(max_turns):
         response = client.messages.create(
-            model="claude-opus-4-6",
-            max_tokens=1024,
+            model="claude-opus-5-5",
+            max_tokens=16000,
             tools=TOOLS,
             messages=messages,
         )
@@ -180,8 +180,8 @@ def run_agent(user_message: str) -> str:
 
     for _ in range(10):
         response = client.messages.create(
-            model="claude-opus-4-6",
-            max_tokens=1024,
+            model="claude-opus-5-5",
+            max_tokens=16000,
             tools=TOOLS,
             messages=messages,
         )
@@ -222,8 +222,8 @@ import anthropic
 client = anthropic.Anthropic()
 
 with client.messages.stream(
-    model="claude-opus-4-6",
-    max_tokens=1024,
+    model="claude-opus-5-5",
+    max_tokens=16000,
     messages=[{"role": "user", "content": "Explain how tool calling works in AI agents."}],
 ) as stream:
     for text in stream.text_stream:
@@ -246,7 +246,7 @@ messages = [{"role": "user", "content": "Explain the ReAct pattern for AI agents
 
 # Count tokens without sending
 token_count = client.messages.count_tokens(
-    model="claude-opus-4-6",
+    model="claude-opus-5-5",
     messages=messages,
 )
 print(f"This request will use ~{token_count.input_tokens} input tokens")
@@ -254,8 +254,8 @@ print(f"This request will use ~{token_count.input_tokens} input tokens")
 # Proceed only if within budget
 if token_count.input_tokens < 10_000:
     response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=1024,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         messages=messages,
     )
     print(response.content[0].text)

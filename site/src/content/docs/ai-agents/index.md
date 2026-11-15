@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"What Are AI Agents? Concepts, Architecture, and How They Work","description":"A developer-focused explanation of AI agents: what they are, how the ReAct loop works, and the core architecture behind agent systems.","url":"https://agentguides.dev/ai-agents/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agents, what are AI agents, AI agent architecture, ReAct loop, AI agent concepts, how AI agents work, artificial intelligence agents"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"What Are AI Agents? Concepts, Architecture, and How They Work","description":"A developer-focused explanation of AI agents: what they are, how the ReAct loop works, and the core architecture behind agent systems.","url":"https://agentguides.dev/ai-agents/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agents, what are AI agents, AI agent architecture, ReAct loop, AI agent concepts, how AI agents work, artificial intelligence agents"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -25,7 +25,7 @@ An AI agent is a system that perceives its environment, reasons about it, and ta
 
 ## What Makes Something an "Agent"?
 
-The minimal definition: **a model + a loop + tools**.
+The minimal definition: **a model + a loop + tools**. In 2026 the loop and everything around it (context management, permissions, sandboxing, hooks, subagents) is usually called the **harness**, so you will also see it put as **agent = model + harness**. See [What Is an Agent Harness?](/ai-agents/agent-harness/)
 
 ```
 while not done:
@@ -66,7 +66,7 @@ while not agent.is_done():
     agent.context.append(result)
 ```
 
-The "Reason" in ReAct refers to the model generating a thought before deciding what action to take. This explicit reasoning step — which might look like "I need to find the current price of AAPL. I should search for it." — is what separates ReAct from blind tool invocation. The model explains its reasoning before acting, which makes the behavior more interpretable and generally more accurate.
+The "Reason" in ReAct refers to the model generating a thought before deciding what action to take. On current models this reasoning happens natively inside each model call (adaptive thinking), so you no longer prompt for it; the loop structure is the same. This explicit reasoning step — which might look like "I need to find the current price of AAPL. I should search for it." — is what separates ReAct from blind tool invocation. The model explains its reasoning before acting, which makes the behavior more interpretable and generally more accurate.
 
 ## Core Architecture
 
@@ -129,16 +129,20 @@ def run_agent(task: str) -> str:
 
     for _ in range(10):
         response = client.messages.create(
-            model="claude-opus-4-6",
-            max_tokens=1024,
+            model="claude-opus-5-5",
+            max_tokens=16000,
             tools=TOOLS,
             messages=messages,
         )
 
-        if response.stop_reason == "end_turn":
-            return next(b.text for b in response.content if hasattr(b, "text"))
+        if response.stop_reason in ("refusal", "max_tokens"):
+            return f"Stopped early: {response.stop_reason}"
 
+        # Append the full content (tool calls and thinking blocks), not just the text.
         messages.append({"role": "assistant", "content": response.content})
+
+        if response.stop_reason == "end_turn":
+            return "".join(b.text for b in response.content if b.type == "text")
         results = []
         for block in response.content:
             if block.type == "tool_use":
@@ -156,7 +160,7 @@ def run_agent(task: str) -> str:
 
 This demonstrates every essential component of an agent:
 - The tools list tells the model what it can do
-- The agent loop runs until `stop_reason == "end_turn"`
+- The agent loop runs until `stop_reason == "end_turn"`, and exits early on `refusal` or `max_tokens` instead of looping
 - Tool calls are detected in `response.content`
 - Results feed back into the conversation as `tool_result` messages
 - A turn limit prevents infinite loops
@@ -186,9 +190,13 @@ Production agents need rate limiting. Agents that call external APIs (search, da
 
 Production agents need human review for high-stakes actions. Sending emails, modifying production data, making purchases, posting to social media — any irreversible action should have a human confirmation step. The cost of pausing for confirmation is low; the cost of an unintended irreversible action can be very high.
 
+Production agents need a verification step. When the loop ends, the model has only *said* it is done. Run tests, a validator, or a reviewer subagent before accepting the result. [The Agentic Loop](/ai-agents/agent-loop/#verification-done-is-a-claim-not-a-fact) covers the options.
+
 These concerns don't apply to experimental or internal-use agents where failures are easy to recover from. But they matter greatly for customer-facing agents or agents that interact with critical systems.
 
 ## Continue reading
 
+- **[What Is an Agent Harness?](/ai-agents/agent-harness/)**: the runtime around the model: tools, context management, permissions, sandboxing, hooks and subagents.
+- **[The Agentic Loop](/ai-agents/agent-loop/)**: turns, every stop condition, compaction, budgets and verification, with working code.
 - **[AI Agent Design Patterns: ReAct, Reflection, Plan-and-Execute, and More](/ai-agents/patterns/)** — Core AI agent design patterns explained with working code: ReAct, Reflection, Plan-and-Execute, Multi-Agent Orchestration, and the Critic Loop pattern.
 - **[Tokens and Context Windows: Managing AI Agent Memory](/ai-agents/tokens-context/)** — How tokens and context windows work in AI agents, why they matter for long-running tasks, and practical strategies for managing context: summarization, sliding windows, and external memory.

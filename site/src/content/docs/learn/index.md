@@ -2,7 +2,7 @@
 title: "Learn the Fundamentals — AI Agents, Workflows, MCP, Frameworks"
 description: "Concept explanations for AI agents, agentic workflows, the Model Context Protocol, Python frameworks, prompt engineering, and the building blocks behind every modern agent stack."
 author: Parvez Ahmed
-lastUpdated: 2026-05-23
+lastUpdated: 2026-11-15
 sidebar:
   order: 1
 head:
@@ -43,7 +43,7 @@ head:
       type: application/ld+json
     content: |
       {"@context":"https://schema.org","@graph":[
-        {"@type":"CollectionPage","@id":"https://agentguides.dev/learn/#collection","name":"Learn the Fundamentals","headline":"Learn the Fundamentals — AI Agents, Workflows, MCP, Frameworks","description":"Concept explanations for AI agents, agentic workflows, MCP, frameworks, prompt engineering, and the building blocks behind every modern agent stack.","url":"https://agentguides.dev/learn/","inLanguage":"en-US","dateModified":"2026-05-23","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"}},
+        {"@type":"CollectionPage","@id":"https://agentguides.dev/learn/#collection","name":"Learn the Fundamentals","headline":"Learn the Fundamentals — AI Agents, Workflows, MCP, Frameworks","description":"Concept explanations for AI agents, agentic workflows, MCP, frameworks, prompt engineering, and the building blocks behind every modern agent stack.","url":"https://agentguides.dev/learn/","inLanguage":"en-US","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed","url":"https://github.com/Sero01"},"publisher":{"@type":"Person","name":"Parvez Ahmed","url":"https://agentguides.dev/about/"}},
         {"@type":"ItemList","name":"Learn — concept pages","numberOfItems":13,"itemListElement":[
           {"@type":"ListItem","position":1,"url":"https://agentguides.dev/ai-agents/","name":"AI Agents — Concepts & Architecture"},
           {"@type":"ListItem","position":2,"url":"https://agentguides.dev/ai-agents/patterns/","name":"Agent Patterns"},
@@ -70,7 +70,7 @@ The Learn section is the conceptual foundation of the site. The pages here expla
 
 ## A suggested reading path
 
-The pages are short by design — most sit in the 1,000 to 1,800 word range — and they cross-link to one another aggressively. There is no required reading order, but a sensible progression for someone new to the space is: AI Agents (concepts), then Tokens & Context (the resource constraints that shape design), then Agent Patterns (the recurring shapes), then a framework page (LangChain, CrewAI, or AutoGen depending on your language preference), then Agentic Workflows for multi-step systems. From there, the MCP pages explain the protocol layer, and the Prompt Engineering page covers how to write instructions that produce stable behavior across model versions.
+The pages are short by design — most sit in the 1,000 to 1,800 word range — and they cross-link to one another aggressively. There is no required reading order, but a sensible progression for someone new to the space is: AI Agents (concepts), then Agent Harnesses and The Agentic Loop (how agents actually run in 2026), then Tokens & Context (the resource constraints that shape design), then Agent Patterns (the recurring shapes), then a framework page (LangChain, CrewAI, or AutoGen depending on your language preference), then Agentic Workflows for multi-step systems. From there, the MCP pages explain the protocol layer, and the Prompt Engineering page covers how to write instructions that produce stable behavior across model versions.
 
 ## Framework-neutral by design
 
@@ -83,6 +83,8 @@ We update this section as the field moves. Significant changes are noted on the 
 ## Concepts & Architecture
 
 - [AI Agents — Concepts & Architecture](/ai-agents/) — the minimum viable definition (model + loop + tools), the ReAct loop, and what separates an agent from a chatbot.
+- [Agent Harnesses](/ai-agents/agent-harness/) — the runtime around the model: tools, context management, permissions, sandboxing, hooks, subagents and skills.
+- [The Agentic Loop](/ai-agents/agent-loop/) — what one turn is, every way a loop stops, compaction, budgets and verification for long-running agents.
 - [Agent Patterns](/ai-agents/patterns/) — recurring shapes: planner-executor, multi-agent, reflection, hierarchical, supervisor.
 - [Tokens & Context](/ai-agents/tokens-context/) — how context windows fill, the worked example of a 50k-token session, and the common mistakes that blow up token bills.
 

@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Tools, Skills, and Memory Systems Explained","description":"How tools, skills, and memory work in AI agent systems. Covers tool calling from the API, skill composition, in-context vs external memory types, and vector store integration.","url":"https://agentguides.dev/tools-memory/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent tools, AI agent memory, vector memory, episodic memory, AI skills, tool use, AI agent capabilities"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Tools, Skills, and Memory Systems Explained","description":"How tools, skills, and memory work in AI agent systems. Covers tool calling from the API, skill composition, in-context vs external memory types, and vector store integration.","url":"https://agentguides.dev/tools-memory/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent tools, AI agent memory, vector memory, episodic memory, AI skills, tool use, AI agent capabilities"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -40,8 +40,8 @@ tools = [
 ]
 
 response = client.messages.create(
-    model="claude-opus-4-6",
-    max_tokens=1024,
+    model="claude-opus-5-5",
+    max_tokens=16000,
     tools=tools,
     messages=[{"role": "user", "content": "What's the weather in Tokyo?"}],
 )
@@ -114,7 +114,20 @@ Return error messages as strings rather than raising exceptions. The model can r
 
 A **skill** is a higher-level, reusable capability — typically a prompt + a tool or set of tools packaged together. Skills make agents composable.
 
-In this project's architecture, skills live as `.md` files in `directives/` — structured prompts that tell the agent what to do and which execution scripts to use.
+The industry has converged on one format for this: **Agent Skills**. A skill is a folder containing a `SKILL.md` file (a name, a one-line description, and instructions) plus any scripts or reference files it needs. Only the description sits in the agent's context; the full instructions load when the agent decides the skill applies. This is called *progressive disclosure*, and it means an agent can have dozens of skills available without filling its context.
+
+```markdown
+---
+name: release-notes
+description: Draft release notes from merged PRs. Use when asked for a changelog or release notes.
+---
+
+1. List PRs merged since the last tag with `git log --merges <tag>..HEAD`.
+2. Group them under Features, Fixes, and Internal.
+3. One line per PR, user-facing wording, link the PR number.
+```
+
+Skills in this format work in Claude Code, the Claude Agent SDK and API, the OpenAI Agents SDK and Codex, and most open-source coding harnesses. A September 2026 study of eleven coding harnesses found `SKILL.md` support in nine of them.
 
 The skill concept generalizes the tool concept: where a tool is a single function call, a skill is a mini-workflow that might involve multiple tool calls, decision-making, and structured output.
 
@@ -223,8 +236,8 @@ Episodic memory stores summaries of past sessions or tasks, allowing the agent t
 def summarize_session(messages: list[dict], outcome: str) -> str:
     """Create an episodic memory entry from a completed session."""
     response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=256,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         messages=[{
             "role": "user",
             "content": f"Summarize what happened in this session in 2-3 sentences, focusing on what was accomplished and any important decisions made:\n\n{format_messages(messages)}\n\nOutcome: {outcome}"
@@ -257,6 +270,16 @@ Episodic memory bridges in-context and vector memory: it stores summaries of pas
 
 A practical starting point: use in-context memory for everything until you hit context limits, then add key-value memory for persistent state, then add vector memory if you need to query a large knowledge base.
 
+### Memory in Agent Harnesses
+
+Harnesses now ship memory as a built-in rather than something you assemble:
+
+- **Instruction files** (`CLAUDE.md`, `AGENTS.md`) are the simplest durable memory: Markdown the harness loads at the start of every session. They also survive context compaction, which chat history does not.
+- **A memory tool** gives the model a file directory it can read and write across sessions (Anthropic's `memory_20250818` tool type, for example). The model decides what to remember; you decide where the files live.
+- **Subagent memory scopes** let a specialised subagent keep its own notes per user or per project.
+
+Prefer these over a vector store until you have more text than fits in a few files. Retrieval adds a ranking step that can silently miss the one fact you needed.
+
 ## MCP and Tool Discovery
 
 MCP (Model Context Protocol) standardizes how agents discover and use tools. Instead of hardcoding tool schemas, an MCP client queries a server for available tools at runtime. See the [MCP section](/mcp/) for the full guide.
@@ -266,5 +289,6 @@ The key advantage of MCP over hand-coded tools is portability: an MCP server can
 ## See Also
 
 - [AI Agent Concepts](/ai-agents/) — The agent loop and how tool calling fits in
+- [What Is an Agent Harness?](/ai-agents/agent-harness/) — Where tools, skills, and memory plug into the runtime
 - [MCP Overview](/mcp/) — Standard protocol for tool discovery and use
 - [Tokens & Context](/ai-agents/tokens-context/) — Managing the context window as memory grows

@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"Tokens and Context Windows: Managing AI Agent Memory","description":"How LLM token counting works, why context windows fill faster than you expect, and how to budget tokens across system prompt, history, and retrieval.","url":"https://agentguides.dev/ai-agents/tokens-context/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"tokens, context windows, AI agent memory, token budgets, Claude context, GPT-4o context, Gemini context, LLM context management"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Tokens and Context Windows: Managing AI Agent Memory","description":"How LLM token counting works, why context windows fill faster than you expect, and how to budget tokens across system prompt, history, and retrieval.","url":"https://agentguides.dev/ai-agents/tokens-context/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"tokens, context windows, AI agent memory, token budgets, Claude context, GPT-4o context, Gemini context, LLM context management"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -97,7 +97,7 @@ client = anthropic.Anthropic()
 def count_tokens(messages: list[dict]) -> int:
     """Estimate token count for a message list."""
     result = client.messages.count_tokens(
-        model="claude-opus-4-6",
+        model="claude-opus-5-5",
         messages=messages,
     )
     return result.input_tokens
@@ -109,8 +109,8 @@ def summarize_messages(messages: list[dict]) -> str:
         for m in messages
     )
     response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=512,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         messages=[{
             "role": "user",
             "content": f"Summarize this conversation, preserving key facts and decisions:\n\n{formatted}"
@@ -233,7 +233,7 @@ client = anthropic.Anthropic()
 
 # Count tokens before sending
 token_count = client.messages.count_tokens(
-    model="claude-opus-4-6",
+    model="claude-opus-5-5",
     messages=[{"role": "user", "content": your_message}]
 )
 print(f"This request will use ~{token_count.input_tokens} input tokens")

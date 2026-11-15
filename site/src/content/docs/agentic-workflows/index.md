@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"Agentic Workflows: What They Are and How to Build Them","description":"What agentic workflows are, how they differ from single AI agents, and practical design principles for building reliable, scalable AI automation pipelines.","url":"https://agentguides.dev/agentic-workflows/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"agentic workflows, AI workflows, AI automation pipelines, AI agent workflows, multi-step AI, AI orchestration"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"Agentic Workflows: What They Are and How to Build Them","description":"What agentic workflows are, how they differ from single AI agents, and practical design principles for building reliable, scalable AI automation pipelines.","url":"https://agentguides.dev/agentic-workflows/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"agentic workflows, AI workflows, AI automation pipelines, AI agent workflows, multi-step AI, AI orchestration"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -68,8 +68,8 @@ client = anthropic.Anthropic()
 def gather_sources(topic: str) -> str:
     """Stage 1: Gather information about a topic."""
     response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=2048,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         system="You are a research specialist. Provide detailed, factual information with clear sourcing.",
         messages=[{
             "role": "user",
@@ -81,8 +81,8 @@ def gather_sources(topic: str) -> str:
 def analyze_and_structure(raw_research: str, topic: str) -> str:
     """Stage 2: Analyze and structure the gathered information."""
     response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=2048,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         system="You are a technical analyst. Extract key insights and structure them clearly.",
         messages=[{
             "role": "user",
@@ -94,8 +94,8 @@ def analyze_and_structure(raw_research: str, topic: str) -> str:
 def write_summary(analysis: str, topic: str, audience: str = "developers") -> str:
     """Stage 3: Write a final summary for the target audience."""
     response = client.messages.create(
-        model="claude-opus-4-6",
-        max_tokens=1024,
+        model="claude-opus-5-5",
+        max_tokens=16000,
         system=f"You write technical content for {audience}. Be precise, practical, and concise.",
         messages=[{
             "role": "user",
@@ -215,4 +215,5 @@ For truly one-off, exploratory tasks where the structure is unclear in advance, 
 
 ## Continue reading
 
+- **[The Agentic Loop](/ai-agents/agent-loop/)** — How a single agent's loop runs, stops, and stays within budget; the building block every workflow stage uses.
 - **[Multi-Agent Pipelines: Sequential, Parallel, and Hierarchical Topologies](/agentic-workflows/multi-agent/)** — How to build multi-agent pipelines. Covers sequential, parallel fan-out, and hierarchical agent topologies with complete Python code examples.

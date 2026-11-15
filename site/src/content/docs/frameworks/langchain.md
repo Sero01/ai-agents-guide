@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"LangChain for AI Agents: Guide and Code Examples","description":"How to build AI agents with LangChain. Covers core concepts, a working agent with tool calling, pros and cons, and when to use LangChain versus simpler alternatives.","url":"https://agentguides.dev/frameworks/langchain/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"LangChain, LangChain guide, LangChain tutorial, LangChain agents, AI agent framework, LangChain code examples, LangChain vs alternatives"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"LangChain for AI Agents: Guide and Code Examples","description":"How to build AI agents with LangChain. Covers core concepts, a working agent with tool calling, pros and cons, and when to use LangChain versus simpler alternatives.","url":"https://agentguides.dev/frameworks/langchain/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"LangChain, LangChain guide, LangChain tutorial, LangChain agents, AI agent framework, LangChain code examples, LangChain vs alternatives"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -42,7 +42,7 @@ from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.tools.tavily_search import TavilySearchResults
 
-llm = ChatAnthropic(model="claude-opus-4-6")
+llm = ChatAnthropic(model="claude-opus-5-5")
 tools = [TavilySearchResults(max_results=3)]
 
 prompt = ChatPromptTemplate.from_messages([
@@ -157,7 +157,7 @@ vectorstore = Chroma.from_documents(chunks, AnthropicEmbeddings())
 
 # Build a RAG chain
 chain = RetrievalQA.from_chain_type(
-    llm=ChatAnthropic(model="claude-opus-4-6"),
+    llm=ChatAnthropic(model="claude-opus-5-5"),
     retriever=vectorstore.as_retriever(search_kwargs={"k": 4}),
 )
 

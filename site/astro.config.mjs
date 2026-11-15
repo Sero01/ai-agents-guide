@@ -178,6 +178,7 @@ export default defineConfig({
 					label: 'Research',
 					collapsed: true,
 					items: [
+						{ label: 'AI Agents in Late 2026', slug: 'research/ai-agents-state-late-2026', badge: { text: 'New', variant: 'tip' } },
 						{ label: 'YC Startup Outcomes 2015–2025', slug: 'research/yc-startup-outcomes-2015-2025' },
 					],
 				},
@@ -195,6 +196,8 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', slug: 'learn' },
 						{ label: 'Concepts & Architecture', slug: 'ai-agents' },
+						{ label: 'Agent Harnesses', slug: 'ai-agents/agent-harness', badge: { text: 'New', variant: 'tip' } },
+						{ label: 'The Agentic Loop', slug: 'ai-agents/agent-loop', badge: { text: 'New', variant: 'tip' } },
 						{ label: 'Agent Patterns', slug: 'ai-agents/patterns' },
 						{ label: 'Tokens & Context', slug: 'ai-agents/tokens-context' },
 					],

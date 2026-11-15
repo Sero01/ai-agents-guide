@@ -8,7 +8,7 @@ head:
     attrs:
       type: application/ld+json
     content: |
-      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Frameworks Compared: LangChain, CrewAI, AutoGen, and Raw API","description":"A practical comparison of AI agent frameworks — LangChain, CrewAI, AutoGen, and using the raw API directly.","url":"https://agentguides.dev/frameworks/","datePublished":"2026-01-01","dateModified":"2026-02-23","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent frameworks, LangChain vs CrewAI, LangChain vs AutoGen, AI framework comparison, agent framework 2026"}
+      {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Agent Frameworks Compared: LangChain, CrewAI, AutoGen, and Raw API","description":"A practical comparison of AI agent frameworks — LangChain, CrewAI, AutoGen, and using the raw API directly.","url":"https://agentguides.dev/frameworks/","datePublished":"2026-01-01","dateModified":"2026-11-15","author":{"@type":"Person","name":"Parvez Ahmed"},"publisher":{"@type":"Person","name":"Parvez Ahmed"},"keywords":"AI agent frameworks, LangChain vs CrewAI, LangChain vs AutoGen, AI framework comparison, agent framework 2026"}
   - tag: script
     attrs:
       type: application/ld+json
@@ -115,8 +115,8 @@ def run_agent(user_message: str, tools: list, tool_handlers: dict) -> str:
 
     while True:
         response = client.messages.create(
-            model="claude-opus-4-6",
-            max_tokens=4096,
+            model="claude-opus-5-5",
+            max_tokens=16000,
             tools=tools,
             messages=messages,
         )
