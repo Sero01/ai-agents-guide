@@ -18,8 +18,9 @@ export default defineConfig({
 			title: 'AI Agents & Agentic Workflows Guide',
 			description: 'A free, code-first reference for developers building AI agents and agentic systems. Covers MCP, LangChain, CrewAI, AutoGen, prompt engineering, and agent design patterns. Updated 2026.',
 			logo: {
-				light: './src/assets/logo-light.svg',
-				dark: './src/assets/logo-dark.svg',
+				// The docs header is an ink block in both themes, so it always uses
+				// the light-on-dark mark. logo-light.svg is kept for other uses.
+				src: './src/assets/logo-dark.svg',
 				replacesTitle: false,
 			},
 			social: {
@@ -38,14 +39,14 @@ export default defineConfig({
 						"try{if(localStorage.getItem('agentguides-sidebar')==='collapsed')" +
 						"document.documentElement.setAttribute('data-sidebar','collapsed')}catch(e){}",
 				},
-				// Google Fonts — Cormorant Garamond (display), Lora (body), JetBrains Mono
+				// Google Fonts: Geist (text and display), Geist Mono (code and data)
 				{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
 				{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' } },
 				{
 					tag: 'link',
 					attrs: {
 						rel: 'stylesheet',
-						href: 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap',
+						href: 'https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap',
 					},
 				},
 				// SEO meta tags applied to all Starlight doc pages
@@ -63,11 +64,11 @@ export default defineConfig({
 				},
 				{
 					tag: 'meta',
-					attrs: { name: 'theme-color', content: '#f3f2f2', media: '(prefers-color-scheme: light)' },
+					attrs: { name: 'theme-color', content: '#f6f7f8', media: '(prefers-color-scheme: light)' },
 				},
 				{
 					tag: 'meta',
-					attrs: { name: 'theme-color', content: '#1b1a19', media: '(prefers-color-scheme: dark)' },
+					attrs: { name: 'theme-color', content: '#0a0f0d', media: '(prefers-color-scheme: dark)' },
 				},
 				{
 					tag: 'meta',
@@ -134,11 +135,10 @@ export default defineConfig({
 			],
 			sidebar: [
 				{ label: 'Home', link: '/' },
-				{ label: 'AI Models Leaderboard', link: '/leaderboard/', badge: { text: 'New', variant: 'tip' } },
+				{ label: 'AI Models Leaderboard', link: '/leaderboard/' },
 				{
 					label: 'Reviews',
 					collapsed: true,
-					badge: { text: 'New', variant: 'tip' },
 					items: [
 						{ label: 'All Reviews', slug: 'reviews' },
 						{ label: 'Claude Fable 5 Review', slug: 'reviews/claude-fable-5' },
@@ -178,7 +178,7 @@ export default defineConfig({
 					label: 'Research',
 					collapsed: true,
 					items: [
-						{ label: 'AI Agents in Late 2026', slug: 'research/ai-agents-state-late-2026', badge: { text: 'New', variant: 'tip' } },
+						{ label: 'AI Agents in Late 2026', slug: 'research/ai-agents-state-late-2026' },
 						{ label: 'YC Startup Outcomes 2015–2025', slug: 'research/yc-startup-outcomes-2015-2025' },
 					],
 				},
@@ -196,8 +196,8 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', slug: 'learn' },
 						{ label: 'Concepts & Architecture', slug: 'ai-agents' },
-						{ label: 'Agent Harnesses', slug: 'ai-agents/agent-harness', badge: { text: 'New', variant: 'tip' } },
-						{ label: 'The Agentic Loop', slug: 'ai-agents/agent-loop', badge: { text: 'New', variant: 'tip' } },
+						{ label: 'Agent Harnesses', slug: 'ai-agents/agent-harness' },
+						{ label: 'The Agentic Loop', slug: 'ai-agents/agent-loop' },
 						{ label: 'Agent Patterns', slug: 'ai-agents/patterns' },
 						{ label: 'Tokens & Context', slug: 'ai-agents/tokens-context' },
 					],
@@ -213,7 +213,6 @@ export default defineConfig({
 				{
 					label: 'Learn: MCP',
 					collapsed: true,
-					badge: { text: 'Hot', variant: 'tip' },
 					items: [
 						{ label: 'What is MCP?', slug: 'mcp' },
 						{ label: 'Setup & Installation', slug: 'mcp/setup' },

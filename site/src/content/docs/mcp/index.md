@@ -3,9 +3,6 @@ title: "What Is MCP? Model Context Protocol and MCP Servers Explained"
 description: "Model Context Protocol (MCP) is an open standard connecting AI apps to tools and data. How MCP clients and servers work, current transports, and client support."
 sidebar:
   order: 1
-  badge:
-    text: Hot
-    variant: tip
 head:
   - tag: script
     attrs:
