@@ -1,27 +1,30 @@
-/* AgentGuide Theme — design tokens
+/* AgentGuide theme: design tokens
  *
- * Classical system, ported from the "AgentGuides Screens" design canvas.
- * Warm editorial: paper ground, ink text, single gold accent, hairline rules.
+ * "Field notes" system (2026-11 redesign).
+ * Crisp, cool gallery-light ground, ink text, one signal-green accent, and a
+ * deep forest "ink block" used for the masthead and footer in both themes.
  *
- * Default = paper (light). The dark theme is the canvas's dark screen (1b),
- * not an inversion — it keeps its own warmer gold so the accent still reads.
- *
- * Two house rules carried over from the design and enforced site-wide:
- *   1. No full-caps rendering. Sentence case everywhere; acronyms excepted.
- *   2. No boxes. Structure comes from rules, spacing and colour — not from
- *      borders, fills, radii or shadows.
- *
- * Both themes load the same fonts. Colour is the only thing that swaps.
+ * House rules:
+ *   1. Sentence case everywhere; acronyms excepted. No tracked-out caps.
+ *   2. Structure comes from 1px rules, spacing and surface tint, not from
+ *      nested bordered cards, radii or shadows.
+ *   3. Two families: Geist for everything readable, Geist Mono for code and
+ *      tabular data only (this is a documentation site).
+ *   4. Three body sizes below the opening screen: --text-heading,
+ *      --text-body, --text-sm. Display type and the wordmark are exempt.
  */
 
 :root {
-  /* Type families.
-   * --display  headings and figures        Cormorant Garamond
-   * --body     running text and UI         Lora
-   * --mono     numbers, labels, code       JetBrains Mono */
-  --display: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-  --body:    'Lora', Georgia, 'Times New Roman', serif;
-  --mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  /* Type families. --display and --body are the same family on purpose:
+   * hierarchy comes from weight, size and colour, not a second face. */
+  --display: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --body:    'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:    'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Type scale (body discipline: three steps). */
+  --text-heading: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+  --text-body:    1.0625rem;
+  --text-sm:      0.875rem;
 
   /* Spacing scale */
   --space-xs: 0.5rem;
@@ -30,63 +33,76 @@
   --space-lg: 4rem;
   --space-xl: 7rem;
 
-  --max-w: 1100px;
+  --max-w: 1200px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* === Paper (default) === */
-  --bg:             #f3f2f2;
-  --bg-card:        #eae9e9;
-  --bg-card-hover:  #e4e2df;
-  --text-primary:   #201f1d;
-  --text-secondary: #45423e;
-  --text-muted:     #6e6b66;
-  --accent:         #b68235;
-  --accent-hover:   #7d5411;
-  --accent-dim:     rgba(182, 130, 53, 0.12);
-  --border:         rgba(32, 31, 29, 0.16);
-  --border-hover:   rgba(32, 31, 29, 0.30);
-  --hero-glow:      rgba(182, 130, 53, 0.05);
-  --status-unreleased: #9c5a2e;
+  /* Ink block: same in both themes, so the masthead and footer keep their
+   * colour conviction whatever the reader picks. */
+  --ink:            #0d2a20;
+  --ink-2:          #123629;
+  --on-ink:         #ecf5f0;
+  --on-ink-muted:   #a9c2b6;
+  --on-ink-accent:  #7cf0b4;
+  --on-ink-rule:    rgba(236, 245, 240, 0.16);
+
+  /* === Light (default) === */
+  --bg:             #f6f7f8;
+  --bg-card:        #eceef0;
+  --bg-card-hover:  #e3e6e9;
+  --text-primary:   #0c1116;
+  --text-secondary: #323a43;
+  --text-muted:     #5a636e;
+  --accent:         #0b7349;
+  --accent-hover:   #075a38;
+  --accent-dim:     rgba(11, 115, 73, 0.10);
+  --border:         rgba(12, 17, 22, 0.12);
+  --border-hover:   rgba(12, 17, 22, 0.26);
+  --hero-glow:      rgba(11, 115, 73, 0.05);
+  --status-unreleased: #9a4a14;
 
   color-scheme: light;
 }
 
-/* === Dark theme (canvas screen 1b) === */
+/* === Dark === */
 :root[data-theme='dark'] {
-  --bg:             #1b1a19;
-  --bg-card:        #232120;
-  --bg-card-hover:  #2a2826;
-  --text-primary:   #f0ede9;
-  --text-secondary: #b3aea8;
-  --text-muted:     #85807a;
-  --accent:         #e1ad66;
-  --accent-hover:   #f2c98a;
-  --accent-dim:     rgba(225, 173, 102, 0.14);
-  --border:         rgba(240, 237, 233, 0.14);
-  --border-hover:   rgba(240, 237, 233, 0.28);
-  --hero-glow:      rgba(225, 173, 102, 0.06);
-  --status-unreleased: #d99a6c;
+  --bg:             #0a0f0d;
+  --bg-card:        #121a17;
+  --bg-card-hover:  #18221e;
+  --text-primary:   #eef3f0;
+  --text-secondary: #bcc7c1;
+  --text-muted:     #8b9891;
+  --accent:         #5be3a0;
+  --accent-hover:   #93f0c2;
+  --accent-dim:     rgba(91, 227, 160, 0.12);
+  --border:         rgba(238, 243, 240, 0.12);
+  --border-hover:   rgba(238, 243, 240, 0.26);
+  --hero-glow:      rgba(91, 227, 160, 0.06);
+  --status-unreleased: #f0a56c;
+  --ink:            #0f2b21;
+  --ink-2:          #143528;
 
   color-scheme: dark;
 }
 
-/* OS-preference fallback before JS resolves (avoids a flash on a dark-OS user
- * arriving with no stored preference). Paper is our default, so we only need
- * to flip when the OS prefers dark AND no explicit theme is set. */
+/* OS-preference fallback before JS resolves (avoids a flash for a dark-OS
+ * reader with no stored preference). */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']):not([data-theme='dark']) {
-    --bg:             #1b1a19;
-    --bg-card:        #232120;
-    --bg-card-hover:  #2a2826;
-    --text-primary:   #f0ede9;
-    --text-secondary: #b3aea8;
-    --text-muted:     #85807a;
-    --accent:         #e1ad66;
-    --accent-hover:   #f2c98a;
-    --accent-dim:     rgba(225, 173, 102, 0.14);
-    --border:         rgba(240, 237, 233, 0.14);
-    --border-hover:   rgba(240, 237, 233, 0.28);
-    --hero-glow:      rgba(225, 173, 102, 0.06);
-    --status-unreleased: #d99a6c;
+    --bg:             #0a0f0d;
+    --bg-card:        #121a17;
+    --bg-card-hover:  #18221e;
+    --text-primary:   #eef3f0;
+    --text-secondary: #bcc7c1;
+    --text-muted:     #8b9891;
+    --accent:         #5be3a0;
+    --accent-hover:   #93f0c2;
+    --accent-dim:     rgba(91, 227, 160, 0.12);
+    --border:         rgba(238, 243, 240, 0.12);
+    --border-hover:   rgba(238, 243, 240, 0.26);
+    --hero-glow:      rgba(91, 227, 160, 0.06);
+    --status-unreleased: #f0a56c;
+    --ink:            #0f2b21;
+    --ink-2:          #143528;
     color-scheme: dark;
   }
 }

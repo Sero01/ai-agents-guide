@@ -313,7 +313,7 @@ const head = [
   }
 
   #leaderboard-app .updated-pill {
-    font-family: var(--mono); font-size: 0.7rem;
+    font-family: var(--body); font-size: 0.8125rem;
     letter-spacing: 0.02em;
     color: var(--accent);
   }
@@ -330,13 +330,13 @@ const head = [
   }
   #leaderboard-app .filter-group { display: flex; gap: 0.4rem; align-items: center; margin-top: 0; }
   #leaderboard-app .filter-label {
-    font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+    font-family: var(--body); font-size: 0.8125rem; font-weight: 500;
     color: var(--text-muted);
     letter-spacing: 0.02em;
     margin-right: 0.5rem;
   }
   #leaderboard-app .chip {
-    font-family: var(--mono); font-size: 0.75rem;
+    font-family: var(--body); font-size: 0.8125rem;
     letter-spacing: 0.02em; text-transform: lowercase;
     background: transparent; border: none;
     border-bottom: 1px solid transparent;
@@ -366,10 +366,10 @@ const head = [
     margin-bottom: 3rem; max-height: 640px;
     background: transparent;
   }
-  #leaderboard-app table { display: table; width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 0; border: none; }
+  #leaderboard-app table { font-variant-numeric: tabular-nums; display: table; width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 0; border: none; }
   #leaderboard-app thead { position: sticky; top: 0; z-index: 1; }
   #leaderboard-app th {
-    font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+    font-family: var(--body); font-size: 0.8125rem; font-weight: 500;
     letter-spacing: 0.02em;
     color: var(--text-muted);
     text-align: left; padding: 1rem 0.9rem 0.7rem 0;
@@ -381,7 +381,7 @@ const head = [
   }
   #leaderboard-app th:last-child, #leaderboard-app td:last-child { border-right: none; }
   #leaderboard-app th:hover { color: var(--accent); }
-  #leaderboard-app th .sort-indicator { color: var(--accent); font-size: 0.7rem; margin-left: 0.25rem; }
+  #leaderboard-app th .sort-indicator { color: var(--accent); font-size: 0.8125rem; margin-left: 0.25rem; }
 
   /* ── Cell provenance ─────────────────────────────────────────────────────
      A number's visual weight tracks how well it is attributed. Sourced
@@ -396,14 +396,14 @@ const head = [
   #leaderboard-app td.cell-unsourced { color: var(--text-muted); font-style: italic; }
   #leaderboard-app td.cell-none { color: var(--text-muted); opacity: 0.5; }
   #leaderboard-app td .prov {
-    font-size: 0.62rem; letter-spacing: 0.02em;
+    font-size: 0.8125rem; letter-spacing: 0.02em;
     vertical-align: super; margin-left: 0.15rem; opacity: 0.7;
   }
-  #leaderboard-app td.src-count { font-family: var(--mono); color: var(--text-muted); }
+  #leaderboard-app td.src-count { font-family: var(--body); color: var(--text-muted); }
 
   #leaderboard-app .badge {
-    font-family: var(--mono);
-    font-size: 0.65rem; letter-spacing: 0.02em;
+    font-family: var(--body);
+    font-size: 0.8125rem; letter-spacing: 0.02em;
     margin-left: 0.4rem;
     opacity: 0.85; white-space: nowrap;
   }
@@ -412,7 +412,7 @@ const head = [
   #leaderboard-app tr.row-old td { opacity: 0.72; }
 
   #leaderboard-app .bar-rank {
-    font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted);
+    font-family: var(--body); font-size: 0.8125rem; color: var(--text-muted);
     text-align: right; min-width: 1.4rem;
   }
   #leaderboard-app .bar-rank.tied { opacity: 0.45; }
@@ -437,9 +437,9 @@ const head = [
   }
   #leaderboard-app td strong { font-family: var(--display); font-weight: 500; font-size: 1.05rem; color: var(--text-primary); }
   #leaderboard-app tr:hover td { background: var(--accent-dim); }
-  #leaderboard-app .vendor-chip { font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.05em; }
-  #leaderboard-app .lic-open { color: var(--accent); font-weight: 500; font-size: 0.75rem; font-family: var(--mono); letter-spacing: 0.02em; }
-  #leaderboard-app .lic-closed { color: var(--text-muted); font-weight: 500; font-size: 0.75rem; font-family: var(--mono); letter-spacing: 0.02em; }
+  #leaderboard-app .vendor-chip { font-family: var(--body); font-size: 0.8125rem; color: var(--text-muted); letter-spacing: 0.05em; }
+  #leaderboard-app .lic-open { color: var(--accent); font-weight: 500; font-size: 0.8125rem; font-family: var(--body); letter-spacing: 0.02em; }
+  #leaderboard-app .lic-closed { color: var(--text-muted); font-weight: 500; font-size: 0.8125rem; font-family: var(--body); letter-spacing: 0.02em; }
   #leaderboard-app .try-btn {
     font-family: var(--display); font-size: 0.95rem; font-weight: 600;
     letter-spacing: 0.01em;
@@ -465,7 +465,7 @@ const head = [
   #leaderboard-app .chart-card p { font-family: var(--body); font-weight: 400; color: var(--text-muted); }
   #leaderboard-app .chart-card .chart-note { font-size: 0.85rem; color: var(--text-muted); margin: 0 0 0.5rem; }
   #leaderboard-app .chart-card select {
-    font-family: var(--mono); font-size: 0.78rem;
+    font-family: var(--body); font-size: 0.8125rem;
     background: transparent; border: none;
     border-bottom: 1px solid var(--border);
     color: var(--text-primary); border-radius: 0;
@@ -494,7 +494,7 @@ const head = [
   }
   #leaderboard-app .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1.25rem; margin: 0 0 1.5rem; }
   #leaderboard-app .calc-grid label {
-    font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+    font-family: var(--body); font-size: 0.8125rem; font-weight: 500;
     letter-spacing: 0.02em;
     color: var(--text-muted);
     display: block; margin-bottom: 0.5rem;
@@ -559,7 +559,7 @@ const head = [
     text-align: left; font-family: var(--body); font-weight: 400;
   }
   #leaderboard-app .compare-table th {
-    font-family: var(--mono); font-size: 0.7rem;
+    font-family: var(--body); font-size: 0.8125rem;
     letter-spacing: 0.02em;
     color: var(--text-muted); background: transparent;
     cursor: default; white-space: normal;

@@ -1,6 +1,7 @@
-/* AgentGuide — Starlight overrides
- * Classical system applied to docs pages: paper ground, hairline rules,
- * sentence case, no boxes. Tokens shared with the homepage via theme.css.
+/* AgentGuide: Starlight overrides
+ * "Field notes" system applied to docs pages: ink header, cool light ground,
+ * Geist type, hairline structure, surface tint for asides and code.
+ * Tokens are shared with the homepage via theme.css.
  */
 
 @import './theme.css';
@@ -9,25 +10,22 @@
 :root {
   --sl-font: var(--body);
   --sl-font-system: var(--body);
+  --sl-font-mono: var(--mono);
   --sl-font-system-mono: var(--mono);
   --sl-text-base: 1rem;
-  --sl-line-height: 1.8;
+  --sl-line-height: 1.75;
+  --sl-nav-height: 4rem;
 }
 
-/* Starlight tokens map onto the theme.css vars, which swap themselves —
- * so one mapping serves both themes. --sl-color-black is the page ground in
- * Starlight's light palette and the true black in its dark one; var(--bg) is
- * correct for both. Pagefind's search input reads it as a background.
- * The [data-theme] selectors matter: Starlight defines its own palette on
- * :root[data-theme='light'], which outranks a bare :root and turned the
- * accent blue once a theme had been chosen. */
+/* The [data-theme] selectors matter: Starlight defines its own palette on
+ * :root[data-theme='light'], which outranks a bare :root. */
 :root,
 :root[data-theme='light'],
 :root[data-theme='dark'] {
   --sl-color-bg: var(--bg);
-  --sl-color-bg-nav: color-mix(in srgb, var(--bg) 85%, transparent);
+  --sl-color-bg-nav: var(--ink);
   --sl-color-bg-sidebar: var(--bg);
-  --sl-color-bg-inline-code: transparent;
+  --sl-color-bg-inline-code: var(--bg-card);
   --sl-color-black: var(--bg);
 
   --sl-color-text: var(--text-secondary);
@@ -52,40 +50,98 @@
   --sl-color-hairline-shade: var(--border);
 }
 
-/* ── Global typography on Starlight pages ────────────────────────── */
+/* ── Global ──────────────────────────────────────────────────────── */
 body {
   font-family: var(--body);
   font-weight: 400;
   background: var(--bg);
   color: var(--text-secondary);
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'ss01' on;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--sl-nav-height) + 1.5rem);
+}
+::selection {
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
+  color: var(--text-primary);
+}
+:where(a, button, summary, input):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-/* Logo / site title in header */
+/* ── Header: ink block, same as the homepage ─────────────────────── */
+header.header {
+  background: var(--ink) !important;
+  border-bottom: 1px solid var(--on-ink-rule) !important;
+  color: var(--on-ink);
+}
+
+/* Wordmark: "agentguide" in the display weight. The full site title stays in
+ * the DOM (and in <title>) for screen readers and search engines. */
 .site-title {
-  font-family: var(--display) !important;
-  font-weight: 500 !important;
-  font-size: 1.4rem !important;
-  letter-spacing: -0.01em;
-  color: var(--text-primary);
   align-items: center;
   gap: 0.6rem;
+  color: var(--on-ink) !important;
 }
-.site-title img { height: 1.8rem; width: auto; }
-
-/* Sticky header w/ blur */
-header.header {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  background: color-mix(in srgb, var(--bg) 85%, transparent) !important;
-  border-bottom: 1px solid var(--border) !important;
+.site-title img { height: 1.7rem; width: auto; }
+.site-title span {
+  position: relative;
+  font-size: 0 !important;
+  line-height: 1;
 }
+.site-title span::before,
+.site-title span::after {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+.site-title span::before { content: 'agent' / ''; color: var(--on-ink); }
+.site-title span::after { content: 'guide' / ''; color: var(--on-ink-accent); }
 
-/* Nav links — uppercase mono-ish */
-.sl-nav-mobile-link,
-header.header a[href]:not(.site-title):not(.social-icons) {
+/* Search: a quiet field on the ink block. */
+site-search button[data-open-modal] {
+  font-family: var(--body) !important;
+  font-size: var(--text-sm) !important;
+  background: color-mix(in srgb, var(--on-ink) 7%, transparent) !important;
+  border: 1px solid var(--on-ink-rule) !important;
+  border-radius: 0 !important;
+  color: var(--on-ink-muted) !important;
+  transition: border-color 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+site-search button[data-open-modal]:hover {
+  border-color: color-mix(in srgb, var(--on-ink) 40%, transparent) !important;
+  color: var(--on-ink) !important;
+}
+site-search button[data-open-modal] kbd {
+  background: transparent !important;
+  color: var(--on-ink-muted) !important;
   font-family: var(--body);
 }
+
+/* Icons in the header. */
+header.header .social-icons a,
+header.header .sl-theme-toggle,
+header.header starlight-menu-button button {
+  color: var(--on-ink-muted) !important;
+  transition: color 160ms var(--ease-out);
+}
+header.header .social-icons a:hover,
+header.header .sl-theme-toggle:hover,
+header.header starlight-menu-button button:hover { color: var(--on-ink) !important; }
+header.header .social-icons::after { border-color: var(--on-ink-rule) !important; }
+
+/* Mobile menu button: a plain icon, not Starlight's filled circle. */
+starlight-menu-button button {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: var(--on-ink) !important;
+}
+starlight-menu-button[aria-expanded='true'] button { color: var(--on-ink-accent) !important; }
 
 /* ── Sidebar ─────────────────────────────────────────────────────── */
 nav.sidebar {
@@ -94,31 +150,34 @@ nav.sidebar {
 }
 nav.sidebar ul.top-level > li > a,
 nav.sidebar ul.top-level > li > details > summary {
-  font-family: var(--display);
-  font-size: 1.05rem !important;
+  font-family: var(--body);
+  font-size: 0.95rem !important;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   color: var(--text-primary);
 }
 nav.sidebar a {
   font-family: var(--body);
   font-weight: 400;
   color: var(--text-secondary);
-  transition: color 0.3s ease;
+  transition: color 160ms var(--ease-out);
 }
 nav.sidebar a:hover { color: var(--text-primary); background: transparent; }
 nav.sidebar a[aria-current='page'] {
   color: var(--accent) !important;
   background: transparent !important;
-  font-weight: 500;
+  font-weight: 600;
+}
+nav.sidebar ul ul a[aria-current='page'] {
+  box-shadow: inset 2px 0 0 var(--accent);
 }
 
 /* ── Article body ────────────────────────────────────────────────── */
 .sl-markdown-content {
   font-family: var(--body);
   font-weight: 400;
-  font-size: 1.02rem;
-  line-height: 1.8;
+  font-size: var(--text-body);
+  line-height: 1.75;
   color: var(--text-secondary);
 }
 
@@ -133,31 +192,31 @@ h1#_top,
 .page-title,
 [data-page-title] {
   font-family: var(--display) !important;
-  font-weight: 500 !important;
+  font-weight: 650 !important;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 .sl-markdown-content h1, h1.title, h1#_top {
-  font-size: clamp(2.1rem, 4.4vw, 3.2rem);
-  letter-spacing: -0.025em;
-  line-height: 1.1;
+  font-size: clamp(2.1rem, 1.4rem + 2.6vw, 3.25rem);
+  font-weight: 700 !important;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
   text-wrap: balance;
 }
-.sl-markdown-content h2 { font-size: clamp(1.65rem, 3vw, 2.2rem); margin-top: 3rem; text-wrap: balance; }
-.sl-markdown-content h3 { font-size: 1.4rem; margin-top: 2rem; }
-.sl-markdown-content h4 { font-size: 1.15rem; }
+.sl-markdown-content h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 1.9rem); margin-top: 3rem; text-wrap: balance; }
+.sl-markdown-content h3 { font-size: 1.25rem; margin-top: 2rem; letter-spacing: -0.02em; }
+.sl-markdown-content h4 { font-size: var(--text-body); letter-spacing: -0.01em; }
 
-.sl-markdown-content em { font-style: italic; }
-.sl-markdown-content strong { font-weight: 500; color: var(--text-primary); }
+.sl-markdown-content strong { font-weight: 600; color: var(--text-primary); }
 
 .sl-markdown-content a {
   color: var(--accent);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
   text-underline-offset: 3px;
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  transition: color 160ms var(--ease-out), text-decoration-color 160ms var(--ease-out);
 }
 .sl-markdown-content a:hover {
   color: var(--accent-hover);
@@ -173,60 +232,99 @@ h1#_top,
 /* ── Code ─────────────────────────────────────────────────────────── */
 .sl-markdown-content code:not(pre code) {
   font-family: var(--mono);
-  font-size: 0.86em;
-  color: var(--accent-hover);
-  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
-  padding: 0.08em 0.3em;
+  font-size: 0.875em;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  padding: 0.12em 0.36em;
   margin: 0;
   border-radius: 0;
   overflow-wrap: anywhere;
 }
 .sl-markdown-content pre {
   font-family: var(--mono);
-  background: transparent !important;
-  border: none !important;
-  border-top: 1px solid var(--border) !important;
-  border-bottom: 1px solid var(--border) !important;
   border-radius: 0 !important;
-  padding: 1.25rem 0 !important;
 }
 .sl-markdown-content pre code { font-family: var(--mono); font-weight: 400; }
 
-/* ── Tables (1px border grid) ────────────────────────────────────── */
+/* Expressive Code frames: a tinted surface, no border box. */
+.expressive-code {
+  --ec-frm-inlBtnBrdOpa: 0;
+  --ec-frm-inlBtnBgIdleOpa: 0;
+  --ec-frm-inlBtnBgHovOpa: 0;
+  --ec-frm-inlBtnBgActOpa: 0;
+}
+.expressive-code .frame {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+.expressive-code .frame pre {
+  background: var(--bg-card) !important;
+  border: none !important;
+  border-left: 2px solid var(--accent) !important;
+  border-radius: 0 !important;
+}
+.expressive-code .frame .header {
+  border-radius: 0 !important;
+}
+.expressive-code .frame.has-title .header,
+.expressive-code .frame.is-terminal .header {
+  background: var(--bg-card-hover) !important;
+  border: none !important;
+}
+.expressive-code .frame .header::before { border: none !important; }
+.expressive-code .copy button {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.expressive-code .copy button::before { border: none !important; }
+.expressive-code .copy button div { background: transparent !important; }
+.expressive-code .copy button::after { opacity: 0.55; }
+.expressive-code .copy button:hover::after,
+.expressive-code .copy button:focus-visible::after { opacity: 1; }
+
+/* ── Tables ──────────────────────────────────────────────────────── */
 .sl-markdown-content table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 0.92rem;
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
 }
 .sl-markdown-content th {
-  color: var(--text-muted);
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  font-family: var(--body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
   padding: 0.75rem 1rem 0.6rem 0;
   text-align: left;
+  background: transparent;
+  border: none;
   border-bottom: 1px solid var(--border-hover);
 }
 .sl-markdown-content td {
   line-height: 1.6;
   vertical-align: top;
   padding: 0.75rem 1rem 0.75rem 0;
+  background: transparent;
+  border: none;
   border-top: 1px solid var(--border);
   color: var(--text-secondary);
 }
-.sl-markdown-content tr:hover td { color: var(--text-primary); }
+.sl-markdown-content tr:hover td { background: var(--accent-dim); }
 
 /* ── Blockquotes ─────────────────────────────────────────────────── */
 .sl-markdown-content blockquote {
   border-left: 2px solid var(--accent);
   background: transparent;
-  padding: 0.25rem 0 0.25rem 1.5rem;
+  padding: 0.25rem 0 0.25rem 1.25rem;
   margin: 1.5rem 0;
-  color: var(--text-secondary);
-  font-style: italic;
-  font-family: var(--display);
-  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-style: normal;
+  font-family: var(--body);
+  font-size: var(--text-body);
 }
 
 /* ── HR ──────────────────────────────────────────────────────────── */
@@ -236,118 +334,111 @@ h1#_top,
   margin: 3rem 0;
 }
 
-/* ── Asides / callouts ───────────────────────────────────────────── */
+/* ── Asides: surface tint with an accent edge ────────────────────── */
 .sl-markdown-content aside.starlight-aside {
-  background: transparent;
+  background: var(--bg-card);
   border-radius: 0;
+  border: none;
   border-inline-start: 2px solid var(--accent);
-  padding: 0.25rem 0 0.25rem 1.25rem;
+  padding: 1rem 1.25rem;
+}
+.sl-markdown-content aside.starlight-aside--caution,
+.sl-markdown-content aside.starlight-aside--danger {
+  border-inline-start-color: var(--status-unreleased);
 }
 .sl-markdown-content aside.starlight-aside .starlight-aside__title {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.02em;
-  color: var(--accent);
-  font-weight: 500;
+  font-family: var(--body);
+  font-size: var(--text-sm);
+  letter-spacing: 0;
+  color: var(--text-primary);
+  font-weight: 600;
 }
+.sl-markdown-content aside.starlight-aside .starlight-aside__icon { color: var(--accent); }
 
 /* ── Pagination links ────────────────────────────────────────────── */
 .pagination-links a {
   background: transparent;
   border: none;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-hover);
   border-radius: 0;
-  padding-top: 0.75rem;
-  transition: color 0.3s ease;
+  box-shadow: none;
+  padding-top: 0.9rem;
+  transition: color 160ms var(--ease-out), border-color 160ms var(--ease-out);
 }
 .pagination-links a:hover {
   background: transparent;
   color: var(--accent);
+  border-top-color: var(--accent);
 }
+.pagination-links .link-title {
+  font-family: var(--display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.pagination-links a:hover .link-title { color: var(--accent); }
 
-/* ── Search button ───────────────────────────────────────────────── */
-site-search button {
-  font-family: var(--mono) !important;
-  font-size: 0.75rem !important;
-  background: transparent !important;
+/* ── Right-hand table of contents ────────────────────────────────── */
+.right-sidebar h2 {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+}
+.right-sidebar a { transition: color 160ms var(--ease-out); }
+
+/* Mobile "On this page" bar: hairline, not a rounded box. */
+mobile-starlight-toc .toggle {
   border: none !important;
-  border-bottom: 1px solid var(--border) !important;
   border-radius: 0 !important;
-  color: var(--text-muted) !important;
+  border-bottom: 1px solid var(--border) !important;
+  background: transparent !important;
+  font-family: var(--body);
 }
-site-search button:hover {
-  border-bottom-color: var(--accent) !important;
-  color: var(--text-secondary) !important;
+/* Starlight paints this bar with --sl-color-bg-nav, which is now the ink
+ * header colour; keep it on the page ground so its text stays readable. */
+mobile-starlight-toc nav {
+  background: color-mix(in srgb, var(--bg) 94%, transparent) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
 }
+mobile-starlight-toc .toggle { color: var(--text-secondary) !important; }
+mobile-starlight-toc .display-current { color: var(--text-primary) !important; }
 
-/* ── Status icon utilities (kept from prior file) ────────────────── */
+/* ── Status icon utilities ───────────────────────────────────────── */
 .sl-markdown-content [data-icon] {
   display: inline-block;
   vertical-align: -0.15em;
   width: 1em;
   height: 1em;
 }
-.sl-markdown-content .status-pass     { color: #4f7a3f; }
-.sl-markdown-content .status-warn     { color: #a06f24; }
-.sl-markdown-content .status-fail     { color: #a33a2b; }
-.sl-markdown-content .status-good     { color: #4f7a3f; fill: currentColor; }
-.sl-markdown-content .status-partial  { color: #9a7d1e; fill: currentColor; }
+.sl-markdown-content .status-pass     { color: #1f7a45; }
+.sl-markdown-content .status-warn     { color: #96600e; }
+.sl-markdown-content .status-fail     { color: #b0322a; }
+.sl-markdown-content .status-good     { color: #1f7a45; fill: currentColor; }
+.sl-markdown-content .status-partial  { color: #8a6d00; fill: currentColor; }
 .sl-markdown-content .inline-icon     { vertical-align: -0.2em; }
 
-:root[data-theme='dark'] .sl-markdown-content .status-pass    { color: #8fbf7a; }
-:root[data-theme='dark'] .sl-markdown-content .status-warn    { color: #e1ad66; }
-:root[data-theme='dark'] .sl-markdown-content .status-fail    { color: #d98a7a; }
-:root[data-theme='dark'] .sl-markdown-content .status-good    { color: #8fbf7a; }
-:root[data-theme='dark'] .sl-markdown-content .status-partial { color: #d4b463; }
+:root[data-theme='dark'] .sl-markdown-content .status-pass    { color: #6fe0a4; }
+:root[data-theme='dark'] .sl-markdown-content .status-warn    { color: #f0c062; }
+:root[data-theme='dark'] .sl-markdown-content .status-fail    { color: #f08a7e; }
+:root[data-theme='dark'] .sl-markdown-content .status-good    { color: #6fe0a4; }
+:root[data-theme='dark'] .sl-markdown-content .status-partial { color: #e6c85a; }
 
-/* ── Starlight chrome: badges and copy button ────────────────────── */
-/* Sidebar/nav badges ship as filled, rounded, off-palette pills. */
+/* ── Starlight chrome: badges ────────────────────────────────────── */
 .sl-badge {
   background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
   color: var(--accent) !important;
-  font-family: var(--mono);
-  font-size: 0.7rem !important;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-family: var(--body);
+  font-size: var(--text-sm) !important;
+  font-weight: 600;
+  letter-spacing: 0;
   padding: 0 !important;
   margin-inline-start: 0.4rem;
   text-transform: none !important;
-}
-
-/* Code-block copy button. The visible box is a bordered ::before plus a filled
- * inner div, not the button itself — both have to go. */
-.expressive-code {
-  --ec-frm-inlBtnBrdOpa: 0;
-  --ec-frm-inlBtnBgIdleOpa: 0;
-  --ec-frm-inlBtnBgHovOpa: 0;
-  --ec-frm-inlBtnBgActOpa: 0;
-}
-.expressive-code .copy button {
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-.expressive-code .copy button::before { border: none !important; }
-.expressive-code .copy button div { background: transparent !important; }
-.expressive-code .copy button::after { opacity: 0.5; }
-.expressive-code .copy button:hover::after,
-.expressive-code .copy button:focus-visible::after { opacity: 1; }
-
-/* Expressive-code frames are boxes by default — reduce to rules. */
-.expressive-code .frame pre {
-  background: transparent !important;
-  border: none !important;
-  border-top: 1px solid var(--border) !important;
-  border-bottom: 1px solid var(--border) !important;
-  border-radius: 0 !important;
-  padding-inline: 0 !important;
-}
-.expressive-code .frame {
-  box-shadow: none !important;
-  border-radius: 0 !important;
 }
 
 /* ── Collapsible sidebar (desktop) ───────────────────────────────────
@@ -355,10 +446,8 @@ site-search button:hover {
  * ([data-has-sidebar] in Page.astro), so zeroing that one variable
  * collapses the pane and reflows both the content and the header.
  * Below 50rem the sidebar is already a mobile drawer, so this is
- * desktop-only. */
-/* Starlight's default sidebar width, kept as our own token because the
- * collapsed state zeroes --sl-sidebar-width and we still need the real
- * measurement for the right-hand table of contents (below). */
+ * desktop-only. --ag-sidebar-width keeps Starlight's default so the
+ * right-hand table of contents still has a real measurement. */
 :root {
   --ag-sidebar-width: 18.75rem;
 }
@@ -381,80 +470,6 @@ site-search button:hover {
   }
 }
 
-
-/* ── Polish pass (2026-11) ─────────────────────────────────────────
- * Smoother motion, a consistent wordmark, and a calmer mobile header.
- * Everything here stays inside the Classical rules: no boxes, sentence
- * case, hairlines for structure. */
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--sl-nav-height) + 1.5rem);
-}
-::selection {
-  background: color-mix(in srgb, var(--accent) 22%, transparent);
-  color: var(--text-primary);
-}
-:where(a, button, summary, input):focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* Wordmark: match the homepage's "agent guide" mark instead of the long
- * site title, which truncated on phones. The full title stays in the DOM
- * (and in <title>) for screen readers and search engines. */
-.site-title span {
-  position: relative;
-  font-size: 0 !important;
-  line-height: 1;
-}
-.site-title span::before,
-.site-title span::after {
-  font-family: var(--display);
-  font-size: 1.55rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-.site-title span::before { content: 'agent' / ''; color: var(--text-primary); }
-.site-title span::after { content: 'guide' / ''; color: var(--accent); font-style: italic; }
-.site-title img { height: 1.6rem; }
-
-/* Right-hand table of contents heading in the display face. */
-.right-sidebar h2 {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 1.15rem;
-  color: var(--text-primary);
-}
-.right-sidebar a { transition: color 0.2s ease; }
-
-/* Sidebar: softer hover, clear current-page marker. */
-nav.sidebar a { transition: color 0.2s ease; }
-nav.sidebar ul ul a[aria-current='page'] {
-  box-shadow: inset 2px 0 0 var(--accent);
-}
-
-/* Mobile menu button: a plain icon, not Starlight's filled circle. */
-starlight-menu-button button {
-  background: transparent !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  color: var(--text-primary) !important;
-  transition: color 0.2s ease;
-}
-starlight-menu-button[aria-expanded='true'] button {
-  color: var(--accent) !important;
-}
-
-/* Mobile "On this page" bar: hairline, not a rounded box. */
-mobile-starlight-toc .toggle {
-  border: none !important;
-  border-radius: 0 !important;
-  border-bottom: 1px solid var(--border) !important;
-  background: transparent !important;
-  font-family: var(--body);
-}
-
 /* Mobile drawer: fade and slide in rather than appearing abruptly.
  * Starlight toggles `visibility`; delaying the visibility change on close
  * lets the fade finish before the pane stops receiving taps. */
@@ -462,16 +477,16 @@ mobile-starlight-toc .toggle {
   .sidebar-pane {
     opacity: 0;
     transform: translateY(-0.5rem);
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+    transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
   }
   body[data-mobile-menu-expanded] .sidebar-pane {
     opacity: 1;
     transform: none;
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
+    transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
   }
   nav.sidebar ul.top-level > li > a,
   nav.sidebar ul.top-level > li > details > summary {
-    font-size: 1.15rem !important;
+    font-size: 1.05rem !important;
   }
   .sl-markdown-content h2 { margin-top: 2.5rem; }
 }
